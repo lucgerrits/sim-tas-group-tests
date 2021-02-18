@@ -4,6 +4,9 @@ Repo principal contenant tout le nécessaire pour les tests chez TAS Group.
 **Important**: Add and change the README.md file in each folder to keep up with installation instruction, requirements and other documentation.
 
 
+<img src="archi_TAS.jpeg">
+
+
 ## Specification of this repo
 
 Documentation on the rest structure of the SIM project in order to do full-scale tests on the TAS Group cloud.
