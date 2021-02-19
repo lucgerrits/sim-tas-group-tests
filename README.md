@@ -3,7 +3,7 @@ Repo principal contenant tout le nécessaire pour les tests chez TAS Group.
 
 **Important:** Add and change the README.md file in each folder to keep up with installation instruction, requirements and other documentation.
 
-## Issues evolution of the project
+## Issues and evolution of the project
 
 To keep up with the project the issues are used to list and see the progress of the project.
 
