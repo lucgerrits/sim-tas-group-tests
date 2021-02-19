@@ -1,15 +1,15 @@
 # SIM-TAS-Group-tests
 Repo principal contenant tout le nécessaire pour les tests chez TAS Group.
 
-**Important**: Add and change the README.md file in each folder to keep up with installation instruction, requirements and other documentation.
+**Important:** Add and change the README.md file in each folder to keep up with installation instruction, requirements and other documentation.
 
-## Issues & evolution of the project
+## Issues evolution of the project
 
 To keep up with the project the issues are used to list and see the progress of the project.
 
 **Note:** The project [dashboard is here](https://github.com/orgs/projet-SIM/projects/1)
 
-## Global test architecture
+## Global test architecture
 
 <img src="archi_TAS.jpeg">
 
