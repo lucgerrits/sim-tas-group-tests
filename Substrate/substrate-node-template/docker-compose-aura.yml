@@ -1,0 +1,157 @@
+version: "3.2"
+
+#
+# Use https://polkadot.js.org/apps/#/explorer/node
+# to view the chain data.
+#
+#Example:
+#docker-compose -f docker-compose-aura.yml up --scale substrate-peer=6
+#
+#View telemetry:
+#https://polkadot.js.org/apps/#/settings?rpc=ws://127.0.0.1:9944.
+
+services:
+
+##########################################################################
+#
+#
+#                         substrate genesis + peer
+#
+#           Note: use the scale cmd line option to scale to N peers
+#
+##########################################################################
+
+  substrate-genesis:
+    image: paritytech/ci-linux:production
+    working_dir: /var/www/node-template
+    ports:
+      - "9944:9944"
+    expose: 
+      - "9615"
+      - "9933"
+      - "9944"
+    environment:
+      - CARGO_HOME=/var/www/node-template/.cargo
+      # - RUST_LOG=runtime=debug
+    volumes:
+      - .:/var/www/node-template
+      - ./node-data:/root/.local
+    # command: bash -c "cargo build --release && ./target/release/node-template --dev --ws-external --prometheus-external"
+    # command: bash -c "./target/release/node-template --dev --ws-external --prometheus-external"
+    command: |
+      bash -c " \
+        # Start Alice's node
+        cargo build --release && ./target/release/node-template \
+          --base-path /tmp/alice \
+          --chain local \
+          --alice \
+          --port 30333 \
+          --ws-port 9944 \
+          --rpc-port 9933 \
+          --node-key 0000000000000000000000000000000000000000000000000000000000000001 \
+          --telemetry-url 'wss://telemetry.polkadot.io/submit/ 0' \
+          --unsafe-ws-external \
+          --rpc-cors=all \
+          --prometheus-external \
+          --validator 
+        "
+
+  substrate-peer:
+    image: paritytech/ci-linux:production
+    working_dir: /var/www/node-template
+    # ports:
+      # - "9944:9944"
+    expose: 
+      - "9615"
+      - "9933"
+      - "9944"
+    environment:
+      - CARGO_HOME=/var/www/node-template/.cargo
+      # - RUST_LOG=runtime=debug
+    volumes:
+      - .:/var/www/node-template
+      - ./node-data:/root/.local
+    command: |
+      bash -c " \
+        # Bob join Alice's node
+        cargo build --release && ./target/release/node-template \
+          --base-path /tmp/bob \
+          --chain local \
+          --bob \
+          --port 30333 \
+          --ws-port 9944 \
+          --rpc-port 9933 \
+          --telemetry-url 'wss://telemetry.polkadot.io/submit/ 0' \
+          --unsafe-ws-external \
+          --rpc-cors=all \
+          --prometheus-external \
+          --validator \
+          --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
+        "
+
+##########################################################################
+#
+#
+#                         Metrics
+#
+#
+##########################################################################
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - ./prometheus-data:/prometheus
+    user: "root"
+    expose: 
+      - "9090"
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - 3000:3000
+    expose: 
+      - "9090"
+      - "9615"
+    volumes:
+      - ./grafana-data:/var/lib/grafana
+    user: "472" #don't forget to do a chown
+    depends_on:
+      - prometheus
+
+  substrate-interface:
+    build:
+        context: ./substrate-SIM-frontend
+        dockerfile: Dockerfile
+    container_name: substrate-interface
+    working_dir: /var/www/node-template-frontend
+    ports:
+      - 8000:8000
+    expose: 
+      - "9090"
+      - "9944"
+      - "9615"
+    volumes:
+      - ./substrate-SIM-frontend:/var/www/node-template-frontend
+    environment:
+      - BROWSER=none
+    command: bash -c "yarn install && yarn start"
+
+
+  # polkadot-ui:
+  #   build:
+  #       context: ./polkadot_UI
+  #       dockerfile: Dockerfile_polkadot_ui
+  #   container_name: polkadot-ui
+  #   ports:
+  #     - 8080:8080
+  #   expose: 
+  #     - "9090"
+  #     - "9944"
+  #     - "9615"
+  #     - "9933"
+  #   environment:
+  #     - WS_URL=ws://127.0.0.1:9944
+    
