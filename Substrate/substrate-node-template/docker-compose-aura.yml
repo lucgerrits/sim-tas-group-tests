@@ -5,7 +5,7 @@ version: "3.2"
 # to view the chain data.
 #
 #Example:
-#docker-compose -f docker-compose-aura.yml up --scale substrate-peer=6
+#docker-compose -f docker-compose-aura.yml up --scale substrate-peer=3
 #
 #View telemetry:
 #https://polkadot.js.org/apps/#/settings?rpc=ws://127.0.0.1:9944.
@@ -41,6 +41,7 @@ services:
     command: |
       bash -c " \
         # Start Alice's node
+        RUST_LOG=runtime=debug
         cargo build --release && ./target/release/node-template \
           --base-path /tmp/alice \
           --chain local \
@@ -53,6 +54,7 @@ services:
           --unsafe-ws-external \
           --rpc-cors=all \
           --prometheus-external \
+          -lmydebug=debug \
           --validator 
         "
 
@@ -67,13 +69,13 @@ services:
       - "9944"
     environment:
       - CARGO_HOME=/var/www/node-template/.cargo
-      # - RUST_LOG=runtime=debug
     volumes:
       - .:/var/www/node-template
       - ./node-data:/root/.local
     command: |
       bash -c " \
         # Bob join Alice's node
+        RUST_LOG=runtime=debug
         cargo build --release && ./target/release/node-template \
           --base-path /tmp/bob \
           --chain local \
@@ -85,6 +87,7 @@ services:
           --unsafe-ws-external \
           --rpc-cors=all \
           --prometheus-external \
+          -lmydebug=debug \
           --validator \
           --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
         "
@@ -107,9 +110,9 @@ services:
     expose: 
       - "9090"
 
-  grafana:
+  grafana-substrate:
     image: grafana/grafana
-    container_name: grafana
+    container_name: grafana-substrate
     ports:
       - 3000:3000
     expose: 
