@@ -36,10 +36,21 @@ decl_storage! {
         Factories: map hasher(blake2_128_concat) T::AccountId => T::BlockNumber; //factory => block nb
 
 		/// List of car ID added by the factories
+		/// (
+		/// 
+		/// 
+		/// 
+		/// )
         Cars: map hasher(blake2_128_concat) T::AccountId => (T::AccountId, T::BlockNumber); //car => factory , block nb
 
 		/// List of car crashes added by a car
-        Crashes: map hasher(blake2_128_concat) T::AccountId => (Vec<u8>, T::BlockNumber); //TODO
+		/// Crashes are declared in a map. Each car_id contains a vector of data hashes:
+		/// (
+		///   car_id => Vec<data_hash>, 
+		///   car_id => Vec<data_hash>, 
+		///   ...
+		/// )
+		Crashes: map hasher(blake2_128_concat) T::AccountId => Vec<Vec<u8>>;
 	}
 }
 
