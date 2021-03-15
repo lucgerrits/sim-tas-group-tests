@@ -54,4 +54,6 @@ The REST API is built by Parity and is called [substrate-api-sidecar](https://gi
 
 More info about the endpoints: [https://paritytech.github.io/substrate-api-sidecar/dist/](https://paritytech.github.io/substrate-api-sidecar/dist/)
 
+### TODO
 
+* build a simple client (in C++ ?) to send benchmark transaction to Substrate
