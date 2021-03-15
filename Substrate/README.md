@@ -13,7 +13,9 @@ A complete example of substrate + SIM use case is in [./substrate-node-template]
 
 The best way to test the Substrate + SIM use case implementation is to run the multi-node example with the following command line:
 ```bash
-docker-compose -f docker-compose-aura.yml up --scale substrate-peer=4
+docker-compose --project-name substrate_sim -f docker-compose-aura.yml up --scale substrate-peer=4
+#note: the project name is required to get a fixed container name for peers. Ex: substrate_sim_substrate-peer_1
+#The container name is used to point prometheus scraper to the right container
 ```
 
 Next, to view and send transactions you'll use the polkadot-js telemetry browser application that will connect directly to your local multi-node setup:

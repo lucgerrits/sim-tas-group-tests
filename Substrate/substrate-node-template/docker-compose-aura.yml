@@ -5,7 +5,7 @@ version: "3.2"
 # to view the chain data.
 #
 #Example:
-#docker-compose -f docker-compose-aura.yml up --scale substrate-peer=3
+#docker-compose --project-name substrate_sim -f docker-compose-aura.yml up --scale substrate-peer=4
 #
 #View telemetry:
 #https://polkadot.js.org/apps/#/settings?rpc=ws://127.0.0.1:9944.
@@ -23,6 +23,7 @@ services:
 
   substrate-genesis:
     image: paritytech/ci-linux:production
+    container_name: substrate-genesis
     working_dir: /var/www/node-template
     ports:
       - "9944:9944"
@@ -51,7 +52,6 @@ services:
           --ws-port 9944 \
           --rpc-port 9933 \
           --node-key 0000000000000000000000000000000000000000000000000000000000000001 \
-          --telemetry-url 'wss://telemetry.polkadot.io/submit/ 0' \
           --unsafe-ws-external \
           --unsafe-rpc-external \
           --rpc-cors=all \
@@ -59,6 +59,7 @@ services:
           -lmydebug=debug \
           --validator 
         "
+          # --telemetry-url 'wss://telemetry.polkadot.io/submit/ 0' \
 
   substrate-peer:
     image: paritytech/ci-linux:production
@@ -85,7 +86,6 @@ services:
           --port 30333 \
           --ws-port 9944 \
           --rpc-port 9933 \
-          --telemetry-url 'wss://telemetry.polkadot.io/submit/ 0' \
           --unsafe-ws-external \
           --rpc-cors=all \
           --prometheus-external \
@@ -93,6 +93,7 @@ services:
           --validator \
           --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
         "
+          # --telemetry-url 'wss://telemetry.polkadot.io/submit/ 0' \
 
   substrate-rest-api:
     image: docker.io/parity/substrate-api-sidecar:latest

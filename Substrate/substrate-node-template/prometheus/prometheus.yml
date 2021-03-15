@@ -43,33 +43,29 @@ scrape_configs:
     # Override the global default and scrape targets from this job every 5 seconds.
     # ** NOTE: you want to have this *LESS THAN* the block time in order to ensure
     # ** that you have a data point for every block!
-    scrape_interval: 5s
+    scrape_interval: 1s
 
     static_configs:
-      - targets: ["substrate-genesis_1:9615"]
+      - targets: ["substrate-genesis:9615"]
 
 
   - job_name: "substrate_node_1"
-    scrape_interval: 5s
+    scrape_interval: 1s
     static_configs:
-      - targets: ["substrate-peer_1:9615"]
+        # note that the URL are the project name + scaled container name from docker compose
+      - targets: ["substrate_sim_substrate-peer_1:9615"]
 
   - job_name: "substrate_node_2"
-    scrape_interval: 5s
+    scrape_interval: 1s
     static_configs:
-      - targets: ["substrate-peer_2:9615"]
+      - targets: ["substrate_sim_substrate-peer_2:9615"]
 
   - job_name: "substrate_node_3"
-    scrape_interval: 5s
+    scrape_interval: 1s
     static_configs:
-      - targets: ["substrate-peer_3:9615"]
+      - targets: ["substrate_sim_substrate-peer_3:9615"]
 
   - job_name: "substrate_node_4"
-    scrape_interval: 5s
+    scrape_interval: 1s
     static_configs:
-      - targets: ["substrate-peer_4:9615"]
-
-  - job_name: "substrate_node_5"
-    scrape_interval: 5s
-    static_configs:
-      - targets: ["substrate-peer_5:9615"]
+      - targets: ["substrate_sim_substrate-peer_4:9615"]
