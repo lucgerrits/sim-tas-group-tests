@@ -1,32 +1,25 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
+use frame_support::codec::{Decode, Encode};
 use frame_support::{
-	decl_error,
-	decl_event,
-	decl_module,
-	decl_storage,
-	dispatch,
-	ensure,
-	traits::Get,
-	StorageMap,
-	// debug,
-	// traits::{EnsureOrigin}
+	decl_error, decl_event, decl_module, decl_storage, dispatch, ensure, traits::Get, StorageMap,
 };
+
 use frame_system::ensure_root;
 use frame_system::ensure_signed;
 
 use sp_std::vec::Vec;
 
-//these types need to be declared in the telemetry dashboard,
-//see file: /Substrate/substrate-node-template/additional_types.json
-// type FactoryId<T> = <T as frame_system::Trait>::AccountId;
-// type CarId<T> = <T as frame_system::Trait>::AccountId;
-
 /// Configure the pallet by specifying the parameters and types on which it depends.
 pub trait Trait: frame_system::Trait {
 	/// Because this pallet emits events, it depends on the runtime's definition of an event.
 	type Event: From<Event<Self>> + Into<<Self as frame_system::Trait>::Event>;
-	// type ForceOrigin: EnsureOrigin<Self::Origin>;
+}
+
+#[derive(Encode, Decode, Default, Clone, PartialEq)]
+pub struct CrashType<BlockNumber> {
+	block_number: BlockNumber,
+	data: Vec<u8>,
 }
 
 // The pallet's runtime storage items.
@@ -50,7 +43,7 @@ decl_storage! {
 		///   car_id => Vec<data_hash>,
 		///   ...
 		/// )
-		Crashes: map hasher(blake2_128_concat) T::AccountId => Vec<Vec<u8>>;
+		Crashes: map hasher(blake2_128_concat) T::AccountId => Vec<CrashType<T::BlockNumber>>;
 	}
 }
 
@@ -66,7 +59,7 @@ decl_event!(
 		/// Event when a car has been added to storage by a factory.
 		CarStored(AccountId, AccountId),
 		/// Event when data (hash) is stored by a car and an account.
-		DataStored(AccountId, AccountId, Vec<u8>),
+		CrashStored(AccountId, Vec<u8>),
 	}
 );
 
@@ -101,26 +94,18 @@ decl_module! {
 
 		/// Dispatchable that takes a singles value as a parameter (factory ID), writes the value to
 		/// storage (factories) and emits an event. This function must be dispatched by a signed extrinsic.
-		// #[weight = 10_000 + T::DbWeight::get().writes(1)]
-		#[weight = 10_000]
+		#[weight = 10_000 + T::DbWeight::get().writes(1)]
 		pub fn store_factory(origin, factory_id: <T as frame_system::Trait>::AccountId) -> dispatch::DispatchResult {
-			// let origin_copy = origin.clone();
 			ensure_root(origin)?;
-			// let who = ensure_signed(origin_copy)?;
 
 			// Verify that the specified factory_id has not already been stored.
 			ensure!(!Factories::<T>::contains_key(&factory_id), Error::<T>::FactoryAlreadyStored);
-
 
 			// Get the block number from the FRAME System module.
 			let current_block = <frame_system::Module<T>>::block_number();
 
 			// Store the factory_id with the sender and block number.
 			Factories::<T>::insert(&factory_id, current_block);
-
-			// debug::debug!(target: "mydebug", "who={:?}", who);
-			// debug::debug!(target: "mydebug", "factory_id={:?}", factory_id);
-			// debug::debug!(target: "mydebug", "current_block={:?}", current_block);
 
 			// Emit an event.
 			Self::deposit_event(RawEvent::FactoryStored(factory_id));
@@ -137,10 +122,8 @@ decl_module! {
 			// Verify that the specified factory_id exists.
 			ensure!(Factories::<T>::contains_key(&who), Error::<T>::UnknownFactory);
 
-
 			// Verify that the specified car_id has not already been stored.
 			ensure!(!Cars::<T>::contains_key(&who), Error::<T>::CarAlreadyStored);
-
 
 			// Get the block number from the FRAME System module.
 			let current_block = <frame_system::Module<T>>::block_number();
@@ -148,15 +131,51 @@ decl_module! {
 			// Store the factory_id with the sender and block number.
 			Cars::<T>::insert(&car_id, (&car_id, current_block));
 
-			// debug::debug!(target: "mydebug", "who={:#?}", who);
-			// debug::debug!(target: "mydebug", "factory_id={:#?}", factory_id);
-			// debug::debug!(target: "mydebug", "car_id={:#?}", car_id);
-			// debug::debug!(target: "mydebug", "current_block={:#?}", current_block);
-
 			// Emit an event.
 			Self::deposit_event(RawEvent::CarStored(car_id, who));
 			// Return a successful DispatchResult
 			Ok(())
 		}
+
+		/// Dispatchable that takes a singles value as a parameter (data hash), writes the value to
+		/// storage (crashes) and emits an event. This function must be dispatched by a signed extrinsic.
+		#[weight = 10_000 + T::DbWeight::get().writes(1)]
+		pub fn store_crash(origin, data_hash: Vec<u8>) -> dispatch::DispatchResult {
+			let who = ensure_signed(origin)?;
+
+			// Verify that the specified car_id has not already been stored.
+			ensure!(Cars::<T>::contains_key(&who), Error::<T>::UnknownCar);
+
+			// Get the block number from the FRAME System module.
+			let current_block = <frame_system::Module<T>>::block_number();
+			let my_crash = CrashType {
+				data: data_hash.clone(),
+				block_number: current_block
+			};
+			if Crashes::<T>::contains_key(&who) {
+				//if car has already crashes, we append a new crash
+				let mut car_crashes = Crashes::<T>::get(&who);
+				car_crashes.push(my_crash);
+				
+				// Update the crashes by removing + inserting
+				// Remove old crahes.
+				Crashes::<T>::remove(&who);
+				// Store the crash in state.
+				Crashes::<T>::insert(&who, car_crashes);
+			} else {
+				//if car has not crashes, we create a new crash
+				let mut new_crash:Vec<CrashType<T::BlockNumber>> = Vec::new();
+				new_crash.push(my_crash);
+
+				// Store the crash in state.
+				Crashes::<T>::insert(&who, new_crash);
+			}
+
+			// Emit an event.
+			Self::deposit_event(RawEvent::CrashStored(who, data_hash));
+			// Return a successful DispatchResult
+			Ok(())
+		}
+
 	}
 }

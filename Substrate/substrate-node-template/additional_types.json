@@ -1,4 +1,6 @@
 {
-    "FactoryId": "Vec<u8>",
-    "CarId":  "Vec<u8>"
+  "CrashType": {
+    "block_number": "BlockNumber",
+    "data": "Vec<u8>"
   }
+}
