@@ -26,6 +26,7 @@ services:
     working_dir: /var/www/node-template
     ports:
       - "9944:9944"
+      - "9933:9933"
     expose: 
       - "9615"
       - "9933"
@@ -52,6 +53,7 @@ services:
           --node-key 0000000000000000000000000000000000000000000000000000000000000001 \
           --telemetry-url 'wss://telemetry.polkadot.io/submit/ 0' \
           --unsafe-ws-external \
+          --unsafe-rpc-external \
           --rpc-cors=all \
           --prometheus-external \
           -lmydebug=debug \
@@ -92,6 +94,15 @@ services:
           --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
         "
 
+  substrate-rest-api:
+    image: docker.io/parity/substrate-api-sidecar:latest
+    container_name: substrate-rest-api
+    ports:
+      - 8888:8888
+    environment:
+      - SAS_EXPRESS_PORT=8888
+      - SAS_SUBSTRATE_WS_URL=ws://substrate-genesis:9944
+        
 ##########################################################################
 #
 #
