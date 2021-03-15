@@ -1,23 +1,23 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
 use frame_support::{
-	decl_module, 
-	decl_storage, 
-	decl_event, 
-	decl_error, 
-	dispatch, 
-	ensure, 
-	traits::Get, 
-	StorageMap, 
+	decl_error,
+	decl_event,
+	decl_module,
+	decl_storage,
+	dispatch,
+	ensure,
+	traits::Get,
+	StorageMap,
 	// debug,
 	// traits::{EnsureOrigin}
 };
-use frame_system::ensure_signed;
 use frame_system::ensure_root;
+use frame_system::ensure_signed;
 
 use sp_std::vec::Vec;
 
-//these types need to be declared in the telemetry dashboard, 
+//these types need to be declared in the telemetry dashboard,
 //see file: /Substrate/substrate-node-template/additional_types.json
 // type FactoryId<T> = <T as frame_system::Trait>::AccountId;
 // type CarId<T> = <T as frame_system::Trait>::AccountId;
@@ -33,21 +33,21 @@ pub trait Trait: frame_system::Trait {
 decl_storage! {
 	trait Store for Module<T: Trait> as SimModule {
 		/// List of factory IDs added by the admin (sudo)
-        Factories: map hasher(blake2_128_concat) T::AccountId => T::BlockNumber; //factory => block nb
+		Factories: map hasher(blake2_128_concat) T::AccountId => T::BlockNumber; //factory => block nb
 
 		/// List of car ID added by the factories
 		/// (
-		/// 
-		/// 
-		/// 
+		///
+		///
+		///
 		/// )
-        Cars: map hasher(blake2_128_concat) T::AccountId => (T::AccountId, T::BlockNumber); //car => factory , block nb
+		Cars: map hasher(blake2_128_concat) T::AccountId => (T::AccountId, T::BlockNumber); //car => factory , block nb
 
 		/// List of car crashes added by a car
 		/// Crashes are declared in a map. Each car_id contains a vector of data hashes:
 		/// (
-		///   car_id => Vec<data_hash>, 
-		///   car_id => Vec<data_hash>, 
+		///   car_id => Vec<data_hash>,
+		///   car_id => Vec<data_hash>,
 		///   ...
 		/// )
 		Crashes: map hasher(blake2_128_concat) T::AccountId => Vec<Vec<u8>>;
@@ -56,7 +56,11 @@ decl_storage! {
 
 // Pallets use events to inform users when important changes are made.
 decl_event!(
-	pub enum Event<T> where AccountId = <T as frame_system::Trait>::AccountId { //, Factory = Vec<u8>, Car = Vec<u8>, Data = Vec<u8>
+	pub enum Event<T>
+	where
+		AccountId = <T as frame_system::Trait>::AccountId,
+	{
+		//, Factory = Vec<u8>, Car = Vec<u8>, Data = Vec<u8>
 		/// Event when a factory has been added to storage.
 		FactoryStored(AccountId),
 		/// Event when a car has been added to storage by a factory.
@@ -98,7 +102,7 @@ decl_module! {
 		/// Dispatchable that takes a singles value as a parameter (factory ID), writes the value to
 		/// storage (factories) and emits an event. This function must be dispatched by a signed extrinsic.
 		// #[weight = 10_000 + T::DbWeight::get().writes(1)]
-        #[weight = 10_000]
+		#[weight = 10_000]
 		pub fn store_factory(origin, factory_id: <T as frame_system::Trait>::AccountId) -> dispatch::DispatchResult {
 			// let origin_copy = origin.clone();
 			ensure_root(origin)?;
@@ -108,8 +112,8 @@ decl_module! {
 			ensure!(!Factories::<T>::contains_key(&factory_id), Error::<T>::FactoryAlreadyStored);
 
 
-            // Get the block number from the FRAME System module.
-            let current_block = <frame_system::Module<T>>::block_number();
+			// Get the block number from the FRAME System module.
+			let current_block = <frame_system::Module<T>>::block_number();
 
 			// Store the factory_id with the sender and block number.
 			Factories::<T>::insert(&factory_id, current_block);
@@ -130,7 +134,7 @@ decl_module! {
 		pub fn store_car(origin, car_id: <T as frame_system::Trait>::AccountId) -> dispatch::DispatchResult {
 			let who = ensure_signed(origin)?;
 
-			// Verify that the specified factory_id exists. 
+			// Verify that the specified factory_id exists.
 			ensure!(Factories::<T>::contains_key(&who), Error::<T>::UnknownFactory);
 
 
@@ -138,8 +142,8 @@ decl_module! {
 			ensure!(!Cars::<T>::contains_key(&who), Error::<T>::CarAlreadyStored);
 
 
-            // Get the block number from the FRAME System module.
-            let current_block = <frame_system::Module<T>>::block_number();
+			// Get the block number from the FRAME System module.
+			let current_block = <frame_system::Module<T>>::block_number();
 
 			// Store the factory_id with the sender and block number.
 			Cars::<T>::insert(&car_id, (&car_id, current_block));
