@@ -1,5 +1,6 @@
 # Hyperledger Sawtooth
 
-Folder containing the files required to deploy Hyperledger Sawtooth in Kubernetes.
+This repository contains files required to deploy Hyperledger Sawtooth on Kubernetes cluster running on a local host.
+
 
 
