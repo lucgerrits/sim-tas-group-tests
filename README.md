@@ -1,6 +1,15 @@
 # SIM-TAS-Group-tests
 Repo principal contenant tout le nécessaire pour les tests chez TAS Group.
 
+**Branches**:
+
+- main: main branch for all projects that is in the CI/CD. Use merges to push code in cloud.
+- dev: most advanced branch, containing last code for entire project.
+- *others*: for each feature and new test use new branches that you'll work on everyday.
+
+---
+
+
 **Important:** Add and change the README.md file in each folder to keep up with installation instruction, requirements and other documentation.
 
 ## Issues and evolution of the project
