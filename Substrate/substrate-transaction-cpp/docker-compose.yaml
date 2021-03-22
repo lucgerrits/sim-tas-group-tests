@@ -1,0 +1,29 @@
+version: "3.2"
+
+services:
+  compile-substrate-sender:
+    image: projetsim/substrate-transaction-cpp:latest
+    container_name: compile-substrate-sender
+    working_dir: /local-substrate-transaction-cpp/
+    volumes:
+      - ./application:/local-substrate-transaction-cpp/
+    network_mode: host
+    command: |
+      bash -c "
+        # Compile local transaction sender cpp program
+        cmake .
+        make clean
+        make
+        if [ $$? -eq 0 ]; then
+          echo 'Finiched compiling !'
+          echo '################################'
+          ./substrate-transaction-cpp
+        fi 
+        echo 'Done'
+      "
+
+######################
+#
+# Other info:
+#
+#escape "$" with "$$"" https://stackoverflow.com/a/61529464/13187605

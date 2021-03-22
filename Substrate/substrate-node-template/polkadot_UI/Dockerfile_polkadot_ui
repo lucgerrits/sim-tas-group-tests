@@ -1,0 +1,15 @@
+FROM node:12
+
+RUN npm install -g yarn  --force
+
+RUN apt-get install -y git
+
+RUN mkdir -p /apps 
+
+RUN cd /apps
+
+WORKDIR /apps
+
+RUN git clone https://github.com/polkadot-js/apps .
+
+RUN yarn run start --port=8080
