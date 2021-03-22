@@ -136,6 +136,8 @@ services:
     depends_on:
       - prometheus
 
+
+  # this interface is not mendatory at all, polkadot-js app can do everything
   substrate-interface:
     build:
         context: ./substrate-SIM-frontend

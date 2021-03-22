@@ -1,0 +1,23 @@
+
+#deps
+application/wpp/
+application/sr25519/
+
+#api lib cmake files
+application/polkadot_api_cpp/CMakeFiles/
+application/polkadot_api_cpp/Makefile
+application/polkadot_api_cpp/CMakeCache.txt
+application/polkadot_api_cpp/DartConfiguration.tcl
+application/polkadot_api_cpp/CTestTestfile.cmake
+application/polkadot_api_cpp/CPackSourceConfig.cmake
+application/polkadot_api_cpp/CPackConfig.cmake
+application/polkadot_api_cpp/cmake_install.cmake
+application/polkadot_api_cpp/Testing
+application/polkadot_api_cpp/bin
+
+#transaction cmake files
+application/CMakeFiles/
+application/CMakeCache.txt
+application/cmake_install.cmake
+application/Makefile
+application/substrate-transaction-cpp
