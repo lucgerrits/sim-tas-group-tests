@@ -50,26 +50,31 @@ void displayMetadata()
     unique_ptr<GetMetadataParams> par2(new GetMetadataParams);
     unique_ptr<Metadata> resp2;
     resp2 = app->getMetadata(nullptr);
-    
+
     assert(resp2->metadataV0 || resp2->metadataV4 || resp2->metadataV5 || resp2->metadataV6);
-    cout << endl << "--- Received metadata ---" << endl;
-    if (resp2->metadataV0) {
+    cout << endl
+         << "--- Received metadata ---" << endl;
+    if (resp2->metadataV0)
+    {
         cout << "OuterEventWrapperV0.name: " << resp2->metadataV0->oew->name << endl;
         cout << "ModuleV0[0].prefix: " << resp2->metadataV0->module[0]->prefix << endl;
         cout << "ModuleV0[1].prefix: " << resp2->metadataV0->module[1]->prefix << endl;
         cout << "..." << endl;
     }
-    if (resp2->metadataV4) {
+    if (resp2->metadataV4)
+    {
         cout << "ModuleV4[0].prefix: " << resp2->metadataV4->module[0]->prefix << endl;
         cout << "ModuleV4[1].prefix: " << resp2->metadataV4->module[1]->prefix << endl;
         cout << "..." << endl;
     }
-    if (resp2->metadataV5) {
+    if (resp2->metadataV5)
+    {
         cout << "ModuleV5[0].prefix: " << resp2->metadataV5->module[0]->prefix << endl;
         cout << "ModuleV5[1].prefix: " << resp2->metadataV5->module[1]->prefix << endl;
         cout << "..." << endl;
     }
-    if (resp2->metadataV6) {
+    if (resp2->metadataV6)
+    {
         cout << "ModuleV6[0].prefix: " << resp2->metadataV6->module[0]->prefix << endl;
         cout << "ModuleV6[1].prefix: " << resp2->metadataV6->module[1]->prefix << endl;
         cout << "..." << endl;
@@ -102,14 +107,20 @@ int main()
         displayInfo();
         // auto final_head = app->getFinalizedHead();
         // cout << "Final Head:" << final_head->blockHash << endl;
-        
+
         // displayMetadata();
 
         Json prm1 = Json::object{{"type", "AccountId"}, {"value", "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y"}};
-        string storage = app->getStorage(prm1.dump(), "Sim", "crashes");
+        string storage = app->getKeys(prm1.dump(), "Balances", "FreeBalance");
         cout << endl
              << "Storage: " << storage << endl
              << endl;
+
+        // Json prm1 = Json::object{{"type", "AccountId"}, {"value", "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y"}};
+        // string storage = app->getStorage(prm1.dump(), "Balances", "FreeBalance");
+        // cout << endl
+        //      << "Storage: " << storage << endl
+        //      << endl;
 
         // XXH128_hash_t module_name = XXH3_128bits("sim", 4);
         // cout << "module_name:" << uint64_tToHex(module_name.high64) << endl;
