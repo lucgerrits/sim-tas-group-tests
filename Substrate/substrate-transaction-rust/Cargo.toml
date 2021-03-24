@@ -1,0 +1,11 @@
+[package]
+authors = ["Luc Gerrits <lucgerrits@users.noreply.github.com>"]
+edition = "2018"
+name = "substrate-transaction-rust"
+version = "1.0.0"
+
+[dependencies]
+codec = {package = "parity-scale-codec", features = ["derive"], version = "2.0.0", default-features = false}
+keyring = {package = "sp-keyring", git = "https://github.com/paritytech/substrate.git"}
+substrate-api-client = {git = "https://github.com/scs/substrate-api-client.git"}
+hex = { version = "0.4" } #, default-features = false
