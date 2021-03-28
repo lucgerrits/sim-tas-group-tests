@@ -2,7 +2,7 @@
 
 use frame_support::codec::{Decode, Encode};
 use frame_support::{
-	decl_error, decl_event, decl_module, decl_storage, dispatch, ensure, traits::Get, StorageMap,
+	decl_error, decl_event, decl_module, decl_storage, ensure, traits::Get, StorageMap,
 };
 
 use frame_system::ensure_root;
@@ -11,20 +11,20 @@ use frame_system::ensure_signed;
 use sp_std::vec::Vec;
 
 /// Configure the pallet by specifying the parameters and types on which it depends.
-pub trait Trait: frame_system::Trait {
+pub trait Config: frame_system::Config {
 	/// Because this pallet emits events, it depends on the runtime's definition of an event.
-	type Event: From<Event<Self>> + Into<<Self as frame_system::Trait>::Event>;
+	type Event: From<Event<Self>> + Into<<Self as frame_system::Config>::Event>;
 }
 
 #[derive(Encode, Decode, Default, Clone, PartialEq)]
 pub struct CrashType<BlockNumber> {
 	block_number: BlockNumber,
-	data: Vec<u8>,
+	data: Vec<u8>
 }
 
 // The pallet's runtime storage items.
 decl_storage! {
-	trait Store for Module<T: Trait> as SimModule {
+	trait Store for Module<T: Config> as SimModule {
 		/// List of factory IDs added by the admin (sudo)
 		Factories: map hasher(blake2_128_concat) T::AccountId => T::BlockNumber; //factory => block nb
 
@@ -51,7 +51,7 @@ decl_storage! {
 decl_event!(
 	pub enum Event<T>
 	where
-		AccountId = <T as frame_system::Trait>::AccountId,
+		AccountId = <T as frame_system::Config>::AccountId,
 	{
 		//, Factory = Vec<u8>, Car = Vec<u8>, Data = Vec<u8>
 		/// Event when a factory has been added to storage.
@@ -65,7 +65,7 @@ decl_event!(
 
 // Errors inform users that something went wrong.
 decl_error! {
-	pub enum Error for Module<T: Trait> {
+	pub enum Error for Module<T: Config> {
 		/// Error names should be descriptive.
 		NoneValue,
 		/// Errors should have helpful documentation associated with them.
@@ -85,7 +85,7 @@ decl_error! {
 // These functions materialize as "extrinsics", which are often compared to transactions.
 // Dispatchable functions must be annotated with a weight and must return a DispatchResult.
 decl_module! {
-	pub struct Module<T: Trait> for enum Call where origin: T::Origin {
+	pub struct Module<T: Config> for enum Call where origin: T::Origin {
 		// Errors must be initialized if they are used by the pallet.
 		type Error = Error<T>;
 
@@ -95,7 +95,7 @@ decl_module! {
 		/// Dispatchable that takes a singles value as a parameter (factory ID), writes the value to
 		/// storage (factories) and emits an event. This function must be dispatched by a signed extrinsic.
 		#[weight = 10_000 + T::DbWeight::get().writes(1)]
-		pub fn store_factory(origin, factory_id: <T as frame_system::Trait>::AccountId) -> dispatch::DispatchResult {
+		pub fn store_factory(origin, factory_id: <T as frame_system::Config>::AccountId) {
 			ensure_root(origin)?;
 
 			// Verify that the specified factory_id has not already been stored.
@@ -109,14 +109,12 @@ decl_module! {
 
 			// Emit an event.
 			Self::deposit_event(RawEvent::FactoryStored(factory_id));
-			// Return a successful DispatchResult
-			Ok(())
 		}
 
 		/// Dispatchable that takes a singles value as a parameter (factory ID), writes the value to
 		/// storage (factories) and emits an event. This function must be dispatched by a signed extrinsic.
 		#[weight = 10_000 + T::DbWeight::get().writes(1)]
-		pub fn store_car(origin, car_id: <T as frame_system::Trait>::AccountId) -> dispatch::DispatchResult {
+		pub fn store_car(origin, car_id: <T as frame_system::Config>::AccountId) {
 			let who = ensure_signed(origin)?;
 
 			// Verify that the specified factory_id exists.
@@ -133,14 +131,12 @@ decl_module! {
 
 			// Emit an event.
 			Self::deposit_event(RawEvent::CarStored(car_id, who));
-			// Return a successful DispatchResult
-			Ok(())
 		}
 
 		/// Dispatchable that takes a singles value as a parameter (data hash), writes the value to
 		/// storage (crashes) and emits an event. This function must be dispatched by a signed extrinsic.
 		#[weight = 10_000 + T::DbWeight::get().writes(1)]
-		pub fn store_crash(origin, data_hash: Vec<u8>) -> dispatch::DispatchResult {
+		fn store_crash(origin, data_hash: Vec<u8>) {
 			let who = ensure_signed(origin)?;
 
 			// Verify that the specified car_id has not already been stored.
@@ -173,8 +169,6 @@ decl_module! {
 
 			// Emit an event.
 			Self::deposit_event(RawEvent::CrashStored(who, data_hash));
-			// Return a successful DispatchResult
-			Ok(())
 		}
 
 	}

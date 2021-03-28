@@ -4,8 +4,23 @@ edition = "2018"
 name = "substrate-transaction-rust"
 version = "1.0.0"
 
+# [dependencies]
+# codec = {package = "parity-scale-codec", features = ["derive"], version = "2.0.0", default-features = false}
+# keyring = {package = "sp-keyring", git = "https://github.com/paritytech/substrate.git"}
+# substrate-api-client = {git = "https://github.com/scs/substrate-api-client.git"}
+# hex = { version = "0.4" } #, default-features = false
+
+# sp-core = { version = "3.0.0", package = "sp-core" }
+
+
 [dependencies]
+env_logger = "0.8.3"
+async-std = { version = "1.9.0", features = ["attributes"] }
+substrate-subxt = {git = "https://github.com/paritytech/substrate-subxt.git", tag="v0.15.0"}
 codec = {package = "parity-scale-codec", features = ["derive"], version = "2.0.0", default-features = false}
 keyring = {package = "sp-keyring", git = "https://github.com/paritytech/substrate.git"}
-substrate-api-client = {git = "https://github.com/scs/substrate-api-client.git"}
-hex = { version = "0.4" } #, default-features = false
+
+sp-core = { version = "3.0.0", package = "sp-core" }
+sp-keyring = { version = "3.0.0", package = "sp-keyring" }
+node-primitives = {package = "node-primitives", git = "https://github.com/paritytech/substrate.git", tag = "v3.0.0"}
+sp-runtime = {package = "sp-runtime", git = "https://github.com/paritytech/substrate.git", tag = "v3.0.0"}

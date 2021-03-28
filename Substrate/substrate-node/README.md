@@ -22,7 +22,7 @@ impl pallet_template::Config for Runtime {
 	type Event = Event;
 }
 
-+impl pallet_sim::Trait for Runtime {
++impl pallet_sim::Config for Runtime {
 +	type Event = Event;
 +}
 

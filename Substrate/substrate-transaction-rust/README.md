@@ -6,3 +6,8 @@ Rust client for Substrate.
 
 - substrate-api-client
 
+## Start
+
+```bash
+RUST_LOG=info RUSTFLAGS=-Awarnings cargo run
+```
