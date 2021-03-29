@@ -95,42 +95,79 @@
 //     println!("Done");
 // }
 
-// use codec::{Decode, Encode};
+use codec::{Decode, Encode};
 // use node_primitives::{AccountId, BlockNumber};
 // use sp_core::{
 //     storage::{StorageChangeSet, StorageData, StorageKey},
 //     Bytes,
 // };
-use sp_keyring::AccountKeyring;
+use sp_keyring::{AccountKeyring, Sr25519Keyring};
 // use sp_runtime::MultiAddress;
 // use sp_core::crypto::{Pair, DEV_PHRASE};
-use sp_core::{Pair, crypto::DEV_PHRASE, crypto::key_types::ACCOUNT};
-use std::convert::From;
+use core::marker::PhantomData;
+// use sp_core::{crypto::key_types::ACCOUNT, crypto::DEV_PHRASE, Pair, Public};
+// use std::convert::From;
 // use std::convert::AsMut;
 // use std::convert::AsRef;
-use std::str::FromStr;
+// use std::error::Error;
+// use std::str::FromStr;
 use substrate_subxt::{
-    balances::{TransferCallExt, TransferEventExt},
+    // balances::{TransferCallExt, TransferEventExt},
     // system::AccountId32,
     sp_runtime::AccountId32,
-    sp_runtime::MultiAddress,
-    // system::AccountInfo,
-    system::AccountStore,
-    // Client,
-    // crypto::AccountId32
-    ClientBuilder,
-    DefaultNodeRuntime,
-    PairSigner,
-    // Pair,
-    Runtime,
+    // sp_runtime::MultiAddress,
     // Signer,
     // keystore,
+    sudo::{Sudo, SudoCall},
+    // system::AccountInfo,
+    system::AccountStore,
+    Client,
+    // crypto::AccountId32
+    ClientBuilder,
+    // DefaultNodeRuntime,
+    NodeTemplateRuntime as MyRuntime,
+    PairSigner,
+    // Runtime,
+    // Pair,
+    // UncheckedExtrinsic,
 };
-use std::error::Error;
+use substrate_subxt_proc_macro::{Call, Store};
+pub mod runtime;
 
-// fn getBalance(client: Client<_>, account: AccountId32) -> u32 {
+async fn get_balance(
+    client: &Client<MyRuntime>,
+    who: &AccountId32,
+    verbose: bool,
+) -> u32 {
+    // get balance of alice and charlie:
+    let account_info = client
+        .fetch_or_default(&AccountStore { account_id: who }, None)
+        .await
+        .unwrap();
+    if verbose {
+        // println!("[+] Alice AccountInfo: {:?}", account_info);
+        println!("[+] Balance of {:?}: {:?}", who, account_info.data.free);
+    }
+    return 1;
+}
 
-//     return 1;
+
+
+// async fn new_factory(
+//     client: &Client<MyRuntime>,
+//     signer: &Sr25519Keyring,
+//     who: &AccountId32,
+//     verbose: bool,
+// ) {
+//     let signer = PairSigner::new(signer.pair());
+//     let call = StoreFactoryCall { factory_id: &who };
+//     let encoded = client.encode(call).unwrap();
+//     let sudo_call = SudoCall {
+//         call: &encoded,
+//         _runtime: PhantomData,
+//     };
+//     let extrinsic = client.create_signed(sudo_call, &signer).await;
+//     let result = client.submit_and_watch_extrinsic(extrinsic).await;
 // }
 
 // //Global contants
@@ -139,98 +176,68 @@ const CHARLIE_SS58_ADDRESS: &str = "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXc
 
 #[async_std::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // let a = AccountId32::from_str(ALICE_SS58_ADDRESS).unwrap().encode();
-    // let ac = AccountId32::encode(&mut a.unwrap());
-    // let alice2:AccountId = AccountId::decode(&mut a.as_ref()).unwrap_or_default();
-    //    T::AccountId::decode(&mut &ac[..]).map_err(|_| <Error<T>>::AccountIdParseError)?;
-
     let url = format!("ws://{}", "127.0.0.1:9944");
     env_logger::init();
 
-    let signer = PairSigner::new(AccountKeyring::Alice.pair());
-    // let dest = AccountKeyring::Bob.to_account_id().into();
+    //////////////////////////////////////////////////////
+    //  Load some accounts
+    //
+    let alice = AccountKeyring::Alice;
+    // let alice_signer = PairSigner::new(alice.pair());
+    let charlie = AccountKeyring::Charlie;
 
     // let alice: AccountId = AccountId::decode(CHARLIE_SS58_ADDRESS_BYTES).unwrap_or_default();
-
-    let alice: AccountId32 = AccountId32::from_str(ALICE_SS58_ADDRESS).unwrap();
-    let charlie: AccountId32 = AccountId32::from_str(CHARLIE_SS58_ADDRESS).unwrap();
+    // let alice: AccountId32 = AccountId32::from_str(ALICE_SS58_ADDRESS).unwrap();
+    // let charlie: AccountId32 = AccountId32::from_str(CHARLIE_SS58_ADDRESS).unwrap();
     // let charlie_address =
     //     MultiAddress::from(AccountId::decode(&mut charlie.encode().as_ref()).unwrap_or_default());
-    let charlie_address = MultiAddress::from(charlie.clone());
-    // let alice_pair = Pair::
-    // let alice_pair = Pair::from_phrase(DEV_PHRASE.as_ref(), None)?;
+    // let charlie_address = MultiAddress::from(charlie.clone());
+    // let alice_pair = Pair::from_string(DEV_PHRASE.as_ref(), None);
+    // let signer = PairSigner::new(signer);
+    // println!("alice_pair: {:?}", alice_pair);
 
-    let alice_pair = Pair::from_string(DEV_PHRASE.as_ref(), None);
-	// let signer = PairSigner::new(signer);
-    println!("alice_pair: {:?}", alice_pair);
-    // let alice_signer = PairSigner::new(alice_pair);
-
-    let client = ClientBuilder::<DefaultNodeRuntime>::new()
+    //////////////////////////////////////////////////////
+    //  Load client
+    //
+    let client = ClientBuilder::<MyRuntime>::new()
         .set_url(url)
         .build()
         .await?;
 
+    //////////////////////////////////////////////////////
+    //  Print some data
+    //
     // let genesis = client.genesis();
     // println!("[+] Genesis is {:?}", genesis);
+    let module_hash = sp_core::twox_128(b"SimModule");
+    println!("module hash: {:?}", module_hash);
+    println!("module hash: {:?}", hex::encode(module_hash));
 
-    // let cars_data = StorageKey::
-    // let result = client.fetch_keys(2);
-    // println!("[+] Result is {:?}", result);
+    // new_factory(&client, &alice.public().into(), true).await;
 
+    //////////////////////////////////////////////////////
+    //  Example to send amount from aloce to charlie
     //
-    //Example to send amount from aloce to charlie
-    //
-    let amount_to_send: u128 = 10_000_000_000;
-    // get balance of alice and charlie:
-    let alice_account_info = client
-        .fetch_or_default(&AccountStore { account_id: &alice }, None)
-        .await
-        .unwrap();
-    let charlie_account_info = client
-        .fetch_or_default(
-            &AccountStore {
-                account_id: &charlie,
-            },
-            None,
-        )
-        .await
-        .unwrap();
-    // println!("[+] Alice AccountInfo: {:?}", alice_account_info);
-    println!("[+] Balance of Alice: {:?}", alice_account_info.data.free);
-    println!(
-        "[+] Balance of Charlie: {:?}",
-        charlie_account_info.data.free
-    );
+    // let amount_to_send: u128 = 10_000_000_000;
+    // get_balance(&client, &alice.public().into(), true).await;
+    // get_balance(&client, &charlie.public().into(), true).await;
 
-    let result = client
-        .transfer_and_watch(&signer, &charlie_address, amount_to_send)
-        .await?;
-    if let Some(event) = result.transfer()? {
-        println!("Balance transfer success: value: {:?}", event.amount);
-    } else {
-        println!("Failed to find Balances::Transfer Event");
-    }
+    // let result = client
+    //     .transfer_and_watch(
+    //         &PairSigner::new(alice.pair()),
+    //         &charlie.to_account_id().into(),
+    //         amount_to_send,
+    //     )
+    //     .await?;
+    // if let Some(event) = result.transfer()? {
+    //     println!("Balance transfer success: value: {:?}", event.amount);
+    // } else {
+    //     println!("Failed to find Balances::Transfer Event");
+    // }
 
-    // get balance of alice and charlie:
-    let alice_account_info = client
-        .fetch_or_default(&AccountStore { account_id: &alice }, None)
-        .await
-        .unwrap();
-    let charlie_account_info = client
-        .fetch_or_default(
-            &AccountStore {
-                account_id: &charlie,
-            },
-            None,
-        )
-        .await
-        .unwrap();
-    // println!("[+] Alice AccountInfo: {:?}", alice_account_info);
-    println!("[+] Balance of Alice: {:?}", alice_account_info.data.free);
-    println!(
-        "[+] Balance of Charlie: {:?}",
-        charlie_account_info.data.free
-    );
+    // // get balance of alice and charlie:
+    // get_balance(&client, &alice.public().into(), true).await;
+    // get_balance(&client, &charlie.public().into(), true).await;
 
     println!("\nDone");
 
