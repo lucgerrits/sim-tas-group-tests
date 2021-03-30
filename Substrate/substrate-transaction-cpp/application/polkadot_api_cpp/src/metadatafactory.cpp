@@ -519,6 +519,152 @@ ConstV6 getConstsV6(std::string &str) {
     return move(cons);
 };
 
+//--------------------------- V7
+
+unique_ptr<StorageV7> getStorageV7(std::string &str) {
+
+    unique_ptr<StorageV7> storage(new StorageV7);
+
+    int storageNameLen = scale::decodeCompactInteger(str);
+    strcpy(storage->name, scale::extractString(str, storageNameLen).c_str());
+
+    storage->modifier = scale::nextByte(str);
+    auto hasSecondType = scale::nextByte(str);
+
+    storage->type.type = hasSecondType != 0 ? scale::nextByte(str) : 0;
+
+    int type1Len = scale::decodeCompactInteger(str);
+    auto type1 = scale::extractString(str, type1Len);
+    strcpy(storage->type.key1, type1.c_str());
+
+    // map
+    if (hasSecondType == 1) {
+        // get value
+        int valLen = scale::decodeCompactInteger(str);
+        auto value = scale::extractString(str, valLen);
+        strcpy(storage->type.value, value.c_str());
+    }
+
+    // double map
+    if (hasSecondType == 2) {
+        // get second key
+        int type2Len = scale::decodeCompactInteger(str);
+        auto type2 = scale::extractString(str, type2Len);
+        strcpy(storage->type.value, type2.c_str());
+
+        // get value
+        int valLen = scale::decodeCompactInteger(str);
+        auto value = scale::extractString(str, valLen);
+        strcpy(storage->type.value, value.c_str());
+    }
+
+    if (hasSecondType != 0) {
+        storage->type.isLinked = scale::nextByte(str);
+    }
+
+    // extract fallback as raw hex
+    auto fallbackLen = scale::decodeCompactInteger(str);
+    auto fallback = str.substr(0, fallbackLen * 2);
+    str = str.substr(fallbackLen * 2);
+    strcpy(storage->fallback, fallback.c_str());
+
+    // documents count
+    auto docCount = scale::decodeCompactInteger(str);
+    for (int di = 0; di < docCount; di++) {
+        auto docStringLen = scale::decodeCompactInteger(str);
+        auto docItem = scale::extractString(str, docStringLen);
+        strcpy(storage->documentation[di], docItem.c_str());
+    }
+
+    return move(storage);
+}
+
+unique_ptr<CallV7> getCallV7(std::string &str) {
+
+    unique_ptr<CallV7> call(new CallV7);
+
+    int callNameLen = scale::decodeCompactInteger(str);
+    strcpy(call->name, scale::extractString(str, callNameLen).c_str());
+
+    // args count
+    int args = scale::decodeCompactInteger(str);
+    for (int i = 0; i < args; i++) {
+        FunctionCallArgV7 arg;
+
+        int argNameLen = scale::decodeCompactInteger(str);
+        strcpy(arg.name, scale::extractString(str, argNameLen).c_str());
+
+        int argTypeLen = scale::decodeCompactInteger(str);
+        strcpy(arg.type, scale::extractString(str, argTypeLen).c_str());
+        call->args[i] = move(arg);
+    }
+
+    // documents count
+    auto docCount = scale::decodeCompactInteger(str);
+    for (int di = 0; di < docCount; di++) {
+        auto docStringLen = scale::decodeCompactInteger(str);
+        auto docItem = scale::extractString(str, docStringLen);
+        strcpy(call->documentation[di], docItem.c_str());
+    }
+
+    return move(call);
+};
+
+unique_ptr<EventArgV7> getEventV7(std::string &str) {
+
+    unique_ptr<EventArgV7> ea(new EventArgV7);
+
+    int callNameLen = scale::decodeCompactInteger(str);
+    strcpy(ea->name, scale::extractString(str, callNameLen).c_str());
+
+    // args count
+    int args = scale::decodeCompactInteger(str);
+    for (int i = 0; i < args; i++) {
+        int argLen = scale::decodeCompactInteger(str);
+        strcpy(ea->args[i], scale::extractString(str, argLen).c_str());
+    }
+
+    // documents count
+    auto docCount = scale::decodeCompactInteger(str);
+    for (int di = 0; di < docCount; di++) {
+        auto docStringLen = scale::decodeCompactInteger(str);
+        auto docItem = scale::extractString(str, docStringLen);
+        strcpy(ea->documentation[di], docItem.c_str());
+    }
+
+    return move(ea);
+}
+
+ConstV7 getConstsV7(std::string &str) {
+
+    ConstV7 cons;
+
+    // extract name
+    int nameLen = scale::decodeCompactInteger(str);
+    strcpy(cons.name, scale::extractString(str, nameLen).c_str());
+
+    // extract type
+    int typeLen = scale::decodeCompactInteger(str);
+    strcpy(cons.type, scale::extractString(str, typeLen).c_str());
+
+    //// extract value
+    int valueLen = scale::decodeCompactInteger(str);
+    auto value = str.substr(0, valueLen * 2);
+    str = str.substr(valueLen * 2);
+    strcpy(cons.value, value.c_str());
+
+    //// documents count
+    auto docCount = scale::decodeCompactInteger(str);
+    for (int di = 0; di < docCount; di++) {
+        auto docStringLen = scale::decodeCompactInteger(str);
+        auto docItem = scale::extractString(str, docStringLen);
+        strcpy(cons.documentation[di], docItem.c_str());
+    }
+
+    return move(cons);
+};
+
+
 unique_ptr<MDV5> fillV5Metadata(std::string str) {
     // skip 5 magic bytes
     nextByte(str);
@@ -816,6 +962,76 @@ unique_ptr<MDV4> fillV4Metadata(std::string str) {
     return move(md);
 };
 
+unique_ptr<MDV7> fillV7Metadata(std::string str) {
+    // magic bytes
+    auto magic1 = nextByte(str);
+    auto magic2 = nextByte(str);
+    auto magic3 = nextByte(str);
+    auto magic4 = nextByte(str);
+    auto magic5 = nextByte(str);
+
+    unique_ptr<MDV7> md(new MDV7);
+    int mLen = decodeCompactInteger(str);
+    for (auto moduleIndex = 0; moduleIndex < mLen; moduleIndex++) {
+        // create module instance
+        unique_ptr<ModuleV7> module(new ModuleV7);
+        md->module[moduleIndex] = move(module);
+
+        // get module name
+        int moduleNameLen = decodeCompactInteger(str);
+        strcpy(md->module[moduleIndex]->name, extractString(str, moduleNameLen).c_str());
+
+        // ---------- Storage
+        // storage is not null
+        auto storageIsset = nextByte(str);
+        if (storageIsset != 0) {
+            // create StorageCollectionV7 instance
+            unique_ptr<StorageCollectionV7> storageCollection(new StorageCollectionV7);
+            md->module[moduleIndex]->storage = move(storageCollection);
+
+            // get StorageCollection name
+            int storageNameLen = decodeCompactInteger(str);
+            strcpy(md->module[moduleIndex]->storage->prefix, extractString(str, storageNameLen).c_str());
+
+            // get storage items
+            int storageLen = decodeCompactInteger(str);
+            for (int i = 0; i < storageLen; i++) {
+                md->module[moduleIndex]->storage->items[i] = move(getStorageV7(str));
+            }
+        }
+
+        // ---------- Calls
+        // calls is not null
+        auto callsIsset = nextByte(str);
+        if (callsIsset != 0) {
+            int callsCount = decodeCompactInteger(str);
+            for (int i = 0; i < callsCount; i++) {
+                md->module[moduleIndex]->call[i] = getCallV7(str);
+            }
+        }
+
+        // ---------- Events
+        // events is not null
+        auto eventsIsset = nextByte(str);
+        if (eventsIsset != 0) {
+            int eventsCount = decodeCompactInteger(str);
+            for (int i = 0; i < eventsCount; i++) {
+                md->module[moduleIndex]->ev[i] = getEventV7(str);
+            }
+        }
+
+        // ---------- Consts
+        auto constsCount = decodeCompactInteger(str);
+        if (constsCount != 0) {
+            for (int i = 0; i < constsCount; i++) {
+                md->module[moduleIndex]->cons[i] = getConstsV7(str);
+            }
+        }
+    }
+
+    return move(md);
+};
+
 MetadataFactory::MetadataFactory(ILogger *logger) {
     _logger = logger;
     _version = -1;
@@ -897,6 +1113,23 @@ unique_ptr<MDV6> MetadataFactory::getMetadataV6() {
     return result;
 }
 
+unique_ptr<MDV7> MetadataFactory::getMetadataV7() {
+
+    unique_ptr<MDV7> result;
+    try {
+        result = move(fillV7Metadata(_buffer.substr()));
+
+        if (result != nullptr) {
+            _version = 7;
+            _logger->info("Metadata version V7 detected");
+        }
+    } catch (...) {
+        _logger->info("Metadata version is not V7");
+    }
+
+    return result;
+}
+
 int MetadataFactory::getVersion() {
     getMetadataV0();
 
@@ -905,6 +1138,9 @@ int MetadataFactory::getVersion() {
 
     if (_version == -1)
         getMetadataV6();
+
+    if (_version == -1)
+        getMetadataV7();
 
     return _version;
 }
