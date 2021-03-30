@@ -3,7 +3,7 @@
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { Keyring } from '@polkadot/keyring';
 import additionalTypes from "./additional_types.js";
-import { createHash } from 'crypto';
+import { createHash, randomBytes } from 'crypto';
 
 
 const url = "ws://127.0.0.1:9944";
@@ -82,15 +82,48 @@ async function print_crashes(api) {
     }
 }
 
+async function send_new_car_crash(api, car) {
+    const nonce = await api.rpc.system.accountNextIndex(car.address);
+
+    var rnd_bytes = randomBytes(32);
+    //process.hrtime().toString()
+    var data = "Hello world:" + rnd_bytes.toString("hex");
+    const hash = createHash('sha256');
+    hash.update(data);
+    var data_sha256sum = hash.digest();
+    // console.log(`Hash "${data}" = ${data_sha256sum.toString("hex")}`)
+
+    // Sign and send a new crash from Bob car
+    let tx = await api.tx.simModule
+        .storeCrash(data_sha256sum.buffer)
+        .signAndSend(car, { nonce: -1 });
+        // .signAndSend(car, { nonce: nonce });
+        // .signAndSend(car, { nonce: data_sha256sum.buffer });
+        // , ({ events = [], status }) => {
+        //     console.log(`Current status is ${status.type}`);
+
+        //     if (status.isFinalized) {
+        //         console.log(`Transaction included at blockHash ${status.asFinalized}`);
+
+        //         // Loop through Vec<EventRecord> to display all events
+        //         events.forEach(({ phase, event: { data, method, section } }) => {
+        //             console.log(`\t' ${phase}: ${section}.${method}:: ${data}`);
+        //         });
+        //         unsub();
+        //     }
+        // });
+    console.log(`Transaction sent: ${tx}`);
+}
+
 
 async function main() {
     // Construct
     const wsProvider = new WsProvider(url);
     const api = await ApiPromise.create({ provider: wsProvider, types: additionalTypes });
     // Retrieve the last timestamp
-    const now = await api.query.timestamp.now();
+    // const now = await api.query.timestamp.now();
     // Genesis Hash
-    const genesisHash = api.genesisHash.toHex()
+    // const genesisHash = api.genesisHash.toHex()
     // init keyring
     const keyring = new Keyring({ type: 'sr25519' });
     // init alice and charlie accounts
@@ -98,60 +131,42 @@ async function main() {
     const bob = keyring.addFromUri('//Bob', { name: 'Bob default' });
     const charlie = keyring.addFromUri('//Charlie', { name: 'Charlie default' });
 
-    console.log("---------------------------------------------------------------------------------------------");
-    console.log(`[+] Genesis Hash: ${genesisHash}`);
-    console.log(`[+] Node time: ${now}`);
-    console.log(`[+] Accounts:`);
-    console.log(`\t Alice:\t\t${alice.address}`);
-    console.log(`\t Bob:\t\t${bob.address}`);
-    console.log(`\t Charlie:\t${charlie.address}`);
-    console.log("---------------------------------------------------------------------------------------------");
+    // console.log("---------------------------------------------------------------------------------------------");
+    // console.log(`[+] Genesis Hash: ${genesisHash}`);
+    // console.log(`[+] Node time: ${now}`);
+    // console.log(`[+] Accounts:`);
+    // console.log(`\t Alice:\t\t${alice.address}`);
+    // console.log(`\t Bob:\t\t${bob.address}`);
+    // console.log(`\t Charlie:\t${charlie.address}`);
+    // console.log("---------------------------------------------------------------------------------------------");
 
 
 
-    // print alice and charlie balance
-    var balance = await get_balance(api, alice.address);
-    console.log(`[+] Alice balance: ${balance.toString()}`);
-    balance = await get_balance(api, charlie.address);
-    console.log(`[+] Charlie balance: ${balance.toString()}`);
+    // // print alice and charlie balance
+    // var balance = await get_balance(api, alice.address);
+    // console.log(`[+] Alice balance: ${balance.toString()}`);
+    // balance = await get_balance(api, charlie.address);
+    // console.log(`[+] Charlie balance: ${balance.toString()}`);
 
-    // print sudo account address
-    var sudo_key = await get_sudo_key(api);
-    console.log(`[+] Sudo key: ${sudo_key}`);
+    // // print sudo account address
+    // var sudo_key = await get_sudo_key(api);
+    // console.log(`[+] Sudo key: ${sudo_key}`);
 
-    // print sudo factories
-    // Note: from here on consider that alice is a factory (i.e. factory_key = sudo_key)
-    var is_factory = print_factories(api, sudo_key);
-    if (!is_factory) {
-        //TODO: Add as a factory if not
-    }
+    // // print sudo factories
+    // // Note: from here on consider that alice is a factory (i.e. factory_key = sudo_key)
+    // var is_factory = print_factories(api, sudo_key);
+    // if (!is_factory) {
+    //     //TODO: Add as a factory if not
+    // }
 
-    await print_cars(api);
-    await print_crashes(api);
+    // await print_cars(api);
+    // await print_crashes(api);
 
-    var data = now.toString() + ":Hello world";
-    const hash = createHash('sha256');
-    hash.update(data);
-    var data_sha256sum = hash.digest();
-    console.log(`Hash "${data}" = ${data_sha256sum.toString("hex")}`)
+    await send_new_car_crash(api, bob);
 
+    //TODO: solve "Priority is too low..."
+    //https://stackoverflow.com/questions/63475813/transaction-failed-error-1014-priority-is-too-low-515000139-vs-515000139
 
-    // Sign and send a new crash from Bob car
-    const unsub = await api.tx.simModule
-        .storeCrash(data_sha256sum.buffer)
-        .signAndSend(bob, ({ events = [], status }) => {
-            console.log(`Current status is ${status.type}`);
-
-            if (status.isFinalized) {
-                console.log(`Transaction included at blockHash ${status.asFinalized}`);
-
-                // Loop through Vec<EventRecord> to display all events
-                events.forEach(({ phase, event: { data, method, section } }) => {
-                    console.log(`\t' ${phase}: ${section}.${method}:: ${data}`);
-                });
-                unsub();
-            }
-        });
 }
 
 main().catch(console.error).finally(() => process.exit());

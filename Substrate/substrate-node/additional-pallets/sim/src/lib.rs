@@ -94,7 +94,7 @@ decl_module! {
 
 		/// Dispatchable that takes a singles value as a parameter (factory ID), writes the value to
 		/// storage (factories) and emits an event. This function must be dispatched by a signed extrinsic.
-		#[weight = 10_000 + T::DbWeight::get().writes(1)]
+		#[weight = 0]
 		pub fn store_factory(origin, factory_id: <T as frame_system::Config>::AccountId) {
 			ensure_root(origin)?;
 
@@ -113,7 +113,7 @@ decl_module! {
 
 		/// Dispatchable that takes a singles value as a parameter (factory ID), writes the value to
 		/// storage (factories) and emits an event. This function must be dispatched by a signed extrinsic.
-		#[weight = 10_000 + T::DbWeight::get().writes(1)]
+		#[weight = 0]
 		pub fn store_car(origin, car_id: <T as frame_system::Config>::AccountId) {
 			let who = ensure_signed(origin)?;
 
@@ -135,7 +135,7 @@ decl_module! {
 
 		/// Dispatchable that takes a singles value as a parameter (data hash), writes the value to
 		/// storage (crashes) and emits an event. This function must be dispatched by a signed extrinsic.
-		#[weight = 10_000 + T::DbWeight::get().writes(1)]
+		#[weight = 0]
 		fn store_crash(origin, data_hash: Vec<u8>) {
 			let who = ensure_signed(origin)?;
 
