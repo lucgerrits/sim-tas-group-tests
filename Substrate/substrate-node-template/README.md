@@ -1,3 +1,5 @@
+Deprecaded: Now use folder `Substrate/substrate-node` to start substrate node (v3.0.0).
+
 # Substrate Node Template
 
 This is a substrate node template with an added pallet [SIM](./pallets/sim).
