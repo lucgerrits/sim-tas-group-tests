@@ -49,8 +49,8 @@ items:
     INFLUXDB_DB: "metrics"
     INFLUXDB_ADMIN_USER: admin
     INFLUXDB_ADMIN_PASSWORD: admin
-    INFLUXDB_USER: admin
-    INFLUXDB_USER_PASSWORD: admin
+    INFLUXDB_USER: metrics
+    INFLUXDB_USER_PASSWORD: metrics
     INFLUXDB_HOST: influxdb
     
  
@@ -87,7 +87,7 @@ items:
         - envFrom:
           - secretRef:
               name: influxdb-creds
-          image: docker.io/influxdb:1.6.4
+          image: docker.io/influxdb:1.8.4
           
           imagePullPolicy: IfNotPresent
           name: influxdb
@@ -133,8 +133,8 @@ items:
   stringData:
     INFLUXDB_DB: metrics
     INFLUXDB_URL: http://influxdb:8086
-    INFLUXDB_USER: admin
-    INFLUXDB_USER_PASSWORD: admin
+    INFLUXDB_USER: metrics
+    INFLUXDB_USER_PASSWORD: metrics
     
 
 #----------------------TELEGRAF-CONFIGMAP---------------------------------
@@ -148,8 +148,8 @@ items:
       [[outputs.influxdb]]
         urls = ["http://influxdb:8086"]
         database = "metrics"
-        username = "admin"
-        password = "admin"# Statsd Server
+        username = "metrics"
+        password = "metrics"# Statsd Server
       [[inputs.statsd]]
         max_tcp_connections = 250
         tcp_keep_alive = false
@@ -258,7 +258,7 @@ items:
         - envFrom:
           - secretRef:
               name: grafana-creds
-          image: blockchaintp/sawtooth-stats-grafana:BTP2.0.5
+          image: grafana/grafana:6.0.0
           imagePullPolicy: IfNotPresent
           name: grafana
           resources: {}
