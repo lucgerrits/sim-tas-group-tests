@@ -59,49 +59,6 @@ def set_file_params(filename, marker, data):
 
 ##################### DEF RUN SCRIPTS #####################
 
-
-# def start_blockchain(sawtooth_parameters):
-#     log("Start blockchain")
-
-#     log("Set parameters", end="")
-#     duplicate_file("docker-compose.yaml", "docker-compose.yaml.benchmark")
-#     set_file_params("docker-compose.yaml.benchmark",
-#                     "<BLOCKCHAIN_OPTIONS_max_batches_per_block>", sawtooth_parameters["max_batches_per_block"])
-#     set_file_params("docker-compose.yaml.benchmark",
-#                     "<BLOCKCHAIN_OPTIONS_block_publishing_delay>", sawtooth_parameters["block_publishing_delay"])
-#     set_file_params("docker-compose.yaml.benchmark",
-#                     "<BLOCKCHAIN_OPTIONS_idle_timeout>", sawtooth_parameters["idle_timeout"])
-#     set_file_params("docker-compose.yaml.benchmark",
-#                     "<BLOCKCHAIN_OPTIONS_forced_view_change_interval>", sawtooth_parameters["forced_view_change_interval"])
-#     set_file_params("docker-compose.yaml.benchmark",
-#                     "<BLOCKCHAIN_OPTIONS_commit_timeout>", sawtooth_parameters["commit_timeout"])
-#     set_file_params("docker-compose.yaml.benchmark",
-#                     "<BLOCKCHAIN_OPTIONS_view_change_duration>", sawtooth_parameters["view_change_duration"])
-#     log(" OK", ts=False)
-
-#     result = subprocess.check_output(
-#         ['docker-compose', '-f', 'docker-compose.yaml.benchmark', 'up', '-d', '--no-color', '--quiet-pull'], stderr=subprocess.STDOUT)
-#     log(result.decode("utf-8"), ts=False)
-#     log("Sleep {} sec for blockchain to start".format(10))
-#     time.sleep(10)
-
-
-# def start_influx_grafana():
-#     log("Start only influx and grafana")
-
-#     result = subprocess.check_output(
-#         ['docker-compose', '-f', 'docker-compose.yaml.benchmark', 'up', '-d', '--no-color', '--quiet-pull', 'grafana', 'influxdb'], stderr=subprocess.STDOUT)
-#     log(result.decode("utf-8"), ts=False)
-
-
-# def reset_blockchain():
-#     log("Reset blockchain")
-#     result = subprocess.check_output(['./reset.sh'], stderr=subprocess.STDOUT)
-#     log(result.decode("utf-8"), ts=False)
-#     log("Sleep {} sec for blockchain to stop".format(5))
-#     time.sleep(5)
-
-
 def start_sender(sender_parameters, test_name):
     log("Start sender")
 
@@ -167,17 +124,11 @@ def main(profiles):
     for i in range(nb_profiles):
         log("Benchmark n°{}".format(i))
 
-        # reset_blockchain()
-
-        # start_blockchain(profiles[i]["sawtooth_parameters"])
-
         start_sender(profiles[i]["sender_parameters"], "TEST n°{}".format(i))
 
-        # start_stats("TEST n°{}".format(i))
+        start_stats("TEST n°{}".format(i))
 
     log("Finishing")
-    # reset_blockchain()
-    # start_influx_grafana()
 
     log("Done {} benchmarks".format(nb_profiles))
 
@@ -185,16 +136,8 @@ def main(profiles):
 # config doc: https://sawtooth.hyperledger.org/docs/pbft/nightly/master/configuring-pbft.html
 test_profiles = [
     {  # basic test first
-        # "sawtooth_parameters": {
-        #     "max_batches_per_block": "300",
-        #     "block_publishing_delay": "1000",
-        #     "idle_timeout": "30000",
-        #     "forced_view_change_interval": "100",
-        #     "view_change_duration": "5000",
-        #     "commit_timeout": "5000"
-        # },
         "sender_parameters": {
-            "limit": "100",
+            "limit": "1000",
             "js_nb_parallele": "3",
             "js_wait_time": "1"
         }
