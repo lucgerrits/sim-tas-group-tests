@@ -62,6 +62,29 @@ services:
       "
     stop_signal: SIGKILL
 
+  send-init-cartp:
+    # networks:
+    #   - my_blockchain_network_pbft
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+      args:
+        - http_proxy
+        - https_proxy
+        - no_proxy
+    image: sender-js
+    container_name: sender-js
+    volumes:
+      - ./:/sender
+    extra_hosts:
+      - "apirest.unice.cust.tasfrance.com:185.52.32.4"
+    command: |
+      /bin/bash -c "
+          echo '185.52.32.4 apirest.unice.cust.tasfrance.com' >> /etc/hosts
+          ./send_init_cartp.sh
+      "
+    stop_signal: SIGKILL
+
   # send-one:
 #     networks:
 #       - my_blockchain_network_pbft

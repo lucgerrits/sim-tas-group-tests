@@ -146,6 +146,7 @@ async function send(sig_array, next) {
 
 async.series([
     // function (callback) {
+    //     //init new_car
     //     var cmd = `./transaction --mode cartp \
     //     --tnxprivatekey ${batchprivatekey} \
     //     --tnxpublickey ${batchpublickey} \
@@ -170,6 +171,7 @@ async.series([
     //     });
     // },
     // function (callback) {
+    //     //init new_owner
     //     var cmd = `./transaction --mode cartp \
     //     --tnxprivatekey ${tnxprivatekey} \
     //     --tnxpublickey ${tnxpublickey} \
@@ -199,7 +201,7 @@ async.series([
     //     setTimeout(callback, 5000);
     // },
     function (callback) {
-        send(sig_array, callback)
+        send(sig_array, callback); //Do the benchmark
     },
     function(callback) {
         process.exit(0);
