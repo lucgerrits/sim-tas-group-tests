@@ -217,7 +217,7 @@ items:
                   if [ ! -e /var/lib/sawtooth/genesis.batch ]; then
                     sawadm genesis config-genesis.batch config.batch
                   fi &&
-                  sawtooth-validator -vv \
+                  sawtooth-validator -v \
                     --endpoint tcp://$SAWTOOTH_0_SERVICE_HOST:8800 \
                     --bind component:tcp://eth0:4004 \
                     --bind consensus:tcp://eth0:5050 \
@@ -467,7 +467,7 @@ items:
                     echo $pbft1pub > /etc/sawtooth/keys/validator.pub
                   fi &&
                   sawtooth keygen my_key &&
-                  sawtooth-validator -vv \
+                  sawtooth-validator -v \
                     --endpoint tcp://$SAWTOOTH_1_SERVICE_HOST:8800 \
                     --bind component:tcp://eth0:4004 \
                     --bind consensus:tcp://eth0:5050 \
@@ -717,7 +717,7 @@ items:
                     echo $pbft2pub > /etc/sawtooth/keys/validator.pub
                   fi &&
                   sawtooth keygen my_key &&
-                  sawtooth-validator -vv \
+                  sawtooth-validator -v \
                     --endpoint tcp://$SAWTOOTH_2_SERVICE_HOST:8800 \
                     --bind component:tcp://eth0:4004 \
                     --bind consensus:tcp://eth0:5050 \
@@ -969,7 +969,7 @@ items:
                     echo $pbft3pub > /etc/sawtooth/keys/validator.pub
                   fi &&
                   sawtooth keygen my_key &&
-                  sawtooth-validator -vv \
+                  sawtooth-validator -v \
                     --endpoint tcp://$SAWTOOTH_3_SERVICE_HOST:8800 \
                     --bind component:tcp://eth0:4004 \
                     --bind consensus:tcp://eth0:5050 \
@@ -1220,7 +1220,7 @@ items:
                     echo $pbft4pub > /etc/sawtooth/keys/validator.pub
                   fi &&
                   sawtooth keygen my_key &&
-                  sawtooth-validator -vv \
+                  sawtooth-validator -v \
                     --endpoint tcp://$SAWTOOTH_4_SERVICE_HOST:8800 \
                     --bind component:tcp://eth0:4004 \
                     --bind consensus:tcp://eth0:5050 \
@@ -1472,7 +1472,7 @@ items:
                     echo $pbft5pub > /etc/sawtooth/keys/validator.pub
                   fi &&
                   sawtooth keygen my_key &&
-                  sawtooth-validator -vv \
+                  sawtooth-validator -v \
                     --endpoint tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --bind component:tcp://eth0:4004 \
                     --bind consensus:tcp://eth0:5050 \
