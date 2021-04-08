@@ -3,6 +3,11 @@
 
 # How to ?
 
+First:
+```bash
+cd ./Hyperledger-Sawtooth/sawtooth-transaction-cpp/
+```
+
 1. Init new_car et new_owner une 1er fois lorsque la blockchain est "fresh" avec:
 ```bash
 docker-compose -f docker-compose-sender.yaml down
