@@ -29,9 +29,9 @@ test_profiles = [
     # },
     {
         "sender_parameters": {
-            "limit": "10000",
-            "js_nb_parallele": "7",
-            "js_wait_time": "1"
+            "limit": "20000",
+            "js_nb_parallele": "50",
+            "js_wait_time": "0.5"
         }
     },
     # {
@@ -133,7 +133,7 @@ def start_sender(sender_parameters, test_name):
     append_file(file_sender_log, result.decode("utf-8"))
     append_file(file_sender_log,
                 "\n============= END {} ============\n".format(test_name))
-    log("Sleep {} sec for blockchain stabilize".format(20))
+    log("Sleep {} sec for blockchain stabilize".format(30))
     time.sleep(30)
 
 
@@ -180,7 +180,7 @@ def main(profiles):
 
         start_sender(profiles[i]["sender_parameters"], "TEST n°{}".format(i))
 
-        start_stats("TEST n°{}".format(i))
+        # start_stats("TEST n°{}".format(i))
 
     log("Finishing")
 

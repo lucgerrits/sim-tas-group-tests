@@ -3,12 +3,15 @@
 
 # How to ?
 
-1. Init new_car et new_owner une 1er fois lorsque la blockchain est "fresh" avec:
+<!-- 1. Init new_car et new_owner une 1er fois lorsque la blockchain est "fresh" avec:
 ```bash
 docker-compose -f docker-compose-sender.yaml down
 docker-compose -f docker-compose-sender.yaml up send-init-cartp
 docker-compose -f docker-compose-sender.yaml down
-```
+``` -->
+
+1. Make sure the blockchain is fresh !!! i.e. no cars or drivers registered.
+
 2. modifier `benchmark.py` pour le test désiré, exemple:
 ```json
     {
