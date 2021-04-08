@@ -12,7 +12,6 @@ cd ./Hyperledger-Sawtooth/sawtooth-transaction-cpp/
 ```bash
 docker-compose -f docker-compose-sender.yaml down
 docker-compose -f docker-compose-sender.yaml up send-init-cartp
-docker-compose -f docker-compose-sender.yaml down
 ```
 2. modifier `benchmark.py` pour le test désiré, exemple:
 ```json
