@@ -7,6 +7,10 @@ import time
 import pathlib
 import os
 ##################### CONFIG #####################
+RANCHER_BEARER_TOKEN = os.environ.get('RANCHER_BEARER_TOKEN')
+if RANCHER_BEARER_TOKEN == None:
+    print("ERROR: Missing RANCHER_BEARER_TOKEN environement variable !")
+    quit()
 
 file_sender_log = "sender_log.log"
 file_stats_log = "stats_log.log"
@@ -31,7 +35,7 @@ test_profiles = [
         "sender_parameters": {
             "limit": "20000",
             "js_nb_parallele": "50",
-            "js_wait_time": "0.5"
+            "js_wait_time": "1"
         }
     },
     # {
@@ -162,6 +166,21 @@ def start_stats(test_name):
     #             "\n============= END {} ============\n".format(test_name))
     time.sleep(1)
 
+
+def reboot_blockchain():
+    log("Rebooting blockchain")
+    log("Login in rancher")
+    working_dir = pathlib.Path(__file__).parent.absolute() / 'rancher-v2.4.10'
+
+    subprocess.call(['bash', 'login.sh', RANCHER_BEARER_TOKEN], cwd=working_dir, stderr=subprocess.STDOUT)
+
+    subprocess.call(['bash', 'restart_blockchain.sh'], cwd=working_dir, stderr=subprocess.STDOUT)
+
+    log("Wainting for blockchain initialization (1min)")
+    time.sleep(60)
+
+    log("Rebooting blockchain Finished")
+
 ##################### MAIN #####################
 
 
@@ -177,6 +196,7 @@ def main(profiles):
 
     for i in range(nb_profiles):
         log("Benchmark n°{}".format(i))
+        reboot_blockchain()
 
         start_sender(profiles[i]["sender_parameters"], "TEST n°{}".format(i))
 
