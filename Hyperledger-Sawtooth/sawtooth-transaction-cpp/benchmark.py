@@ -126,13 +126,13 @@ def start_sender(sender_parameters, test_name):
                     "<SENDER_TEST_JS_OPTIONS>", params)
     log(" OK", ts=False)
     log(" CMD SENDER: docker-compose -f docker-compose-sender.yaml.benchmark up --no-color --quiet-pull sender-js", ts=False)
-
+    append_file(file_sender_log,
+                "\n============= {} ============\n".format(test_name))
     result = subprocess.check_output(
         ['docker-compose', '-f', 'docker-compose-sender.yaml.benchmark', 'up', '--no-color', '--quiet-pull', 'sender-js'], stderr=subprocess.STDOUT)
 
     log(result.decode("utf-8"), ts=False)
-    append_file(file_sender_log,
-                "\n============= {} ============\n".format(test_name))
+
     # append_file(file_sender_log, result.decode("utf-8").split("Start loop")[1])
     append_file(file_sender_log, result.decode("utf-8"))
     append_file(file_sender_log,
@@ -176,8 +176,8 @@ def reboot_blockchain():
 
     subprocess.call(['bash', 'restart_blockchain.sh'], cwd=working_dir, stderr=subprocess.STDOUT)
 
-    log("Wainting for blockchain initialization (1min)")
-    time.sleep(60)
+    log("Wainting for blockchain initialization (2min)")
+    time.sleep(120)
 
     log("Rebooting blockchain Finished")
 
