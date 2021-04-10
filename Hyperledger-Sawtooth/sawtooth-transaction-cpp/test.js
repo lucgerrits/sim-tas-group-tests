@@ -233,7 +233,7 @@ async.series([
 
             // Listen for any response:
             child.stdout.on('data', function (data) {
-                console.log(data);
+                // console.log(data);
             });
             // Listen if the process closed
             child.on('close', function (exit_code) {
@@ -265,7 +265,7 @@ async.series([
 
             // Listen for any response:
             child.stdout.on('data', function (data) {
-                console.log(data);
+                // console.log(data);
             });
             // Listen if the process closed
             child.on('close', function (exit_code) {
