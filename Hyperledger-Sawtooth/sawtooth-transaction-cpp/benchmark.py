@@ -73,34 +73,34 @@ test_profiles = [
             "js_wait_time": "1"
         }
     },
-    {
-        "sender_parameters": {
-            "limit": "10000",
-            "js_nb_parallele": "70",
-            "js_wait_time": "1"
-        }
-    },
-    {
-        "sender_parameters": {
-            "limit": "10000",
-            "js_nb_parallele": "80",
-            "js_wait_time": "1"
-        }
-    },
-    {
-        "sender_parameters": {
-            "limit": "10000",
-            "js_nb_parallele": "90",
-            "js_wait_time": "1"
-        }
-    },
-    {
-        "sender_parameters": {
-            "limit": "10000",
-            "js_nb_parallele": "100",
-            "js_wait_time": "1"
-        }
-    },
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "70",
+    #         "js_wait_time": "1"
+    #     }
+    # },
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "80",
+    #         "js_wait_time": "1"
+    #     }
+    # },
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "90",
+    #         "js_wait_time": "1"
+    #     }
+    # },
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "100",
+    #         "js_wait_time": "1"
+    #     }
+    # },
 ]
 ##################### DEF GENERAL #####################
 

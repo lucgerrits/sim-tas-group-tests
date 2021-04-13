@@ -28,5 +28,5 @@ docker-compose -f docker-compose-sender.yaml down
     },
 ```
 
-3. executer `./benchmark.py`
+3. executer `RANCHER_BEARER_TOKEN=token-XXXX ./benchmark.py`
 
