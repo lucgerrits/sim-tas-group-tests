@@ -3203,12 +3203,12 @@ items:
               - name: validators
                 containerPort: 8800
             env:
-              - name: pbft1priv
+              - name: pbft6priv
                 valueFrom:
                   configMapKeyRef:
                     name: keys-config
-                    key: pbft1priv
-              - name: pbft1pub
+                    key: pbft6priv
+              - name: pbft6pub
                 valueFrom:
                   configMapKeyRef:
                     name: keys-config
@@ -3676,12 +3676,12 @@ items:
                 valueFrom:
                   configMapKeyRef:
                     name: keys-config
-                    key: pbft2priv
-              - name: pbft2pub
+                    key: pbft7priv
+              - name: pbft7pub
                 valueFrom:
                   configMapKeyRef:
                     name: keys-config
-                    key: pbft1pub
+                    key: pbft7pub
             command:
               - bash
             args:
@@ -4145,16 +4145,16 @@ items:
               - name: validators
                 containerPort: 8800
             env:
-              - name: pbft3priv
+              - name: pbft8priv
                 valueFrom:
                   configMapKeyRef:
                     name: keys-config
-                    key: pbft3priv
-              - name: pbft3pub
+                    key: pbft8priv
+              - name: pbft8pub
                 valueFrom:
                   configMapKeyRef:
                     name: keys-config
-                    key: pbft3pub
+                    key: pbft8pub
             command:
               - bash
             args:
@@ -4617,16 +4617,16 @@ items:
               - name: validators
                 containerPort: 8800
             env:
-              - name: pbft4priv
+              - name: pbft9priv
                 valueFrom:
                   configMapKeyRef:
                     name: keys-config
-                    key: pbft4priv
-              - name: pbft4pub
+                    key: pbft9priv
+              - name: pbft9pub
                 valueFrom:
                   configMapKeyRef:
                     name: keys-config
-                    key: pbft4pub
+                    key: pbft9pub
             command:
               - bash
             args:
@@ -5090,16 +5090,16 @@ items:
               - name: validators
                 containerPort: 8800
             env:
-              - name: pbft5priv
+              - name: pbft10priv
                 valueFrom:
                   configMapKeyRef:
                     name: keys-config
-                    key: pbft5priv
-              - name: pbft5pub
+                    key: pbft10priv
+              - name: pbft10pub
                 valueFrom:
                   configMapKeyRef:
                     name: keys-config
-                    key: pbft5pub
+                    key: pbft10pub
             command:
               - bash
             args:
@@ -5563,16 +5563,16 @@ items:
               - name: validators
                 containerPort: 8800
             env:
-              - name: pbft5priv
+              - name: pbft11priv
                 valueFrom:
                   configMapKeyRef:
                     name: keys-config
-                    key: pbft5priv
-              - name: pbft5pub
+                    key: pbft11priv
+              - name: pbft11pub
                 valueFrom:
                   configMapKeyRef:
                     name: keys-config
-                    key: pbft5pub
+                    key: pbft11pub
             command:
               - bash
             args:
