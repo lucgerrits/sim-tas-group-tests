@@ -3220,8 +3220,8 @@ items:
               - |
                   rm -rf /var/lib/sawtooth/* &&
                   if [ ! -e /etc/sawtooth/keys/validator.priv ]; then
-                    echo $pbft1priv > /etc/sawtooth/keys/validator.priv
-                    echo $pbft1pub > /etc/sawtooth/keys/validator.pub
+                    echo $pbft6priv > /etc/sawtooth/keys/validator.priv
+                    echo $pbft6pub > /etc/sawtooth/keys/validator.pub
                   fi &&
                   sawtooth keygen my_key &&
                   sawtooth-validator -v \
@@ -3689,8 +3689,8 @@ items:
               - |
                   rm -rf /var/lib/sawtooth/* &&
                   if [ ! -e /etc/sawtooth/keys/validator.priv ]; then
-                    echo $pbft2priv > /etc/sawtooth/keys/validator.priv
-                    echo $pbft2pub > /etc/sawtooth/keys/validator.pub
+                    echo $pbft7priv > /etc/sawtooth/keys/validator.priv
+                    echo $pbft7pub > /etc/sawtooth/keys/validator.pub
                   fi &&
                   sawtooth keygen my_key &&
                   sawtooth-validator -v \
@@ -4162,8 +4162,8 @@ items:
               - |
                   rm -rf /var/lib/sawtooth/* &&
                   if [ ! -e /etc/sawtooth/keys/validator.priv ]; then
-                    echo $pbft3priv > /etc/sawtooth/keys/validator.priv
-                    echo $pbft3pub > /etc/sawtooth/keys/validator.pub
+                    echo $pbft8priv > /etc/sawtooth/keys/validator.priv
+                    echo $pbft8pub > /etc/sawtooth/keys/validator.pub
                   fi &&
                   sawtooth keygen my_key &&
                   sawtooth-validator -v \
@@ -4634,8 +4634,8 @@ items:
               - |
                   rm -rf /var/lib/sawtooth/* &&
                   if [ ! -e /etc/sawtooth/keys/validator.priv ]; then
-                    echo $pbft4priv > /etc/sawtooth/keys/validator.priv
-                    echo $pbft4pub > /etc/sawtooth/keys/validator.pub
+                    echo $pbft9priv > /etc/sawtooth/keys/validator.priv
+                    echo $pbft9pub > /etc/sawtooth/keys/validator.pub
                   fi &&
                   sawtooth keygen my_key &&
                   sawtooth-validator -v \
@@ -5107,8 +5107,8 @@ items:
               - |
                   rm -rf /var/lib/sawtooth/* &&
                   if [ ! -e /etc/sawtooth/keys/validator.priv ]; then
-                    echo $pbft5priv > /etc/sawtooth/keys/validator.priv
-                    echo $pbft5pub > /etc/sawtooth/keys/validator.pub
+                    echo $pbft10priv > /etc/sawtooth/keys/validator.priv
+                    echo $pbft10pub > /etc/sawtooth/keys/validator.pub
                   fi &&
                   sawtooth keygen my_key &&
                   sawtooth-validator -v \
@@ -5580,8 +5580,8 @@ items:
               - |
                   rm -rf /var/lib/sawtooth/* &&
                   if [ ! -e /etc/sawtooth/keys/validator.priv ]; then
-                    echo $pbft5priv > /etc/sawtooth/keys/validator.priv
-                    echo $pbft5pub > /etc/sawtooth/keys/validator.pub
+                    echo $pbft11priv > /etc/sawtooth/keys/validator.priv
+                    echo $pbft11pub > /etc/sawtooth/keys/validator.pub
                   fi &&
                   sawtooth keygen my_key &&
                   sawtooth-validator -v \
