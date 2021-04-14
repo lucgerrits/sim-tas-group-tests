@@ -39,30 +39,17 @@ items:
         securityContext:
           fsGroup: 101
         containers:
-          - name: sawtooth-intkey-tp-python
-            image: hyperledger/sawtooth-intkey-tp-python:chime
-            resources:
-              requests:
-                memory: "300Mi"
-                cpu: "200m"
-              limits:
-                memory: "500Mi"
-                cpu: "500m"
-            command:
-              - bash
-            args:
-              - -c
-              - "intkey-tp-python -vv -C tcp://$HOSTNAME:4004"
-
           - name: sawtooth-pbft-engine
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
               requests:
                 memory: "500Mi"
                 cpu: "1"
+                ephemeral-storage: "1Gi"
               limits:
                 memory: "1Gi"
                 cpu: "2"
+                ephemeral-storage: "2Gi"
             command:
               - bash
             args:
@@ -75,9 +62,11 @@ items:
               requests:
                 memory: "2Gi"
                 cpu: "1"
+                ephemeral-storage: "2Gi"
               limits:
                 memory: "3Gi"
                 cpu: "2"
+                ephemeral-storage: "3Gi"
             ports:
               - name: api
                 containerPort: 8008
@@ -103,11 +92,13 @@ items:
             image: hyperledger/sawtooth-settings-tp:chime
             resources:
               requests:
-                memory: "300Mi"
-                cpu: "200m"
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "200Mi"
               limits:
-                memory: "500Mi"
-                cpu: "500m"
+                memory: "300Mi"
+                cpu: "300m"
+                ephemeral-storage: "400Mi"
             command:
               - bash
             args:
@@ -118,41 +109,255 @@ items:
             image: hyperledger/sawtooth-shell:chime
             resources:
               requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "200Mi"
+              limits:
                 memory: "300Mi"
                 cpu: "300m"
-              limits:
-                memory: "500Mi"
-                cpu: "500m"
+                ephemeral-storage: "400Mi"
             command:
               - bash
             args:
               - -c
               - "sawtooth keygen && tail -f /dev/null"
 
-          - name: sawtooth-smallbank-tp-rust
-            image: hyperledger/sawtooth-smallbank-tp-rust:chime
+          - name: sawtooth-car-tp-1
+            image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "300Mi"
-                cpu: "300m"
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
               limits:
-                memory: "500Mi"
-                cpu: "500m"
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
             command:
               - bash
             args:
               - -c
-              - "smallbank-tp-rust -vv -C tcp://$HOSTNAME:4004"
-          
-          - name: sawtooth-car-tp
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-2
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "1Gi"
-                cpu: "500m"
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
               limits:
-                memory: "2Gi"
-                cpu: "1"
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+          
+          - name: sawtooth-car-tp-3
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+          
+          - name: sawtooth-car-tp-4
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-5
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-6
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-7
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-8
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-9
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-10
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
             command:
               - bash
             args:
@@ -172,10 +377,12 @@ items:
             resources:
               requests:
                 memory: "4Gi"
-                cpu: "2"
+                cpu: "2.2"
+                ephemeral-storage: "6Gi"
               limits:
-                memory: "6Gi"
-                cpu: "4"
+                memory: "7Gi"
+                cpu: "4.7"
+                ephemeral-storage: "8Gi"
             ports:
               - name: tp
                 containerPort: 4004
@@ -203,13 +410,13 @@ items:
                     sawset genesis -k /root/.sawtooth/keys/my_key.priv -o config-genesis.batch
                   fi &&
                   sleep 30 &&
-                  echo sawtooth.consensus.pbft.members=["\"$pbft0pub\",\"$pbft1pub\",\"$pbft2pub\",\"$pbft3pub\",\"$pbft4pub\""] &&
+                  echo sawtooth.consensus.pbft.members=["\"$pbft0pub\",\"$pbft1pub\",\"$pbft2pub\",\"$pbft3pub\",\"$pbft4pub\",\"$pbft5pub\""] &&
                   if [ ! -e config.batch ]; then
                     sawset proposal create \
                       -k /root/.sawtooth/keys/my_key.priv \
                       sawtooth.consensus.algorithm.name=pbft \
                       sawtooth.consensus.algorithm.version=1.0\
-                      sawtooth.consensus.pbft.members=["\"$pbft0pub\",\"$pbft1pub\",\"$pbft2pub\",\"$pbft3pub\",\"$pbft4pub\""] \
+                      sawtooth.consensus.pbft.members=["\"$pbft0pub\",\"$pbft1pub\",\"$pbft2pub\",\"$pbft3pub\",\"$pbft4pub\",\"$pbft5pub\""] \
                       sawtooth.publisher.max_batches_per_block=1200 \
                       sawtooth.cartp.factory.members='[\"02a47084f6228bf7eb91e1628140f5b717cad1d1166b4ad7665e88204e74f92e5c\"]' \
                       -o config.batch
@@ -229,15 +436,19 @@ items:
               - name: validator-config-volume
                 mountPath: /etc/sawtooth/validator.toml
                 subPath: validator.toml
+              - name: sawtooth-data-0
+                mountPath: /var/lib/sawtooth
           - name: sawtooth-xo-tp-python
             image: hyperledger/sawtooth-xo-tp-python:chime
             resources:
               requests:
-                memory: "1Gi"
+                memory: "200Mi"
                 cpu: "200m"
+                ephemeral-storage: "400Mi"
               limits:
-                memory: "2Gi"
+                memory: "400Mi"
                 cpu: "500m"
+                ephemeral-storage: "800Mi"
             command:
               - bash
             args:
@@ -248,6 +459,10 @@ items:
             configMap:
               name: validator-influx-config
               defaultMode: 0640
+          - name: sawtooth-data-0
+            persistentVolumeClaim:
+            claimName: sawtooth-data-0
+
 
 - apiVersion: v1
   kind: Service
@@ -302,30 +517,17 @@ items:
         securityContext:
           fsGroup: 101
         containers:
-          - name: sawtooth-intkey-tp-python
-            image: hyperledger/sawtooth-intkey-tp-python:chime
-            resources:
-              requests:
-                memory: "300Mi"
-                cpu: "200m"
-              limits:
-                memory: "500Mi"
-                cpu: "500m"
-            command:
-              - bash
-            args:
-              - -c
-              - "intkey-tp-python -vv -C tcp://$HOSTNAME:4004"
-
           - name: sawtooth-pbft-engine
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
               requests:
                 memory: "500Mi"
                 cpu: "1"
+                ephemeral-storage: "1Gi"
               limits:
                 memory: "1Gi"
                 cpu: "2"
+                ephemeral-storage: "2Gi"
             command:
               - bash
             args:
@@ -338,9 +540,11 @@ items:
               requests:
                 memory: "2Gi"
                 cpu: "1"
+                ephemeral-storage: "2Gi"
               limits:
                 memory: "3Gi"
                 cpu: "2"
+                ephemeral-storage: "3Gi"
             ports:
               - name: api
                 containerPort: 8008
@@ -365,11 +569,13 @@ items:
             image: hyperledger/sawtooth-settings-tp:chime
             resources:
               requests:
-                memory: "300Mi"
-                cpu: "200m"
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "200Mi"
               limits:
-                memory: "500Mi"
-                cpu: "500m"
+                memory: "300Mi"
+                cpu: "300m"
+                ephemeral-storage: "400Mi"
             command:
               - bash
             args:
@@ -380,41 +586,255 @@ items:
             image: hyperledger/sawtooth-shell:chime
             resources:
               requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "200Mi"
+              limits:
                 memory: "300Mi"
                 cpu: "300m"
-              limits:
-                memory: "500Mi"
-                cpu: "500m"
+                ephemeral-storage: "400Mi"
             command:
               - bash
             args:
               - -c
               - "sawtooth keygen && tail -f /dev/null"
-
-          - name: sawtooth-smallbank-tp-rust
-            image: hyperledger/sawtooth-smallbank-tp-rust:chime
+          
+          - name: sawtooth-car-tp-1
+            image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "300Mi"
-                cpu: "300m"
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
               limits:
-                memory: "500Mi"
-                cpu: "500m"
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
             command:
               - bash
             args:
               - -c
-              - "smallbank-tp-rust -vv -C tcp://$HOSTNAME:4004"
-          
-          - name: sawtooth-car-tp
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-2
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "1Gi"
-                cpu: "500m"
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
               limits:
-                memory: "2Gi"
-                cpu: "1"
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+          
+          - name: sawtooth-car-tp-3
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+          
+          - name: sawtooth-car-tp-4
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-5
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-6
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-7
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-8
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-9
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-10
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
             command:
               - bash
             args:
@@ -434,10 +854,12 @@ items:
             resources:
               requests:
                 memory: "4Gi"
-                cpu: "2"
+                cpu: "2.2"
+                ephemeral-storage: "6Gi"
               limits:
-                memory: "6Gi"
-                cpu: "4"
+                memory: "7Gi"
+                cpu: "4.7"
+                ephemeral-storage: "8Gi"
             ports:
               - name: tp
                 containerPort: 4004
@@ -480,15 +902,19 @@ items:
               - name: validator-config-volume
                 mountPath: /etc/sawtooth/validator.toml
                 subPath: validator.toml
+              - name: sawtooth-data-1
+                mountPath: /var/lib/sawtooth
           - name: sawtooth-xo-tp-python
             image: hyperledger/sawtooth-xo-tp-python:chime
             resources:
               requests:
-                memory: "1Gi"
+                memory: "200Mi"
                 cpu: "200m"
+                ephemeral-storage: "400Mi"
               limits:
-                memory: "2Gi"
+                memory: "400Mi"
                 cpu: "500m"
+                ephemeral-storage: "800Mi"
             command:
               - bash
             args:
@@ -499,6 +925,9 @@ items:
             configMap:
               name: validator-influx-config
               defaultMode: 0640
+          - name: sawtooth-data-1
+            persistentVolumeClaim:
+            claimName: sawtooth-data-1
 - apiVersion: v1
   kind: Service
   metadata:
@@ -551,30 +980,17 @@ items:
         securityContext:
           fsGroup: 101
         containers:
-          - name: sawtooth-intkey-tp-python
-            image: hyperledger/sawtooth-intkey-tp-python:chime
-            resources:
-              requests:
-                memory: "300Mi"
-                cpu: "200m"
-              limits:
-                memory: "500Mi"
-                cpu: "500m"
-            command:
-              - bash
-            args:
-              - -c
-              - "intkey-tp-python -vv -C tcp://$HOSTNAME:4004"
-
           - name: sawtooth-pbft-engine
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
               requests:
                 memory: "500Mi"
                 cpu: "1"
+                ephemeral-storage: "1Gi"
               limits:
                 memory: "1Gi"
                 cpu: "2"
+                ephemeral-storage: "2Gi"
             command:
               - bash
             args:
@@ -587,9 +1003,11 @@ items:
               requests:
                 memory: "2Gi"
                 cpu: "1"
+                ephemeral-storage: "2Gi"
               limits:
                 memory: "3Gi"
                 cpu: "2"
+                ephemeral-storage: "3Gi"
             ports:
               - name: api
                 containerPort: 8008
@@ -615,11 +1033,13 @@ items:
             image: hyperledger/sawtooth-settings-tp:chime
             resources:
               requests:
-                memory: "300Mi"
-                cpu: "200m"
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "200Mi"
               limits:
-                memory: "500Mi"
-                cpu: "500m"
+                memory: "300Mi"
+                cpu: "300m"
+                ephemeral-storage: "400Mi"
             command:
               - bash
             args:
@@ -630,41 +1050,255 @@ items:
             image: hyperledger/sawtooth-shell:chime
             resources:
               requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "200Mi"
+              limits:
                 memory: "300Mi"
                 cpu: "300m"
-              limits:
-                memory: "500Mi"
-                cpu: "500m"
+                ephemeral-storage: "400Mi"
             command:
               - bash
             args:
               - -c
               - "sawtooth keygen && tail -f /dev/null"
 
-          - name: sawtooth-smallbank-tp-rust
-            image: hyperledger/sawtooth-smallbank-tp-rust:chime
+          - name: sawtooth-car-tp-1
+            image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "300Mi"
-                cpu: "300m"
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
               limits:
-                memory: "500Mi"
-                cpu: "500m"
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
             command:
               - bash
             args:
               - -c
-              - "smallbank-tp-rust -vv -C tcp://$HOSTNAME:4004"
-          
-          - name: sawtooth-car-tp
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-2
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "1Gi"
-                cpu: "500m"
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
               limits:
-                memory: "2Gi"
-                cpu: "1"
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+          
+          - name: sawtooth-car-tp-3
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+          
+          - name: sawtooth-car-tp-4
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-5
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-6
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-7
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-8
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-9
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-10
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
             command:
               - bash
             args:
@@ -684,10 +1318,12 @@ items:
             resources:
               requests:
                 memory: "4Gi"
-                cpu: "2"
+                cpu: "2.2"
+                ephemeral-storage: "6Gi"
               limits:
-                memory: "6Gi"
-                cpu: "4"
+                memory: "7Gi"
+                cpu: "4.7"
+                ephemeral-storage: "8Gi"
             ports:
               - name: tp
                 containerPort: 4004
@@ -731,15 +1367,19 @@ items:
               - name: validator-config-volume
                 mountPath: /etc/sawtooth/validator.toml
                 subPath: validator.toml
+              - name: sawtooth-data-2
+                mountPath: /var/lib/sawtooth
           - name: sawtooth-xo-tp-python
             image: hyperledger/sawtooth-xo-tp-python:chime
             resources:
               requests:
-                memory: "1Gi"
+                memory: "200Mi"
                 cpu: "200m"
+                ephemeral-storage: "400Mi"
               limits:
-                memory: "2Gi"
+                memory: "400Mi"
                 cpu: "500m"
+                ephemeral-storage: "800Mi"
             command:
               - bash
             args:
@@ -750,6 +1390,9 @@ items:
             configMap:
               name: validator-influx-config
               defaultMode: 0640
+          - name: sawtooth-data-2
+            persistentVolumeClaim:
+            claimName: sawtooth-data-2
 
 - apiVersion: v1
   kind: Service
@@ -804,30 +1447,18 @@ items:
         securityContext:
           fsGroup: 101
         containers:
-          - name: sawtooth-intkey-tp-python
-            image: hyperledger/sawtooth-intkey-tp-python:chime
-            resources:
-              requests:
-                memory: "300Mi"
-                cpu: "200m"
-              limits:
-                memory: "500Mi"
-                cpu: "500m"
-            command:
-              - bash
-            args:
-              - -c
-              - "intkey-tp-python -vv -C tcp://$HOSTNAME:4004"
-
+          
           - name: sawtooth-pbft-engine
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
               requests:
                 memory: "500Mi"
                 cpu: "1"
+                ephemeral-storage: "1Gi"
               limits:
                 memory: "1Gi"
                 cpu: "2"
+                ephemeral-storage: "2Gi"
             command:
               - bash
             args:
@@ -840,9 +1471,11 @@ items:
               requests:
                 memory: "2Gi"
                 cpu: "1"
+                ephemeral-storage: "2Gi"
               limits:
                 memory: "3Gi"
                 cpu: "2"
+                ephemeral-storage: "3Gi"
             ports:
               - name: api
                 containerPort: 8008
@@ -867,11 +1500,13 @@ items:
             image: hyperledger/sawtooth-settings-tp:chime
             resources:
               requests:
-                memory: "300Mi"
-                cpu: "200m"
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "200Mi"
               limits:
-                memory: "500Mi"
-                cpu: "500m"
+                memory: "300Mi"
+                cpu: "300m"
+                ephemeral-storage: "400Mi"
             command:
               - bash
             args:
@@ -882,41 +1517,30 @@ items:
             image: hyperledger/sawtooth-shell:chime
             resources:
               requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "200Mi"
+              limits:
                 memory: "300Mi"
                 cpu: "300m"
-              limits:
-                memory: "500Mi"
-                cpu: "500m"
+                ephemeral-storage: "400Mi"
             command:
               - bash
             args:
               - -c
               - "sawtooth keygen && tail -f /dev/null"
 
-          - name: sawtooth-smallbank-tp-rust
-            image: hyperledger/sawtooth-smallbank-tp-rust:chime
-            resources:
-              requests:
-                memory: "300Mi"
-                cpu: "300m"
-              limits:
-                memory: "500Mi"
-                cpu: "500m"
-            command:
-              - bash
-            args:
-              - -c
-              - "smallbank-tp-rust -vv -C tcp://$HOSTNAME:4004"
-          
-          - name: sawtooth-car-tp
+          - name: sawtooth-car-tp-1
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "1Gi"
-                cpu: "500m"
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
               limits:
-                memory: "2Gi"
-                cpu: "1"
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
             command:
               - bash
             args:
@@ -931,15 +1555,243 @@ items:
                   python3 setup.py build &&
                   cartp-tp-python -C tcp://$HOSTNAME:4004 
 
+          - name: sawtooth-car-tp-2
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+          
+          - name: sawtooth-car-tp-3
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+          
+          - name: sawtooth-car-tp-4
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-5
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-6
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-7
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-8
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-9
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-10
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+
           - name: sawtooth-validator
             image: hyperledger/sawtooth-validator:chime
             resources:
               requests:
                 memory: "4Gi"
-                cpu: "2"
+                cpu: "2.2"
+                ephemeral-storage: "6Gi"
               limits:
-                memory: "6Gi"
-                cpu: "4"
+                memory: "7Gi"
+                cpu: "4.7"
+                ephemeral-storage: "8Gi"
             ports:
               - name: tp
                 containerPort: 4004
@@ -984,15 +1836,19 @@ items:
               - name: validator-config-volume
                 mountPath: /etc/sawtooth/validator.toml
                 subPath: validator.toml
+              - name: sawtooth-data-3
+                mountPath: /var/lib/sawtooth
           - name: sawtooth-xo-tp-python
             image: hyperledger/sawtooth-xo-tp-python:chime
             resources:
               requests:
-                memory: "1Gi"
+                memory: "200Mi"
                 cpu: "200m"
+                ephemeral-storage: "400Mi"
               limits:
-                memory: "2Gi"
+                memory: "400Mi"
                 cpu: "500m"
+                ephemeral-storage: "800Mi"
             command:
               - bash
             args:
@@ -1003,6 +1859,9 @@ items:
             configMap:
               name: validator-influx-config
               defaultMode: 0640
+          - name: sawtooth-data-3
+            persistentVolumeClaim:
+            claimName: sawtooth-data-3
 
 - apiVersion: v1
   kind: Service
@@ -1057,30 +1916,17 @@ items:
         securityContext:
           fsGroup: 101
         containers:
-          - name: sawtooth-intkey-tp-python
-            image: hyperledger/sawtooth-intkey-tp-python:chime
-            resources:
-              requests:
-                memory: "300Mi"
-                cpu: "200m"
-              limits:
-                memory: "500Mi"
-                cpu: "500m"
-            command:
-              - bash
-            args:
-              - -c
-              - "intkey-tp-python -vv -C tcp://$HOSTNAME:4004"
-
           - name: sawtooth-pbft-engine
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
               requests:
                 memory: "500Mi"
                 cpu: "1"
+                ephemeral-storage: "1Gi"
               limits:
                 memory: "1Gi"
                 cpu: "2"
+                ephemeral-storage: "2Gi"
             command:
               - bash
             args:
@@ -1093,9 +1939,11 @@ items:
               requests:
                 memory: "2Gi"
                 cpu: "1"
+                ephemeral-storage: "2Gi"
               limits:
                 memory: "3Gi"
                 cpu: "2"
+                ephemeral-storage: "3Gi"
             ports:
               - name: api
                 containerPort: 8008
@@ -1119,11 +1967,13 @@ items:
             image: hyperledger/sawtooth-settings-tp:chime
             resources:
               requests:
-                memory: "300Mi"
-                cpu: "200m"
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "200Mi"
               limits:
-                memory: "500Mi"
-                cpu: "500m"
+                memory: "300Mi"
+                cpu: "300m"
+                ephemeral-storage: "400Mi"
             command:
               - bash
             args:
@@ -1134,40 +1984,30 @@ items:
             image: hyperledger/sawtooth-shell:chime
             resources:
               requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "200Mi"
+              limits:
                 memory: "300Mi"
                 cpu: "300m"
-              limits:
-                memory: "500Mi"
-                cpu: "500m"
+                ephemeral-storage: "400Mi"
             command:
               - bash
             args:
               - -c
               - "sawtooth keygen && tail -f /dev/null"
 
-          - name: sawtooth-smallbank-tp-rust
-            image: hyperledger/sawtooth-smallbank-tp-rust:chime
-            resources:
-              requests:
-                memory: "300Mi"
-                cpu: "300m"
-              limits:
-                memory: "500Mi"
-                cpu: "500m"
-            command:
-              - bash
-            args:
-              - -c
-              - "smallbank-tp-rust -vv -C tcp://$HOSTNAME:4004"
-          - name: sawtooth-car-tp
+          - name: sawtooth-car-tp-1
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "1Gi"
-                cpu: "500m"
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
               limits:
-                memory: "2Gi"
-                cpu: "1"
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
             command:
               - bash
             args:
@@ -1182,15 +2022,243 @@ items:
                   python3 setup.py build &&
                   cartp-tp-python -C tcp://$HOSTNAME:4004 
 
+          - name: sawtooth-car-tp-2
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+          
+          - name: sawtooth-car-tp-3
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+          
+          - name: sawtooth-car-tp-4
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-5
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-6
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-7
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-8
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-9
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-10
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+ 
+
           - name: sawtooth-validator
             image: hyperledger/sawtooth-validator:chime
             resources:
               requests:
                 memory: "4Gi"
-                cpu: "2"
+                cpu: "2.2"
+                ephemeral-storage: "6Gi"
               limits:
-                memory: "6Gi"
-                cpu: "4"
+                memory: "7Gi"
+                cpu: "4.7"
+                ephemeral-storage: "8Gi"
             ports:
               - name: tp
                 containerPort: 4004
@@ -1236,15 +2304,19 @@ items:
               - name: validator-config-volume
                 mountPath: /etc/sawtooth/validator.toml
                 subPath: validator.toml
+              - name: sawtooth-data-4
+                mountPath: /var/lib/sawtooth
           - name: sawtooth-xo-tp-python
             image: hyperledger/sawtooth-xo-tp-python:chime
             resources:
               requests:
-                memory: "1Gi"
+                memory: "200Mi"
                 cpu: "200m"
+                ephemeral-storage: "400Mi"
               limits:
-                memory: "2Gi"
+                memory: "400Mi"
                 cpu: "500m"
+                ephemeral-storage: "800Mi"
             command:
               - bash
             args:
@@ -1255,6 +2327,9 @@ items:
             configMap:
               name: validator-influx-config
               defaultMode: 0640
+          - name: sawtooth-data-4
+            persistentVolumeClaim:
+            claimName: sawtooth-data-4
 
 - apiVersion: v1
   kind: Service
@@ -1309,30 +2384,17 @@ items:
         securityContext:
           fsGroup: 101
         containers:
-          - name: sawtooth-intkey-tp-python
-            image: hyperledger/sawtooth-intkey-tp-python:chime
-            resources:
-              requests:
-                memory: "300Mi"
-                cpu: "200m"
-              limits:
-                memory: "500Mi"
-                cpu: "500m"
-            command:
-              - bash
-            args:
-              - -c
-              - "intkey-tp-python -vv -C tcp://$HOSTNAME:4004"
-
           - name: sawtooth-pbft-engine
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
               requests:
                 memory: "500Mi"
                 cpu: "1"
+                ephemeral-storage: "1Gi"
               limits:
                 memory: "1Gi"
                 cpu: "2"
+                ephemeral-storage: "2Gi"
             command:
               - bash
             args:
@@ -1345,9 +2407,11 @@ items:
               requests:
                 memory: "2Gi"
                 cpu: "1"
+                ephemeral-storage: "2Gi"
               limits:
                 memory: "3Gi"
                 cpu: "2"
+                ephemeral-storage: "3Gi"
             ports:
               - name: api
                 containerPort: 8008
@@ -1371,11 +2435,13 @@ items:
             image: hyperledger/sawtooth-settings-tp:chime
             resources:
               requests:
-                memory: "300Mi"
-                cpu: "200m"
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "200Mi"
               limits:
-                memory: "500Mi"
-                cpu: "500m"
+                memory: "300Mi"
+                cpu: "300m"
+                ephemeral-storage: "400Mi"
             command:
               - bash
             args:
@@ -1386,40 +2452,255 @@ items:
             image: hyperledger/sawtooth-shell:chime
             resources:
               requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "200Mi"
+              limits:
                 memory: "300Mi"
                 cpu: "300m"
-              limits:
-                memory: "500Mi"
-                cpu: "500m"
+                ephemeral-storage: "400Mi"
             command:
               - bash
             args:
               - -c
               - "sawtooth keygen && tail -f /dev/null"
 
-          - name: sawtooth-smallbank-tp-rust
-            image: hyperledger/sawtooth-smallbank-tp-rust:chime
+          - name: sawtooth-car-tp-1
+            image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "300Mi"
-                cpu: "300m"
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
               limits:
-                memory: "500Mi"
-                cpu: "500m"
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
             command:
               - bash
             args:
               - -c
-              - "smallbank-tp-rust -vv -C tcp://$HOSTNAME:4004"
-          - name: sawtooth-car-tp
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-2
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "1Gi"
-                cpu: "500m"
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
               limits:
-                memory: "2Gi"
-                cpu: "1"
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+          
+          - name: sawtooth-car-tp-3
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+          
+          - name: sawtooth-car-tp-4
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-5
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-6
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-7
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-8
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-9
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-10
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "100Mi"
+                cpu: "100m"
+                ephemeral-storage: "500Mi"
+              limits:
+                memory: "200Mi"
+                cpu: "200m"
+                ephemeral-storage: "1Gi"
             command:
               - bash
             args:
@@ -1439,10 +2720,12 @@ items:
             resources:
               requests:
                 memory: "4Gi"
-                cpu: "2"
+                cpu: "2.2"
+                ephemeral-storage: "6Gi"
               limits:
-                memory: "6Gi"
-                cpu: "4"
+                memory: "7Gi"
+                cpu: "4.7"
+                ephemeral-storage: "8Gi"
             ports:
               - name: tp
                 containerPort: 4004
@@ -1489,15 +2772,19 @@ items:
               - name: validator-config-volume
                 mountPath: /etc/sawtooth/validator.toml
                 subPath: validator.toml
+              - name: sawtooth-data-5
+                mountPath: /var/lib/sawtooth
           - name: sawtooth-xo-tp-python
             image: hyperledger/sawtooth-xo-tp-python:chime
             resources:
               requests:
-                memory: "1Gi"
+                memory: "200Mi"
                 cpu: "200m"
+                ephemeral-storage: "400Mi"
               limits:
-                memory: "2Gi"
+                memory: "400Mi"
                 cpu: "500m"
+                ephemeral-storage: "800Mi"
             command:
               - bash
             args:
@@ -1508,6 +2795,9 @@ items:
             configMap:
               name: validator-influx-config
               defaultMode: 0640
+          - name: sawtooth-data-5
+            persistentVolumeClaim:
+            claimName: sawtooth-data-5
 
 - apiVersion: v1
   kind: Service
@@ -1559,3 +2849,191 @@ items:
         protocol: TCP
         port: 8008
         targetPort: 8008
+#---------------------------------=NODES VOLUMES=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: sawtooth-node-0
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 200Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/sawtooth-0"
+
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: sawtooth-node-1
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 200Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/sawtooth-1"
+
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: sawtooth-node-2
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 200Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/sawtooth-2"
+
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: sawtooth-node-3
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 200Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/sawtooth-3"
+
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: sawtooth-node-4
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 200Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/sawtooth-4"
+
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: sawtooth-node-5
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 200Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/sawtooth-5"
+
+#--------------------------=PERSISTENT VOLUME CLAIM=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: sawtooth-data
+    name: sawtooth-data-0
+    namespace: sim-sawtooth-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 150Gi
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: sawtooth-data
+    name: sawtooth-data-1
+    namespace: sim-sawtooth-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 150Gi
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: sawtooth-data
+    name: sawtooth-data-2
+    namespace: sim-sawtooth-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 150Gi
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: sawtooth-data
+    name: sawtooth-data-3
+    namespace: sim-sawtooth-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 150Gi
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: sawtooth-data
+    name: sawtooth-data-4
+    namespace: sim-sawtooth-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 150Gi
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: sawtooth-data
+    name: sawtooth-data-5
+    namespace: sim-sawtooth-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 150Gi
