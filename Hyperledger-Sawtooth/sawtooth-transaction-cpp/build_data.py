@@ -12,6 +12,9 @@ import glob
 import pylab as pl
 import re 
 from pathlib import Path 
+from matplotlib import cm
+from scipy.interpolate import make_interp_spline, BSpline
+from scipy.ndimage.filters import gaussian_filter1d
 
 data_path = "./datas"
 fields = [
@@ -66,36 +69,95 @@ df2.columns = ["time", "tx_exec_rate"]
 df3.columns = ["time", "pending_tx"]
 
 #merge the dataframes
-df = df1.merge(df2, on="time", how="left").merge(df3, on="time", how="left")
+df = df1.merge(df2, on="time", how="left").merge(df3, on="time", how="left").fillna(method='ffill')
 # df = df1.join(df2, how="outer") #fonctionne pas
 # df = pd.concat([df1, df2]).fillna(0) #fonctionne pas
 
 # add benchmark detection: use to distinguish multiple test in the dataframe
-#TODO
+df["test#"]=0
+
+threshold=3000 #if commits jump N tx = change of test (VERIFY ALLWAYS IF TESTS MATCH ACTUAL TESTS)
+previous=0 #previous value to compare to
+current_test_index=0 #this is will be the nb of tests at the end of the for loop
+for index, row in df.iterrows():
+    if abs(row[1] - previous) > threshold:
+        current_test_index = current_test_index +1
+        df.loc[index, "test#"] = current_test_index
+    else:
+        df.loc[index, "test#"] = current_test_index
+    previous = row[1]
 
 print(df)
 
+# exit()
+#######################################################
+#Start plotting from here
+
+
 #X values for the graphs
+Test_values = df.values[:,4]
+total_plots=0 #self inc on each myplot() call
+#%%
+
+#color map here:
+cm_subsection = np.linspace(0.0, 1.0, current_test_index+1) 
+colors = [ cm.jet(x) for x in cm_subsection ]
+
+#general plot fct to make it simple
+def myplot(X_colomn_index, Y_colomn_index, title, xlabel, ylabel, smooth = False):
+    global total_plots
+    pl.figure(total_plots)
+    for i in range(0, current_test_index+1):
+        #print lines for each test, using diff colors
+        X_values=df.loc[df['test#'] == i].values[:,X_colomn_index]
+        Y_values=df.loc[df['test#'] == i].values[:,Y_colomn_index]
+        if smooth:
+            Y_values= gaussian_filter1d(Y_values, sigma=1) # make more smooth: BE CARFUL
+        pl.plot(X_values,Y_values, color=colors[i], label="Test#{}".format(i))
+    pl.title(title)
+    pl.xlabel(xlabel)
+    pl.ylabel(ylabel)
+    pl.legend()
+    total_plots = total_plots+1
+
+myplot(1, 2, "commits vs tx rate", "commits", "tx rate", True)
+# pl.figure(0)
+# for i in range(0, current_test_index+1):
+#     #print lines for each test, using diff colors
+#     X_values=df.loc[df['test#'] == i].values[:,1]
+#     Y_values=df.loc[df['test#'] == i].values[:,2]
+#     Y_values= gaussian_filter1d(Y_values, sigma=1) # make more smooth: BE CARFUL
+#     pl.plot(X_values,Y_values, color=colors[i], label="Test#{}".format(i))
+# pl.title("commits vs tx rate")
+# pl.xlabel("commits")
+# pl.ylabel("tx rate")
+# pl.legend()
+
+#%%
+
+
+
+
 X_values = df.values[:,1]
+Y_values = df.values[:,0]
+myplot(0, 1, "commits in time", "time", "commits")
+# pl.figure(1)
+# pl.plot(X_values,Y_values, c=Test_values, label="Block vs commits")
+# pl.title("commits vs tx rate")
+# pl.xlabel("commits")
+# pl.ylabel("tx rate")
+# pl.legend()
 
-#%%
+# #%%
 
-Y_values = df.values[:,2]
-pl.figure(1)
-pl.scatter(X_values,Y_values, label="Block vs commits")
-pl.title("commits vs tx rate")
-pl.xlabel("commits")
-pl.ylabel("tx rate")
-pl.legend()
+# X_values = df.values[:,1]
+# Y_values = df.values[:,3]
+# pl.figure(2)
+# pl.scatter(X_values,Y_values, c=Test_values, label="Block vs commits")
+# pl.title("commits vs pending tx")
+# pl.xlabel("commits")
+# pl.ylabel("pending tx")
+# pl.legend()
 
-#%%
-
-Y_values = df.values[:,3]
-pl.figure(2)
-pl.scatter(X_values,Y_values, label="Block vs commits")
-pl.title("commits vs pending tx")
-pl.xlabel("commits")
-pl.ylabel("pending tx")
-pl.legend()
 
 pl.show()
