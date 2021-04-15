@@ -410,13 +410,13 @@ items:
                     sawset genesis -k /root/.sawtooth/keys/my_key.priv -o config-genesis.batch
                   fi &&
                   sleep 30 &&
-                  echo sawtooth.consensus.pbft.members=["\"$pbft0pub\",\"$pbft1pub\",\"$pbft2pub\",\"$pbft3pub\",\"$pbft4pub\",\"$pbft5pub\""] &&
+                  echo sawtooth.consensus.pbft.members=["\"$pbft0pub\",\"$pbft1pub\",\"$pbft2pub\",\"$pbft3pub\",\"$pbft4pub\",\"$pbft5pub\",\"$pbft6pub\",\"$pbft7pub\",\"$pbft8pub\",\"$pbft9pub\",\"$pbft10pub\",\"$pbft11pub\",\"$pbft12pub\",\"$pbft13pub\",\"$pbft14pub\",\"$pbft15pub\",\"$pbft16pub\",\"$pbft17pub\""] &&
                   if [ ! -e config.batch ]; then
                     sawset proposal create \
                       -k /root/.sawtooth/keys/my_key.priv \
                       sawtooth.consensus.algorithm.name=pbft \
                       sawtooth.consensus.algorithm.version=1.0\
-                      sawtooth.consensus.pbft.members=["\"$pbft0pub\",\"$pbft1pub\",\"$pbft2pub\",\"$pbft3pub\",\"$pbft4pub\",\"$pbft5pub\""] \
+                      sawtooth.consensus.pbft.members=["\"$pbft0pub\",\"$pbft1pub\",\"$pbft2pub\",\"$pbft3pub\",\"$pbft4pub\",\"$pbft5pub\",\"$pbft6pub\",\"$pbft7pub\",\"$pbft8pub\",\"$pbft9pub\",\"$pbft10pub\",\"$pbft11pub\",\"$pbft12pub\",\"$pbft13pub\",\"$pbft14pub\",\"$pbft15pub\",\"$pbft16pub\",\"$pbft17pub\""] \
                       sawtooth.publisher.max_batches_per_block=1200 \
                       sawtooth.cartp.factory.members='[\"02a47084f6228bf7eb91e1628140f5b717cad1d1166b4ad7665e88204e74f92e5c\"]' \
                       -o config.batch
