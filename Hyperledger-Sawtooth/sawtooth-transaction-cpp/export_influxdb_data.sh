@@ -22,12 +22,12 @@ mkdir -p $DATA_PATH
 NOW=$(date +%s%N | cut -b1-13)
 START_TS=1618494133288
 END_TS=$NOW
-INTERVAL=120 #in seconds
+# INTERVAL=120 #in seconds
 GROUP_BY_TIME="60s" #in seconds
-COUNTER=0
-FIELDS="sawtooth_validator.chain.ChainController.block_num sawtooth_validator.chain.ChainController.committed_transactions_gauge sawtooth_validator.executor.TransactionExecutorThread.tp_process_response_count"
-INTERVAL=$(($INTERVAL *1000))
-TOTAL=$((($END_TS-$START_TS) / $INTERVAL))
+# COUNTER=0
+# FIELDS="sawtooth_validator.chain.ChainController.block_num sawtooth_validator.chain.ChainController.committed_transactions_gauge sawtooth_validator.executor.TransactionExecutorThread.tp_process_response_count sawtooth_validator.publisher.BlockPublisher.pending_batch_gauge"
+# INTERVAL=$(($INTERVAL *1000))
+# TOTAL=$((($END_TS-$START_TS) / $INTERVAL))
 # for i in $(seq $START_TS $INTERVAL $END_TS)
 # do
 #     for field in $FIELDS; do
@@ -59,9 +59,9 @@ TOTAL=$((($END_TS-$START_TS) / $INTERVAL))
 
 ############## remove useless interval loop
 
-for field in $FIELDS; do
-    mkdir -p "$DATA_PATH/$field"
-done 
+# for field in $FIELDS; do
+#     mkdir -p "$DATA_PATH/$field"
+# done 
 
 timeFilter="time >= ${START_TS}ms and time <= ${END_TS}ms "
 
@@ -77,6 +77,10 @@ curl -sS --insecure -u $INFLUX_USER:$INFLUX_PWD -XPOST "$INFLUX_URL/query" --dat
 ####
 field="sawtooth_validator.executor.TransactionExecutorThread.tp_process_response_count"
 QUERY="SELECT (non_negative_derivative(mean(\"count\"), 10s) /10) as mean FROM \"$field\" WHERE  $timeFilter GROUP BY time($GROUP_BY_TIME) fill(null)" #, \"host\"  (\"response_type\" = 'OK') AND
+curl -sS --insecure -u $INFLUX_USER:$INFLUX_PWD -XPOST "$INFLUX_URL/query" --data-urlencode "db=$INFLUX_DB" --data-urlencode "q=$QUERY" -H "Accept: application/csv" > "$DATA_PATH/$field.csv"
+####
+field="sawtooth_validator.publisher.BlockPublisher.pending_batch_gauge"
+QUERY="SELECT mean(\"value\") FROM \"$field\" WHERE  $timeFilter GROUP BY time($GROUP_BY_TIME) fill(null)" #, \"host\"  (\"response_type\" = 'OK') AND
 curl -sS --insecure -u $INFLUX_USER:$INFLUX_PWD -XPOST "$INFLUX_URL/query" --data-urlencode "db=$INFLUX_DB" --data-urlencode "q=$QUERY" -H "Accept: application/csv" > "$DATA_PATH/$field.csv"
 ####
 
