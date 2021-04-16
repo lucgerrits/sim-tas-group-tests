@@ -17,17 +17,46 @@ file_stats_log = "stats_log.log"
 
 # config doc: https://sawtooth.hyperledger.org/docs/pbft/nightly/master/configuring-pbft.html
 test_profiles = [
-    # {  # basic test first
-    #     "sender_parameters": {
-    #         "limit": "100",
-    #         "js_nb_parallele": "3",
-    #         "js_wait_time": "1"
-    #     }
-    # },
     {
         "sender_parameters": {
             "limit": "10000",
             "js_nb_parallele": "5",
+            "js_wait_time": "1"
+        }
+    },
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "5",
+            "js_wait_time": "1"
+        }
+    },
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "5",
+            "js_wait_time": "1"
+        }
+    },
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "5",
+            "js_wait_time": "1"
+        }
+    },
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "5",
+            "js_wait_time": "1"
+        }
+    },
+    ###############################
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "10",
             "js_wait_time": "1"
         }
     },
@@ -41,6 +70,28 @@ test_profiles = [
     {
         "sender_parameters": {
             "limit": "10000",
+            "js_nb_parallele": "10",
+            "js_wait_time": "1"
+        }
+    },
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "10",
+            "js_wait_time": "1"
+        }
+    },
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "10",
+            "js_wait_time": "1"
+        }
+    },
+    ################################
+    {
+        "sender_parameters": {
+            "limit": "10000",
             "js_nb_parallele": "20",
             "js_wait_time": "1"
         }
@@ -48,59 +99,31 @@ test_profiles = [
     {
         "sender_parameters": {
             "limit": "10000",
-            "js_nb_parallele": "30",
+            "js_nb_parallele": "20",
             "js_wait_time": "1"
         }
     },
     {
         "sender_parameters": {
             "limit": "10000",
-            "js_nb_parallele": "40",
+            "js_nb_parallele": "20",
             "js_wait_time": "1"
         }
     },
     {
         "sender_parameters": {
             "limit": "10000",
-            "js_nb_parallele": "50",
+            "js_nb_parallele": "20",
             "js_wait_time": "1"
         }
     },
     {
         "sender_parameters": {
             "limit": "10000",
-            "js_nb_parallele": "60",
+            "js_nb_parallele": "20",
             "js_wait_time": "1"
         }
     },
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "70",
-    #         "js_wait_time": "1"
-    #     }
-    # },
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "80",
-    #         "js_wait_time": "1"
-    #     }
-    # },
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "90",
-    #         "js_wait_time": "1"
-    #     }
-    # },
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "100",
-    #         "js_wait_time": "1"
-    #     }
-    # },
 ]
 ##################### DEF GENERAL #####################
 
