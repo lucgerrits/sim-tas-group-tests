@@ -229,8 +229,8 @@ def reboot_blockchain():
     subprocess.call(['bash', 'restart_blockchain.sh'],
                     cwd=working_dir, stderr=subprocess.STDOUT)
 
-    log("Wainting for blockchain initialization (3min)")
-    time.sleep(180)
+    log("Wainting for blockchain initialization (5min)")
+    time.sleep(300)
 
     log("Rebooting blockchain Finished")
 
