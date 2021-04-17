@@ -22,13 +22,14 @@ final_df = None
 detect_benchmarks_on="block_num"
 
 #5~300 tx blocks for init in our considered_councase:
-initialization_threshold=310
+initialization_threshold=300
 
 #benchmark ended if consecutive elements are equal.
 #Delete all data between start of detected consecutive element and jump of detect_benchmark_threshold
 #Using 2, stop detected when 2 consecutive elements are strictly equal
 #Note: minimum=2, recommended=4
-detect_benchmark_stop_elements=3
+detect_benchmark_stop_elements=4
+detect_benchmark_stop_elements_std=0.1 #use something low (<0.5)
 
 #blocks jump of N detect_benchmarks_on (= change of test)
 detect_benchmark_threshold=50
@@ -74,6 +75,7 @@ for field_key in tmp_df.keys():
     if field_key == detect_benchmarks_on:
         continue
     #merge tables
+    #help, see https://pandas.pydata.org/docs/user_guide/merging.html#brief-primer-on-merge-methods-relational-algebra
     final_df = final_df.merge(tmp_df[field_key], on="time", how="left")
 
 #fill NaN with previous value
@@ -97,7 +99,6 @@ final_df = final_df.drop(final_df[(final_df[detect_benchmarks_on] >= 0) & (final
 final_df = final_df.reset_index(drop=True)
 
 #detect benchmark stop
-detect_benchmark_stop_elements=4
 col_detect_index=final_df_cols.index(detect_benchmarks_on)
 #def remove_consecutive_elements(mydf):
 start_at_index=-1
@@ -111,7 +112,7 @@ for index, row in final_df.iterrows():
     
     if index > detect_benchmark_stop_elements:
         #print("{} {} => {}".format(index,previous_elements,np.array(previous_elements).std()))
-        if np.array(previous_elements).std() < 0.1 and start_at_index == -1:
+        if np.array(previous_elements).std() < detect_benchmark_stop_elements_std and start_at_index == -1:
             #found same consecutive elements !
             start_at_index=index
             
@@ -129,12 +130,15 @@ final_df = final_df.reset_index(drop=True)
 #
 # Benchmark detection: use to distinguish multiple test in the dataframe
 #
-final_df["test#"]=0
+final_df["test#"]=1
 #detect_benchmark_threshold if commits jump N tx = change of test (VERIFY ALLWAYS IF TESTS MATCH ACTUAL TESTS)
 previous=0 #previous value to compare to
-number_of_benchmarks=0 #this is will be the nb of tests at the end of the for loop
+number_of_benchmarks=1 #this is will be the nb of tests at the end of the for loop
 col_detect_index=final_df_cols.index(detect_benchmarks_on)
 for index, row in final_df.iterrows():
+    if index == 0:
+        previous=row[col_detect_index]
+        continue #init first value
     if abs(row[col_detect_index] - (previous)) > detect_benchmark_threshold:
         number_of_benchmarks = number_of_benchmarks + col_detect_index
     previous=row[col_detect_index]
@@ -158,12 +162,10 @@ def myplot(plot_type, X_colomn_name, Y_colomn_name, title, smooth = False):
     #help on legend placement here: https://stackoverflow.com/a/4701285/13187605
     pl.figure(total_plots)
     ax = pl.subplot(111)
-    #temp_tests_list = np.array([])
-    for i in range(0, number_of_benchmarks+1):
+    for i in range(1, number_of_benchmarks+1):
         #print lines for each test, using diff colors
         X_values=final_df.loc[final_df['test#'] == i].values[:,final_df_cols.index(X_colomn_name)]
         Y_values=final_df.loc[final_df['test#'] == i].values[:,final_df_cols.index(Y_colomn_name)]
-        #np.append(temp_tests_list, Y_values)
         if smooth:
             Y_values= gaussian_filter1d(Y_values, sigma=1) # make more smooth: BE CARFUL
         if plot_type == "line":
@@ -182,36 +184,70 @@ def myplot(plot_type, X_colomn_name, Y_colomn_name, title, smooth = False):
     pl.title(title)
     pl.xlabel(X_colomn_name)
     pl.ylabel(Y_colomn_name)
-    #print(temp_tests_list)
-    #print("{} => variance={}".format(title, np.var(temp_tests_list)))
     box = ax.get_position()
-    ax.set_position([box.x0, box.y0, box.width * 0.7, box.height])
+    ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-    total_plots = total_plots+1
+    total_plots+=1
 
 
-#def myplot_tests_merged(plot_type, X_colomn_name, Y_colomn_name, title, smooth = False):
-    #TODO
+def myplot_merged(X_colomn_name, Y_colomn_name):
+    global total_plots
+    
+    #Note: X_colomn_name should be time !!
+    
+    # info on axis selection: https://stackoverflow.com/a/46223968/13187605
+    #Axis 1 will act on all the COLUMNS in each ROW
+    
+    #Some results of:
+    #Variance: describes how much a random variable differs from its expected value. 
+    #Standard deviation is the measure of dispersion of a set of data from its mean.
+    
+    merged_array = merge_data(X_colomn_name, Y_colomn_name).values
+    merged_array_mean = merged_array.mean(axis=1)
+    
+    #show some data
+    pl.figure(total_plots)
+    total_plots+=1
+    ax = pl.subplot(111)
+    i=1
+    for col_arr in merged_array.T:
+        ax.plot(col_arr, label="Test {}".format(i))
+        i+=1
+    ax.plot(merged_array_mean, label="Mean of all tests")
+    ax.plot([], [], ' ', label="Variance={:.2f} (Not ok)".format(merged_array.var(axis=0,ddof=1).mean()))
+    ax.legend()
+    pl.title("Tests with mean ({})".format(Y_colomn_name))
+    ax.legend()
 
-print(final_df)
+#%%
+#
+# Merge function of multiple signals
+#
+
+def merge_data(X_colomn_name, Y_colomn_name):
+    tmp={}
+    for i in range(1, number_of_benchmarks+1):
+        Y_values=final_df.loc[final_df['test#'] == i].values[:,final_df_cols.index(Y_colomn_name)]
+        tmp2= {}
+        tmp2[i]=Y_values
+        tmp[i]=pd.DataFrame(tmp2)
+    #for help, see https://pandas.pydata.org/docs/user_guide/merging.html
+    temp_elements = pd.concat(tmp, axis=1, join="outer")
+    temp_elements = temp_elements.fillna(method='ffill')
+    return temp_elements
+
+
+#print(final_df)
 # exit() #for debug
 #%%
 #
 # Start plotting from here
 #
 
-# myplot(1, 2, "commits vs tx rate", "commits", "tx rate", True)
-# myplot(0, 1, "commits in time", "time", "commits")
-# myplot(1, 3, "commits vs pending tx", "commits", "pending tx")
-# myplot(1, 4, "commits vs blocks count", "commits", "blocks count")
-# myplot(1, 5, "commits vs reject rate", "commits", "reject rate")
-# myplot(1, 6, "commits vs rest-api batch rate", "commits", "rest-api batch rate")
-# myplot(1, 7, "commits vs msg sent rate", "commits", "msg sent rate")
-# myplot(1, 8, "commits vs msg receive rate", "commits", "msg receive rate")
-
-myplot("line", "time", "commits", "commits in time")
-
-myplot("bar","rest_api_batch_rate", "tx_exec_rate", "Title")
+#myplot("bar","rest_api_batch_rate", "tx_exec_rate", "Title")
+#myplot("line", "time", "block_num", "commits in time")
+#myplot_merged("time", "block_num")
+myplot_merged("time", "commits")
 
 
 pl.show()
