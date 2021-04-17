@@ -84,7 +84,6 @@ threshold=3000 #if commits jump N tx = change of test (VERIFY ALLWAYS IF TESTS M
 previous=0 #previous value to compare to
 current_test_index=0 #this is will be the nb of tests at the end of the for loop
 col_detect_index=final_df_cols.index(detect_benchmarks_on)
-print(col_detect_index)
 for index, row in final_df.iterrows():
     if abs(row[col_detect_index] - previous) > threshold:
         current_test_index = current_test_index +col_detect_index
