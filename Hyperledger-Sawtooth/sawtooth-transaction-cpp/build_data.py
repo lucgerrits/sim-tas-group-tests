@@ -129,7 +129,7 @@ def myplot(X_colomn_name, Y_colomn_name, title, xlabel, ylabel, smooth = False):
     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
     total_plots = total_plots+1
 
-print(final_df)
+# print(final_df)
 # exit() #for debug
 #%%
 #
