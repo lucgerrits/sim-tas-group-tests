@@ -6,3 +6,5 @@
 
 datas/
 images/
+datas_csv/
+*.benchmark
