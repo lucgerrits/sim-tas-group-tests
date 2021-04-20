@@ -10,7 +10,13 @@ echo "6_nodes"
 ./build_data.py "10tps|6_nodes"
 
 ./export_influxdb_data.sh 1618672104227 1618678876449
+./build_data.py "17tps|6_nodes"
+
+./export_influxdb_data.sh 1618914242555 1618915137266
 ./build_data.py "20tps|6_nodes"
+
+./export_influxdb_data.sh 1618915318532 1618916041273
+./build_data.py "25tps|6_nodes"
 
 echo "12_nodes"
 ./export_influxdb_data.sh 1618781571866 1618795969900
