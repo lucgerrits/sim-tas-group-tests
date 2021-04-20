@@ -13,11 +13,14 @@ import pylab as pl
 from matplotlib import cm
 from scipy.ndimage.filters import gaussian_filter1d
 from datetime import datetime
+pl.style.use('science')
+#pl.style.use('ieee')
 
 #%%
 #global variables:
 data_path = "./datas_csv/"
-conf_figsize=(15,8)
+conf_figsize=(10, 6)
+# conf_figsize=(6.4, 4.8)
 merge_on="time"
 #%%
 #
@@ -55,85 +58,92 @@ for field_key in all_df_iter:
 #reorder the dict for nice graphs
 final_df = final_df.sort_index(axis = 1)
 
+
+#%%
+
+#Format for latex
+def formatStrLatex(text):
+    return text.replace('_', '\_')
+
 #%%
 
 #not ("20tps|12_nodes" in col)
 
-fig, axs = pl.subplots(2,2,figsize=conf_figsize)
+fig, axs = pl.subplots(3,2,figsize=conf_figsize)
 show="commits_rate"
 for col in final_df.columns:
     if show in col :
-        axs[0][0].plot(final_df[col].values, label="{}".format(col.replace(show+'_','')))
+        axs[0][0].plot(final_df[col].values, label=formatStrLatex("{}".format(col.replace(show+'_',''))))
 #        print(final_df[col].shape)
-axs[0][0].set_title("{}".format(show))
+axs[0][0].set_title(formatStrLatex("{}".format(show)))
 axs[0][0].legend()
 
 
 show="pending_tx_rate"
 for col in final_df.columns:
     if show in col:
-        axs[1][0].plot(final_df[col].values, label="{}".format(col.replace(show+'_','')))
+        axs[1][0].plot(final_df[col].values, label=formatStrLatex("{}".format(col.replace(show+'_',''))))
 
 #axs[1][0].set_yscale('log')
-axs[1][0].set_title("{}".format(show))
+axs[1][0].set_title(formatStrLatex("{}".format(show)))
 axs[1][0].legend()
+
 
 show="tx_exec_rate"
 for col in final_df.columns:
     if show in col:
-        axs[1][1].plot(final_df[col].values, label="{}".format(col.replace(show+'_','')))
-axs[1][1].set_title("{}".format(show))
+        axs[1][1].plot(final_df[col].values, label=formatStrLatex("{}".format(col.replace(show+'_',''))))
+axs[1][1].set_title(formatStrLatex("{}".format(show)))
 axs[1][1].legend()
 
 show="reject_rate"
 for col in final_df.columns:
     if show in col:
-        axs[0][1].plot(final_df[col].values, label="{}".format(col.replace(show+'_','')))
-axs[0][1].set_title("{}".format(show))
+        axs[0][1].plot(final_df[col].values, label=formatStrLatex("{}".format(col.replace(show+'_',''))))
+axs[0][1].set_title(formatStrLatex("{}".format(show)))
 axs[0][1].legend()
 
 
-fig, axs = pl.subplots(2,2,figsize=conf_figsize)
 show="rest_api_batch_rate"
 for col in final_df.columns:
     if show in col :
-        axs[0][0].plot(final_df[col].values, label="{}".format(col.replace(show+'_','')))
+        axs[2][0].plot(final_df[col].values, label=formatStrLatex("{}".format(col.replace(show+'_',''))))
 #        print(final_df[col].shape)
-axs[0][0].set_title("{}".format(show))
-axs[0][0].legend()
+axs[2][0].set_title(formatStrLatex("{}".format(show)))
+axs[2][0].legend()
 
 
 show="block_num_rate"
 for col in final_df.columns:
     if show in col :
-        axs[1][0].plot(final_df[col].values, label="{}".format(col.replace(show+'_','')))
+        axs[2][1].plot(final_df[col].values, label=formatStrLatex("{}".format(col.replace(show+'_',''))))
 
 #axs[1][0].set_yscale('log')
-axs[1][0].set_title("{}".format(show))
-axs[1][0].legend()
+axs[2][1].set_title(formatStrLatex("{}".format(show)))
+axs[2][1].legend()
 
-show="msg_sent_rate"
-for col in final_df.columns:
-    if show in col :
-        axs[1][1].plot(final_df[col].values, label="{}".format(col.replace(show+'_','')))
-axs[1][1].set_title("{}".format(show))
-axs[1][1].legend()
-
-show="msg_receive_rate"
-for col in final_df.columns:
-    if show in col :
-        axs[0][1].plot(final_df[col].values, label="{}".format(col.replace(show+'_','')))
-axs[0][1].set_title("{}".format(show))
-axs[0][1].legend()
-
+#show="msg_sent_rate"
+#for col in final_df.columns:
+#    if show in col :
+#        axs[3][0].plot(final_df[col].values, label=formatStrLatex("{}".format(col.replace(show+'_',''))))
+#axs[3][0].set_title(formatStrLatex("{}".format(show)))
+#axs[3][0].legend()
 #
+#show="msg_receive_rate"
+#for col in final_df.columns:
+#    if show in col :
+#        axs[3][1].plot(final_df[col].values, label=formatStrLatex("{}".format(col.replace(show+'_',''))))
+#axs[3][1].set_title(formatStrLatex("{}".format(show)))
+#axs[3][1].legend()
+
+
+#individual plot
 #fig, axs = pl.subplots(1,1,figsize=conf_figsize)
-#
 #show="msg_"
 #for col in final_df.columns:
 #    if show in col and ("20tps|12_nodes" in col):
-#        axs.plot(final_df[col].values, label="{}".format(col.replace(show+'_','')))
-#axs.set_title("{}".format(show))
+#        axs.plot(final_df[col].values, label=formatStrLatex("{}".format(col.replace(show+'_',''))))
+#axs.set_title(formatStrLatex("{}".format(show)))
 #axs.legend()
 
 
