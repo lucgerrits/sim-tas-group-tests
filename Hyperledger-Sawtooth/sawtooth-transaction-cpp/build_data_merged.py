@@ -19,9 +19,11 @@ pl.style.use('science')
 #%%
 #global variables:
 data_path = "./datas_csv/"
-conf_figsize=(10, 6)
+conf_figsize=(20, 10)
 # conf_figsize=(6.4, 4.8)
 merge_on="time"
+filter_out_all_with_elements=["12_nodes", "5tps"]
+
 #%%
 #
 # Get all CSV files and put it inside dataframes
@@ -65,14 +67,19 @@ final_df = final_df.sort_index(axis = 1)
 def formatStrLatex(text):
     return text.replace('_', '\_')
 
+def filter_out_all_with(text):
+    for a in filter_out_all_with_elements:
+        if a in text:
+            return False
+    return True
 #%%
 
 #not ("20tps|12_nodes" in col)
 
-fig, axs = pl.subplots(3,2,figsize=conf_figsize)
+fig, axs = pl.subplots(2,2,figsize=conf_figsize)
 show="commits_rate"
 for col in final_df.columns:
-    if show in col :
+    if show in col and filter_out_all_with(col):
         axs[0][0].plot(final_df[col].values, label=formatStrLatex("{}".format(col.replace(show+'_',''))))
 #        print(final_df[col].shape)
 axs[0][0].set_title(formatStrLatex("{}".format(show)))
@@ -81,7 +88,7 @@ axs[0][0].legend()
 
 show="pending_tx_rate"
 for col in final_df.columns:
-    if show in col:
+    if show in col and filter_out_all_with(col):
         axs[1][0].plot(final_df[col].values, label=formatStrLatex("{}".format(col.replace(show+'_',''))))
 
 #axs[1][0].set_yscale('log')
@@ -91,47 +98,50 @@ axs[1][0].legend()
 
 show="tx_exec_rate"
 for col in final_df.columns:
-    if show in col:
+    if show in col and filter_out_all_with(col):
         axs[1][1].plot(final_df[col].values, label=formatStrLatex("{}".format(col.replace(show+'_',''))))
 axs[1][1].set_title(formatStrLatex("{}".format(show)))
 axs[1][1].legend()
 
 show="reject_rate"
 for col in final_df.columns:
-    if show in col:
+    if show in col and filter_out_all_with(col):
         axs[0][1].plot(final_df[col].values, label=formatStrLatex("{}".format(col.replace(show+'_',''))))
 axs[0][1].set_title(formatStrLatex("{}".format(show)))
 axs[0][1].legend()
 
 
+
+fig, axs = pl.subplots(2,2,figsize=conf_figsize)
 show="rest_api_batch_rate"
 for col in final_df.columns:
-    if show in col :
-        axs[2][0].plot(final_df[col].values, label=formatStrLatex("{}".format(col.replace(show+'_',''))))
+    if show in col and filter_out_all_with(col):
+        axs[0][0].plot(final_df[col].values, label=formatStrLatex("{}".format(col.replace(show+'_',''))))
 #        print(final_df[col].shape)
-axs[2][0].set_title(formatStrLatex("{}".format(show)))
-axs[2][0].legend()
+axs[0][0].set_title(formatStrLatex("{}".format(show)))
+axs[0][0].legend()
 
 
 show="block_num_rate"
 for col in final_df.columns:
-    if show in col :
-        axs[2][1].plot(final_df[col].values, label=formatStrLatex("{}".format(col.replace(show+'_',''))))
+    if show in col and filter_out_all_with(col):
+        axs[0][1].plot(final_df[col].values, label=formatStrLatex("{}".format(col.replace(show+'_',''))))
 
 #axs[1][0].set_yscale('log')
-axs[2][1].set_title(formatStrLatex("{}".format(show)))
-axs[2][1].legend()
+axs[0][1].set_title(formatStrLatex("{}".format(show)))
+axs[0][1].legend()
 
-#show="msg_sent_rate"
-#for col in final_df.columns:
-#    if show in col :
-#        axs[3][0].plot(final_df[col].values, label=formatStrLatex("{}".format(col.replace(show+'_',''))))
-#axs[3][0].set_title(formatStrLatex("{}".format(show)))
-#axs[3][0].legend()
-#
+show="tx_in_process_rate"
+for col in final_df.columns:
+   if show in col and filter_out_all_with(col):
+       axs[1][0].plot(final_df[col].values, label=formatStrLatex("{}".format(col.replace(show+'_',''))))
+axs[1][0].set_title(formatStrLatex("{}".format(show)))
+axs[1][0].legend()
+
+
 #show="msg_receive_rate"
 #for col in final_df.columns:
-#    if show in col :
+#    if show in col and filter_out_all_with(col):
 #        axs[3][1].plot(final_df[col].values, label=formatStrLatex("{}".format(col.replace(show+'_',''))))
 #axs[3][1].set_title(formatStrLatex("{}".format(show)))
 #axs[3][1].legend()
@@ -141,7 +151,7 @@ axs[2][1].legend()
 #fig, axs = pl.subplots(1,1,figsize=conf_figsize)
 #show="msg_"
 #for col in final_df.columns:
-#    if show in col and ("20tps|12_nodes" in col):
+#    if show in col and filter_out_all_with(col):
 #        axs.plot(final_df[col].values, label=formatStrLatex("{}".format(col.replace(show+'_',''))))
 #axs.set_title(formatStrLatex("{}".format(show)))
 #axs.legend()
