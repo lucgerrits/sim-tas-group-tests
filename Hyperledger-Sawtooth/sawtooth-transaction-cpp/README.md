@@ -1,7 +1,17 @@
 # Benchmark pour sawtooth
 
+## Requirements
 
-# How to ?
+- Python 3
+- Docker + docker-compose
+
+
+For python requirements:
+```bash
+pip install -r requirements.txt
+```
+
+## How to ?
 
 First:
 ```bash
@@ -30,3 +40,23 @@ docker-compose -f docker-compose-sender.yaml down
 
 3. executer `RANCHER_BEARER_TOKEN=token-XXXX ./benchmark.py`
 
+## Visualize results
+
+
+1. Do multiple tests with benchmark.py
+
+2. Collect `start` and `end` timestamps (13 digits timestamp) of one configuration (example start="1618648510089", end="1618662753248", name="5tps|6_nodes")
+
+3. Edit `./export_all_data.sh` to get all the tests in CSV files, example:
+```bash
+echo "6_nodes"
+./export_influxdb_data.sh 1618648510089 1618662753248
+./build_data.py "5tps|6_nodes"
+
+./export_influxdb_data.sh 1618662934316 1618671949158
+./build_data.py "10tps|6_nodes"
+
+#.....
+```
+
+4. Visualize the merged data of all tests with `./build_data_merged.py`

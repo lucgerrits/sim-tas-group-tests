@@ -1,10 +1,10 @@
 *.log
-*.txt
 *.out
 
 .env
 
+tmp.txt
 datas/
 images/
 datas_csv/
-*.benchmark
+*.yaml.benchmark
