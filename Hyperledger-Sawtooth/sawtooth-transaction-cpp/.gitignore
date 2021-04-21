@@ -1,8 +1,10 @@
 *.log
-*.txt
 *.out
 
 .env
 
+tmp.txt
 datas/
 images/
+datas_csv/
+*.yaml.benchmark

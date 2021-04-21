@@ -5,6 +5,7 @@
 """
 
 import os
+import sys
 import pandas as pd
 import numpy as np
 import glob
@@ -15,44 +16,36 @@ from datetime import datetime
 
 #%%
 #global variables:
-data_path = "./datas"
+export_data_path = "./datas_csv/"
+export_data_filename=sys.argv[1] if len(sys.argv)>1 else "6_nodes|5tps"
+data_path = "./datas/"
 image_directory="./images/"
 final_df = None
 conf_figsize=(15,8)
 #detect_benchmarks_on="commits"
-#initialization_threshold=1000 #500*2 tx commits for init in our case
-#detect_benchmark_threshold=3000 #commits jump N tx = change of test
-detect_benchmarks_on="block_num"
+detect_benchmarks_on="commits"
 
-#5~300 tx blocks for init in our considered_councase:
-initialization_threshold=310
+#jump of N detect_benchmarks_on (= change of test)
+detect_benchmark_threshold=5000
+
+#~300 blocks for init in our case:
+detect_benchmark_start=True
+initialization_threshold=1100
 
 #benchmark ended if consecutive elements are equal.
+detect_benchmark_stop=True
 #Delete all data between start of detected consecutive element and jump of detect_benchmark_threshold
 #Using 2, stop detected when 2 consecutive elements are strictly equal
 #Note: minimum=2, recommended=4
-detect_benchmark_stop_elements=5 #use something low (<5)
+detect_benchmark_stop_elements=4 #use something low (<5)
 detect_benchmark_stop_elements_std=0.1 #use something low (<0.5)
-
-#blocks jump of N detect_benchmarks_on (= change of test)
-detect_benchmark_threshold=50
-
-#fields (= csv filename) with their corresponding column name:
-#fields = {
-#    "sawtooth_validator.chain.ChainController.block_num": "block_num",
-#    "sawtooth_validator.chain.ChainController.committed_transactions_gauge": "commits",
-#    "sawtooth_validator.executor.TransactionExecutorThread.tp_process_response_count": "tx_exec_rate",
-#    "sawtooth_validator.publisher.BlockPublisher.pending_batch_gauge": "pending_tx",
-#    "sawtooth_validator.chain.ChainController.blocks_considered_count": "blocks_count",
-#    "sawtooth_validator.back_pressure_handlers.ClientBatchSubmitBackpressureHandler.backpressure_batches_rejected_gauge": "reject_rate",
-#    "sawtooth_rest_api.post_batches_count": "rest_api_batch_rate",
-#    "sawtooth_validator.interconnect.Interconnect.send_response_time": "msg_sent_rate",
-#    "sawtooth_validator.interconnect._SendReceive.received_message_count": "msg_receive_rate"
-#}
+detect_benchmark_stop_previous_elements=6
 
 if not os.path.exists(image_directory):
     os.makedirs(image_directory)
     
+if not os.path.exists(export_data_path):
+    os.makedirs(export_data_path)
 #%%
 #
 # Get all CSV files and put it inside dataframes
@@ -61,7 +54,7 @@ all_files = glob.glob(data_path + "/*.csv")
 tmp_df = {}
 for filename in all_files:
     df = pd.read_csv(filename, index_col=None, header=0, usecols=["time", "mean"],)
-    field_name = os.path.basename(filename)[:-4]
+    field_name = os.path.basename(filename)[:-4]#remove extension
 #    try:#test if field exists
 #        test=fields[field_name]
 #    except:
@@ -96,42 +89,7 @@ for col in final_df.columns:
     print("{}, ".format(col), end='') #print the columns to know whats available
     final_df_cols.append(col)
 print("")
-#%%
-#
-# Filter out initialization of the test: only keep data where commits>1000
-#
-#thanks to https://stackoverflow.com/a/27360130/13187605
-final_df = final_df.drop(final_df[(final_df[detect_benchmarks_on] >= 0) & (final_df[detect_benchmarks_on] < initialization_threshold)].index)
-final_df = final_df.reset_index(drop=True)
 
-#detect benchmark stop
-col_detect_index=final_df_cols.index(detect_benchmarks_on)
-#def remove_consecutive_elements(mydf):
-start_at_index=-1
-previous_elements=[] #previous value to compare to
-previous=0 #previous value to compare to
-for index, row in final_df.iterrows():
-    if len(previous_elements) > detect_benchmark_stop_elements:
-        previous_elements.pop(0)
-
-    previous_elements.append(round(row[col_detect_index]))
-
-    if index > detect_benchmark_stop_elements:
-        #print("{} {} => {}".format(index,previous_elements,np.array(previous_elements).std()))
-        if np.array(previous_elements).std() < detect_benchmark_stop_elements_std and start_at_index == -1:
-            #found same consecutive elements !
-            start_at_index=index
-
-
-        if abs(row[col_detect_index] - (previous)) > detect_benchmark_threshold and start_at_index != -1:
-            #found jump !
-            final_df = final_df.drop(final_df.index[start_at_index:index])
-#            print("Detect benchmark stop from {} to {}".format(start_at_index,index))
-            start_at_index = -1 #can start deleting delete again
-
-    previous=row[col_detect_index]
-
-final_df = final_df.reset_index(drop=True)
 #%%
 #
 # Benchmark detection: use to distinguish multiple test in the dataframe
@@ -154,6 +112,54 @@ print("Benchmark detected = {}".format(number_of_benchmarks))
 
 #%%
 #
+# Filter out initialization of the test: only keep data where commits>1000
+#
+
+#detect benchmark start
+#thanks to https://stackoverflow.com/a/27360130/13187605
+if detect_benchmark_start:
+    final_df = final_df.drop(final_df[(final_df[detect_benchmarks_on] >= 0) & (final_df[detect_benchmarks_on] < initialization_threshold)].index)
+    final_df = final_df.reset_index(drop=True)
+
+#detect_benchmark_stop=False
+#detect benchmark stop
+if detect_benchmark_stop:
+    
+    col_detect_index=final_df_cols.index(detect_benchmarks_on)
+    #def remove_consecutive_elements(mydf):
+    start_delete=False
+    previous_elements=[] #previous value to compare to, act like a fifo
+    previous=0 #previous value to compare to
+    
+    cur_benchmark=1
+    for index, row in final_df.iterrows():
+        if len(previous_elements) > detect_benchmark_stop_elements:
+            previous_elements.pop(0) #do fifo stype array 
+        previous_elements.append(round(row[col_detect_index], 3))
+    
+        if index > detect_benchmark_stop_elements:
+            #print("{} {} => {}".format(index,previous_elements,np.array(previous_elements).std()))
+            
+            #detecte le debut de la fin du test
+            if np.array(previous_elements).std() < detect_benchmark_stop_elements_std and start_delete == False:
+#                print("{} {} => {}".format(index,previous_elements,np.array(previous_elements).std()))
+                #found same consecutive elements !
+                for i in range(0, detect_benchmark_stop_elements+detect_benchmark_stop_previous_elements):
+                    final_df = final_df.drop(index-i)
+                start_delete=True
+                continue
+            if start_delete == True:
+                final_df = final_df.drop(index)
+            
+            if cur_benchmark != row["test#"]:
+#                print("Change in test, stop end detection. Detect benchmark stop from {} to {}".format(start_at_index,index))
+                start_delete = False #can start deleting delete again
+                cur_benchmark=row["test#"]   
+                                  
+final_df = final_df.reset_index(drop=True)
+
+#%%
+#
 # Plot function
 # (auto color and auto benchmark detection based on "test#" column)
 #
@@ -170,7 +176,10 @@ def myplot(plot_type, X_colomn_name, Y_colomn_name, display=False, smooth = Fals
     fig, ax = pl.subplots(1,1,figsize=conf_figsize)
     for i in range(1, number_of_benchmarks+1):
         #print lines for each test, using diff colors
-        X_values=final_df.loc[final_df['test#'] == i].values[:,final_df_cols.index(X_colomn_name)]
+        if X_colomn_name == "index":
+            X_values=final_df.loc[final_df['test#'] == i].index
+        else:
+            X_values=final_df.loc[final_df['test#'] == i].values[:,final_df_cols.index(X_colomn_name)]
         Y_values=final_df.loc[final_df['test#'] == i].values[:,final_df_cols.index(Y_colomn_name)]
         if smooth:
             Y_values= gaussian_filter1d(Y_values, sigma=1) # make more smooth: BE CARFUL
@@ -223,11 +232,10 @@ def myplot_merged(X_colomn_name, Y_colomn_name, display=False):
 
     X_colomn_merged_array = merge_tests_data_from(X_colomn_name).values.mean(axis=1) #avg times
     # utcfromtimestamp need 10 digit timestamp
-    start=datetime.utcfromtimestamp(X_colomn_merged_array[0]/1e9)
-    end=datetime.utcfromtimestamp(X_colomn_merged_array[-1]/1e9)
+    start=datetime.utcfromtimestamp(X_colomn_merged_array[0]) #/1e9
+    end=datetime.utcfromtimestamp(X_colomn_merged_array[-1]) #/1e9
     avg_time_sec=(end-start).total_seconds()
     avg_time_min=avg_time_sec/60
-    print()
     
     #show some data
 #    pl.figure(total_plots)
@@ -239,6 +247,7 @@ def myplot_merged(X_colomn_name, Y_colomn_name, display=False):
         i+=1
     axs[0].plot(Y_colomn_merged_array_mean, label="Mean of all tests")
     
+    axs[0].plot([], [], ' ', label="Mean={:.2f}".format(Y_colomn_merged_array.mean()))
     axs[0].plot([], [], ' ', label="Variance={:.2f} (?)".format(getVariance(Y_colomn_merged_array)))
     axs[0].plot([], [], ' ', label="Std={:.2f}".format(getStd(Y_colomn_merged_array)))
     axs[0].plot([], [], ' ', label="Time={:.1f}min".format(avg_time_min))
@@ -270,19 +279,51 @@ def merge_tests_data_from(colomn_name):
     temp_elements = temp_elements.fillna(method='ffill')
     return temp_elements
 
+def merge_and_mean_tests_data_from(colomn_name):
+    d=merge_tests_data_from(colomn_name).values.mean(axis=1) #mean all rows
+    return d
 
-#print(final_df)
+#%%
+#
+# Some fix on time values
+# And export to csv
+
+if len(sys.argv)>1:
+    #print(final_df)
+    print("Data shape: {}".format(final_df.shape))
+    filename=export_data_path +export_data_filename+".csv"
+    final_df[['time']] = (df[['time']]/1e9).astype(int)
+    final_df.to_csv(filename, index=False)
+    print("Data exported to '{}'".format(filename))
+
+    #merge and export all merged data:
+    final_merged_df = {
+            "time": merge_and_mean_tests_data_from("time").astype(int) #init with time
+            }
+    for col in final_df_cols:
+            if col != "time":
+                final_merged_df[col] = merge_and_mean_tests_data_from(col)
+    final_merged_df = pd.DataFrame(final_merged_df) #to dataframe
+    final_merged_df["test_name"]=export_data_filename #set test name in cas we need it
+    print("Merged shape: {}".format(final_merged_df.values.shape))
+    filename=export_data_path +"merged_"+export_data_filename+".csv"
+    final_merged_df.to_csv(filename, index=False)
+    print("Merged data exported to '{}'".format(filename))
 # exit() #for debug
+
 #%%
 #
 # Start plotting from here
 #
 
-myplot("line", "time", "commits_rate", True, True)
-myplot("line", "time", "block_num_rate", True, True)
+#myplot("line", "time", "commits_rate", True, True)
+#myplot("line", "time", "tx_exec_rate", True, True)
+#myplot("scatter", "index", "commits", True, True)
+#myplot("scatter", "time", "commits", True, True)
+#myplot("scatter", "commits_rate", "rest_api_batch_rate", True, False)
 
-myplot_merged("time", "commits_rate", True)
-myplot_merged("time", "block_num_rate", True)
+#myplot_merged("time", "commits_rate", True)
+#myplot_merged("time", "tx_exec_rate", True)
 
 #%%
 #
