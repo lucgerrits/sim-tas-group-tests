@@ -42,14 +42,14 @@ items:
           - name: sawtooth-pbft-engine
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
-              requests:
-                memory: "150Mi"
-                cpu: "320m"
-                ephemeral-storage: "320Mi"
-              limits:
-                memory: "320Mi"
-                cpu: "650m"
-                ephemeral-storage: "650Mi"
+               requests:
+                 memory: "150Mi"
+                 cpu: "320m"
+                 ephemeral-storage: "320Mi"
+               limits:
+                 memory: "320Mi"
+                 cpu: "650m"
+                 ephemeral-storage: "650Mi"
             command:
               - bash
             args:
@@ -59,14 +59,14 @@ items:
           - name: sawtooth-rest-api
             image: hyperledger/sawtooth-rest-api:chime
             resources:
-              requests:
-                memory: "650Mi"
-                cpu: "300m"
-                ephemeral-storage: "650Mi"
-              limits:
-                memory: "1Gi"
-                cpu: "650m"
-                ephemeral-storage: "1Gi"
+               requests:
+                 memory: "650Mi"
+                 cpu: "300m"
+                 ephemeral-storage: "650Mi"
+               limits:
+                 memory: "1Gi"
+                 cpu: "650m"
+                 ephemeral-storage: "1Gi"
             ports:
               - name: api
                 containerPort: 8008
@@ -91,14 +91,14 @@ items:
           - name: sawtooth-settings-tp
             image: hyperledger/sawtooth-settings-tp:chime
             resources:
-              requests:
-                memory: "32Mi"
-                cpu: "32m"
-                ephemeral-storage: "65Mi"
-              limits:
-                memory: "100Mi"
-                cpu: "100m"
-                ephemeral-storage: "125Mi"
+               requests:
+                 memory: "32Mi"
+                 cpu: "32m"
+                 ephemeral-storage: "65Mi"
+               limits:
+                 memory: "100Mi"
+                 cpu: "100m"
+                 ephemeral-storage: "125Mi"
             command:
               - bash
             args:
@@ -108,14 +108,14 @@ items:
           - name: sawtooth-shell
             image: hyperledger/sawtooth-shell:chime
             resources:
-              requests:
-                memory: "32Mi"
-                cpu: "32m"
-                ephemeral-storage: "65Mi"
-              limits:
-                memory: "100Mi"
-                cpu: "100m"
-                ephemeral-storage: "125Mi"
+               requests:
+                 memory: "32Mi"
+                 cpu: "32m"
+                 ephemeral-storage: "65Mi"
+               limits:
+                 memory: "100Mi"
+                 cpu: "100m"
+                 ephemeral-storage: "125Mi"
             command:
               - bash
             args:
@@ -410,14 +410,14 @@ items:
                     sawset genesis -k /root/.sawtooth/keys/my_key.priv -o config-genesis.batch
                   fi &&
                   sleep 30 &&
-                  echo sawtooth.consensus.pbft.members=["\"$pbft0pub\",\"$pbft1pub\",\"$pbft2pub\",\"$pbft3pub\",\"$pbft4pub\",\"$pbft5pub\",\"$pbft6pub\",\"$pbft7pub\",\"$pbft8pub\",\"$pbft9pub\",\"$pbft10pub\",\"$pbft11pub\",\"$pbft12pub\",\"$pbft13pub\",\"$pbft14pub\",\"$pbft15pub\",\"$pbft16pub\",\"$pbft17pub\""] &&
+                  echo sawtooth.consensus.pbft.members=["\"$pbft0pub\",\"$pbft1pub\",\"$pbft2pub\",\"$pbft3pub\",\"$pbft4pub\",\"$pbft5pub\",\"$pbft6pub\",\"$pbft7pub\",\"$pbft8pub\",\"$pbft9pub\",\"$pbft10pub\",\"$pbft11pub\""] &&
                   if [ ! -e config.batch ]; then
                     sawset proposal create \
                       -k /root/.sawtooth/keys/my_key.priv \
                       sawtooth.consensus.algorithm.name=pbft \
                       sawtooth.consensus.algorithm.version=1.0\
-                      sawtooth.consensus.pbft.members=["\"$pbft0pub\",\"$pbft1pub\",\"$pbft2pub\",\"$pbft3pub\",\"$pbft4pub\",\"$pbft5pub\",\"$pbft6pub\",\"$pbft7pub\",\"$pbft8pub\",\"$pbft9pub\",\"$pbft10pub\",\"$pbft11pub\",\"$pbft12pub\",\"$pbft13pub\",\"$pbft14pub\",\"$pbft15pub\",\"$pbft16pub\",\"$pbft17pub\""] \
-                      sawtooth.publisher.max_batches_per_block=1200 \
+                      sawtooth.consensus.pbft.members=["\"$pbft0pub\",\"$pbft1pub\",\"$pbft2pub\",\"$pbft3pub\",\"$pbft4pub\",\"$pbft5pub\",\"$pbft6pub\",\"$pbft7pub\",\"$pbft8pub\",\"$pbft9pub\",\"$pbft10pub\",\"$pbft11pub\""] \
+                      sawtooth.publisher.max_batches_per_block=1100 \
                       sawtooth.cartp.factory.members='[\"02a47084f6228bf7eb91e1628140f5b717cad1d1166b4ad7665e88204e74f92e5c\"]' \
                       -o config.batch
                   fi && \
@@ -520,14 +520,14 @@ items:
           - name: sawtooth-pbft-engine
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
-              requests:
-                memory: "150Mi"
-                cpu: "320m"
-                ephemeral-storage: "320Mi"
-              limits:
-                memory: "320Mi"
-                cpu: "650m"
-                ephemeral-storage: "650Mi"
+               requests:
+                 memory: "150Mi"
+                 cpu: "320m"
+                 ephemeral-storage: "320Mi"
+               limits:
+                 memory: "320Mi"
+                 cpu: "650m"
+                 ephemeral-storage: "650Mi"
             command:
               - bash
             args:
@@ -537,14 +537,14 @@ items:
           - name: sawtooth-rest-api
             image: hyperledger/sawtooth-rest-api:chime
             resources:
-              requests:
-                memory: "650Mi"
-                cpu: "300m"
-                ephemeral-storage: "650Mi"
-              limits:
-                memory: "1Gi"
-                cpu: "650m"
-                ephemeral-storage: "1Gi"
+               requests:
+                 memory: "650Mi"
+                 cpu: "300m"
+                 ephemeral-storage: "650Mi"
+               limits:
+                 memory: "1Gi"
+                 cpu: "650m"
+                 ephemeral-storage: "1Gi"
             ports:
               - name: api
                 containerPort: 8008
@@ -983,14 +983,14 @@ items:
           - name: sawtooth-pbft-engine
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
-              requests:
-                memory: "150Mi"
-                cpu: "320m"
-                ephemeral-storage: "320Mi"
-              limits:
-                memory: "320Mi"
-                cpu: "650m"
-                ephemeral-storage: "650Mi"
+               requests:
+                 memory: "150Mi"
+                 cpu: "320m"
+                 ephemeral-storage: "320Mi"
+               limits:
+                 memory: "320Mi"
+                 cpu: "650m"
+                 ephemeral-storage: "650Mi"
             command:
               - bash
             args:
@@ -1000,14 +1000,14 @@ items:
           - name: sawtooth-rest-api
             image: hyperledger/sawtooth-rest-api:chime
             resources:
-              requests:
-                memory: "650Mi"
-                cpu: "300m"
-                ephemeral-storage: "650Mi"
-              limits:
-                memory: "1Gi"
-                cpu: "650m"
-                ephemeral-storage: "1Gi"
+               requests:
+                 memory: "650Mi"
+                 cpu: "300m"
+                 ephemeral-storage: "650Mi"
+               limits:
+                 memory: "1Gi"
+                 cpu: "650m"
+                 ephemeral-storage: "1Gi"
             ports:
               - name: api
                 containerPort: 8008
@@ -1451,14 +1451,14 @@ items:
           - name: sawtooth-pbft-engine
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
-              requests:
-                memory: "150Mi"
-                cpu: "320m"
-                ephemeral-storage: "320Mi"
-              limits:
-                memory: "320Mi"
-                cpu: "650m"
-                ephemeral-storage: "650Mi"
+               requests:
+                 memory: "150Mi"
+                 cpu: "320m"
+                 ephemeral-storage: "320Mi"
+               limits:
+                 memory: "320Mi"
+                 cpu: "650m"
+                 ephemeral-storage: "650Mi"
             command:
               - bash
             args:
@@ -1468,14 +1468,14 @@ items:
           - name: sawtooth-rest-api
             image: hyperledger/sawtooth-rest-api:chime
             resources:
-              requests:
-                memory: "650Mi"
-                cpu: "300m"
-                ephemeral-storage: "650Mi"
-              limits:
-                memory: "1Gi"
-                cpu: "650m"
-                ephemeral-storage: "1Gi"
+               requests:
+                 memory: "650Mi"
+                 cpu: "300m"
+                 ephemeral-storage: "650Mi"
+               limits:
+                 memory: "1Gi"
+                 cpu: "650m"
+                 ephemeral-storage: "1Gi"
             ports:
               - name: api
                 containerPort: 8008
@@ -1919,14 +1919,14 @@ items:
           - name: sawtooth-pbft-engine
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
-              requests:
-                memory: "150Mi"
-                cpu: "320m"
-                ephemeral-storage: "320Mi"
-              limits:
-                memory: "320Mi"
-                cpu: "650m"
-                ephemeral-storage: "650Mi"
+               requests:
+                 memory: "150Mi"
+                 cpu: "320m"
+                 ephemeral-storage: "320Mi"
+               limits:
+                 memory: "320Mi"
+                 cpu: "650m"
+                 ephemeral-storage: "650Mi"
             command:
               - bash
             args:
@@ -1936,14 +1936,14 @@ items:
           - name: sawtooth-rest-api
             image: hyperledger/sawtooth-rest-api:chime
             resources:
-              requests:
-                memory: "650Mi"
-                cpu: "300m"
-                ephemeral-storage: "650Mi"
-              limits:
-                memory: "1Gi"
-                cpu: "650m"
-                ephemeral-storage: "1Gi"
+               requests:
+                 memory: "650Mi"
+                 cpu: "300m"
+                 ephemeral-storage: "650Mi"
+               limits:
+                 memory: "1Gi"
+                 cpu: "650m"
+                 ephemeral-storage: "1Gi"
             ports:
               - name: api
                 containerPort: 8008
@@ -2387,14 +2387,14 @@ items:
           - name: sawtooth-pbft-engine
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
-              requests:
-                memory: "150Mi"
-                cpu: "320m"
-                ephemeral-storage: "320Mi"
-              limits:
-                memory: "320Mi"
-                cpu: "650m"
-                ephemeral-storage: "650Mi"
+               requests:
+                 memory: "150Mi"
+                 cpu: "320m"
+                 ephemeral-storage: "320Mi"
+               limits:
+                 memory: "320Mi"
+                 cpu: "650m"
+                 ephemeral-storage: "650Mi"
             command:
               - bash
             args:
@@ -2404,14 +2404,14 @@ items:
           - name: sawtooth-rest-api
             image: hyperledger/sawtooth-rest-api:chime
             resources:
-              requests:
-                memory: "650Mi"
-                cpu: "300m"
-                ephemeral-storage: "650Mi"
-              limits:
-                memory: "1Gi"
-                cpu: "650m"
-                ephemeral-storage: "1Gi"
+               requests:
+                 memory: "650Mi"
+                 cpu: "300m"
+                 ephemeral-storage: "650Mi"
+               limits:
+                 memory: "1Gi"
+                 cpu: "650m"
+                 ephemeral-storage: "1Gi"
             ports:
               - name: api
                 containerPort: 8008
@@ -2855,14 +2855,14 @@ items:
           - name: sawtooth-pbft-engine
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
-              requests:
-                memory: "150Mi"
-                cpu: "320m"
-                ephemeral-storage: "320Mi"
-              limits:
-                memory: "320Mi"
-                cpu: "650m"
-                ephemeral-storage: "650Mi"
+               requests:
+                 memory: "150Mi"
+                 cpu: "320m"
+                 ephemeral-storage: "320Mi"
+               limits:
+                 memory: "320Mi"
+                 cpu: "650m"
+                 ephemeral-storage: "650Mi"
             command:
               - bash
             args:
@@ -2872,14 +2872,14 @@ items:
           - name: sawtooth-rest-api
             image: hyperledger/sawtooth-rest-api:chime
             resources:
-              requests:
-                memory: "650Mi"
-                cpu: "300m"
-                ephemeral-storage: "650Mi"
-              limits:
-                memory: "1Gi"
-                cpu: "650m"
-                ephemeral-storage: "1Gi"
+               requests:
+                 memory: "650Mi"
+                 cpu: "300m"
+                 ephemeral-storage: "650Mi"
+               limits:
+                 memory: "1Gi"
+                 cpu: "650m"
+                 ephemeral-storage: "1Gi"
             ports:
               - name: api
                 containerPort: 8008
@@ -3212,7 +3212,7 @@ items:
                 valueFrom:
                   configMapKeyRef:
                     name: keys-config
-                    key: pbft6pub
+                    key: pbft1pub
             command:
               - bash
             args:
@@ -3323,14 +3323,14 @@ items:
           - name: sawtooth-pbft-engine
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
-              requests:
-                memory: "150Mi"
-                cpu: "320m"
-                ephemeral-storage: "320Mi"
-              limits:
-                memory: "320Mi"
-                cpu: "650m"
-                ephemeral-storage: "650Mi"
+               requests:
+                 memory: "150Mi"
+                 cpu: "320m"
+                 ephemeral-storage: "320Mi"
+               limits:
+                 memory: "320Mi"
+                 cpu: "650m"
+                 ephemeral-storage: "650Mi"
             command:
               - bash
             args:
@@ -3340,14 +3340,14 @@ items:
           - name: sawtooth-rest-api
             image: hyperledger/sawtooth-rest-api:chime
             resources:
-              requests:
-                memory: "650Mi"
-                cpu: "300m"
-                ephemeral-storage: "650Mi"
-              limits:
-                memory: "1Gi"
-                cpu: "650m"
-                ephemeral-storage: "1Gi"
+               requests:
+                 memory: "650Mi"
+                 cpu: "300m"
+                 ephemeral-storage: "650Mi"
+               limits:
+                 memory: "1Gi"
+                 cpu: "650m"
+                 ephemeral-storage: "1Gi"
             ports:
               - name: api
                 containerPort: 8008
@@ -3707,8 +3707,7 @@ items:
                     --peers tcp://$SAWTOOTH_3_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_4_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 
-
+                    --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800
             volumeMounts:
               - name: validator-config-volume
                 mountPath: /etc/sawtooth/validator.toml
@@ -3797,14 +3796,14 @@ items:
           - name: sawtooth-pbft-engine
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
-              requests:
-                memory: "150Mi"
-                cpu: "320m"
-                ephemeral-storage: "320Mi"
-              limits:
-                memory: "320Mi"
-                cpu: "650m"
-                ephemeral-storage: "650Mi"
+               requests:
+                 memory: "150Mi"
+                 cpu: "320m"
+                 ephemeral-storage: "320Mi"
+               limits:
+                 memory: "320Mi"
+                 cpu: "650m"
+                 ephemeral-storage: "650Mi"
             command:
               - bash
             args:
@@ -3814,14 +3813,14 @@ items:
           - name: sawtooth-rest-api
             image: hyperledger/sawtooth-rest-api:chime
             resources:
-              requests:
-                memory: "650Mi"
-                cpu: "300m"
-                ephemeral-storage: "650Mi"
-              limits:
-                memory: "1Gi"
-                cpu: "650m"
-                ephemeral-storage: "1Gi"
+               requests:
+                 memory: "650Mi"
+                 cpu: "300m"
+                 ephemeral-storage: "650Mi"
+               limits:
+                 memory: "1Gi"
+                 cpu: "650m"
+                 ephemeral-storage: "1Gi"
             ports:
               - name: api
                 containerPort: 8008
@@ -4182,7 +4181,7 @@ items:
                     --peers tcp://$SAWTOOTH_4_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 
+                    --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800
             volumeMounts:
               - name: validator-config-volume
                 mountPath: /etc/sawtooth/validator.toml
@@ -4270,14 +4269,14 @@ items:
           - name: sawtooth-pbft-engine
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
-              requests:
-                memory: "150Mi"
-                cpu: "320m"
-                ephemeral-storage: "320Mi"
-              limits:
-                memory: "320Mi"
-                cpu: "650m"
-                ephemeral-storage: "650Mi"
+               requests:
+                 memory: "150Mi"
+                 cpu: "320m"
+                 ephemeral-storage: "320Mi"
+               limits:
+                 memory: "320Mi"
+                 cpu: "650m"
+                 ephemeral-storage: "650Mi"
             command:
               - bash
             args:
@@ -4287,14 +4286,14 @@ items:
           - name: sawtooth-rest-api
             image: hyperledger/sawtooth-rest-api:chime
             resources:
-              requests:
-                memory: "650Mi"
-                cpu: "300m"
-                ephemeral-storage: "650Mi"
-              limits:
-                memory: "1Gi"
-                cpu: "650m"
-                ephemeral-storage: "1Gi"
+               requests:
+                 memory: "650Mi"
+                 cpu: "300m"
+                 ephemeral-storage: "650Mi"
+               limits:
+                 memory: "1Gi"
+                 cpu: "650m"
+                 ephemeral-storage: "1Gi"
             ports:
               - name: api
                 containerPort: 8008
@@ -4654,7 +4653,7 @@ items:
                     --peers tcp://$SAWTOOTH_4_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800
 
             volumeMounts:
@@ -4744,14 +4743,14 @@ items:
           - name: sawtooth-pbft-engine
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
-              requests:
-                memory: "150Mi"
-                cpu: "320m"
-                ephemeral-storage: "320Mi"
-              limits:
-                memory: "320Mi"
-                cpu: "650m"
-                ephemeral-storage: "650Mi"
+               requests:
+                 memory: "150Mi"
+                 cpu: "320m"
+                 ephemeral-storage: "320Mi"
+               limits:
+                 memory: "320Mi"
+                 cpu: "650m"
+                 ephemeral-storage: "650Mi"
             command:
               - bash
             args:
@@ -4761,14 +4760,14 @@ items:
           - name: sawtooth-rest-api
             image: hyperledger/sawtooth-rest-api:chime
             resources:
-              requests:
-                memory: "650Mi"
-                cpu: "300m"
-                ephemeral-storage: "650Mi"
-              limits:
-                memory: "1Gi"
-                cpu: "650m"
-                ephemeral-storage: "1Gi"
+               requests:
+                 memory: "650Mi"
+                 cpu: "300m"
+                 ephemeral-storage: "650Mi"
+               limits:
+                 memory: "1Gi"
+                 cpu: "650m"
+                 ephemeral-storage: "1Gi"
             ports:
               - name: api
                 containerPort: 8008
@@ -5128,8 +5127,9 @@ items:
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800
+
             volumeMounts:
               - name: validator-config-volume
                 mountPath: /etc/sawtooth/validator.toml
@@ -5216,14 +5216,14 @@ items:
           - name: sawtooth-pbft-engine
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
-              requests:
-                memory: "150Mi"
-                cpu: "320m"
-                ephemeral-storage: "320Mi"
-              limits:
-                memory: "320Mi"
-                cpu: "650m"
-                ephemeral-storage: "650Mi"
+               requests:
+                 memory: "150Mi"
+                 cpu: "320m"
+                 ephemeral-storage: "320Mi"
+               limits:
+                 memory: "320Mi"
+                 cpu: "650m"
+                 ephemeral-storage: "650Mi"
             command:
               - bash
             args:
@@ -5233,14 +5233,14 @@ items:
           - name: sawtooth-rest-api
             image: hyperledger/sawtooth-rest-api:chime
             resources:
-              requests:
-                memory: "650Mi"
-                cpu: "300m"
-                ephemeral-storage: "650Mi"
-              limits:
-                memory: "1Gi"
-                cpu: "650m"
-                ephemeral-storage: "1Gi"
+               requests:
+                 memory: "650Mi"
+                 cpu: "300m"
+                 ephemeral-storage: "650Mi"
+               limits:
+                 memory: "1Gi"
+                 cpu: "650m"
+                 ephemeral-storage: "1Gi"
             ports:
               - name: api
                 containerPort: 8008
@@ -5253,7 +5253,6 @@ items:
               - name: validator-config-volume
                 mountPath: /etc/sawtooth/rest_api.toml
                 subPath: validator.toml
-
             readinessProbe:
               httpGet:
                 path: /status
@@ -5294,7 +5293,7 @@ items:
             args:
               - -c
               - "sawtooth keygen && tail -f /dev/null"
-          
+
           - name: sawtooth-car-tp-1
             image: projetsim/cartp-tp-python:latest
             resources:
@@ -5601,8 +5600,8 @@ items:
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800
             volumeMounts:
               - name: validator-config-volume
@@ -5634,6 +5633,7 @@ items:
           - name: sawtooth-data-11
             persistentVolumeClaim:
             claimName: sawtooth-data-11
+
 - apiVersion: v1
   kind: Service
   metadata:
@@ -5665,7 +5665,8 @@ items:
         port: 8800
         targetPort: 8800
 
-# --------------------------=== pod 12 ===--------------------------
+
+# # --------------------------=== pod 12 ===--------------------------
 
 - apiVersion: apps/v1
   kind: Deployment
@@ -6059,7 +6060,7 @@ items:
                     echo $pbft12pub > /etc/sawtooth/keys/validator.pub
                   fi &&
                   sawtooth keygen my_key &&
-                  sawtooth-validator -v \
+                  sawtooth-validator -vv \
                     --endpoint tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \
                     --bind component:tcp://eth0:4004 \
                     --bind consensus:tcp://eth0:5050 \
@@ -6075,9 +6076,9 @@ items:
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800 
             volumeMounts:
               - name: validator-config-volume
@@ -6537,7 +6538,7 @@ items:
                     echo $pbft13pub > /etc/sawtooth/keys/validator.pub
                   fi &&
                   sawtooth keygen my_key &&
-                  sawtooth-validator -v \
+                  sawtooth-validator -vv \
                     --endpoint tcp://$SAWTOOTH_13_SERVICE_HOST:8800 \
                     --bind component:tcp://eth0:4004 \
                     --bind consensus:tcp://eth0:5050 \
@@ -6553,9 +6554,9 @@ items:
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800
             volumeMounts:
@@ -7030,11 +7031,11 @@ items:
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_13_SERVICE_HOST:8800
 
             volumeMounts:
@@ -7508,12 +7509,12 @@ items:
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_13_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_13_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_14_SERVICE_HOST:8800
 
             volumeMounts:
@@ -7987,13 +7988,13 @@ items:
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_13_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_14_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_13_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_14_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_15_SERVICE_HOST:8800
             volumeMounts:
               - name: validator-config-volume
@@ -8465,14 +8466,14 @@ items:
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_13_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_14_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_15_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_13_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_14_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_15_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_16_SERVICE_HOST:8800
             volumeMounts:
               - name: validator-config-volume

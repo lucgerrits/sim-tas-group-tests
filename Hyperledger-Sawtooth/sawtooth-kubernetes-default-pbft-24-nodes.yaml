@@ -5127,7 +5127,7 @@ items:
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800
 
             volumeMounts:
@@ -5600,8 +5600,8 @@ items:
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800
             volumeMounts:
               - name: validator-config-volume
@@ -6075,9 +6075,9 @@ items:
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800
             volumeMounts:
               - name: validator-config-volume
@@ -6552,9 +6552,9 @@ items:
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800
             volumeMounts:
@@ -7028,9 +7028,9 @@ items:
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_13_SERVICE_HOST:8800
@@ -7508,9 +7508,9 @@ items:
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_13_SERVICE_HOST:8800 \
@@ -7987,9 +7987,9 @@ items:
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_13_SERVICE_HOST:8800 \
@@ -8466,9 +8466,9 @@ items:
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_13_SERVICE_HOST:8800 \
@@ -8947,9 +8947,9 @@ items:
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_13_SERVICE_HOST:8800 \
@@ -9428,9 +9428,9 @@ items:
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_13_SERVICE_HOST:8800 \
@@ -9913,9 +9913,9 @@ items:
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_13_SERVICE_HOST:8800 \
@@ -10397,9 +10397,9 @@ items:
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_13_SERVICE_HOST:8800 \
@@ -10882,8 +10882,8 @@ items:
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \
@@ -11367,8 +11367,8 @@ items:
                     --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \ 
-                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \ 
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \
