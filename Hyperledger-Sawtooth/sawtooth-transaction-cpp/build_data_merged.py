@@ -22,8 +22,8 @@ data_path = "./datas_csv/"
 conf_figsize=(20, 10)
 # conf_figsize=(6.4, 4.8)
 merge_on="time"
-filter_out_all_with_elements=["12_nodes", "5tps"]
-
+filter_out_all_with_elements=["bpb"]
+filter_out_reverse=True
 #%%
 #
 # Get all CSV files and put it inside dataframes
@@ -70,8 +70,8 @@ def formatStrLatex(text):
 def filter_out_all_with(text):
     for a in filter_out_all_with_elements:
         if a in text:
-            return False
-    return True
+            return True if filter_out_reverse else False
+    return False if filter_out_reverse else True
 #%%
 
 #not ("20tps|12_nodes" in col)
