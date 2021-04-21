@@ -45,7 +45,7 @@ curl -sS --insecure -u $INFLUX_USER:$INFLUX_PWD -XPOST "$INFLUX_URL/query" --dat
 ####
 field="sawtooth_validator.executor.TransactionExecutorThread.tp_process_response_count"
 name="tx_exec_rate"
-QUERY="SELECT (moving_average(non_negative_derivative(mean(\"count\"), 10s),3) /10) as mean FROM \"$field\" WHERE  $timeFilter GROUP BY time($GROUP_BY_TIME) fill(null)" #, \"host\"  (\"response_type\" = 'OK') AND
+QUERY="SELECT (moving_average(non_negative_derivative(mean(\"count\"), 10s),2) /10) as mean FROM \"$field\" WHERE  $timeFilter GROUP BY time($GROUP_BY_TIME) fill(null)" #, \"host\"  (\"response_type\" = 'OK') AND
 curl -sS --insecure -u $INFLUX_USER:$INFLUX_PWD -XPOST "$INFLUX_URL/query" --data-urlencode "db=$INFLUX_DB" --data-urlencode "q=$QUERY" -H "Accept: application/csv" > "$DATA_PATH/$name.csv"
 ####
 field="sawtooth_validator.executor.TransactionExecutorThread.in_process_transactions_count"
