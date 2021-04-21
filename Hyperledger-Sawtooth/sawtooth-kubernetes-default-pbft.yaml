@@ -54,7 +54,7 @@ items:
               - bash
             args:
               - -c
-              - "pbft-engine -vv --connect tcp://$HOSTNAME:5050"
+              - "pbft-engine -v --connect tcp://$HOSTNAME:5050"
 
           - name: sawtooth-rest-api
             image: hyperledger/sawtooth-rest-api:chime
@@ -74,7 +74,7 @@ items:
               - bash
             args:
               - -c
-              - "sawtooth-rest-api -vv -C tcp://$HOSTNAME:4004 -B 0.0.0.0:8008"
+              - "sawtooth-rest-api -v -C tcp://$HOSTNAME:4004 -B 0.0.0.0:8008"
             
             volumeMounts:
               - name: validator-config-volume
@@ -103,7 +103,7 @@ items:
               - bash
             args:
               - -c
-              - "settings-tp -vv -C tcp://$HOSTNAME:4004"
+              - "settings-tp -v -C tcp://$HOSTNAME:4004"
 
           - name: sawtooth-shell
             image: hyperledger/sawtooth-shell:chime
@@ -453,7 +453,7 @@ items:
               - bash
             args:
               - -c
-              - "xo-tp-python -vv -C tcp://$HOSTNAME:4004"
+              - "xo-tp-python -v -C tcp://$HOSTNAME:4004"
         volumes:
           - name: validator-config-volume
             configMap:
@@ -532,7 +532,7 @@ items:
               - bash
             args:
               - -c
-              - "pbft-engine -vv --connect tcp://$HOSTNAME:5050"
+              - "pbft-engine -v --connect tcp://$HOSTNAME:5050"
 
           - name: sawtooth-rest-api
             image: hyperledger/sawtooth-rest-api:chime
@@ -552,7 +552,7 @@ items:
               - bash
             args:
               - -c
-              - "sawtooth-rest-api -vv -C tcp://$HOSTNAME:4004 -B 0.0.0.0:8008"
+              - "sawtooth-rest-api -v -C tcp://$HOSTNAME:4004 -B 0.0.0.0:8008"
             volumeMounts:
               - name: validator-config-volume
                 mountPath: /etc/sawtooth/rest_api.toml
@@ -580,7 +580,7 @@ items:
               - bash
             args:
               - -c
-              - "settings-tp -vv -C tcp://$HOSTNAME:4004"
+              - "settings-tp -v -C tcp://$HOSTNAME:4004"
 
           - name: sawtooth-shell
             image: hyperledger/sawtooth-shell:chime
@@ -919,7 +919,7 @@ items:
               - bash
             args:
               - -c
-              - "xo-tp-python -vv -C tcp://$HOSTNAME:4004"
+              - "xo-tp-python -v -C tcp://$HOSTNAME:4004"
         volumes:
           - name: validator-config-volume
             configMap:
@@ -995,7 +995,7 @@ items:
               - bash
             args:
               - -c
-              - "pbft-engine -vv --connect tcp://$HOSTNAME:5050"
+              - "pbft-engine -v --connect tcp://$HOSTNAME:5050"
 
           - name: sawtooth-rest-api
             image: hyperledger/sawtooth-rest-api:chime
@@ -1015,7 +1015,7 @@ items:
               - bash
             args:
               - -c
-              - "sawtooth-rest-api -vv -C tcp://$HOSTNAME:4004 -B 0.0.0.0:8008"
+              - "sawtooth-rest-api -v -C tcp://$HOSTNAME:4004 -B 0.0.0.0:8008"
             
             volumeMounts:
               - name: validator-config-volume
@@ -1044,7 +1044,7 @@ items:
               - bash
             args:
               - -c
-              - "settings-tp -vv -C tcp://$HOSTNAME:4004"
+              - "settings-tp -v -C tcp://$HOSTNAME:4004"
 
           - name: sawtooth-shell
             image: hyperledger/sawtooth-shell:chime
@@ -1384,7 +1384,7 @@ items:
               - bash
             args:
               - -c
-              - "xo-tp-python -vv -C tcp://$HOSTNAME:4004"
+              - "xo-tp-python -v -C tcp://$HOSTNAME:4004"
         volumes:
           - name: validator-config-volume
             configMap:
@@ -1463,7 +1463,7 @@ items:
               - bash
             args:
               - -c
-              - "pbft-engine -vv --connect tcp://$HOSTNAME:5050"
+              - "pbft-engine -v --connect tcp://$HOSTNAME:5050"
 
           - name: sawtooth-rest-api
             image: hyperledger/sawtooth-rest-api:chime
@@ -1483,7 +1483,7 @@ items:
               - bash
             args:
               - -c
-              - "sawtooth-rest-api -vv -C tcp://$HOSTNAME:4004 -B 0.0.0.0:8008"
+              - "sawtooth-rest-api -v -C tcp://$HOSTNAME:4004 -B 0.0.0.0:8008"
             volumeMounts:
               - name: validator-config-volume
                 mountPath: /etc/sawtooth/rest_api.toml
@@ -1511,7 +1511,7 @@ items:
               - bash
             args:
               - -c
-              - "settings-tp -vv -C tcp://$HOSTNAME:4004"
+              - "settings-tp -v -C tcp://$HOSTNAME:4004"
 
           - name: sawtooth-shell
             image: hyperledger/sawtooth-shell:chime
@@ -1853,7 +1853,7 @@ items:
               - bash
             args:
               - -c
-              - "xo-tp-python -vv -C tcp://$HOSTNAME:4004"
+              - "xo-tp-python -v -C tcp://$HOSTNAME:4004"
         volumes:
           - name: validator-config-volume
             configMap:
@@ -1931,7 +1931,7 @@ items:
               - bash
             args:
               - -c
-              - "pbft-engine -vv --connect tcp://$HOSTNAME:5050"
+              - "pbft-engine -v --connect tcp://$HOSTNAME:5050"
 
           - name: sawtooth-rest-api
             image: hyperledger/sawtooth-rest-api:chime
@@ -1951,7 +1951,7 @@ items:
               - bash
             args:
               - -c
-              - "sawtooth-rest-api -vv -C tcp://$HOSTNAME:4004 -B 0.0.0.0:8008"
+              - "sawtooth-rest-api -v -C tcp://$HOSTNAME:4004 -B 0.0.0.0:8008"
             volumeMounts:
               - name: validator-config-volume
                 mountPath: /etc/sawtooth/rest_api.toml
@@ -1978,7 +1978,7 @@ items:
               - bash
             args:
               - -c
-              - "settings-tp -vv -C tcp://$HOSTNAME:4004"
+              - "settings-tp -v -C tcp://$HOSTNAME:4004"
 
           - name: sawtooth-shell
             image: hyperledger/sawtooth-shell:chime
@@ -2321,7 +2321,7 @@ items:
               - bash
             args:
               - -c
-              - "xo-tp-python -vv -C tcp://$HOSTNAME:4004"
+              - "xo-tp-python -v -C tcp://$HOSTNAME:4004"
         volumes:
           - name: validator-config-volume
             configMap:
@@ -2399,7 +2399,7 @@ items:
               - bash
             args:
               - -c
-              - "pbft-engine -vv --connect tcp://$HOSTNAME:5050"
+              - "pbft-engine -v --connect tcp://$HOSTNAME:5050"
 
           - name: sawtooth-rest-api
             image: hyperledger/sawtooth-rest-api:chime
@@ -2419,7 +2419,7 @@ items:
               - bash
             args:
               - -c
-              - "sawtooth-rest-api -vv -C tcp://$HOSTNAME:4004 -B 0.0.0.0:8008"
+              - "sawtooth-rest-api -v -C tcp://$HOSTNAME:4004 -B 0.0.0.0:8008"
             volumeMounts:
               - name: validator-config-volume
                 mountPath: /etc/sawtooth/rest_api.toml
@@ -2446,7 +2446,7 @@ items:
               - bash
             args:
               - -c
-              - "settings-tp -vv -C tcp://$HOSTNAME:4004"
+              - "settings-tp -v -C tcp://$HOSTNAME:4004"
 
           - name: sawtooth-shell
             image: hyperledger/sawtooth-shell:chime
@@ -2789,7 +2789,7 @@ items:
               - bash
             args:
               - -c
-              - "xo-tp-python -vv -C tcp://$HOSTNAME:4004"
+              - "xo-tp-python -v -C tcp://$HOSTNAME:4004"
         volumes:
           - name: validator-config-volume
             configMap:
