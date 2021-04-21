@@ -1,10 +1,12 @@
 #!/bin/bash
-
+echo "Remove previous results"
 rm -r ./datas_csv/*
 
+echo "Start compiling all results"
+
 echo "6_nodes"
-./export_influxdb_data.sh 1618648510089 1618662753248
-./build_data.py "5tps|6_nodes"
+./export_influxdb_data.sh 1618648510089 1618662753248 #start end timestamps (13 digits)
+./build_data.py "5tps|6_nodes" #name the test
 
 ./export_influxdb_data.sh 1618662934316 1618671949158
 ./build_data.py "10tps|6_nodes"
@@ -17,6 +19,9 @@ echo "6_nodes"
 
 ./export_influxdb_data.sh 1618915318532 1618916041273
 ./build_data.py "25tps|6_nodes"
+
+./export_influxdb_data.sh 1618928118662 1618930060338
+./build_data.py "40tps|6_nodes"
 
 echo "12_nodes"
 ./export_influxdb_data.sh 1618781571866 1618795969900
@@ -33,3 +38,6 @@ echo "TODO"
 
 echo "24_nodes"
 echo "TODO"
+
+
+echo "End compiling all results"
