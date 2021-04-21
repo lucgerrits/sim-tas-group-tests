@@ -3672,7 +3672,7 @@ items:
               - name: validators
                 containerPort: 8800
             env:
-              - name: pbft2priv
+              - name: pbft7priv
                 valueFrom:
                   configMapKeyRef:
                     name: keys-config

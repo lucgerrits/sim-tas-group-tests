@@ -20,7 +20,7 @@ items:
       - ReadWriteOnce
     persistentVolumeReclaimPolicy: Recycle
     hostPath:
-      path: "/mnt/influxdb"
+      path: "/datas/influxdb"
 
 #------------------INFLUXDB-PERSISTENT-VOLUME-CLAIM----------------------
 - apiVersion: v1
