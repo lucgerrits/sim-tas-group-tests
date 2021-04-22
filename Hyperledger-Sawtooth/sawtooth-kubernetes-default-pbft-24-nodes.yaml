@@ -410,13 +410,13 @@ items:
                     sawset genesis -k /root/.sawtooth/keys/my_key.priv -o config-genesis.batch
                   fi &&
                   sleep 30 &&
-                  echo sawtooth.consensus.pbft.members=["\"$pbft0pub\",\"$pbft1pub\",\"$pbft2pub\",\"$pbft3pub\",\"$pbft4pub\",\"$pbft5pub\",\"$pbft6pub\",\"$pbft7pub\",\"$pbft8pub\",\"$pbft9pub\",\"$pbft10pub\",\"$pbft11pub\",\"$pbft12pub\",\"$pbft13pub\",\"$pbft14pub\",\"$pbft15pub\",\"$pbft16pub\",\"$pbft17pub\",\"$pbft18pub\",\"$pbft19pub\",\"$pbft20pub\",\"$pbft21pub\",\"$pbft22pub\",\"$pbft23pub\""] &&
+                  echo sawtooth.consensus.pbft.members=["\"$pbft0pub\",\"$pbft1pub\",\"$pbft2pub\",\"$pbft3pub\",\"$pbft4pub\",\"$pbft5pub\",\"$pbft6pub\",\"$pbft7pub\",\"$pbft8pub\",\"$pbft9pub\",\"$pbft10pub\",\"$pbft11pub\""] &&
                   if [ ! -e config.batch ]; then
                     sawset proposal create \
                       -k /root/.sawtooth/keys/my_key.priv \
                       sawtooth.consensus.algorithm.name=pbft \
                       sawtooth.consensus.algorithm.version=1.0\
-                      sawtooth.consensus.pbft.members=["\"$pbft0pub\",\"$pbft1pub\",\"$pbft2pub\",\"$pbft3pub\",\"$pbft4pub\",\"$pbft5pub\",\"$pbft6pub\",\"$pbft7pub\",\"$pbft8pub\",\"$pbft9pub\",\"$pbft10pub\",\"$pbft11pub\",\"$pbft12pub\",\"$pbft13pub\",\"$pbft14pub\",\"$pbft15pub\",\"$pbft16pub\",\"$pbft17pub\",\"$pbft18pub\",\"$pbft19pub\",\"$pbft20pub\",\"$pbft21pub\",\"$pbft22pub\",\"$pbft23pub\""] \
+                      sawtooth.consensus.pbft.members=["\"$pbft0pub\",\"$pbft1pub\",\"$pbft2pub\",\"$pbft3pub\",\"$pbft4pub\",\"$pbft5pub\",\"$pbft6pub\",\"$pbft7pub\",\"$pbft8pub\",\"$pbft9pub\",\"$pbft10pub\",\"$pbft11pub\""] \
                       sawtooth.publisher.max_batches_per_block=1100 \
                       sawtooth.cartp.factory.members='[\"02a47084f6228bf7eb91e1628140f5b717cad1d1166b4ad7665e88204e74f92e5c\"]' \
                       -o config.batch
@@ -1341,7 +1341,7 @@ items:
                 valueFrom:
                   configMapKeyRef:
                     name: keys-config
-                    key: pbft2pub
+                    key: pbft1pub
             command:
               - bash
             args:
@@ -3212,7 +3212,7 @@ items:
                 valueFrom:
                   configMapKeyRef:
                     name: keys-config
-                    key: pbft6pub
+                    key: pbft1pub
             command:
               - bash
             args:
@@ -5665,6 +5665,7 @@ items:
         port: 8800
         targetPort: 8800
 
+
 # --------------------------=== pod 12 ===--------------------------
 
 - apiVersion: apps/v1
@@ -5681,959 +5682,6 @@ items:
       metadata:
         labels:
           name: sawtooth-12
-          serviceSelector: sawtooth-node
-      spec:
-        securityContext:
-          fsGroup: 101
-        containers:
-          - name: sawtooth-pbft-engine
-            image: hyperledger/sawtooth-pbft-engine:chime
-            resources:
-              requests:
-                memory: "125Mi"
-                cpu: "0.2"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "250Mi"
-                cpu: "0.5"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - "pbft-engine -vv --connect tcp://$HOSTNAME:5050"
-
-          - name: sawtooth-rest-api
-            image: hyperledger/sawtooth-rest-api:chime
-            resources:
-              requests:
-                memory: "250Mi"
-                cpu: "0.2"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "375Mi"
-                cpu: "0.5"
-                ephemeral-storage: "375Mi"
-            ports:
-              - name: api
-                containerPort: 8008
-            command:
-              - bash
-            args:
-              - -c
-              - "sawtooth-rest-api -vv -C tcp://$HOSTNAME:4004 -B 0.0.0.0:8008"
-            
-            volumeMounts:
-              - name: validator-config-volume
-                mountPath: /etc/sawtooth/rest_api.toml
-                subPath: validator.toml
-
-            readinessProbe:
-              httpGet:
-                path: /status
-                port: 8008
-              initialDelaySeconds: 15
-              periodSeconds: 10
-
-          - name: sawtooth-settings-tp
-            image: hyperledger/sawtooth-settings-tp:chime
-            resources:
-              requests:
-                memory: "25Mi"
-                cpu: "25m"
-                ephemeral-storage: "50Mi"
-              limits:
-                memory: "37Mi"
-                cpu: "35m"
-                ephemeral-storage: "50Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - "settings-tp -vv -C tcp://$HOSTNAME:4004"
-
-          - name: sawtooth-shell
-            image: hyperledger/sawtooth-shell:chime
-            resources:
-              requests:
-                memory: "25Mi"
-                cpu: "25m"
-                ephemeral-storage: "50Mi"
-              limits:
-                memory: "37Mi"
-                cpu: "35m"
-                ephemeral-storage: "50Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - "sawtooth keygen && tail -f /dev/null"
-
-          - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-
-          - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-          
-          - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-          
-          - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-
-          - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-
-          - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-
-          - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-
-          - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-
-          - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-
-          - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-
-          - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
-            resources:
-              requests:
-                memory: "1Gi"
-                cpu: "0.5"
-                ephemeral-storage: "1500Mi"
-              limits:
-                memory: "1750Mi"
-                cpu: "1.1"
-                ephemeral-storage: "2Gi"
-            ports:
-              - name: tp
-                containerPort: 4004
-              - name: consensus
-                containerPort: 5050
-              - name: validators
-                containerPort: 8800
-            env:
-              - name: pbft12priv
-                valueFrom:
-                  configMapKeyRef:
-                    name: keys-config
-                    key: pbft12priv
-              - name: pbft12pub
-                valueFrom:
-                  configMapKeyRef:
-                    name: keys-config
-                    key: pbft12pub
-            command:
-              - bash
-            args:
-              - -c
-              - |
-                  rm -rf /var/lib/sawtooth/* &&
-                  if [ ! -e /etc/sawtooth/keys/validator.priv ]; then
-                    echo $pbft12priv > /etc/sawtooth/keys/validator.priv
-                    echo $pbft12pub > /etc/sawtooth/keys/validator.pub
-                  fi &&
-                  sawtooth keygen my_key &&
-                  sawtooth-validator -v \
-                    --endpoint tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \
-                    --bind component:tcp://eth0:4004 \
-                    --bind consensus:tcp://eth0:5050 \
-                    --bind network:tcp://eth0:8800 \
-                    --scheduler parallel \
-                    --peering static \
-                    --maximum-peer-connectivity 10000 \
-                    --peers tcp://$SAWTOOTH_0_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_1_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_2_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_3_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_4_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800
-            volumeMounts:
-              - name: validator-config-volume
-                mountPath: /etc/sawtooth/validator.toml
-                subPath: validator.toml
-              - name: sawtooth-data-12
-                mountPath: /var/lib/sawtooth
-          - name: sawtooth-xo-tp-python
-            image: hyperledger/sawtooth-xo-tp-python:chime
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "50Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "125m"
-                ephemeral-storage: "200Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - "xo-tp-python -vv -C tcp://$HOSTNAME:4004"
-        volumes:
-          - name: validator-config-volume
-            configMap:
-              name: validator-influx-config
-              defaultMode: 0640
-          - name: sawtooth-data-12
-            persistentVolumeClaim:
-            claimName: sawtooth-data-12
-
-
-- apiVersion: v1
-  kind: Service
-  metadata:
-    name: sawtooth-0
-    namespace: sim-sawtooth-net
-  spec:
-    type: ClusterIP
-    selector:
-      name: sawtooth-0
-    ports:
-      - name: "4004"
-        protocol: TCP
-        port: 4004
-        targetPort: 4004
-      - name: "5050"
-        protocol: TCP
-        port: 5050
-        targetPort: 5050
-      - name: "8008"
-        protocol: TCP
-        port: 8008
-        targetPort: 8008
-      - name: "8080"
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
-      - name: "8800"
-        protocol: TCP
-        port: 8800
-        targetPort: 8800
-
-
-# --------------------------=== pod 13 ===--------------------------
-
-- apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    name: node-13
-    namespace: sim-sawtooth-net
-  spec:
-    replicas: 1
-    selector:
-      matchLabels:
-        name: sawtooth-13
-    template:
-      metadata:
-        labels:
-          name: sawtooth-13
-          serviceSelector: sawtooth-node
-      spec:
-        securityContext:
-          fsGroup: 101
-        containers:
-          - name: sawtooth-pbft-engine
-            image: hyperledger/sawtooth-pbft-engine:chime
-            resources:
-              requests:
-                memory: "125Mi"
-                cpu: "0.2"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "250Mi"
-                cpu: "0.5"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - "pbft-engine -vv --connect tcp://$HOSTNAME:5050"
-
-          - name: sawtooth-rest-api
-            image: hyperledger/sawtooth-rest-api:chime
-            resources:
-              requests:
-                memory: "250Mi"
-                cpu: "0.2"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "375Mi"
-                cpu: "0.5"
-                ephemeral-storage: "375Mi"
-            ports:
-              - name: api
-                containerPort: 8008
-            command:
-              - bash
-            args:
-              - -c
-              - "sawtooth-rest-api -vv -C tcp://$HOSTNAME:4004 -B 0.0.0.0:8008"
-            volumeMounts:
-              - name: validator-config-volume
-                mountPath: /etc/sawtooth/rest_api.toml
-                subPath: validator.toml
-
-            readinessProbe:
-              httpGet:
-                path: /status
-                port: 8008
-              initialDelaySeconds: 15
-              periodSeconds: 10
-
-          - name: sawtooth-settings-tp
-            image: hyperledger/sawtooth-settings-tp:chime
-            resources:
-              requests:
-                memory: "25Mi"
-                cpu: "25m"
-                ephemeral-storage: "50Mi"
-              limits:
-                memory: "37Mi"
-                cpu: "35m"
-                ephemeral-storage: "50Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - "settings-tp -vv -C tcp://$HOSTNAME:4004"
-
-          - name: sawtooth-shell
-            image: hyperledger/sawtooth-shell:chime
-            resources:
-              requests:
-                memory: "25Mi"
-                cpu: "25m"
-                ephemeral-storage: "50Mi"
-              limits:
-                memory: "37Mi"
-                cpu: "35m"
-                ephemeral-storage: "50Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - "sawtooth keygen && tail -f /dev/null"
-          
-          - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-
-          - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-          
-          - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-          
-          - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-
-          - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-
-          - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-
-          - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-
-          - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-
-          - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-
-          - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-
-          - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
-            resources:
-              requests:
-                memory: "1Gi"
-                cpu: "0.5"
-                ephemeral-storage: "1500Mi"
-              limits:
-                memory: "1750Mi"
-                cpu: "1.1"
-                ephemeral-storage: "2Gi"
-            ports:
-              - name: tp
-                containerPort: 4004
-              - name: consensus
-                containerPort: 5050
-              - name: validators
-                containerPort: 8800
-            env:
-              - name: pbft13priv
-                valueFrom:
-                  configMapKeyRef:
-                    name: keys-config
-                    key: pbft13priv
-              - name: pbft13pub
-                valueFrom:
-                  configMapKeyRef:
-                    name: keys-config
-                    key: pbft13pub
-            command:
-              - bash
-            args:
-              - -c
-              - |
-                  rm -rf /var/lib/sawtooth/* &&
-                  if [ ! -e /etc/sawtooth/keys/validator.priv ]; then
-                    echo $pbft13priv > /etc/sawtooth/keys/validator.priv
-                    echo $pbft13pub > /etc/sawtooth/keys/validator.pub
-                  fi &&
-                  sawtooth keygen my_key &&
-                  sawtooth-validator -v \
-                    --endpoint tcp://$SAWTOOTH_13_SERVICE_HOST:8800 \
-                    --bind component:tcp://eth0:4004 \
-                    --bind consensus:tcp://eth0:5050 \
-                    --bind network:tcp://eth0:8800 \
-                    --scheduler parallel \
-                    --peering static \
-                    --maximum-peer-connectivity 10000 \
-                    --peers tcp://$SAWTOOTH_0_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_1_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_2_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_3_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_4_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800
-            volumeMounts:
-              - name: validator-config-volume
-                mountPath: /etc/sawtooth/validator.toml
-                subPath: validator.toml
-              - name: sawtooth-data-13
-                mountPath: /var/lib/sawtooth
-          - name: sawtooth-xo-tp-python
-            image: hyperledger/sawtooth-xo-tp-python:chime
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "50Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "125m"
-                ephemeral-storage: "200Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - "xo-tp-python -vv -C tcp://$HOSTNAME:4004"
-        volumes:
-          - name: validator-config-volume
-            configMap:
-              name: validator-influx-config
-              defaultMode: 0640
-          - name: sawtooth-data-13
-            persistentVolumeClaim:
-            claimName: sawtooth-data-13
-- apiVersion: v1
-  kind: Service
-  metadata:
-    name: sawtooth-1
-    namespace: sim-sawtooth-net
-  spec:
-    type: ClusterIP
-    selector:
-      name: sawtooth-1
-    ports:
-      - name: "4004"
-        protocol: TCP
-        port: 4004
-        targetPort: 4004
-      - name: "5050"
-        protocol: TCP
-        port: 5050
-        targetPort: 5050
-      - name: "8008"
-        protocol: TCP
-        port: 8008
-        targetPort: 8008
-      - name: "8080"
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
-      - name: "8800"
-        protocol: TCP
-        port: 8800
-        targetPort: 8800
-
-# --------------------------=== pod 14 ===--------------------------
-
-- apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    name: node-14
-    namespace: sim-sawtooth-net
-  spec:
-    replicas: 1
-    selector:
-      matchLabels:
-        name: sawtooth-14
-    template:
-      metadata:
-        labels:
-          name: sawtooth-14
           serviceSelector: sawtooth-node
       spec:
         securityContext:
@@ -6991,16 +6039,16 @@ items:
               - name: validators
                 containerPort: 8800
             env:
-              - name: pbft14priv
+              - name: pbft12priv
                 valueFrom:
                   configMapKeyRef:
                     name: keys-config
-                    key: pbft14priv
-              - name: pbft14pub
+                    key: pbft12priv
+              - name: pbft12pub
                 valueFrom:
                   configMapKeyRef:
                     name: keys-config
-                    key: pbft14pub
+                    key: pbft12pub
             command:
               - bash
             args:
@@ -7008,12 +6056,12 @@ items:
               - |
                   rm -rf /var/lib/sawtooth/* &&
                   if [ ! -e /etc/sawtooth/keys/validator.priv ]; then
-                    echo $pbft14priv > /etc/sawtooth/keys/validator.priv
-                    echo $pbft14pub > /etc/sawtooth/keys/validator.pub
+                    echo $pbft12priv > /etc/sawtooth/keys/validator.priv
+                    echo $pbft12pub > /etc/sawtooth/keys/validator.pub
                   fi &&
                   sawtooth keygen my_key &&
-                  sawtooth-validator -v \
-                    --endpoint tcp://$SAWTOOTH_14_SERVICE_HOST:8800 \
+                  sawtooth-validator -vv \
+                    --endpoint tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \
                     --bind component:tcp://eth0:4004 \
                     --bind consensus:tcp://eth0:5050 \
                     --bind network:tcp://eth0:8800 \
@@ -7031,14 +6079,12 @@ items:
                     --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_13_SERVICE_HOST:8800
+                    --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800 
             volumeMounts:
               - name: validator-config-volume
                 mountPath: /etc/sawtooth/validator.toml
                 subPath: validator.toml
-              - name: sawtooth-data-14
+              - name: sawtooth-data-12
                 mountPath: /var/lib/sawtooth
           - name: sawtooth-xo-tp-python
             image: hyperledger/sawtooth-xo-tp-python:chime
@@ -7061,19 +6107,19 @@ items:
             configMap:
               name: validator-influx-config
               defaultMode: 0640
-          - name: sawtooth-data-14
+          - name: sawtooth-data-12
             persistentVolumeClaim:
-            claimName: sawtooth-data-14
+            claimName: sawtooth-data-12
 
 - apiVersion: v1
   kind: Service
   metadata:
-    name: sawtooth-2
+    name: sawtooth-12
     namespace: sim-sawtooth-net
   spec:
     type: ClusterIP
     selector:
-      name: sawtooth-2
+      name: sawtooth-12
     ports:
       - name: "4004"
         protocol: TCP
@@ -7097,22 +6143,22 @@ items:
         targetPort: 8800
 
 
-# --------------------------=== pod 15 ===--------------------------
+# --------------------------=== pod 13 ===--------------------------
 
 - apiVersion: apps/v1
   kind: Deployment
   metadata:
-    name: node-15
+    name: node-13
     namespace: sim-sawtooth-net
   spec:
     replicas: 1
     selector:
       matchLabels:
-        name: sawtooth-15
+        name: sawtooth-13
     template:
       metadata:
         labels:
-          name: sawtooth-15
+          name: sawtooth-13
           serviceSelector: sawtooth-node
       spec:
         securityContext:
@@ -7471,6 +6517,961 @@ items:
               - name: validators
                 containerPort: 8800
             env:
+              - name: pbft13priv
+                valueFrom:
+                  configMapKeyRef:
+                    name: keys-config
+                    key: pbft13priv
+              - name: pbft13pub
+                valueFrom:
+                  configMapKeyRef:
+                    name: keys-config
+                    key: pbft13pub
+            command:
+              - bash
+            args:
+              - -c
+              - |
+                  rm -rf /var/lib/sawtooth/* &&
+                  if [ ! -e /etc/sawtooth/keys/validator.priv ]; then
+                    echo $pbft13priv > /etc/sawtooth/keys/validator.priv
+                    echo $pbft13pub > /etc/sawtooth/keys/validator.pub
+                  fi &&
+                  sawtooth keygen my_key &&
+                  sawtooth-validator -vv \
+                    --endpoint tcp://$SAWTOOTH_13_SERVICE_HOST:8800 \
+                    --bind component:tcp://eth0:4004 \
+                    --bind consensus:tcp://eth0:5050 \
+                    --bind network:tcp://eth0:8800 \
+                    --scheduler parallel \
+                    --peering static \
+                    --maximum-peer-connectivity 10000 \
+                    --peers tcp://$SAWTOOTH_0_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_1_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_2_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_3_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_4_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800
+            volumeMounts:
+              - name: validator-config-volume
+                mountPath: /etc/sawtooth/validator.toml
+                subPath: validator.toml
+              - name: sawtooth-data-13
+                mountPath: /var/lib/sawtooth
+          - name: sawtooth-xo-tp-python
+            image: hyperledger/sawtooth-xo-tp-python:chime
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "50Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "125m"
+                ephemeral-storage: "200Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - "xo-tp-python -vv -C tcp://$HOSTNAME:4004"
+        volumes:
+          - name: validator-config-volume
+            configMap:
+              name: validator-influx-config
+              defaultMode: 0640
+          - name: sawtooth-data-13
+            persistentVolumeClaim:
+            claimName: sawtooth-data-13
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: sawtooth-13
+    namespace: sim-sawtooth-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: sawtooth-13
+    ports:
+      - name: "4004"
+        protocol: TCP
+        port: 4004
+        targetPort: 4004
+      - name: "5050"
+        protocol: TCP
+        port: 5050
+        targetPort: 5050
+      - name: "8008"
+        protocol: TCP
+        port: 8008
+        targetPort: 8008
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "8800"
+        protocol: TCP
+        port: 8800
+        targetPort: 8800
+
+
+# --------------------------=== pod 14 ===--------------------------
+
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: node-14
+    namespace: sim-sawtooth-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: sawtooth-14
+    template:
+      metadata:
+        labels:
+          name: sawtooth-14
+          serviceSelector: sawtooth-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: sawtooth-pbft-engine
+            image: hyperledger/sawtooth-pbft-engine:chime
+            resources:
+              requests:
+                memory: "125Mi"
+                cpu: "0.2"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "250Mi"
+                cpu: "0.5"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - "pbft-engine -vv --connect tcp://$HOSTNAME:5050"
+
+          - name: sawtooth-rest-api
+            image: hyperledger/sawtooth-rest-api:chime
+            resources:
+              requests:
+                memory: "250Mi"
+                cpu: "0.2"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "375Mi"
+                cpu: "0.5"
+                ephemeral-storage: "375Mi"
+            ports:
+              - name: api
+                containerPort: 8008
+            command:
+              - bash
+            args:
+              - -c
+              - "sawtooth-rest-api -vv -C tcp://$HOSTNAME:4004 -B 0.0.0.0:8008"
+            volumeMounts:
+              - name: validator-config-volume
+                mountPath: /etc/sawtooth/rest_api.toml
+                subPath: validator.toml
+            readinessProbe:
+              httpGet:
+                path: /status
+                port: 8008
+              initialDelaySeconds: 15
+              periodSeconds: 10
+
+          - name: sawtooth-settings-tp
+            image: hyperledger/sawtooth-settings-tp:chime
+            resources:
+              requests:
+                memory: "25Mi"
+                cpu: "25m"
+                ephemeral-storage: "50Mi"
+              limits:
+                memory: "37Mi"
+                cpu: "35m"
+                ephemeral-storage: "50Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - "settings-tp -vv -C tcp://$HOSTNAME:4004"
+
+          - name: sawtooth-shell
+            image: hyperledger/sawtooth-shell:chime
+            resources:
+              requests:
+                memory: "25Mi"
+                cpu: "25m"
+                ephemeral-storage: "50Mi"
+              limits:
+                memory: "37Mi"
+                cpu: "35m"
+                ephemeral-storage: "50Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - "sawtooth keygen && tail -f /dev/null"
+
+          - name: sawtooth-car-tp-1
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-2
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+          
+          - name: sawtooth-car-tp-3
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+          
+          - name: sawtooth-car-tp-4
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-5
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-6
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-7
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-8
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-9
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-10
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+ 
+
+          - name: sawtooth-validator
+            image: hyperledger/sawtooth-validator:chime
+            resources:
+              requests:
+                memory: "1Gi"
+                cpu: "0.5"
+                ephemeral-storage: "1500Mi"
+              limits:
+                memory: "1750Mi"
+                cpu: "1.1"
+                ephemeral-storage: "2Gi"
+            ports:
+              - name: tp
+                containerPort: 4004
+              - name: consensus
+                containerPort: 5050
+              - name: validators
+                containerPort: 8800
+            env:
+              - name: pbft14priv
+                valueFrom:
+                  configMapKeyRef:
+                    name: keys-config
+                    key: pbft14priv
+              - name: pbft14pub
+                valueFrom:
+                  configMapKeyRef:
+                    name: keys-config
+                    key: pbft14pub
+            command:
+              - bash
+            args:
+              - -c
+              - |
+                  rm -rf /var/lib/sawtooth/* &&
+                  if [ ! -e /etc/sawtooth/keys/validator.priv ]; then
+                    echo $pbft14priv > /etc/sawtooth/keys/validator.priv
+                    echo $pbft14pub > /etc/sawtooth/keys/validator.pub
+                  fi &&
+                  sawtooth keygen my_key &&
+                  sawtooth-validator -v \
+                    --endpoint tcp://$SAWTOOTH_14_SERVICE_HOST:8800 \
+                    --bind component:tcp://eth0:4004 \
+                    --bind consensus:tcp://eth0:5050 \
+                    --bind network:tcp://eth0:8800 \
+                    --scheduler parallel \
+                    --peering static \
+                    --maximum-peer-connectivity 10000 \
+                    --peers tcp://$SAWTOOTH_0_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_1_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_2_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_3_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_4_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_13_SERVICE_HOST:8800
+
+            volumeMounts:
+              - name: validator-config-volume
+                mountPath: /etc/sawtooth/validator.toml
+                subPath: validator.toml
+              - name: sawtooth-data-14
+                mountPath: /var/lib/sawtooth
+          - name: sawtooth-xo-tp-python
+            image: hyperledger/sawtooth-xo-tp-python:chime
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "50Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "125m"
+                ephemeral-storage: "200Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - "xo-tp-python -vv -C tcp://$HOSTNAME:4004"
+        volumes:
+          - name: validator-config-volume
+            configMap:
+              name: validator-influx-config
+              defaultMode: 0640
+          - name: sawtooth-data-14
+            persistentVolumeClaim:
+            claimName: sawtooth-data-14
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: sawtooth-14
+    namespace: sim-sawtooth-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: sawtooth-14
+    ports:
+      - name: "4004"
+        protocol: TCP
+        port: 4004
+        targetPort: 4004
+      - name: "5050"
+        protocol: TCP
+        port: 5050
+        targetPort: 5050
+      - name: "8008"
+        protocol: TCP
+        port: 8008
+        targetPort: 8008
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "8800"
+        protocol: TCP
+        port: 8800
+        targetPort: 8800
+
+
+# --------------------------=== pod 15 ===--------------------------
+
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: node-15
+    namespace: sim-sawtooth-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: sawtooth-15
+    template:
+      metadata:
+        labels:
+          name: sawtooth-15
+          serviceSelector: sawtooth-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: sawtooth-pbft-engine
+            image: hyperledger/sawtooth-pbft-engine:chime
+            resources:
+              requests:
+                memory: "125Mi"
+                cpu: "0.2"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "250Mi"
+                cpu: "0.5"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - "pbft-engine -vv --connect tcp://$HOSTNAME:5050"
+
+          - name: sawtooth-rest-api
+            image: hyperledger/sawtooth-rest-api:chime
+            resources:
+              requests:
+                memory: "250Mi"
+                cpu: "0.2"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "375Mi"
+                cpu: "0.5"
+                ephemeral-storage: "375Mi"
+            ports:
+              - name: api
+                containerPort: 8008
+            command:
+              - bash
+            args:
+              - -c
+              - "sawtooth-rest-api -vv -C tcp://$HOSTNAME:4004 -B 0.0.0.0:8008"
+            volumeMounts:
+              - name: validator-config-volume
+                mountPath: /etc/sawtooth/rest_api.toml
+                subPath: validator.toml
+            readinessProbe:
+              httpGet:
+                path: /status
+                port: 8008
+              initialDelaySeconds: 15
+              periodSeconds: 10
+
+          - name: sawtooth-settings-tp
+            image: hyperledger/sawtooth-settings-tp:chime
+            resources:
+              requests:
+                memory: "25Mi"
+                cpu: "25m"
+                ephemeral-storage: "50Mi"
+              limits:
+                memory: "37Mi"
+                cpu: "35m"
+                ephemeral-storage: "50Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - "settings-tp -vv -C tcp://$HOSTNAME:4004"
+
+          - name: sawtooth-shell
+            image: hyperledger/sawtooth-shell:chime
+            resources:
+              requests:
+                memory: "25Mi"
+                cpu: "25m"
+                ephemeral-storage: "50Mi"
+              limits:
+                memory: "37Mi"
+                cpu: "35m"
+                ephemeral-storage: "50Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - "sawtooth keygen && tail -f /dev/null"
+
+          - name: sawtooth-car-tp-1
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-2
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+          
+          - name: sawtooth-car-tp-3
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+          
+          - name: sawtooth-car-tp-4
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-5
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-6
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-7
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-8
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-9
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-10
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-validator
+            image: hyperledger/sawtooth-validator:chime
+            resources:
+              requests:
+                memory: "1Gi"
+                cpu: "0.5"
+                ephemeral-storage: "1500Mi"
+              limits:
+                memory: "1750Mi"
+                cpu: "1.1"
+                ephemeral-storage: "2Gi"
+            ports:
+              - name: tp
+                containerPort: 4004
+              - name: consensus
+                containerPort: 5050
+              - name: validators
+                containerPort: 8800
+            env:
               - name: pbft15priv
                 valueFrom:
                   configMapKeyRef:
@@ -7515,6 +7516,7 @@ items:
                     --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_13_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_14_SERVICE_HOST:8800
+
             volumeMounts:
               - name: validator-config-volume
                 mountPath: /etc/sawtooth/validator.toml
@@ -7549,12 +7551,12 @@ items:
 - apiVersion: v1
   kind: Service
   metadata:
-    name: sawtooth-3
+    name: sawtooth-15
     namespace: sim-sawtooth-net
   spec:
     type: ClusterIP
     selector:
-      name: sawtooth-3
+      name: sawtooth-15
     ports:
       - name: "4004"
         protocol: TCP
@@ -7929,7 +7931,6 @@ items:
                   python3 setup.py clean --all &&
                   python3 setup.py build &&
                   cartp-tp-python -C tcp://$HOSTNAME:4004 
- 
 
           - name: sawtooth-validator
             image: hyperledger/sawtooth-validator:chime
@@ -8029,12 +8030,12 @@ items:
 - apiVersion: v1
   kind: Service
   metadata:
-    name: sawtooth-4
+    name: sawtooth-16
     namespace: sim-sawtooth-net
   spec:
     type: ClusterIP
     selector:
-      name: sawtooth-4
+      name: sawtooth-16
     ports:
       - name: "4004"
         protocol: TCP
@@ -8056,7 +8057,6 @@ items:
         protocol: TCP
         port: 8800
         targetPort: 8800
-
 
 # --------------------------=== pod 17 ===--------------------------
 
@@ -8509,12 +8509,12 @@ items:
 - apiVersion: v1
   kind: Service
   metadata:
-    name: sawtooth-5
+    name: sawtooth-17
     namespace: sim-sawtooth-net
   spec:
     type: ClusterIP
     selector:
-      name: sawtooth-5
+      name: sawtooth-17
     ports:
       - name: "4004"
         protocol: TCP
@@ -8554,486 +8554,6 @@ items:
       metadata:
         labels:
           name: sawtooth-18
-          serviceSelector: sawtooth-node
-      spec:
-        securityContext:
-          fsGroup: 101
-        containers:
-          - name: sawtooth-pbft-engine
-            image: hyperledger/sawtooth-pbft-engine:chime
-            resources:
-              requests:
-                memory: "125Mi"
-                cpu: "0.2"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "250Mi"
-                cpu: "0.5"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - "pbft-engine -vv --connect tcp://$HOSTNAME:5050"
-
-          - name: sawtooth-rest-api
-            image: hyperledger/sawtooth-rest-api:chime
-            resources:
-              requests:
-                memory: "250Mi"
-                cpu: "0.2"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "375Mi"
-                cpu: "0.5"
-                ephemeral-storage: "375Mi"
-            ports:
-              - name: api
-                containerPort: 8008
-            command:
-              - bash
-            args:
-              - -c
-              - "sawtooth-rest-api -vv -C tcp://$HOSTNAME:4004 -B 0.0.0.0:8008"
-            volumeMounts:
-              - name: validator-config-volume
-                mountPath: /etc/sawtooth/rest_api.toml
-                subPath: validator.toml
-
-            readinessProbe:
-              httpGet:
-                path: /status
-                port: 8008
-              initialDelaySeconds: 15
-              periodSeconds: 10
-
-          - name: sawtooth-settings-tp
-            image: hyperledger/sawtooth-settings-tp:chime
-            resources:
-              requests:
-                memory: "25Mi"
-                cpu: "25m"
-                ephemeral-storage: "50Mi"
-              limits:
-                memory: "37Mi"
-                cpu: "35m"
-                ephemeral-storage: "50Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - "settings-tp -vv -C tcp://$HOSTNAME:4004"
-
-          - name: sawtooth-shell
-            image: hyperledger/sawtooth-shell:chime
-            resources:
-              requests:
-                memory: "25Mi"
-                cpu: "25m"
-                ephemeral-storage: "50Mi"
-              limits:
-                memory: "37Mi"
-                cpu: "35m"
-                ephemeral-storage: "50Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - "sawtooth keygen && tail -f /dev/null"
-          
-          - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-
-          - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-          
-          - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-          
-          - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-
-          - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-
-          - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-
-          - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-
-          - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-
-          - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-
-          - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "250Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "500Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
-
-          - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
-            resources:
-              requests:
-                memory: "1Gi"
-                cpu: "0.5"
-                ephemeral-storage: "1500Mi"
-              limits:
-                memory: "1750Mi"
-                cpu: "1.1"
-                ephemeral-storage: "2Gi"
-            ports:
-              - name: tp
-                containerPort: 4004
-              - name: consensus
-                containerPort: 5050
-              - name: validators
-                containerPort: 8800
-            env:
-              - name: pbft18priv
-                valueFrom:
-                  configMapKeyRef:
-                    name: keys-config
-                    key: pbft18priv
-              - name: pbft18pub
-                valueFrom:
-                  configMapKeyRef:
-                    name: keys-config
-                    key: pbft18pub
-            command:
-              - bash
-            args:
-              - -c
-              - |
-                  rm -rf /var/lib/sawtooth/* &&
-                  if [ ! -e /etc/sawtooth/keys/validator.priv ]; then
-                    echo $pbft18priv > /etc/sawtooth/keys/validator.priv
-                    echo $pbft18pub > /etc/sawtooth/keys/validator.pub
-                  fi &&
-                  sawtooth keygen my_key &&
-                  sawtooth-validator -v \
-                    --endpoint tcp://$SAWTOOTH_18_SERVICE_HOST:8800 \
-                    --bind component:tcp://eth0:4004 \
-                    --bind consensus:tcp://eth0:5050 \
-                    --bind network:tcp://eth0:8800 \
-                    --scheduler parallel \
-                    --peering static \
-                    --maximum-peer-connectivity 10000 \
-                    --peers tcp://$SAWTOOTH_0_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_1_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_2_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_3_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_4_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_13_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_14_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_15_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_16_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_17_SERVICE_HOST:8800
-            volumeMounts:
-              - name: validator-config-volume
-                mountPath: /etc/sawtooth/validator.toml
-                subPath: validator.toml
-              - name: sawtooth-data-18
-                mountPath: /var/lib/sawtooth
-          - name: sawtooth-xo-tp-python
-            image: hyperledger/sawtooth-xo-tp-python:chime
-            resources:
-              requests:
-                memory: "50Mi"
-                cpu: "50m"
-                ephemeral-storage: "50Mi"
-              limits:
-                memory: "50Mi"
-                cpu: "125m"
-                ephemeral-storage: "200Mi"
-            command:
-              - bash
-            args:
-              - -c
-              - "xo-tp-python -vv -C tcp://$HOSTNAME:4004"
-        volumes:
-          - name: validator-config-volume
-            configMap:
-              name: validator-influx-config
-              defaultMode: 0640
-          - name: sawtooth-data-18
-            persistentVolumeClaim:
-            claimName: sawtooth-data-18
-- apiVersion: v1
-  kind: Service
-  metadata:
-    name: sawtooth-6
-    namespace: sim-sawtooth-net
-  spec:
-    type: ClusterIP
-    selector:
-      name: sawtooth-6
-    ports:
-      - name: "4004"
-        protocol: TCP
-        port: 4004
-        targetPort: 4004
-      - name: "5050"
-        protocol: TCP
-        port: 5050
-        targetPort: 5050
-      - name: "8008"
-        protocol: TCP
-        port: 8008
-        targetPort: 8008
-      - name: "8080"
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
-      - name: "8800"
-        protocol: TCP
-        port: 8800
-        targetPort: 8800
-
-# --------------------------=== pod 19 ===--------------------------
-
-- apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    name: node-19
-    namespace: sim-sawtooth-net
-  spec:
-    replicas: 1
-    selector:
-      matchLabels:
-        name: sawtooth-19
-    template:
-      metadata:
-        labels:
-          name: sawtooth-19
           serviceSelector: sawtooth-node
       spec:
         securityContext:
@@ -9391,16 +8911,16 @@ items:
               - name: validators
                 containerPort: 8800
             env:
-              - name: pbft19priv
+              - name: pbft18priv
                 valueFrom:
                   configMapKeyRef:
                     name: keys-config
-                    key: pbft19priv
-              - name: pbft19pub
+                    key: pbft18priv
+              - name: pbft18pub
                 valueFrom:
                   configMapKeyRef:
                     name: keys-config
-                    key: pbft19pub
+                    key: pbft18pub
             command:
               - bash
             args:
@@ -9408,12 +8928,12 @@ items:
               - |
                   rm -rf /var/lib/sawtooth/* &&
                   if [ ! -e /etc/sawtooth/keys/validator.priv ]; then
-                    echo $pbft19priv > /etc/sawtooth/keys/validator.priv
-                    echo $pbft19pub > /etc/sawtooth/keys/validator.pub
+                    echo $pbft18priv > /etc/sawtooth/keys/validator.priv
+                    echo $pbft18pub > /etc/sawtooth/keys/validator.pub
                   fi &&
                   sawtooth keygen my_key &&
                   sawtooth-validator -v \
-                    --endpoint tcp://$SAWTOOTH_19_SERVICE_HOST:8800 \
+                    --endpoint tcp://$SAWTOOTH_18_SERVICE_HOST:8800 \
                     --bind component:tcp://eth0:4004 \
                     --bind consensus:tcp://eth0:5050 \
                     --bind network:tcp://eth0:8800 \
@@ -9437,13 +8957,12 @@ items:
                     --peers tcp://$SAWTOOTH_14_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_15_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_16_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_17_SERVICE_HOST:8800 \
-                    --peers tcp://$SAWTOOTH_18_SERVICE_HOST:8800
+                    --peers tcp://$SAWTOOTH_17_SERVICE_HOST:8800
             volumeMounts:
               - name: validator-config-volume
                 mountPath: /etc/sawtooth/validator.toml
                 subPath: validator.toml
-              - name: sawtooth-data-19
+              - name: sawtooth-data-18
                 mountPath: /var/lib/sawtooth
           - name: sawtooth-xo-tp-python
             image: hyperledger/sawtooth-xo-tp-python:chime
@@ -9466,19 +8985,19 @@ items:
             configMap:
               name: validator-influx-config
               defaultMode: 0640
-          - name: sawtooth-data-19
+          - name: sawtooth-data-18
             persistentVolumeClaim:
-            claimName: sawtooth-data-19
+            claimName: sawtooth-data-18
 
 - apiVersion: v1
   kind: Service
   metadata:
-    name: sawtooth-7
+    name: sawtooth-18
     namespace: sim-sawtooth-net
   spec:
     type: ClusterIP
     selector:
-      name: sawtooth-7
+      name: sawtooth-18
     ports:
       - name: "4004"
         protocol: TCP
@@ -9502,22 +9021,22 @@ items:
         targetPort: 8800
 
 
-# --------------------------=== pod 20 ===--------------------------
+# --------------------------=== pod 19 ===--------------------------
 
 - apiVersion: apps/v1
   kind: Deployment
   metadata:
-    name: node-20
+    name: node-19
     namespace: sim-sawtooth-net
   spec:
     replicas: 1
     selector:
       matchLabels:
-        name: sawtooth-20
+        name: sawtooth-19
     template:
       metadata:
         labels:
-          name: sawtooth-20
+          name: sawtooth-19
           serviceSelector: sawtooth-node
       spec:
         securityContext:
@@ -9876,6 +9395,489 @@ items:
               - name: validators
                 containerPort: 8800
             env:
+              - name: pbft19priv
+                valueFrom:
+                  configMapKeyRef:
+                    name: keys-config
+                    key: pbft19priv
+              - name: pbft19pub
+                valueFrom:
+                  configMapKeyRef:
+                    name: keys-config
+                    key: pbft19pub
+            command:
+              - bash
+            args:
+              - -c
+              - |
+                  rm -rf /var/lib/sawtooth/* &&
+                  if [ ! -e /etc/sawtooth/keys/validator.priv ]; then
+                    echo $pbft19priv > /etc/sawtooth/keys/validator.priv
+                    echo $pbft19pub > /etc/sawtooth/keys/validator.pub
+                  fi &&
+                  sawtooth keygen my_key &&
+                  sawtooth-validator -v \
+                    --endpoint tcp://$SAWTOOTH_19_SERVICE_HOST:8800 \
+                    --bind component:tcp://eth0:4004 \
+                    --bind consensus:tcp://eth0:5050 \
+                    --bind network:tcp://eth0:8800 \
+                    --scheduler parallel \
+                    --peering static \
+                    --maximum-peer-connectivity 10000 \
+                    --peers tcp://$SAWTOOTH_0_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_1_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_2_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_3_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_4_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_5_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_6_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_7_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_8_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_9_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_10_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_11_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_12_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_13_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_14_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_15_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_16_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_17_SERVICE_HOST:8800 \
+                    --peers tcp://$SAWTOOTH_18_SERVICE_HOST:8800
+            volumeMounts:
+              - name: validator-config-volume
+                mountPath: /etc/sawtooth/validator.toml
+                subPath: validator.toml
+              - name: sawtooth-data-19
+                mountPath: /var/lib/sawtooth
+          - name: sawtooth-xo-tp-python
+            image: hyperledger/sawtooth-xo-tp-python:chime
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "50Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "125m"
+                ephemeral-storage: "200Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - "xo-tp-python -vv -C tcp://$HOSTNAME:4004"
+        volumes:
+          - name: validator-config-volume
+            configMap:
+              name: validator-influx-config
+              defaultMode: 0640
+          - name: sawtooth-data-19
+            persistentVolumeClaim:
+            claimName: sawtooth-data-19
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: sawtooth-19
+    namespace: sim-sawtooth-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: sawtooth-19
+    ports:
+      - name: "4004"
+        protocol: TCP
+        port: 4004
+        targetPort: 4004
+      - name: "5050"
+        protocol: TCP
+        port: 5050
+        targetPort: 5050
+      - name: "8008"
+        protocol: TCP
+        port: 8008
+        targetPort: 8008
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "8800"
+        protocol: TCP
+        port: 8800
+        targetPort: 8800
+
+
+# --------------------------=== pod 20 ===--------------------------
+
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: node-20
+    namespace: sim-sawtooth-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: sawtooth-20
+    template:
+      metadata:
+        labels:
+          name: sawtooth-20
+          serviceSelector: sawtooth-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: sawtooth-pbft-engine
+            image: hyperledger/sawtooth-pbft-engine:chime
+            resources:
+              requests:
+                memory: "125Mi"
+                cpu: "0.2"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "250Mi"
+                cpu: "0.5"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - "pbft-engine -vv --connect tcp://$HOSTNAME:5050"
+
+          - name: sawtooth-rest-api
+            image: hyperledger/sawtooth-rest-api:chime
+            resources:
+              requests:
+                memory: "250Mi"
+                cpu: "0.2"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "375Mi"
+                cpu: "0.5"
+                ephemeral-storage: "375Mi"
+            ports:
+              - name: api
+                containerPort: 8008
+            command:
+              - bash
+            args:
+              - -c
+              - "sawtooth-rest-api -vv -C tcp://$HOSTNAME:4004 -B 0.0.0.0:8008"
+            volumeMounts:
+              - name: validator-config-volume
+                mountPath: /etc/sawtooth/rest_api.toml
+                subPath: validator.toml
+            readinessProbe:
+              httpGet:
+                path: /status
+                port: 8008
+              initialDelaySeconds: 15
+              periodSeconds: 10
+
+          - name: sawtooth-settings-tp
+            image: hyperledger/sawtooth-settings-tp:chime
+            resources:
+              requests:
+                memory: "25Mi"
+                cpu: "25m"
+                ephemeral-storage: "50Mi"
+              limits:
+                memory: "37Mi"
+                cpu: "35m"
+                ephemeral-storage: "50Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - "settings-tp -vv -C tcp://$HOSTNAME:4004"
+
+          - name: sawtooth-shell
+            image: hyperledger/sawtooth-shell:chime
+            resources:
+              requests:
+                memory: "25Mi"
+                cpu: "25m"
+                ephemeral-storage: "50Mi"
+              limits:
+                memory: "37Mi"
+                cpu: "35m"
+                ephemeral-storage: "50Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - "sawtooth keygen && tail -f /dev/null"
+
+          - name: sawtooth-car-tp-1
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-2
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+          
+          - name: sawtooth-car-tp-3
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+          
+          - name: sawtooth-car-tp-4
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-5
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-6
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-7
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-8
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-9
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+
+          - name: sawtooth-car-tp-10
+            image: projetsim/cartp-tp-python:latest
+            resources:
+              requests:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "250Mi"
+              limits:
+                memory: "50Mi"
+                cpu: "50m"
+                ephemeral-storage: "500Mi"
+            command:
+              - bash
+            args:
+              - -c
+              - | 
+                  pwd &&
+                  echo Executing_potogen &&
+                  bin/protogen &&
+                  echo cd_to_cartp_python &&
+                  cd examples/cartp_python &&
+                  python3 setup.py clean --all &&
+                  python3 setup.py build &&
+                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+ 
+
+          - name: sawtooth-validator
+            image: hyperledger/sawtooth-validator:chime
+            resources:
+              requests:
+                memory: "1Gi"
+                cpu: "0.5"
+                ephemeral-storage: "1500Mi"
+              limits:
+                memory: "1750Mi"
+                cpu: "1.1"
+                ephemeral-storage: "2Gi"
+            ports:
+              - name: tp
+                containerPort: 4004
+              - name: consensus
+                containerPort: 5050
+              - name: validators
+                containerPort: 8800
+            env:
               - name: pbft20priv
                 valueFrom:
                   configMapKeyRef:
@@ -9925,6 +9927,7 @@ items:
                     --peers tcp://$SAWTOOTH_17_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_18_SERVICE_HOST:8800 \
                     --peers tcp://$SAWTOOTH_19_SERVICE_HOST:8800
+
             volumeMounts:
               - name: validator-config-volume
                 mountPath: /etc/sawtooth/validator.toml
@@ -9959,12 +9962,12 @@ items:
 - apiVersion: v1
   kind: Service
   metadata:
-    name: sawtooth-8
+    name: sawtooth-20
     namespace: sim-sawtooth-net
   spec:
     type: ClusterIP
     selector:
-      name: sawtooth-8
+      name: sawtooth-20
     ports:
       - name: "4004"
         protocol: TCP
@@ -10339,7 +10342,6 @@ items:
                   python3 setup.py clean --all &&
                   python3 setup.py build &&
                   cartp-tp-python -C tcp://$HOSTNAME:4004 
- 
 
           - name: sawtooth-validator
             image: hyperledger/sawtooth-validator:chime
@@ -10440,17 +10442,17 @@ items:
               defaultMode: 0640
           - name: sawtooth-data-21
             persistentVolumeClaim:
-            claimName: sawtooth-data-21 
+            claimName: sawtooth-data-21
 
 - apiVersion: v1
   kind: Service
   metadata:
-    name: sawtooth-9
+    name: sawtooth-21
     namespace: sim-sawtooth-net
   spec:
     type: ClusterIP
     selector:
-      name: sawtooth-9
+      name: sawtooth-21
     ports:
       - name: "4004"
         protocol: TCP
@@ -10931,12 +10933,12 @@ items:
 - apiVersion: v1
   kind: Service
   metadata:
-    name: sawtooth-10
+    name: sawtooth-22
     namespace: sim-sawtooth-net
   spec:
     type: ClusterIP
     selector:
-      name: sawtooth-10
+      name: sawtooth-22
     ports:
       - name: "4004"
         protocol: TCP
@@ -11416,12 +11418,12 @@ items:
 - apiVersion: v1
   kind: Service
   metadata:
-    name: sawtooth-11
+    name: sawtooth-23
     namespace: sim-sawtooth-net
   spec:
     type: ClusterIP
     selector:
-      name: sawtooth-11
+      name: sawtooth-23
     ports:
       - name: "4004"
         protocol: TCP
@@ -11443,7 +11445,6 @@ items:
         protocol: TCP
         port: 8800
         targetPort: 8800
-
 
 
 
