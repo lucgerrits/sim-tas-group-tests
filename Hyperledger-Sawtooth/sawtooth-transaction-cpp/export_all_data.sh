@@ -54,7 +54,13 @@ echo "18_nodes"
 ./build_data.py "20tps|18_nodes"
 
 echo "24_nodes"
-echo "TODO"
+./export_influxdb_data.sh 1619087487723 1619100641339
+./build_data.py "5tps|24_nodes"
 
+./export_influxdb_data.sh 1619100882542 1619108858328
+./build_data.py "10tps|24_nodes"
+
+./export_influxdb_data.sh 1619114864543 1619118072408
+./build_data.py "20tps|24_nodes"
 
 echo "End compiling all results"
