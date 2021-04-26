@@ -8,6 +8,7 @@ const nb_batch_parallele = parseInt(process.argv[2]);
 const waiting_time = parseFloat(process.argv[3]) * 1000;
 const limit = parseInt(process.argv[4]);
 
+const init_limit = 500;
 
 // const apiURL = "10.1.0.222:8080";
 const apiURL = "apirest.unice.cust.tasfrance.com:80";
@@ -67,7 +68,7 @@ async function send(sig_array, next) {
     for (sig of sig_array) {
         // console.log(sig)
         (function (i, total) {
-            var tmp_index = get_rnd_index(cars_keys);
+            var tmp_index = parseInt(i % init_limit) //get_rnd_index(cars_keys);
             var cmd = `./transaction --mode cartp \
             --tnxprivatekey ${drivers_keys[tmp_index].priv} \
             --tnxpublickey ${drivers_keys[tmp_index].pub} \
@@ -217,9 +218,12 @@ async.series([
     function (callback) {
         if (!do_init)
             return callback();
+        var tmp = 0;
         async.eachOfSeries(cars_keys, function (value, key, each_callback) {
-            //init new_car
-            var cmd = `./transaction --mode cartp \
+            if (tmp < init_limit) {
+                tmp += 1;
+                //init new_car
+                var cmd = `./transaction --mode cartp \
                 --tnxprivatekey ${value.priv} \
                 --tnxpublickey ${value.pub} \
                 --batchprivatekey ${factory_keys.priv} \
@@ -229,28 +233,34 @@ async.series([
                 --car_type "Danger" \
                 --car_licence "X1-102-10V" \
                 --url "http://${apiURL}/batches"`;
-            var child = exec(cmd);
+                var child = exec(cmd);
 
-            // Listen for any response:
-            child.stdout.on('data', function (data) {
-                // console.log(data);
-            });
-            // Listen if the process closed
-            child.on('close', function (exit_code) {
-                if (exit_code != 0)
-                    console.log('Closed before stop: Closing code: ', exit_code);
-                // each_callback();
-                setTimeout(each_callback, 5);//wait a little because we have 1000 keys 
-            });
+                // Listen for any response:
+                child.stdout.on('data', function (data) {
+                    // console.log(data);
+                });
+                // Listen if the process closed
+                child.on('close', function (exit_code) {
+                    if (exit_code != 0)
+                        console.log('Closed before stop: Closing code: ', exit_code);
+                    // each_callback();
+                    setTimeout(each_callback, 5);//wait a little because we have 1000 keys 
+                });
+            } else {
+                each_callback()
+            }
         }, callback)
     },
 
     function (callback) {
         if (!do_init)
             return callback();
+        var tmp = 0;
         async.eachOfSeries(drivers_keys, function (value, key, each_callback) {
-            //init new_owner
-            var cmd = `./transaction --mode cartp \
+            if (tmp < init_limit) {
+                tmp += 1;
+                //init new_owner
+                var cmd = `./transaction --mode cartp \
                 --tnxprivatekey ${value.priv} \
                 --tnxpublickey ${value.pub} \
                 --batchprivatekey ${cars_keys[key].priv} \
@@ -261,19 +271,22 @@ async.series([
                 --owner_address "1 av Atlantis" \
                 --owner_country "France" \
                 --url "http://${apiURL}/batches"`;
-            var child = exec(cmd);
+                var child = exec(cmd);
 
-            // Listen for any response:
-            child.stdout.on('data', function (data) {
-                // console.log(data);
-            });
-            // Listen if the process closed
-            child.on('close', function (exit_code) {
-                if (exit_code != 0)
-                    console.log('Closed before stop: Closing code: ', exit_code);
-                // each_callback();
-                setTimeout(each_callback, 5);//wait a little because we have 1000 keys 
-            });
+                // Listen for any response:
+                child.stdout.on('data', function (data) {
+                    // console.log(data);
+                });
+                // Listen if the process closed
+                child.on('close', function (exit_code) {
+                    if (exit_code != 0)
+                        console.log('Closed before stop: Closing code: ', exit_code);
+                    // each_callback();
+                    setTimeout(each_callback, 5);//wait a little because we have 1000 keys 
+                });
+            } else {
+                each_callback()
+            }
         }, callback)
     },
 
