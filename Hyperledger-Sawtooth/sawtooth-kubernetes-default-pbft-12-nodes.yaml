@@ -43,12 +43,12 @@ items:
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
               requests:
-                memory: "250Mi"
-                cpu: "0.5"
+                # memory: "250Mi"
+                # cpu: "0.5"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "500Mi"
-                cpu: "1"
+                # memory: "500Mi"
+                # cpu: "1"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -60,12 +60,12 @@ items:
             image: hyperledger/sawtooth-rest-api:chime
             resources:
               requests:
-                memory: "500Mi"
-                cpu: "0.5"
+                # memory: "500Mi"
+                # cpu: "0.5"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "750Mi"
-                cpu: "1"
+                # memory: "750Mi"
+                # cpu: "1"
                 ephemeral-storage: "750Mi"
             ports:
               - name: api
@@ -92,12 +92,12 @@ items:
             image: hyperledger/sawtooth-settings-tp:chime
             resources:
               requests:
-                memory: "50Mi"
-                cpu: "50m"
+                # memory: "50Mi"
+                # cpu: "50m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "75Mi"
-                cpu: "75m"
+                # memory: "75Mi"
+                # cpu: "75m"
                 ephemeral-storage: "100Mi"
             command:
               - bash
@@ -109,12 +109,12 @@ items:
             image: hyperledger/sawtooth-shell:chime
             resources:
               requests:
-                memory: "50Mi"
-                cpu: "50m"
+                # memory: "50Mi"
+                # cpu: "50m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "75Mi"
-                cpu: "75m"
+                # memory: "75Mi"
+                # cpu: "75m"
                 ephemeral-storage: "100Mi"
             command:
               - bash
@@ -126,12 +126,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -151,12 +151,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -176,12 +176,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -201,12 +201,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -226,12 +226,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -251,12 +251,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -276,12 +276,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -301,12 +301,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -326,12 +326,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -351,12 +351,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -376,12 +376,12 @@ items:
             image: hyperledger/sawtooth-validator:chime
             resources:
               requests:
-                memory: "2Gi"
-                cpu: "1.1"
+                memory: "10Gi"
+                # cpu: "1.1"
                 ephemeral-storage: "3Gi"
               limits:
-                memory: "3500Mi"
-                cpu: "2.3"
+                memory: "11Gi"
+                # cpu: "2.3"
                 ephemeral-storage: "4Gi"
             ports:
               - name: tp
@@ -442,12 +442,12 @@ items:
             image: hyperledger/sawtooth-xo-tp-python:chime
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "100Mi"
-                cpu: "250m"
+                # memory: "100Mi"
+                # cpu: "250m"
                 ephemeral-storage: "400Mi"
             command:
               - bash
@@ -521,12 +521,12 @@ items:
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
               requests:
-                memory: "250Mi"
-                cpu: "0.5"
+                # memory: "250Mi"
+                # cpu: "0.5"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "500Mi"
-                cpu: "1"
+                # memory: "500Mi"
+                # cpu: "1"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -538,12 +538,12 @@ items:
             image: hyperledger/sawtooth-rest-api:chime
             resources:
               requests:
-                memory: "500Mi"
-                cpu: "0.5"
+                # memory: "500Mi"
+                # cpu: "0.5"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "750Mi"
-                cpu: "1"
+                # memory: "750Mi"
+                # cpu: "1"
                 ephemeral-storage: "750Mi"
             ports:
               - name: api
@@ -569,12 +569,12 @@ items:
             image: hyperledger/sawtooth-settings-tp:chime
             resources:
               requests:
-                memory: "50Mi"
-                cpu: "50m"
+                # memory: "50Mi"
+                # cpu: "50m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "75Mi"
-                cpu: "75m"
+                # memory: "75Mi"
+                # cpu: "75m"
                 ephemeral-storage: "100Mi"
             command:
               - bash
@@ -586,12 +586,12 @@ items:
             image: hyperledger/sawtooth-shell:chime
             resources:
               requests:
-                memory: "50Mi"
-                cpu: "50m"
+                # memory: "50Mi"
+                # cpu: "50m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "75Mi"
-                cpu: "75m"
+                # memory: "75Mi"
+                # cpu: "75m"
                 ephemeral-storage: "100Mi"
             command:
               - bash
@@ -603,12 +603,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -628,12 +628,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -653,12 +653,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -678,12 +678,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -703,12 +703,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -728,12 +728,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -753,12 +753,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -778,12 +778,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -803,12 +803,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -828,12 +828,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -853,12 +853,12 @@ items:
             image: hyperledger/sawtooth-validator:chime
             resources:
               requests:
-                memory: "2Gi"
-                cpu: "1.1"
+                memory: "10Gi"
+                # cpu: "1.1"
                 ephemeral-storage: "3Gi"
               limits:
-                memory: "3500Mi"
-                cpu: "2.3"
+                memory: "11Gi"
+                # cpu: "2.3"
                 ephemeral-storage: "4Gi"
             ports:
               - name: tp
@@ -908,12 +908,12 @@ items:
             image: hyperledger/sawtooth-xo-tp-python:chime
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "100Mi"
-                cpu: "250m"
+                # memory: "100Mi"
+                # cpu: "250m"
                 ephemeral-storage: "400Mi"
             command:
               - bash
@@ -984,12 +984,12 @@ items:
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
               requests:
-                memory: "250Mi"
-                cpu: "0.5"
+                # memory: "250Mi"
+                # cpu: "0.5"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "500Mi"
-                cpu: "1"
+                # memory: "500Mi"
+                # cpu: "1"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -1001,12 +1001,12 @@ items:
             image: hyperledger/sawtooth-rest-api:chime
             resources:
               requests:
-                memory: "500Mi"
-                cpu: "0.5"
+                # memory: "500Mi"
+                # cpu: "0.5"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "750Mi"
-                cpu: "1"
+                # memory: "750Mi"
+                # cpu: "1"
                 ephemeral-storage: "750Mi"
             ports:
               - name: api
@@ -1033,12 +1033,12 @@ items:
             image: hyperledger/sawtooth-settings-tp:chime
             resources:
               requests:
-                memory: "50Mi"
-                cpu: "50m"
+                # memory: "50Mi"
+                # cpu: "50m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "75Mi"
-                cpu: "75m"
+                # memory: "75Mi"
+                # cpu: "75m"
                 ephemeral-storage: "100Mi"
             command:
               - bash
@@ -1050,12 +1050,12 @@ items:
             image: hyperledger/sawtooth-shell:chime
             resources:
               requests:
-                memory: "50Mi"
-                cpu: "50m"
+                # memory: "50Mi"
+                # cpu: "50m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "75Mi"
-                cpu: "75m"
+                # memory: "75Mi"
+                # cpu: "75m"
                 ephemeral-storage: "100Mi"
             command:
               - bash
@@ -1067,12 +1067,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -1092,12 +1092,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -1117,12 +1117,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -1142,12 +1142,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -1167,12 +1167,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -1192,12 +1192,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -1217,12 +1217,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -1242,12 +1242,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -1267,12 +1267,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -1292,12 +1292,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -1317,12 +1317,12 @@ items:
             image: hyperledger/sawtooth-validator:chime
             resources:
               requests:
-                memory: "2Gi"
-                cpu: "1.1"
+                memory: "10Gi"
+                # cpu: "1.1"
                 ephemeral-storage: "3Gi"
               limits:
-                memory: "3500Mi"
-                cpu: "2.3"
+                memory: "11Gi"
+                # cpu: "2.3"
                 ephemeral-storage: "4Gi"
             ports:
               - name: tp
@@ -1373,12 +1373,12 @@ items:
             image: hyperledger/sawtooth-xo-tp-python:chime
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "100Mi"
-                cpu: "250m"
+                # memory: "100Mi"
+                # cpu: "250m"
                 ephemeral-storage: "400Mi"
             command:
               - bash
@@ -1452,12 +1452,12 @@ items:
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
               requests:
-                memory: "250Mi"
-                cpu: "0.5"
+                # memory: "250Mi"
+                # cpu: "0.5"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "500Mi"
-                cpu: "1"
+                # memory: "500Mi"
+                # cpu: "1"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -1469,12 +1469,12 @@ items:
             image: hyperledger/sawtooth-rest-api:chime
             resources:
               requests:
-                memory: "500Mi"
-                cpu: "0.5"
+                # memory: "500Mi"
+                # cpu: "0.5"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "750Mi"
-                cpu: "1"
+                # memory: "750Mi"
+                # cpu: "1"
                 ephemeral-storage: "750Mi"
             ports:
               - name: api
@@ -1500,12 +1500,12 @@ items:
             image: hyperledger/sawtooth-settings-tp:chime
             resources:
               requests:
-                memory: "50Mi"
-                cpu: "50m"
+                # memory: "50Mi"
+                # cpu: "50m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "75Mi"
-                cpu: "75m"
+                # memory: "75Mi"
+                # cpu: "75m"
                 ephemeral-storage: "100Mi"
             command:
               - bash
@@ -1517,12 +1517,12 @@ items:
             image: hyperledger/sawtooth-shell:chime
             resources:
               requests:
-                memory: "50Mi"
-                cpu: "50m"
+                # memory: "50Mi"
+                # cpu: "50m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "75Mi"
-                cpu: "75m"
+                # memory: "75Mi"
+                # cpu: "75m"
                 ephemeral-storage: "100Mi"
             command:
               - bash
@@ -1534,12 +1534,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -1559,12 +1559,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -1584,12 +1584,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -1609,12 +1609,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -1634,12 +1634,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -1659,12 +1659,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -1684,12 +1684,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -1709,12 +1709,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -1734,12 +1734,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -1759,12 +1759,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -1785,12 +1785,12 @@ items:
             image: hyperledger/sawtooth-validator:chime
             resources:
               requests:
-                memory: "2Gi"
-                cpu: "1.1"
+                memory: "10Gi"
+                # cpu: "1.1"
                 ephemeral-storage: "3Gi"
               limits:
-                memory: "3500Mi"
-                cpu: "2.3"
+                memory: "11Gi"
+                # cpu: "2.3"
                 ephemeral-storage: "4Gi"
             ports:
               - name: tp
@@ -1842,12 +1842,12 @@ items:
             image: hyperledger/sawtooth-xo-tp-python:chime
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "100Mi"
-                cpu: "250m"
+                # memory: "100Mi"
+                # cpu: "250m"
                 ephemeral-storage: "400Mi"
             command:
               - bash
@@ -1920,12 +1920,12 @@ items:
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
               requests:
-                memory: "250Mi"
-                cpu: "0.5"
+                # memory: "250Mi"
+                # cpu: "0.5"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "500Mi"
-                cpu: "1"
+                # memory: "500Mi"
+                # cpu: "1"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -1937,12 +1937,12 @@ items:
             image: hyperledger/sawtooth-rest-api:chime
             resources:
               requests:
-                memory: "500Mi"
-                cpu: "0.5"
+                # memory: "500Mi"
+                # cpu: "0.5"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "750Mi"
-                cpu: "1"
+                # memory: "750Mi"
+                # cpu: "1"
                 ephemeral-storage: "750Mi"
             ports:
               - name: api
@@ -1967,12 +1967,12 @@ items:
             image: hyperledger/sawtooth-settings-tp:chime
             resources:
               requests:
-                memory: "50Mi"
-                cpu: "50m"
+                # memory: "50Mi"
+                # cpu: "50m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "75Mi"
-                cpu: "75m"
+                # memory: "75Mi"
+                # cpu: "75m"
                 ephemeral-storage: "100Mi"
             command:
               - bash
@@ -1984,12 +1984,12 @@ items:
             image: hyperledger/sawtooth-shell:chime
             resources:
               requests:
-                memory: "50Mi"
-                cpu: "50m"
+                # memory: "50Mi"
+                # cpu: "50m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "75Mi"
-                cpu: "75m"
+                # memory: "75Mi"
+                # cpu: "75m"
                 ephemeral-storage: "100Mi"
             command:
               - bash
@@ -2001,12 +2001,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -2026,12 +2026,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -2051,12 +2051,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -2076,12 +2076,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -2101,12 +2101,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -2126,12 +2126,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -2151,12 +2151,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -2176,12 +2176,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -2201,12 +2201,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -2226,12 +2226,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -2252,12 +2252,12 @@ items:
             image: hyperledger/sawtooth-validator:chime
             resources:
               requests:
-                memory: "2Gi"
-                cpu: "1.1"
+                memory: "10Gi"
+                # cpu: "1.1"
                 ephemeral-storage: "3Gi"
               limits:
-                memory: "3500Mi"
-                cpu: "2.3"
+                memory: "11Gi"
+                # cpu: "2.3"
                 ephemeral-storage: "4Gi"
             ports:
               - name: tp
@@ -2310,12 +2310,12 @@ items:
             image: hyperledger/sawtooth-xo-tp-python:chime
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "100Mi"
-                cpu: "250m"
+                # memory: "100Mi"
+                # cpu: "250m"
                 ephemeral-storage: "400Mi"
             command:
               - bash
@@ -2388,12 +2388,12 @@ items:
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
               requests:
-                memory: "250Mi"
-                cpu: "0.5"
+                # memory: "250Mi"
+                # cpu: "0.5"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "500Mi"
-                cpu: "1"
+                # memory: "500Mi"
+                # cpu: "1"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -2405,12 +2405,12 @@ items:
             image: hyperledger/sawtooth-rest-api:chime
             resources:
               requests:
-                memory: "500Mi"
-                cpu: "0.5"
+                # memory: "500Mi"
+                # cpu: "0.5"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "750Mi"
-                cpu: "1"
+                # memory: "750Mi"
+                # cpu: "1"
                 ephemeral-storage: "750Mi"
             ports:
               - name: api
@@ -2435,12 +2435,12 @@ items:
             image: hyperledger/sawtooth-settings-tp:chime
             resources:
               requests:
-                memory: "50Mi"
-                cpu: "50m"
+                # memory: "50Mi"
+                # cpu: "50m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "75Mi"
-                cpu: "75m"
+                # memory: "75Mi"
+                # cpu: "75m"
                 ephemeral-storage: "100Mi"
             command:
               - bash
@@ -2452,12 +2452,12 @@ items:
             image: hyperledger/sawtooth-shell:chime
             resources:
               requests:
-                memory: "50Mi"
-                cpu: "50m"
+                # memory: "50Mi"
+                # cpu: "50m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "75Mi"
-                cpu: "75m"
+                # memory: "75Mi"
+                # cpu: "75m"
                 ephemeral-storage: "100Mi"
             command:
               - bash
@@ -2469,12 +2469,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -2494,12 +2494,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -2519,12 +2519,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -2544,12 +2544,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -2569,12 +2569,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -2594,12 +2594,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -2619,12 +2619,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -2644,12 +2644,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -2669,12 +2669,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -2694,12 +2694,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -2719,12 +2719,12 @@ items:
             image: hyperledger/sawtooth-validator:chime
             resources:
               requests:
-                memory: "2Gi"
-                cpu: "1.1"
+                memory: "10Gi"
+                # cpu: "1.1"
                 ephemeral-storage: "3Gi"
               limits:
-                memory: "3500Mi"
-                cpu: "2.3"
+                memory: "11Gi"
+                # cpu: "2.3"
                 ephemeral-storage: "4Gi"
             ports:
               - name: tp
@@ -2778,12 +2778,12 @@ items:
             image: hyperledger/sawtooth-xo-tp-python:chime
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "100Mi"
-                cpu: "250m"
+                # memory: "100Mi"
+                # cpu: "250m"
                 ephemeral-storage: "400Mi"
             command:
               - bash
@@ -2856,12 +2856,12 @@ items:
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
               requests:
-                memory: "250Mi"
-                cpu: "0.5"
+                # memory: "250Mi"
+                # cpu: "0.5"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "500Mi"
-                cpu: "1"
+                # memory: "500Mi"
+                # cpu: "1"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -2873,12 +2873,12 @@ items:
             image: hyperledger/sawtooth-rest-api:chime
             resources:
               requests:
-                memory: "500Mi"
-                cpu: "0.5"
+                # memory: "500Mi"
+                # cpu: "0.5"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "750Mi"
-                cpu: "1"
+                # memory: "750Mi"
+                # cpu: "1"
                 ephemeral-storage: "750Mi"
             ports:
               - name: api
@@ -2904,12 +2904,12 @@ items:
             image: hyperledger/sawtooth-settings-tp:chime
             resources:
               requests:
-                memory: "50Mi"
-                cpu: "50m"
+                # memory: "50Mi"
+                # cpu: "50m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "75Mi"
-                cpu: "75m"
+                # memory: "75Mi"
+                # cpu: "75m"
                 ephemeral-storage: "100Mi"
             command:
               - bash
@@ -2921,12 +2921,12 @@ items:
             image: hyperledger/sawtooth-shell:chime
             resources:
               requests:
-                memory: "50Mi"
-                cpu: "50m"
+                # memory: "50Mi"
+                # cpu: "50m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "75Mi"
-                cpu: "75m"
+                # memory: "75Mi"
+                # cpu: "75m"
                 ephemeral-storage: "100Mi"
             command:
               - bash
@@ -2938,12 +2938,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -2963,12 +2963,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -2988,12 +2988,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -3013,12 +3013,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -3038,12 +3038,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -3063,12 +3063,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -3088,12 +3088,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -3113,12 +3113,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -3138,12 +3138,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -3163,12 +3163,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -3188,12 +3188,12 @@ items:
             image: hyperledger/sawtooth-validator:chime
             resources:
               requests:
-                memory: "2Gi"
-                cpu: "1.1"
+                memory: "10Gi"
+                # cpu: "1.1"
                 ephemeral-storage: "3Gi"
               limits:
-                memory: "3500Mi"
-                cpu: "2.3"
+                memory: "11Gi"
+                # cpu: "2.3"
                 ephemeral-storage: "4Gi"
             ports:
               - name: tp
@@ -3248,12 +3248,12 @@ items:
             image: hyperledger/sawtooth-xo-tp-python:chime
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "100Mi"
-                cpu: "250m"
+                # memory: "100Mi"
+                # cpu: "250m"
                 ephemeral-storage: "400Mi"
             command:
               - bash
@@ -3324,12 +3324,12 @@ items:
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
               requests:
-                memory: "250Mi"
-                cpu: "0.5"
+                # memory: "250Mi"
+                # cpu: "0.5"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "500Mi"
-                cpu: "1"
+                # memory: "500Mi"
+                # cpu: "1"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -3341,12 +3341,12 @@ items:
             image: hyperledger/sawtooth-rest-api:chime
             resources:
               requests:
-                memory: "500Mi"
-                cpu: "0.5"
+                # memory: "500Mi"
+                # cpu: "0.5"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "750Mi"
-                cpu: "1"
+                # memory: "750Mi"
+                # cpu: "1"
                 ephemeral-storage: "750Mi"
             ports:
               - name: api
@@ -3373,12 +3373,12 @@ items:
             image: hyperledger/sawtooth-settings-tp:chime
             resources:
               requests:
-                memory: "50Mi"
-                cpu: "50m"
+                # memory: "50Mi"
+                # cpu: "50m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "75Mi"
-                cpu: "75m"
+                # memory: "75Mi"
+                # cpu: "75m"
                 ephemeral-storage: "100Mi"
             command:
               - bash
@@ -3390,12 +3390,12 @@ items:
             image: hyperledger/sawtooth-shell:chime
             resources:
               requests:
-                memory: "50Mi"
-                cpu: "50m"
+                # memory: "50Mi"
+                # cpu: "50m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "75Mi"
-                cpu: "75m"
+                # memory: "75Mi"
+                # cpu: "75m"
                 ephemeral-storage: "100Mi"
             command:
               - bash
@@ -3407,12 +3407,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -3432,12 +3432,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -3457,12 +3457,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -3482,12 +3482,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -3507,12 +3507,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -3532,12 +3532,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -3557,12 +3557,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -3582,12 +3582,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -3607,12 +3607,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -3632,12 +3632,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -3657,12 +3657,12 @@ items:
             image: hyperledger/sawtooth-validator:chime
             resources:
               requests:
-                memory: "2Gi"
-                cpu: "1.1"
+                memory: "10Gi"
+                # cpu: "1.1"
                 ephemeral-storage: "3Gi"
               limits:
-                memory: "3500Mi"
-                cpu: "2.3"
+                memory: "11Gi"
+                # cpu: "2.3"
                 ephemeral-storage: "4Gi"
             ports:
               - name: tp
@@ -3718,12 +3718,12 @@ items:
             image: hyperledger/sawtooth-xo-tp-python:chime
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "100Mi"
-                cpu: "250m"
+                # memory: "100Mi"
+                # cpu: "250m"
                 ephemeral-storage: "400Mi"
             command:
               - bash
@@ -3797,12 +3797,12 @@ items:
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
               requests:
-                memory: "250Mi"
-                cpu: "0.5"
+                # memory: "250Mi"
+                # cpu: "0.5"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "500Mi"
-                cpu: "1"
+                # memory: "500Mi"
+                # cpu: "1"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -3814,12 +3814,12 @@ items:
             image: hyperledger/sawtooth-rest-api:chime
             resources:
               requests:
-                memory: "500Mi"
-                cpu: "0.5"
+                # memory: "500Mi"
+                # cpu: "0.5"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "750Mi"
-                cpu: "1"
+                # memory: "750Mi"
+                # cpu: "1"
                 ephemeral-storage: "750Mi"
             ports:
               - name: api
@@ -3845,12 +3845,12 @@ items:
             image: hyperledger/sawtooth-settings-tp:chime
             resources:
               requests:
-                memory: "50Mi"
-                cpu: "50m"
+                # memory: "50Mi"
+                # cpu: "50m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "75Mi"
-                cpu: "75m"
+                # memory: "75Mi"
+                # cpu: "75m"
                 ephemeral-storage: "100Mi"
             command:
               - bash
@@ -3862,12 +3862,12 @@ items:
             image: hyperledger/sawtooth-shell:chime
             resources:
               requests:
-                memory: "50Mi"
-                cpu: "50m"
+                # memory: "50Mi"
+                # cpu: "50m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "75Mi"
-                cpu: "75m"
+                # memory: "75Mi"
+                # cpu: "75m"
                 ephemeral-storage: "100Mi"
             command:
               - bash
@@ -3879,12 +3879,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -3904,12 +3904,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -3929,12 +3929,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -3954,12 +3954,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -3979,12 +3979,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -4004,12 +4004,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -4029,12 +4029,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -4054,12 +4054,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -4079,12 +4079,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -4104,12 +4104,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -4130,12 +4130,12 @@ items:
             image: hyperledger/sawtooth-validator:chime
             resources:
               requests:
-                memory: "2Gi"
-                cpu: "1.1"
+                memory: "10Gi"
+                # cpu: "1.1"
                 ephemeral-storage: "3Gi"
               limits:
-                memory: "3500Mi"
-                cpu: "2.3"
+                memory: "11Gi"
+                # cpu: "2.3"
                 ephemeral-storage: "4Gi"
             ports:
               - name: tp
@@ -4192,12 +4192,12 @@ items:
             image: hyperledger/sawtooth-xo-tp-python:chime
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "100Mi"
-                cpu: "250m"
+                # memory: "100Mi"
+                # cpu: "250m"
                 ephemeral-storage: "400Mi"
             command:
               - bash
@@ -4270,12 +4270,12 @@ items:
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
               requests:
-                memory: "250Mi"
-                cpu: "0.5"
+                # memory: "250Mi"
+                # cpu: "0.5"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "500Mi"
-                cpu: "1"
+                # memory: "500Mi"
+                # cpu: "1"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -4287,12 +4287,12 @@ items:
             image: hyperledger/sawtooth-rest-api:chime
             resources:
               requests:
-                memory: "500Mi"
-                cpu: "0.5"
+                # memory: "500Mi"
+                # cpu: "0.5"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "750Mi"
-                cpu: "1"
+                # memory: "750Mi"
+                # cpu: "1"
                 ephemeral-storage: "750Mi"
             ports:
               - name: api
@@ -4317,12 +4317,12 @@ items:
             image: hyperledger/sawtooth-settings-tp:chime
             resources:
               requests:
-                memory: "50Mi"
-                cpu: "50m"
+                # memory: "50Mi"
+                # cpu: "50m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "75Mi"
-                cpu: "75m"
+                # memory: "75Mi"
+                # cpu: "75m"
                 ephemeral-storage: "100Mi"
             command:
               - bash
@@ -4334,12 +4334,12 @@ items:
             image: hyperledger/sawtooth-shell:chime
             resources:
               requests:
-                memory: "50Mi"
-                cpu: "50m"
+                # memory: "50Mi"
+                # cpu: "50m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "75Mi"
-                cpu: "75m"
+                # memory: "75Mi"
+                # cpu: "75m"
                 ephemeral-storage: "100Mi"
             command:
               - bash
@@ -4351,12 +4351,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -4376,12 +4376,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -4401,12 +4401,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -4426,12 +4426,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -4451,12 +4451,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -4476,12 +4476,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -4501,12 +4501,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -4526,12 +4526,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -4551,12 +4551,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -4576,12 +4576,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -4602,12 +4602,12 @@ items:
             image: hyperledger/sawtooth-validator:chime
             resources:
               requests:
-                memory: "2Gi"
-                cpu: "1.1"
+                memory: "10Gi"
+                # cpu: "1.1"
                 ephemeral-storage: "3Gi"
               limits:
-                memory: "3500Mi"
-                cpu: "2.3"
+                memory: "11Gi"
+                # cpu: "2.3"
                 ephemeral-storage: "4Gi"
             ports:
               - name: tp
@@ -4666,12 +4666,12 @@ items:
             image: hyperledger/sawtooth-xo-tp-python:chime
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "100Mi"
-                cpu: "250m"
+                # memory: "100Mi"
+                # cpu: "250m"
                 ephemeral-storage: "400Mi"
             command:
               - bash
@@ -4744,12 +4744,12 @@ items:
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
               requests:
-                memory: "250Mi"
-                cpu: "0.5"
+                # memory: "250Mi"
+                # cpu: "0.5"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "500Mi"
-                cpu: "1"
+                # memory: "500Mi"
+                # cpu: "1"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -4761,12 +4761,12 @@ items:
             image: hyperledger/sawtooth-rest-api:chime
             resources:
               requests:
-                memory: "500Mi"
-                cpu: "0.5"
+                # memory: "500Mi"
+                # cpu: "0.5"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "750Mi"
-                cpu: "1"
+                # memory: "750Mi"
+                # cpu: "1"
                 ephemeral-storage: "750Mi"
             ports:
               - name: api
@@ -4791,12 +4791,12 @@ items:
             image: hyperledger/sawtooth-settings-tp:chime
             resources:
               requests:
-                memory: "50Mi"
-                cpu: "50m"
+                # memory: "50Mi"
+                # cpu: "50m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "75Mi"
-                cpu: "75m"
+                # memory: "75Mi"
+                # cpu: "75m"
                 ephemeral-storage: "100Mi"
             command:
               - bash
@@ -4808,12 +4808,12 @@ items:
             image: hyperledger/sawtooth-shell:chime
             resources:
               requests:
-                memory: "50Mi"
-                cpu: "50m"
+                # memory: "50Mi"
+                # cpu: "50m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "75Mi"
-                cpu: "75m"
+                # memory: "75Mi"
+                # cpu: "75m"
                 ephemeral-storage: "100Mi"
             command:
               - bash
@@ -4825,12 +4825,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -4850,12 +4850,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -4875,12 +4875,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -4900,12 +4900,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -4925,12 +4925,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -4950,12 +4950,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -4975,12 +4975,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -5000,12 +5000,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -5025,12 +5025,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -5050,12 +5050,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -5075,12 +5075,12 @@ items:
             image: hyperledger/sawtooth-validator:chime
             resources:
               requests:
-                memory: "2Gi"
-                cpu: "1.1"
+                memory: "10Gi"
+                # cpu: "1.1"
                 ephemeral-storage: "3Gi"
               limits:
-                memory: "3500Mi"
-                cpu: "2.3"
+                memory: "11Gi"
+                # cpu: "2.3"
                 ephemeral-storage: "4Gi"
             ports:
               - name: tp
@@ -5140,12 +5140,12 @@ items:
             image: hyperledger/sawtooth-xo-tp-python:chime
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "100Mi"
-                cpu: "250m"
+                # memory: "100Mi"
+                # cpu: "250m"
                 ephemeral-storage: "400Mi"
             command:
               - bash
@@ -5217,12 +5217,12 @@ items:
             image: hyperledger/sawtooth-pbft-engine:chime
             resources:
               requests:
-                memory: "250Mi"
-                cpu: "0.5"
+                # memory: "250Mi"
+                # cpu: "0.5"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "500Mi"
-                cpu: "1"
+                # memory: "500Mi"
+                # cpu: "1"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -5234,12 +5234,12 @@ items:
             image: hyperledger/sawtooth-rest-api:chime
             resources:
               requests:
-                memory: "500Mi"
-                cpu: "0.5"
+                # memory: "500Mi"
+                # cpu: "0.5"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "750Mi"
-                cpu: "1"
+                # memory: "750Mi"
+                # cpu: "1"
                 ephemeral-storage: "750Mi"
             ports:
               - name: api
@@ -5264,12 +5264,12 @@ items:
             image: hyperledger/sawtooth-settings-tp:chime
             resources:
               requests:
-                memory: "50Mi"
-                cpu: "50m"
+                # memory: "50Mi"
+                # cpu: "50m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "75Mi"
-                cpu: "75m"
+                # memory: "75Mi"
+                # cpu: "75m"
                 ephemeral-storage: "100Mi"
             command:
               - bash
@@ -5281,12 +5281,12 @@ items:
             image: hyperledger/sawtooth-shell:chime
             resources:
               requests:
-                memory: "50Mi"
-                cpu: "50m"
+                # memory: "50Mi"
+                # cpu: "50m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "75Mi"
-                cpu: "75m"
+                # memory: "75Mi"
+                # cpu: "75m"
                 ephemeral-storage: "100Mi"
             command:
               - bash
@@ -5298,12 +5298,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -5323,12 +5323,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -5348,12 +5348,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -5373,12 +5373,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -5398,12 +5398,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -5423,12 +5423,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -5448,12 +5448,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -5473,12 +5473,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -5498,12 +5498,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -5523,12 +5523,12 @@ items:
             image: projetsim/cartp-tp-python:latest
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "500Mi"
               limits:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "1Gi"
             command:
               - bash
@@ -5548,12 +5548,12 @@ items:
             image: hyperledger/sawtooth-validator:chime
             resources:
               requests:
-                memory: "2Gi"
-                cpu: "1.1"
+                memory: "10Gi"
+                # cpu: "1.1"
                 ephemeral-storage: "3Gi"
               limits:
-                memory: "3500Mi"
-                cpu: "2.3"
+                memory: "11Gi"
+                # cpu: "2.3"
                 ephemeral-storage: "4Gi"
             ports:
               - name: tp
@@ -5613,12 +5613,12 @@ items:
             image: hyperledger/sawtooth-xo-tp-python:chime
             resources:
               requests:
-                memory: "100Mi"
-                cpu: "100m"
+                # memory: "100Mi"
+                # cpu: "100m"
                 ephemeral-storage: "100Mi"
               limits:
-                memory: "100Mi"
-                cpu: "250m"
+                # memory: "100Mi"
+                # cpu: "250m"
                 ephemeral-storage: "400Mi"
             command:
               - bash
