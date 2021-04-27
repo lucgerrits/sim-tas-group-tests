@@ -1341,7 +1341,7 @@ items:
                 valueFrom:
                   configMapKeyRef:
                     name: keys-config
-                    key: pbft1pub
+                    key: pbft2pub
             command:
               - bash
             args:
@@ -3212,7 +3212,7 @@ items:
                 valueFrom:
                   configMapKeyRef:
                     name: keys-config
-                    key: pbft1pub
+                    key: pbft6pub
             command:
               - bash
             args:
