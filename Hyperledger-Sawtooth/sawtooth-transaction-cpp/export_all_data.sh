@@ -33,6 +33,13 @@ echo "6_nodes"
 ./export_influxdb_data.sh 1618933586200 1618934255201
 ./build_data.py "40tps|6_nodes|bpb_500|bpd=200"
 
+#max_batches_per_block=1000
+# ./export_influxdb_data.sh 1619437034420 1619437832701
+# ./build_data.py "30tps|6_nodes|bpb_1k"
+#max_batches_per_block=100000
+# ./export_influxdb_data.sh 1619438237587 1619438818601
+# ./build_data.py "30tps|6_nodes|bpb_100k"
+
 echo "12_nodes"
 ./export_influxdb_data.sh 1618781571866 1618795969900
 ./build_data.py "5tps|12_nodes"
@@ -44,14 +51,24 @@ echo "12_nodes"
 ./build_data.py "20tps|12_nodes"
 
 echo "18_nodes"
-./export_influxdb_data.sh 1618946501490 1618957272765
-./build_data.py "5tps|18_nodes"
+# ./export_influxdb_data.sh 1618946501490 1618957272765
+# ./build_data.py "5tps|18_nodes"
 
-./export_influxdb_data.sh 1618960306976 1618968577377
-./build_data.py "10tps|18_nodes"
+# ./export_influxdb_data.sh 1618960306976 1618968577377
+# ./build_data.py "10tps|18_nodes"
 
-./export_influxdb_data.sh 1618968799807 1618974623463
-./build_data.py "20tps|18_nodes"
+# ./export_influxdb_data.sh 1618968799807 1618974623463
+# ./build_data.py "20tps|18_nodes"
+./export_influxdb_data.sh 1619510166969 1619512401181
+./build_data.py "5tps|18_nodes|new_setup"
+
+./export_influxdb_data.sh 1619512831161 1619514168878
+./build_data.py "10tps|18_nodes|new_setup"
+
+./export_influxdb_data.sh 1619518794173 1619519574575
+./build_data.py "20tps|18_nodes|new_setup"
+
+
 
 echo "24_nodes"
 ./export_influxdb_data.sh 1619087487723 1619100641339
@@ -62,5 +79,14 @@ echo "24_nodes"
 
 ./export_influxdb_data.sh 1619114864543 1619118072408
 ./build_data.py "20tps|24_nodes"
+
+./export_influxdb_data.sh 1619533556102 1619535874761
+./build_data.py "5tps|24_nodes|new_setup"
+
+./export_influxdb_data.sh 1619536279826 1619537684371
+./build_data.py "10tps|24_nodes|new_setup"
+
+./export_influxdb_data.sh 1619538056512 1619538874596
+./build_data.py "20tps|24_nodes|new_setup"
 
 echo "End compiling all results"
