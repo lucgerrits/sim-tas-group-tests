@@ -7,4 +7,8 @@ tmp.txt
 datas/
 images/
 datas_csv/
+backup_influxdb/
 *.yaml.benchmark
+
+influxdb-v1.8.5/
+backup_influxdb.sh
