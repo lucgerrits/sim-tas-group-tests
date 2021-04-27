@@ -6,5 +6,5 @@
 tmp.txt
 datas/
 images/
-datas_csv/
+#datas_csv/
 *.yaml.benchmark
