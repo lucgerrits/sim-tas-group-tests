@@ -2,7 +2,7 @@ prometheus-data/
 grafana-data/
 Substrate/substrate-transaction-rust/log.log
 Substrate/substrate-node/additional-pallets/sim/target/
-Hyperledger-Sawtooth/cartp-rust/
+#Hyperledger-Sawtooth/cartp-rust/
 Hyperledger-Sawtooth/sawtooth-transaction-cpp/docker-compose-sender.yaml.benchmark
 Hyperledger-Sawtooth/sawtooth-transaction-cpp/gnuplots/results_commits.eps
 Hyperledger-Sawtooth/sawtooth-transaction-cpp/gnuplots/results_commits_6_nodes_only.eps
