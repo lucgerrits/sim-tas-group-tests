@@ -7,7 +7,6 @@ tmp.txt
 datas/
 images/
 #datas_csv/
-datas_csv/
 backup_influxdb/
 *.yaml.benchmark
 
