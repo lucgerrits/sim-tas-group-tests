@@ -35,12 +35,12 @@ use std::process;
 
 use sawtooth_sdk::processor::TransactionProcessor;
 
-use handler::IntkeyTransactionHandler;
+use handler::CartpTransactionHandler;
 
 fn main() {
-    let matches = clap_app!(intkey =>
+    let matches = clap_app!(cartp =>
         (version: crate_version!())
-        (about: "Intkey Transaction Processor (Rust)")
+        (about: "Cartp Transaction Processor (Rust)")
         (@arg connect: -C --connect +takes_value
          "connection endpoint for validator")
         (@arg verbose: -v --verbose +multiple
@@ -86,7 +86,7 @@ fn main() {
         }
     }
 
-    let handler = IntkeyTransactionHandler::new();
+    let handler = CartpTransactionHandler::new();
     let mut processor = TransactionProcessor::new(endpoint);
 
     info!("Console logging level: {}", console_log_level);
