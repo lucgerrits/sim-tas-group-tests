@@ -20,110 +20,131 @@ test_profiles = [
     {
         "sender_parameters": {
             "limit": "10000",
-            "js_nb_parallele": "5",
-            "js_wait_time": "1"
+            "js_nb_parallele": "15",
+            "js_wait_time": "0.5"
         }
     },
-    {
-        "sender_parameters": {
-            "limit": "10000",
-            "js_nb_parallele": "5",
-            "js_wait_time": "1"
-        }
-    },
-    {
-        "sender_parameters": {
-            "limit": "10000",
-            "js_nb_parallele": "5",
-            "js_wait_time": "1"
-        }
-    },
-    {
-        "sender_parameters": {
-            "limit": "10000",
-            "js_nb_parallele": "5",
-            "js_wait_time": "1"
-        }
-    },
-    {
-        "sender_parameters": {
-            "limit": "10000",
-            "js_nb_parallele": "5",
-            "js_wait_time": "1"
-        }
-    },
-     ###############################
-    {
-        "sender_parameters": {
-            "limit": "10000",
-            "js_nb_parallele": "10",
-            "js_wait_time": "1"
-        }
-    },
-    {
-        "sender_parameters": {
-            "limit": "10000",
-            "js_nb_parallele": "10",
-            "js_wait_time": "1"
-        }
-    },
-    {
-        "sender_parameters": {
-            "limit": "10000",
-            "js_nb_parallele": "10",
-            "js_wait_time": "1"
-        }
-    },
-    {
-        "sender_parameters": {
-            "limit": "10000",
-            "js_nb_parallele": "10",
-            "js_wait_time": "1"
-        }
-    },
-    {
-        "sender_parameters": {
-            "limit": "10000",
-            "js_nb_parallele": "10",
-            "js_wait_time": "1"
-        }
-    },
-    ###############################
-    {
-        "sender_parameters": {
-            "limit": "10000",
-            "js_nb_parallele": "20",
-            "js_wait_time": "1"
-        }
-    },
-    {
-        "sender_parameters": {
-            "limit": "10000",
-            "js_nb_parallele": "20",
-            "js_wait_time": "1"
-        }
-    },
-    {
-        "sender_parameters": {
-            "limit": "10000",
-            "js_nb_parallele": "20",
-            "js_wait_time": "1"
-        }
-    },
-    {
-        "sender_parameters": {
-            "limit": "10000",
-            "js_nb_parallele": "20",
-            "js_wait_time": "1"
-        }
-    },
-    {
-        "sender_parameters": {
-            "limit": "10000",
-            "js_nb_parallele": "20",
-            "js_wait_time": "1"
-        }
-    },
+#    {
+#        "sender_parameters": {
+#            "limit": "10000",
+#            "js_nb_parallele": "35",
+#            "js_wait_time": "0.5"
+#        }
+#    },
+#    {
+#        "sender_parameters": {
+#            "limit": "10000",
+#            "js_nb_parallele": "40",
+#            "js_wait_time": "0.5"
+#        }
+#    },
+#    {
+#        "sender_parameters": {
+#            "limit": "10000",
+#            "js_nb_parallele": "450",
+#            "js_wait_time": "0.5"
+#        }
+#    },
+#    {
+#        "sender_parameters": {
+#            "limit": "10000",
+#            "js_nb_parallele": "50",
+#            "js_wait_time": "0.5"
+#        }
+#    },
+#    {
+#        "sender_parameters": {
+#            "limit": "10000",
+#            "js_nb_parallele": "5",
+#            "js_wait_time": "1"
+#        }
+#    },
+#    {
+#        "sender_parameters": {
+#            "limit": "10000",
+#            "js_nb_parallele": "5",
+#            "js_wait_time": "1"
+#        }
+#    },
+#    {
+#        "sender_parameters": {
+#            "limit": "10000",
+#            "js_nb_parallele": "5",
+#            "js_wait_time": "1"
+#        }
+#    },
+#     ###############################
+#    {
+#        "sender_parameters": {
+#            "limit": "10000",
+#            "js_nb_parallele": "10",
+#            "js_wait_time": "1"
+#        }
+#    },
+#    {
+#        "sender_parameters": {
+#            "limit": "10000",
+#            "js_nb_parallele": "10",
+#            "js_wait_time": "1"
+#        }
+#    },
+#    {
+#        "sender_parameters": {
+#            "limit": "10000",
+#            "js_nb_parallele": "10",
+#            "js_wait_time": "1"
+#        }
+#    },
+#    {
+#        "sender_parameters": {
+#            "limit": "10000",
+#            "js_nb_parallele": "10",
+#            "js_wait_time": "1"
+#        }
+#    },
+#    {
+#        "sender_parameters": {
+#            "limit": "10000",
+#            "js_nb_parallele": "10",
+#            "js_wait_time": "1"
+#        }
+#    },
+#    ###############################
+#    {
+#        "sender_parameters": {
+#            "limit": "10000",
+#            "js_nb_parallele": "20",
+#            "js_wait_time": "1"
+#        }
+#    },
+#    {
+#        "sender_parameters": {
+#            "limit": "10000",
+#            "js_nb_parallele": "20",
+#            "js_wait_time": "1"
+#        }
+#    },
+#    {
+#        "sender_parameters": {
+#            "limit": "10000",
+#            "js_nb_parallele": "20",
+#            "js_wait_time": "1"
+#        }
+#    },
+#    {
+#        "sender_parameters": {
+#            "limit": "10000",
+#            "js_nb_parallele": "20",
+#            "js_wait_time": "1"
+#        }
+#    },
+#    {
+#        "sender_parameters": {
+#            "limit": "10000",
+#            "js_nb_parallele": "20",
+#            "js_wait_time": "1"
+#        }
+#    },
    
     # ################################
     # {
@@ -290,7 +311,7 @@ def reboot_blockchain():
                     cwd=working_dir, stderr=subprocess.STDOUT)
 
     log("Wainting for blockchain initialization (5min)")
-    time.sleep(300)
+    time.sleep(200)
 
     log("Rebooting blockchain Finished")
 

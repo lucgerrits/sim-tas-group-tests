@@ -38,7 +38,8 @@ use sawtooth_sdk::processor::handler::ApplyError;
 use sawtooth_sdk::processor::handler::TransactionContext;
 use sawtooth_sdk::processor::handler::TransactionHandler;
 
-use serde_json::{json, Value as JsonValue};
+use serde_json::json;
+use serde_json::{Value as JsonValue};
 
 #[derive(Copy, Clone)]
 enum Cmd {

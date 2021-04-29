@@ -15,6 +15,7 @@
  * -----------------------------------------------------------------------------
  */
 extern crate cbor;
+extern crate serde_json;
 extern crate crypto;
 #[macro_use]
 extern crate log;

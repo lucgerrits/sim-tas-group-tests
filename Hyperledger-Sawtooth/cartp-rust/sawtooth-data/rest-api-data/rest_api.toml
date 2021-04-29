@@ -4,6 +4,6 @@ opentsdb_url = "http://influxdb:8086"
 # The name of the database used for storing metrics
 opentsdb_db = "metrics"
 
-opentsdb_username  = "lrdata"
+opentsdb_username  = "admin"
 
-opentsdb_password  = "lrdata"
+opentsdb_password  = "admin"

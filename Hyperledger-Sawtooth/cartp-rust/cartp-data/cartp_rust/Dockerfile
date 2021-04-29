@@ -55,9 +55,24 @@ ENV PATH=$PATH:/project/sawtooth-sdk-rust/bin:/protoc3/bin:/root/.cargo/bin \
 
 WORKDIR /project/sawtooth-sdk-rust/
 
-CMD cd examples/cartp_rust \
- && echo "\033[0;32m--- Building cartp-tp-rust ---\n\033[0m" \
+COPY . /project/sawtooth-sdk-rust/
+
+WORKDIR /project/sawtooth-sdk-rust/examples/cartp_rust
+
+RUN echo "\033[0;32m--- Building cartp-tp-rust ---\n\033[0m" \
  && rm -rf ./bin/ \
  && mkdir -p ./bin/ \
- && cargo build --release \
- && cp ./target/release/cartp-tp-rust ./bin/cartp-tp-rust
+ && cargo build --release
+
+RUN cp ./target/release/cartp-tp-rust ./bin/cartp-tp-rust
+
+RUN ls -l && ls -l ./bin/
+
+# RUN cd examples/cartp_rust \
+#  && echo "\033[0;32m--- Building cartp-tp-rust ---\n\033[0m" \
+#  && rm -rf ./bin/ \
+#  && mkdir -p ./bin/ \
+#  && cargo build --release \
+#  && cp ./target/release/cartp-tp-rust ./bin/cartp-tp-rust
+
+CMD echo "Try ./bin/cartp-tp-rust"

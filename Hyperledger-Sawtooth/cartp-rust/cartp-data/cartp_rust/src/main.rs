@@ -16,6 +16,7 @@
  */
 
 extern crate cbor;
+extern crate serde_json;
 #[macro_use]
 extern crate clap;
 extern crate crypto;

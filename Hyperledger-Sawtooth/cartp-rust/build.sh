@@ -10,7 +10,7 @@ do_build () {
     if [ ! -d ./sawtooth-sdk-rust ]; then
         echo -n "Can't find sawtooth-sdk-rust"
         echo "=> Cloning project"
-        git clone --depth 1 --branch v0.5.0 https://github.com/hyperledger/sawtooth-sdk-rust.git
+        git clone --depth 1 --branch v0.5.0 https://github.com/hyperledger/sawtooth-sdk-rust.git sawtooth-sdk-rust
         echo "Done"
     fi
 

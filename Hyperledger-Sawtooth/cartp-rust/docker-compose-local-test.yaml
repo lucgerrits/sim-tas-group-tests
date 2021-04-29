@@ -32,7 +32,7 @@ services:
     networks:
       - my_blockchain_network_pbft
   influxdb:
-    image: influxdb
+    image: influxdb:1.8.5
     container_name: influxdb
     ports: 
       - 8086:8086
@@ -134,7 +134,7 @@ services:
           sawtooth keygen my_key
         fi &&
         cp /var/lib/sawtooth-validator-data/validator.toml /etc/sawtooth/validator.toml && \
-        sawtooth-validator -v \
+        sawtooth-validator \
           --endpoint tcp://validator-0:8800 \
           --bind component:tcp://eth0:4004 \
           --bind consensus:tcp://eth0:5050 \
@@ -172,7 +172,7 @@ services:
         fi &&
         sawtooth keygen my_key &&
         cp /var/lib/sawtooth-validator-data/validator.toml /etc/sawtooth/validator.toml && \
-        sawtooth-validator -v \
+        sawtooth-validator \
           --endpoint tcp://validator-1:8800 \
           --bind component:tcp://eth0:4004 \
           --bind consensus:tcp://eth0:5050 \
@@ -211,7 +211,7 @@ services:
         fi &&
         sawtooth keygen my_key &&
         cp /var/lib/sawtooth-validator-data/validator.toml /etc/sawtooth/validator.toml && \
-        sawtooth-validator -v \
+        sawtooth-validator \
           --endpoint tcp://validator-2:8800 \
           --bind component:tcp://eth0:4004 \
           --bind consensus:tcp://eth0:5050 \
@@ -251,7 +251,7 @@ services:
         fi &&
         sawtooth keygen my_key &&
         cp /var/lib/sawtooth-validator-data/validator.toml /etc/sawtooth/validator.toml && \
-        sawtooth-validator -v \
+        sawtooth-validator \
           --endpoint tcp://validator-3:8800 \
           --bind component:tcp://eth0:4004 \
           --bind consensus:tcp://eth0:5050 \
@@ -292,7 +292,7 @@ services:
         fi &&
         sawtooth keygen my_key &&
         cp /var/lib/sawtooth-validator-data/validator.toml /etc/sawtooth/validator.toml && \
-        sawtooth-validator -v \
+        sawtooth-validator \
           --endpoint tcp://validator-4:8800 \
           --bind component:tcp://eth0:4004 \
           --bind consensus:tcp://eth0:5050 \
@@ -407,18 +407,18 @@ services:
     stop_signal: SIGKILL
     
   cartp-tp-rust-0:
-    build:
-      context: ./sawtooth-sdk-rust
-      dockerfile: examples/cartp_rust/Dockerfile
-    image: cartp-tp-rust-local-0
-    volumes:
-      - ./sawtooth-sdk-rust-0.5.0/:/project/sawtooth-sdk-rust
+    # build:
+    #   context: ./sawtooth-sdk-rust
+    #   dockerfile: examples/cartp_rust/Dockerfile
+    image: projetsim/cartp-tp-rust
+    # volumes:
+    #   - ./sawtooth-sdk-rust/:/project/sawtooth-sdk-rust
     container_name: cartp-tp-rust-local-0
     networks:
       - my_blockchain_network_pbft
     command: |
       bash -c "
-        cartp-tp-rust -C tcp://validator-0:4004
+        ./bin/cartp-tp-rust -v -C tcp://validator-0:4004
       "
     stop_signal: SIGKILL
 
@@ -430,15 +430,15 @@ services:
         - http_proxy
         - https_proxy
         - no_proxy
-    image: cartp-tp-rust-local-1
-    volumes:
-      - ./sawtooth-sdk-rust-0.5.0/:/project/sawtooth-sdk-rust
+    image: projetsim/cartp-tp-rust
+    # volumes:
+    #   - ./sawtooth-sdk-rust/:/project/sawtooth-sdk-rust
     container_name: cartp-tp-rust-local-1
     networks:
       - my_blockchain_network_pbft
     command: |
       bash -c "
-        cartp-tp-rust -C tcp://validator-1:4004
+        ./bin/cartp-tp-rust -v -C tcp://validator-1:4004
       "
     stop_signal: SIGKILL
 
@@ -450,15 +450,15 @@ services:
         - http_proxy
         - https_proxy
         - no_proxy
-    image: cartp-tp-rust-local-2
-    volumes:
-      - ./sawtooth-sdk-rust-0.5.0/:/project/sawtooth-sdk-rust
+    image: projetsim/cartp-tp-rust
+    # volumes:
+    #   - ./sawtooth-sdk-rust/:/project/sawtooth-sdk-rust
     container_name: cartp-tp-rust-local-2
     networks:
       - my_blockchain_network_pbft
     command: |
       bash -c "
-        cartp-tp-rust -C tcp://validator-2:4004
+        ./bin/cartp-tp-rust -v -C tcp://validator-2:4004
       "
     stop_signal: SIGKILL
 
@@ -470,15 +470,15 @@ services:
         - http_proxy
         - https_proxy
         - no_proxy
-    image: cartp-tp-rust-local-3
-    volumes:
-      - ./sawtooth-sdk-rust-0.5.0/:/project/sawtooth-sdk-rust
+    image: projetsim/cartp-tp-rust
+    # volumes:
+    #   - ./sawtooth-sdk-rust/:/project/sawtooth-sdk-rust
     container_name: cartp-tp-rust-local-3
     networks:
       - my_blockchain_network_pbft
     command: |
       bash -c "
-        cartp-tp-rust -C tcp://validator-3:4004
+        ./bin/cartp-tp-rust -v -C tcp://validator-3:4004
       "
     stop_signal: SIGKILL
 
@@ -490,15 +490,15 @@ services:
         - http_proxy
         - https_proxy
         - no_proxy
-    image: cartp-tp-rust-local-4
-    volumes:
-      - ./sawtooth-sdk-rust-0.5.0/:/project/sawtooth-sdk-rust
+    image: projetsim/cartp-tp-rust
+    # volumes:
+    #   - ./sawtooth-sdk-rust/:/project/sawtooth-sdk-rust
     container_name: cartp-tp-rust-local-4
     networks:
       - my_blockchain_network_pbft
     command: |
       bash -c "
-        cartp-tp-rust -C tcp://validator-4:4004
+        ./bin/cartp-tp-rust -v -C tcp://validator-4:4004
       "
     stop_signal: SIGKILL
 
@@ -559,7 +559,7 @@ services:
     container_name: sawtooth-pbft-engine-default-0
     networks:
       - my_blockchain_network_pbft
-    command: pbft-engine -v --connect tcp://validator-0:5050
+    command: pbft-engine --connect tcp://validator-0:5050
     stop_signal: SIGKILL
 
   pbft-1:
@@ -567,7 +567,7 @@ services:
     container_name: sawtooth-pbft-engine-default-1
     networks:
       - my_blockchain_network_pbft
-    command: pbft-engine -v --connect tcp://validator-1:5050
+    command: pbft-engine --connect tcp://validator-1:5050
     stop_signal: SIGKILL
 
   pbft-2:
@@ -575,7 +575,7 @@ services:
     container_name: sawtooth-pbft-engine-default-2
     networks:
       - my_blockchain_network_pbft
-    command: pbft-engine -v --connect tcp://validator-2:5050
+    command: pbft-engine --connect tcp://validator-2:5050
     stop_signal: SIGKILL
 
   pbft-3:
@@ -583,7 +583,7 @@ services:
     container_name: sawtooth-pbft-engine-default-3
     networks:
       - my_blockchain_network_pbft
-    command: pbft-engine -v --connect tcp://validator-3:5050
+    command: pbft-engine --connect tcp://validator-3:5050
     stop_signal: SIGKILL
 
   pbft-4:
@@ -591,5 +591,5 @@ services:
     container_name: sawtooth-pbft-engine-default-4
     networks:
       - my_blockchain_network_pbft
-    command: pbft-engine -v --connect tcp://validator-4:5050
+    command: pbft-engine --connect tcp://validator-4:5050
     stop_signal: SIGKILL
