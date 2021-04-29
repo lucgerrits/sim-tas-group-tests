@@ -1,2 +1,4 @@
 
 sawtooth-sdk-rust/
+sawtooth-data/pbft-shared/*
+validator-data/*
