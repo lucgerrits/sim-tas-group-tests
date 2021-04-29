@@ -408,11 +408,11 @@ services:
     
   cartp-tp-rust-0:
     build:
-      context: ./sawtooth-sdk-rust-0.5.0
+      context: ./sawtooth-sdk-rust
       dockerfile: examples/cartp_rust/Dockerfile
     image: cartp-tp-rust-local-0
     volumes:
-      - ./sawtooth-sdk-rust-0.5.0/:/project/sawtooth-sdk-rust-0.5.0
+      - ./sawtooth-sdk-rust-0.5.0/:/project/sawtooth-sdk-rust
     container_name: cartp-tp-rust-local-0
     networks:
       - my_blockchain_network_pbft
@@ -424,7 +424,7 @@ services:
 
   cartp-tp-rust-1:
     build:
-      context: ./sawtooth-sdk-rust-0.5.0
+      context: ./sawtooth-sdk-rust
       dockerfile: examples/cartp_rust/Dockerfile
       args:
         - http_proxy
@@ -432,7 +432,7 @@ services:
         - no_proxy
     image: cartp-tp-rust-local-1
     volumes:
-      - ./sawtooth-sdk-rust-0.5.0/:/project/sawtooth-sdk-rust-0.5.0
+      - ./sawtooth-sdk-rust-0.5.0/:/project/sawtooth-sdk-rust
     container_name: cartp-tp-rust-local-1
     networks:
       - my_blockchain_network_pbft
@@ -444,7 +444,7 @@ services:
 
   cartp-tp-rust-2:
     build:
-      context: ./sawtooth-sdk-rust-0.5.0
+      context: ./sawtooth-sdk-rust
       dockerfile: examples/cartp_rust/Dockerfile
       args:
         - http_proxy
@@ -452,7 +452,7 @@ services:
         - no_proxy
     image: cartp-tp-rust-local-2
     volumes:
-      - ./sawtooth-sdk-rust-0.5.0/:/project/sawtooth-sdk-rust-0.5.0
+      - ./sawtooth-sdk-rust-0.5.0/:/project/sawtooth-sdk-rust
     container_name: cartp-tp-rust-local-2
     networks:
       - my_blockchain_network_pbft
@@ -464,7 +464,7 @@ services:
 
   cartp-tp-rust-3:
     build:
-      context: ./sawtooth-sdk-rust-0.5.0
+      context: ./sawtooth-sdk-rust
       dockerfile: examples/cartp_rust/Dockerfile
       args:
         - http_proxy
@@ -472,7 +472,7 @@ services:
         - no_proxy
     image: cartp-tp-rust-local-3
     volumes:
-      - ./sawtooth-sdk-rust-0.5.0/:/project/sawtooth-sdk-rust-0.5.0
+      - ./sawtooth-sdk-rust-0.5.0/:/project/sawtooth-sdk-rust
     container_name: cartp-tp-rust-local-3
     networks:
       - my_blockchain_network_pbft
@@ -484,7 +484,7 @@ services:
 
   cartp-tp-rust-4:
     build:
-      context: ./sawtooth-sdk-rust-0.5.0
+      context: ./sawtooth-sdk-rust
       dockerfile: examples/cartp_rust/Dockerfile
       args:
         - http_proxy
@@ -492,7 +492,7 @@ services:
         - no_proxy
     image: cartp-tp-rust-local-4
     volumes:
-      - ./sawtooth-sdk-rust-0.5.0/:/project/sawtooth-sdk-rust-0.5.0
+      - ./sawtooth-sdk-rust-0.5.0/:/project/sawtooth-sdk-rust
     container_name: cartp-tp-rust-local-4
     networks:
       - my_blockchain_network_pbft

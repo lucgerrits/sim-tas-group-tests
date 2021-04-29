@@ -20,59 +20,90 @@ use cbor;
 use crypto::digest::Digest;
 use crypto::sha2::Sha512;
 
-use std::collections::BTreeMap;
+// use std::collections::BTreeMap;
 use std::collections::HashMap;
 use std::fmt;
 use std::io::Cursor;
+use std::str;
 
-use cbor::encoder::GenericEncoder;
-use cbor::value::Key;
-use cbor::value::Text;
-use cbor::value::Value;
+// use cbor::encoder::GenericEncoder;
+// use cbor::value::Key;
+// use cbor::value::Text;
+// use cbor::value::Value;
+// use serde_cbor::to_value;
+// use serde_cbor::to_vec;
 
 use sawtooth_sdk::messages::processor::TpProcessRequest;
 use sawtooth_sdk::processor::handler::ApplyError;
 use sawtooth_sdk::processor::handler::TransactionContext;
 use sawtooth_sdk::processor::handler::TransactionHandler;
 
-const MAX_VALUE: u32 = 4_294_967_295;
-const MAX_NAME_LEN: usize = 20;
+use serde_json::{json, Value as JsonValue};
 
 #[derive(Copy, Clone)]
-enum Verb {
-    Set,
-    Increment,
-    Decrement,
+enum Cmd {
+    NewCar,
+    NewOwner,
+    Crash,
 }
 
-impl fmt::Display for Verb {
+impl fmt::Display for Cmd {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
             "{}",
             match *self {
-                Verb::Set => "Verb::Set",
-                Verb::Increment => "Verb::Increment",
-                Verb::Decrement => "Verb::Decrement",
+                Cmd::NewCar => "Cmd::NewCar",
+                Cmd::NewOwner => "Cmd::NewOwner",
+                Cmd::Crash => "Cmd::Crash",
             }
         )
     }
 }
 
-fn get_intkey_prefix() -> String {
+fn get_cartp_prefix() -> String {
     let mut sha = Sha512::new();
-    sha.input_str("intkey");
+    sha.input_str("cartp");
     sha.result_str()[..6].to_string()
 }
 
-struct IntkeyPayload {
-    verb: Verb,
-    name: String,
-    value: u32,
+/**
+ *
+ * cartp payload possibilities:
+ * cmd: new_car, new_owner, crash
+ * (cmd always required)
+ *
+ * Parameters for:
+ * - new_car: car_brand, car_type, car_licence
+ * - new_owner: owner_lastname, owner_name, owner_address, owner_country
+ * - crash: accident_ID, signature, dataPublicKey
+ *
+ *
+**/
+
+struct CartpPayload {
+    cmd: Cmd,
+    car_id: String,
+    //for new_car
+    factory_id: String,
+    car_brand: String,
+    car_type: String,
+    car_licence: String,
+    //for new_owner
+    owner_id: String,
+    owner_lastname: String,
+    owner_name: String,
+    owner_address: String,
+    owner_country: String,
+    //for crash
+    // owner_id: String,
+    accident_id: String,
+    signature: String,
+    datapublickey: String,
 }
 
-impl IntkeyPayload {
-    pub fn new(payload_data: &[u8]) -> Result<Option<IntkeyPayload>, ApplyError> {
+impl CartpPayload {
+    pub fn new(payload_data: &[u8]) -> Result<Option<CartpPayload>, ApplyError> {
         let input = Cursor::new(payload_data);
 
         let mut decoder = cbor::GenericDecoder::new(cbor::Config::default(), input);
@@ -82,179 +113,280 @@ impl IntkeyPayload {
 
         let c = cbor::value::Cursor::new(&decoder_value);
 
-        let verb_raw: String = match c.field("Verb").text_plain() {
+        let cmd_raw: String = match c.field("Cmd").text_plain() {
             None => {
                 return Err(ApplyError::InvalidTransaction(String::from(
-                    "Verb must be 'set', 'inc', or 'dec'",
+                    "Cmd must be 'new_car', 'new_owner', or 'crash'",
                 )));
             }
-            Some(verb_raw) => verb_raw.clone(),
+            Some(cmd_raw) => cmd_raw.clone(),
         };
 
-        let verb = match verb_raw.as_str() {
-            "set" => Verb::Set,
-            "inc" => Verb::Increment,
-            "dec" => Verb::Decrement,
+        let cmd = match cmd_raw.as_str() {
+            "new_car" => Cmd::NewCar,
+            "new_owner" => Cmd::NewOwner,
+            "crash" => Cmd::Crash,
             _ => {
                 return Err(ApplyError::InvalidTransaction(String::from(
-                    "Verb must be 'set', 'inc', or 'dec'",
+                    "Cmd must be 'new_car', 'new_owner', or 'crash'",
                 )));
             }
         };
-
-        let value_raw = c.field("Value");
-        let value_raw = match value_raw.value() {
-            Some(x) => x,
-            None => {
-                return Err(ApplyError::InvalidTransaction(String::from(
-                    "Must have a value",
-                )));
-            }
+        let car_id_raw: String = match c.field("car_id").text_plain() {
+            None => String::from(""),
+            // None => {
+            // return Err(ApplyError::InvalidTransaction(String::from(
+            //     "car_brand must be a string",
+            // )));
+            // }
+            Some(car_id_raw) => car_id_raw.clone(),
         };
-
-        let value: u32 = match *value_raw {
-            cbor::value::Value::U8(x) => u32::from(x),
-            cbor::value::Value::U16(x) => u32::from(x),
-            cbor::value::Value::U32(x) => x,
-            _ => {
-                return Err(ApplyError::InvalidTransaction(String::from(
-                    "Value must be an integer",
-                )));
-            }
+        //----------------------------for new_car
+        let factory_id_raw: String = match c.field("factory_id").text_plain() {
+            None => String::from(""), //ignore all none values for testing purposes
+            Some(factory_id_raw) => factory_id_raw.clone(),
         };
-
-        let name_raw: String = match c.field("Name").text_plain() {
-            None => {
-                return Err(ApplyError::InvalidTransaction(String::from(
-                    "Name must be a string",
-                )));
-            }
-            Some(name_raw) => name_raw.clone(),
+        let car_brand_raw: String = match c.field("car_brand").text_plain() {
+            None => String::from(""), //ignore all none values for testing purposes
+            Some(car_brand_raw) => car_brand_raw.clone(),
         };
-
-        if name_raw.len() > MAX_NAME_LEN {
-            return Err(ApplyError::InvalidTransaction(String::from(
-                "Name must be equal to or less than 20 characters",
-            )));
-        }
-
-        let intkey_payload = IntkeyPayload {
-            verb,
-            name: name_raw,
-            value,
+        let car_type_raw: String = match c.field("car_type").text_plain() {
+            None => String::from(""),
+            Some(car_type_raw) => car_type_raw.clone(),
         };
-        Ok(Some(intkey_payload))
+        let car_licence_raw: String = match c.field("car_licence").text_plain() {
+            None => String::from(""),
+            Some(car_licence_raw) => car_licence_raw.clone(),
+        };
+        //----------------------------for new_owner
+        let owner_id_raw: String = match c.field("owner_id").text_plain() {
+            None => String::from(""), //ignore all none values for testing purposes
+            Some(owner_id_raw) => owner_id_raw.clone(),
+        };
+        let owner_lastname_raw: String = match c.field("owner_lastname").text_plain() {
+            None => String::from(""),
+            Some(owner_lastname_raw) => owner_lastname_raw.clone(),
+        };
+        let owner_name_raw: String = match c.field("owner_name").text_plain() {
+            None => String::from(""),
+            Some(owner_name_raw) => owner_name_raw.clone(),
+        };
+        let owner_address_raw: String = match c.field("owner_address").text_plain() {
+            None => String::from(""),
+            Some(owner_address_raw) => owner_address_raw.clone(),
+        };
+        let owner_country_raw: String = match c.field("owner_country").text_plain() {
+            None => String::from(""),
+            Some(owner_country_raw) => owner_country_raw.clone(),
+        };
+        //----------------------------for crash
+        let accident_id_raw: String = match c.field("accident_ID").text_plain() {
+            None => String::from(""),
+            Some(accident_id_raw) => accident_id_raw.clone(),
+        };
+        let signature_raw: String = match c.field("signature").text_plain() {
+            None => String::from(""),
+            Some(signature_raw) => signature_raw.clone(),
+        };
+        let datapublickey_raw: String = match c.field("dataPublicKey").text_plain() {
+            None => String::from(""),
+            Some(datapublickey_raw) => datapublickey_raw.clone(),
+        };
+        //----------------------------for crash
+        let cartp_payload = CartpPayload {
+            cmd,
+            car_id: car_id_raw,
+            //for new_car
+            factory_id: factory_id_raw,
+            car_brand: car_brand_raw,
+            car_type: car_type_raw,
+            car_licence: car_licence_raw,
+            //for new_owner
+            owner_id: owner_id_raw,
+            owner_lastname: owner_lastname_raw,
+            owner_name: owner_name_raw,
+            owner_address: owner_address_raw,
+            owner_country: owner_country_raw,
+            //for crash
+            accident_id: accident_id_raw,
+            signature: signature_raw,
+            datapublickey: datapublickey_raw,
+        };
+        Ok(Some(cartp_payload))
     }
 
-    pub fn get_verb(&self) -> Verb {
-        self.verb
+    pub fn get_cmd(&self) -> Cmd {
+        self.cmd
     }
-
-    pub fn get_name(&self) -> &String {
-        &self.name
+    pub fn get_car_id(&self) -> &String {
+        &self.car_id
     }
-
-    pub fn get_value(&self) -> u32 {
-        self.value
+    pub fn get_factory_id(&self) -> &String {
+        &self.factory_id
+    }
+    pub fn get_car_brand(&self) -> &String {
+        &self.car_brand
+    }
+    pub fn get_car_type(&self) -> &String {
+        &self.car_type
+    }
+    pub fn get_car_licence(&self) -> &String {
+        &self.car_licence
+    }
+    pub fn get_owner_id(&self) -> &String {
+        &self.owner_id
+    }
+    pub fn get_owner_lastname(&self) -> &String {
+        &self.owner_lastname
+    }
+    pub fn get_owner_name(&self) -> &String {
+        &self.owner_name
+    }
+    pub fn get_owner_address(&self) -> &String {
+        &self.owner_address
+    }
+    pub fn get_owner_country(&self) -> &String {
+        &self.owner_country
+    }
+    pub fn get_accident_id(&self) -> &String {
+        &self.accident_id
+    }
+    pub fn get_signature(&self) -> &String {
+        &self.signature
+    }
+    pub fn get_datapublickey(&self) -> &String {
+        &self.datapublickey
     }
 }
 
-pub struct IntkeyState<'a> {
+impl fmt::Display for CartpPayload {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self.cmd {
+            Cmd::NewCar => {
+                write!(
+                    f,
+                    "(cmd:{}, card_id:{}, factory_id:{}, car_brand:{}, car_type:{}, car_licence:{})",
+                    self.get_cmd(),
+                    self.get_car_id(),
+                    self.get_factory_id(),
+                    self.get_car_brand(),
+                    self.get_car_type(),
+                    self.get_car_licence()
+                )
+            }
+            Cmd::NewOwner => {
+                write!(
+                    f,
+                    "(cmd:{}, card_id:{}, owner_id:{}, owner_lastname:{}, owner_name:{}, owner_address:{}, owner_country:{})",
+                    self.get_cmd(),
+                    self.get_car_id(),
+                    self.get_owner_id(),
+                    self.get_owner_lastname(),
+                    self.get_owner_name(),
+                    self.get_owner_address(),
+                    self.get_owner_country()
+                )
+            }
+            Cmd::Crash => {
+                write!(
+                    f,
+                    "(cmd:{}, card_id:{}, owner_id:{}, accident_ID:{}, signature:{}, dataPublicKey:{})",
+                    self.get_cmd(),
+                    self.get_car_id(),
+                    self.get_owner_id(),
+                    self.get_accident_id(),
+                    self.get_signature(),
+                    self.get_datapublickey()
+                )
+            }
+            // _ => {
+            //     write!(
+            //         f,
+            //         "ERROR: cannot display, Cmd must be 'new_car', 'new_owner', or 'crash'"
+            //     )
+            // }
+        }
+    }
+}
+
+pub struct CartpState<'a> {
     context: &'a mut dyn TransactionContext,
-    get_cache: HashMap<String, BTreeMap<Key, Value>>,
+    address_map: HashMap<String, Option<String>>, //we have addresses with a key and the value is a string (= a json string)
 }
 
-impl<'a> IntkeyState<'a> {
-    pub fn new(context: &'a mut dyn TransactionContext) -> IntkeyState {
-        IntkeyState {
+impl<'a> CartpState<'a> {
+    pub fn new(context: &'a mut dyn TransactionContext) -> CartpState {
+        CartpState {
             context,
-            get_cache: HashMap::new(),
+            address_map: HashMap::new(),
         }
     }
 
-    fn calculate_address(name: &str) -> String {
-        let mut sha = Sha512::new();
-        sha.input(name.as_bytes());
-        get_intkey_prefix() + &sha.result_str()[64..].to_string()
-    }
+    fn calculate_address(data_type: &str, car_id: &str) -> String {
+        let n = vec!["car", "owner", "crash"];
+        if n.iter().any(|&i| i == data_type) {
+            let mut data_type_sha = Sha512::new();
+            data_type_sha.input(data_type.as_bytes());
 
-    pub fn get(&mut self, name: &str) -> Result<Option<u32>, ApplyError> {
-        let address = IntkeyState::calculate_address(name);
+            let mut car_id_sha = Sha512::new();
+            car_id_sha.input(car_id.as_bytes());
+
+            return get_cartp_prefix()
+                + &data_type_sha.result_str()[4..].to_string()
+                + &car_id_sha.result_str()[60..].to_string();
+        } else if data_type == "factory_settings" {
+            return String::from(
+                "000000a87cb5eafdcca6a89a6f6aa92a4b7cb206c8aaa93d80a76817373ca1c7634a4b",
+            );
+        } else {
+            return String::from("");
+        }
+    }
+    pub fn get(&mut self, data_type: &str, id: &str) -> Result<Option<JsonValue>, ApplyError> {
+        let address = CartpState::calculate_address(data_type, id);
         let d = self.context.get_state_entry(&address)?;
         match d {
-            Some(packed) => {
-                let input = Cursor::new(packed);
-                let mut decoder = cbor::GenericDecoder::new(cbor::Config::default(), input);
-                let map_value = decoder
-                    .value()
-                    .map_err(|err| ApplyError::InternalError(format!("{}", err)))?;
-                let map = match map_value {
-                    Value::Map(m) => m,
-                    _ => {
-                        return Err(ApplyError::InternalError(String::from(
-                            "No map returned from state",
-                        )));
-                    }
-                };
-
-                let status = match map.get(&Key::Text(Text::Text(String::from(name)))) {
-                    Some(v) => match *v {
-                        Value::U32(x) => Ok(Some(x)),
-                        Value::U16(x) => Ok(Some(u32::from(x))),
-                        Value::U8(x) => Ok(Some(u32::from(x))),
-                        _ => Err(ApplyError::InternalError(String::from(
-                            "Value returned from state is the wrong type.",
-                        ))),
-                    },
-                    None => Ok(None),
-                };
-                self.get_cache.insert(address, map);
-                status
+            Some(state_bytes) => {
+                let json_val: JsonValue =
+                    serde_json::from_str(str::from_utf8(&state_bytes).unwrap()).map_err(|e| {
+                        ApplyError::InvalidTransaction(format!(
+                            "Invalid serialization of json state: {}",
+                            e
+                        ))
+                    })?;
+                Ok(Some(json_val))
             }
-            None => Ok(None),
+            None => Ok(Some(json!(null))),
         }
     }
-
-    pub fn set(&mut self, name: &str, value: u32) -> Result<(), ApplyError> {
-        let mut map: BTreeMap<Key, Value> = match self
-            .get_cache
-            .get_mut(&IntkeyState::calculate_address(name))
-        {
-            Some(m) => m.clone(),
-            None => BTreeMap::new(),
-        };
-        map.insert(Key::Text(Text::Text(String::from(name))), Value::U32(value));
-
-        let mut e = GenericEncoder::new(Cursor::new(Vec::new()));
-        e.value(&Value::Map(map))
-            .map_err(|err| ApplyError::InternalError(format!("{}", err)))?;
-
-        let packed = e.into_inner().into_writer().into_inner();
+    pub fn set(&mut self, data_type: &str, id: &str, value: JsonValue) -> Result<(), ApplyError> {
+        let address = CartpState::calculate_address(data_type, id);
+        let state_string: String = value.to_string();
+        self.address_map
+            .insert(address.clone(), Some(state_string.clone()));
         self.context
-            .set_state_entry(IntkeyState::calculate_address(name), packed)
-            .map_err(|err| ApplyError::InternalError(format!("{}", err)))?;
-
+            .set_state_entry(address, state_string.into_bytes())?;
         Ok(())
     }
 }
 
-pub struct IntkeyTransactionHandler {
+pub struct CartpTransactionHandler {
     family_name: String,
     family_versions: Vec<String>,
     namespaces: Vec<String>,
 }
 
-impl IntkeyTransactionHandler {
-    pub fn new() -> IntkeyTransactionHandler {
-        IntkeyTransactionHandler {
-            family_name: "intkey".to_string(),
+impl CartpTransactionHandler {
+    pub fn new() -> CartpTransactionHandler {
+        CartpTransactionHandler {
+            family_name: "cartp".to_string(),
             family_versions: vec!["1.0".to_string()],
-            namespaces: vec![get_intkey_prefix()],
+            namespaces: vec![get_cartp_prefix()],
         }
     }
 }
 
-impl TransactionHandler for IntkeyTransactionHandler {
+impl TransactionHandler for CartpTransactionHandler {
     fn family_name(&self) -> String {
         self.family_name.clone()
     }
@@ -272,7 +404,7 @@ impl TransactionHandler for IntkeyTransactionHandler {
         request: &TpProcessRequest,
         context: &mut dyn TransactionContext,
     ) -> Result<(), ApplyError> {
-        let payload = IntkeyPayload::new(request.get_payload());
+        let payload = CartpPayload::new(request.get_payload());
         let payload = match payload {
             Err(e) => return Err(e),
             Ok(payload) => payload,
@@ -286,66 +418,157 @@ impl TransactionHandler for IntkeyTransactionHandler {
             }
         };
 
-        let mut state = IntkeyState::new(context);
+        let mut state = CartpState::new(context);
 
         info!(
-            "payload: {} {} {} {} {}",
-            payload.get_verb(),
-            payload.get_name(),
-            payload.get_value(),
-            request.get_header().get_inputs()[0],
-            request.get_header().get_outputs()[0]
+            // "payload: {} {} {}",
+            "payload: {}",
+            payload,
+            // request.get_header().get_inputs(),
+            // request.get_header().get_outputs()
         );
 
-        match payload.get_verb() {
-            Verb::Set => {
-                match state.get(payload.get_name()) {
+        match payload.get_cmd() {
+            Cmd::NewCar => {
+                //if factory exists
+                //TODO: skip for now, because need to add exception in get state for "factory_id"
+
+                // if car exist
+                match state.get("car", payload.get_car_id()) {
                     Ok(Some(_)) => {
                         return Err(ApplyError::InvalidTransaction(format!(
-                            "{} already set",
-                            payload.get_name()
+                            "ERROR: Already exists: car_id: {}",
+                            payload.get_car_id()
                         )));
                     }
                     Ok(None) => (),
                     Err(err) => return Err(err),
                 };
-                state.set(&payload.get_name(), payload.get_value())
+
+                state.set(
+                    "car",
+                    payload.get_car_id(),
+                    json!({
+                        "data": { //add "data" to getsame structure as python TP version
+                            "factory_id": payload.get_factory_id(),
+                            "car_id": payload.get_car_id(),
+                            "car_brand": payload.get_car_brand(),
+                            "car_type": payload.get_car_type(),
+                            "car_licence": payload.get_car_licence()
+                        }
+                    }),
+                )
             }
-            Verb::Increment => {
-                let orig_value: u32 = match state.get(payload.get_name()) {
-                    Ok(Some(v)) => v,
-                    Ok(None) => {
-                        return Err(ApplyError::InvalidTransaction(String::from(
-                            "inc requires a set value",
+            Cmd::NewOwner => {
+                // if car exist
+                match state.get("car", payload.get_car_id()) {
+                    Ok(Some(_)) => (),
+                    Ok(None) => { //error if no car
+                        return Err(ApplyError::InvalidTransaction(format!(
+                            "'ERROR: Car not exists: car_id: {}",
+                            payload.get_car_id()
                         )));
-                    }
+                    },
                     Err(err) => return Err(err),
                 };
-                let diff = MAX_VALUE - orig_value;
-                if diff < payload.get_value() {
-                    return Err(ApplyError::InvalidTransaction(String::from(
-                        "Value is too large to inc",
-                    )));
+                // if already owner
+                match state.get("owner", payload.get_owner_id()) {
+                    Ok(Some(_)) => {
+                        return Err(ApplyError::InvalidTransaction(format!(
+                            "ERROR: Already owner of car_id: {} owner_id: {}",
+                            payload.get_car_id(),
+                            payload.get_owner_id()
+                        )));
+                    }
+                    Ok(None) => (),
+                    Err(err) => return Err(err),
+                };
+                state.set(
+                    "owner",
+                    payload.get_car_id(),
+                    json!({
+                        "data": { //add "data" to getsame structure as python TP version
+                            "car_id": payload.get_car_id(),
+                            "owner_id": payload.get_owner_id(),
+                            "owner_lastname": payload.get_owner_lastname(),
+                            "owner_name": payload.get_owner_name(),
+                            "owner_address": payload.get_owner_address(),
+                            "owner_country": payload.get_owner_country()
+                        }
+                    }),
+                )
+            }
+            Cmd::Crash => {
+                // if car exist
+                match state.get("car", payload.get_car_id()) {
+                    Ok(Some(_)) => (),
+                    Ok(None) => { //error if no car
+                        return Err(ApplyError::InvalidTransaction(format!(
+                            "'ERROR: Car not exists: car_id: {}",
+                            payload.get_car_id()
+                        )));
+                    },
+                    Err(err) => return Err(err),
                 };
 
-                state.set(&payload.get_name(), orig_value + payload.get_value())
-            }
-            Verb::Decrement => {
-                let orig_value: u32 = match state.get(payload.get_name()) {
-                    Ok(Some(v)) => v,
-                    Ok(None) => {
-                        return Err(ApplyError::InvalidTransaction(String::from(
-                            "dec requires a set value",
-                        )));
-                    }
+                match state.get("crash", payload.get_car_id()) { //get crashes for car_id
+                    Ok(Some(mut crash_car))  => { 
+                        //append to already existing list of car crashes
+                        let data_array = crash_car["data"].as_array_mut().unwrap();
+                        data_array.append(&mut vec![JsonValue::from(request.get_signature())]);
+                        state.set(
+                            "crash",
+                            payload.get_car_id(),
+                            json!({
+                                "data": data_array
+                            }),
+                        )?;
+                        ()
+                    },
+                    Ok(None) => { 
+                        //create and init list of car crashes
+                        state.set(
+                            "crash",
+                            payload.get_car_id(),
+                            json!({
+                                "data": [
+                                    request.get_signature()
+                                ]
+                            }),
+                        )?;
+                        ()
+                    },
                     Err(err) => return Err(err),
                 };
-                if payload.get_value() > orig_value {
-                    return Err(ApplyError::InvalidTransaction(String::from(
-                        "Value is too large to dec",
-                    )));
+
+                match state.get("crash", payload.get_owner_id()) { //get crashes for owner_id
+                    Ok(Some(mut crash_owner))  => { 
+                        //append to already existing list of owner crashes
+                        let data_array = crash_owner["data"].as_array_mut().unwrap();
+                        data_array.append(&mut vec![JsonValue::from(request.get_signature())]);
+                        return state.set(
+                            "crash",
+                            payload.get_owner_id(),
+                            json!({
+                                "data": data_array
+                            }),
+                        )
+                    },
+                    Ok(None) => { 
+                        //create and init list of owner crashes
+                        return state.set(
+                            "crash",
+                            payload.get_owner_id(),
+                            json!({
+                                "data": [
+                                    request.get_signature()
+                                ]
+                            }),
+                        )
+                    },
+                    Err(err) => return Err(err),
                 };
-                state.set(&payload.get_name(), orig_value - payload.get_value())
+
             }
         }
     }
