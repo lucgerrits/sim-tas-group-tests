@@ -411,94 +411,99 @@ services:
     #   context: ./sawtooth-sdk-rust
     #   dockerfile: examples/cartp_rust/Dockerfile
     image: projetsim/cartp-tp-rust
+    working_dir: /project/sawtooth-sdk-rust/examples/cartp_rust
     # volumes:
     #   - ./sawtooth-sdk-rust/:/project/sawtooth-sdk-rust
-    container_name: cartp-tp-rust-local-0
+    # container_name: cartp-tp-rust-local-0
     networks:
       - my_blockchain_network_pbft
     command: |
       bash -c "
-        ./bin/cartp-tp-rust -v -C tcp://validator-0:4004
+        ./bin/cartp-tp-rust -C tcp://validator-0:4004
       "
     stop_signal: SIGKILL
 
   cartp-tp-rust-1:
-    build:
-      context: ./sawtooth-sdk-rust
-      dockerfile: examples/cartp_rust/Dockerfile
-      args:
-        - http_proxy
-        - https_proxy
-        - no_proxy
+    # build:
+    #   context: ./sawtooth-sdk-rust
+    #   dockerfile: examples/cartp_rust/Dockerfile
+    #   args:
+    #     - http_proxy
+    #     - https_proxy
+    #     - no_proxy
     image: projetsim/cartp-tp-rust
+    working_dir: /project/sawtooth-sdk-rust/examples/cartp_rust
     # volumes:
     #   - ./sawtooth-sdk-rust/:/project/sawtooth-sdk-rust
-    container_name: cartp-tp-rust-local-1
+    # container_name: cartp-tp-rust-local-1
     networks:
       - my_blockchain_network_pbft
     command: |
       bash -c "
-        ./bin/cartp-tp-rust -v -C tcp://validator-1:4004
+        ./bin/cartp-tp-rust -C tcp://validator-1:4004
       "
     stop_signal: SIGKILL
 
   cartp-tp-rust-2:
-    build:
-      context: ./sawtooth-sdk-rust
-      dockerfile: examples/cartp_rust/Dockerfile
-      args:
-        - http_proxy
-        - https_proxy
-        - no_proxy
+    # build:
+    #   context: ./sawtooth-sdk-rust
+    #   dockerfile: examples/cartp_rust/Dockerfile
+    #   args:
+    #     - http_proxy
+    #     - https_proxy
+    #     - no_proxy
     image: projetsim/cartp-tp-rust
+    working_dir: /project/sawtooth-sdk-rust/examples/cartp_rust
     # volumes:
     #   - ./sawtooth-sdk-rust/:/project/sawtooth-sdk-rust
-    container_name: cartp-tp-rust-local-2
+    # container_name: cartp-tp-rust-local-2
     networks:
       - my_blockchain_network_pbft
     command: |
       bash -c "
-        ./bin/cartp-tp-rust -v -C tcp://validator-2:4004
+        ./bin/cartp-tp-rust -C tcp://validator-2:4004
       "
     stop_signal: SIGKILL
 
   cartp-tp-rust-3:
-    build:
-      context: ./sawtooth-sdk-rust
-      dockerfile: examples/cartp_rust/Dockerfile
-      args:
-        - http_proxy
-        - https_proxy
-        - no_proxy
+    # build:
+    #   context: ./sawtooth-sdk-rust
+    #   dockerfile: examples/cartp_rust/Dockerfile
+    #   args:
+    #     - http_proxy
+    #     - https_proxy
+    #     - no_proxy
     image: projetsim/cartp-tp-rust
+    working_dir: /project/sawtooth-sdk-rust/examples/cartp_rust
     # volumes:
     #   - ./sawtooth-sdk-rust/:/project/sawtooth-sdk-rust
-    container_name: cartp-tp-rust-local-3
+    # container_name: cartp-tp-rust-local-3
     networks:
       - my_blockchain_network_pbft
     command: |
       bash -c "
-        ./bin/cartp-tp-rust -v -C tcp://validator-3:4004
+        ./bin/cartp-tp-rust -C tcp://validator-3:4004
       "
     stop_signal: SIGKILL
 
   cartp-tp-rust-4:
-    build:
-      context: ./sawtooth-sdk-rust
-      dockerfile: examples/cartp_rust/Dockerfile
-      args:
-        - http_proxy
-        - https_proxy
-        - no_proxy
+    # build:
+    #   context: ./sawtooth-sdk-rust
+    #   dockerfile: examples/cartp_rust/Dockerfile
+    #   args:
+    #     - http_proxy
+    #     - https_proxy
+    #     - no_proxy
     image: projetsim/cartp-tp-rust
+    working_dir: /project/sawtooth-sdk-rust/examples/cartp_rust
     # volumes:
     #   - ./sawtooth-sdk-rust/:/project/sawtooth-sdk-rust
-    container_name: cartp-tp-rust-local-4
+    # container_name: cartp-tp-rust-local-4
     networks:
       - my_blockchain_network_pbft
     command: |
       bash -c "
-        ./bin/cartp-tp-rust -v -C tcp://validator-4:4004
+        ./bin/cartp-tp-rust -C tcp://validator-4:4004
       "
     stop_signal: SIGKILL
 
