@@ -39,7 +39,7 @@ use sawtooth_sdk::processor::handler::TransactionContext;
 use sawtooth_sdk::processor::handler::TransactionHandler;
 
 use serde_json::json;
-use serde_json::{Value as JsonValue};
+use serde_json::Value as JsonValue;
 
 #[derive(Copy, Clone)]
 enum Cmd {
@@ -114,10 +114,10 @@ impl CartpPayload {
 
         let c = cbor::value::Cursor::new(&decoder_value);
 
-        let cmd_raw: String = match c.field("Cmd").text_plain() {
+        let cmd_raw: String = match c.field("tnx_cmd").text_plain() {
             None => {
                 return Err(ApplyError::InvalidTransaction(String::from(
-                    "Cmd must be 'new_car', 'new_owner', or 'crash'",
+                    "cmd parameter is required",
                 )));
             }
             Some(cmd_raw) => cmd_raw.clone(),
@@ -299,13 +299,12 @@ impl fmt::Display for CartpPayload {
                     self.get_signature(),
                     self.get_datapublickey()
                 )
-            }
-            // _ => {
-            //     write!(
-            //         f,
-            //         "ERROR: cannot display, Cmd must be 'new_car', 'new_owner', or 'crash'"
-            //     )
-            // }
+            } // _ => {
+              //     write!(
+              //         f,
+              //         "ERROR: cannot display, Cmd must be 'new_car', 'new_owner', or 'crash'"
+              //     )
+              // }
         }
     }
 }
@@ -333,8 +332,8 @@ impl<'a> CartpState<'a> {
             car_id_sha.input(car_id.as_bytes());
 
             return get_cartp_prefix()
-                + &data_type_sha.result_str()[4..].to_string()
-                + &car_id_sha.result_str()[60..].to_string();
+                + &data_type_sha.result_str()[..4].to_string()
+                + &car_id_sha.result_str()[..60].to_string();
         } else if data_type == "factory_settings" {
             return String::from(
                 "000000a87cb5eafdcca6a89a6f6aa92a4b7cb206c8aaa93d80a76817373ca1c7634a4b",
@@ -435,53 +434,60 @@ impl TransactionHandler for CartpTransactionHandler {
                 //TODO: skip for now, because need to add exception in get state for "factory_id"
 
                 // if car exist
-                match state.get("car", payload.get_car_id()) {
-                    Ok(Some(_)) => {
+                let state_data = state.get("car", payload.get_car_id());
+                match state_data {
+                    Ok(Some(JsonValue::Object(_)))
+                    | Ok(Some(JsonValue::String(_)))
+                    | Ok(Some(JsonValue::Bool(_)))
+                    | Ok(Some(JsonValue::Array(_)))
+                    | Ok(Some(JsonValue::Number(_))) => {
                         return Err(ApplyError::InvalidTransaction(format!(
-                            "ERROR: Already exists: car_id: {}",
-                            payload.get_car_id()
+                            "ERROR: Already exists: car_id: {}, car_data: \n{}",
+                            payload.get_car_id(),
+                            state_data.unwrap().unwrap().to_string()
                         )));
                     }
-                    Ok(None) => (),
+                    Ok(Some(JsonValue::Null)) | Ok(None) => {
+                        return state.set(
+                            "car",
+                            payload.get_car_id(),
+                            json!({
+                                "data": { //add "data" to getsame structure as python TP version
+                                    "factory_id": payload.get_factory_id(),
+                                    "car_id": payload.get_car_id(),
+                                    "car_brand": payload.get_car_brand(),
+                                    "car_type": payload.get_car_type(),
+                                    "car_licence": payload.get_car_licence()
+                                }
+                            }),
+                        );
+                    }
                     Err(err) => return Err(err),
                 };
-
-                state.set(
-                    "car",
-                    payload.get_car_id(),
-                    json!({
-                        "data": { //add "data" to getsame structure as python TP version
-                            "factory_id": payload.get_factory_id(),
-                            "car_id": payload.get_car_id(),
-                            "car_brand": payload.get_car_brand(),
-                            "car_type": payload.get_car_type(),
-                            "car_licence": payload.get_car_licence()
-                        }
-                    }),
-                )
             }
             Cmd::NewOwner => {
                 // if car exist
                 match state.get("car", payload.get_car_id()) {
-                    Ok(Some(_)) => (),
-                    Ok(None) => { //error if no car
+                    Ok(Some(JsonValue::Null)) | Ok(None) => {
+                        //error if no car
                         return Err(ApplyError::InvalidTransaction(format!(
                             "'ERROR: Car not exists: car_id: {}",
                             payload.get_car_id()
                         )));
-                    },
+                    }
+                    Ok(Some(_)) => (),
                     Err(err) => return Err(err),
                 };
                 // if already owner
-                match state.get("owner", payload.get_owner_id()) {
+                match state.get("owner", payload.get_car_id()) {
+                    Ok(Some(JsonValue::Null)) | Ok(None) => (),
                     Ok(Some(_)) => {
                         return Err(ApplyError::InvalidTransaction(format!(
                             "ERROR: Already owner of car_id: {} owner_id: {}",
                             payload.get_car_id(),
                             payload.get_owner_id()
                         )));
-                    }
-                    Ok(None) => (),
+                    },
                     Err(err) => return Err(err),
                 };
                 state.set(
@@ -502,31 +508,20 @@ impl TransactionHandler for CartpTransactionHandler {
             Cmd::Crash => {
                 // if car exist
                 match state.get("car", payload.get_car_id()) {
-                    Ok(Some(_)) => (),
-                    Ok(None) => { //error if no car
+                    Ok(Some(JsonValue::Null)) | Ok(None) => {
+                        //error if no car
                         return Err(ApplyError::InvalidTransaction(format!(
                             "'ERROR: Car not exists: car_id: {}",
                             payload.get_car_id()
                         )));
                     },
-                    Err(err) => return Err(err),
+                    Ok(Some(_)) => (),
+                    Err(err) => return Err(err)
                 };
 
-                match state.get("crash", payload.get_car_id()) { //get crashes for car_id
-                    Ok(Some(mut crash_car))  => { 
-                        //append to already existing list of car crashes
-                        let data_array = crash_car["data"].as_array_mut().unwrap();
-                        data_array.append(&mut vec![JsonValue::from(request.get_signature())]);
-                        state.set(
-                            "crash",
-                            payload.get_car_id(),
-                            json!({
-                                "data": data_array
-                            }),
-                        )?;
-                        ()
-                    },
-                    Ok(None) => { 
+                match state.get("crash", payload.get_car_id()) {
+                    //get crashes for car_id
+                    Ok(Some(JsonValue::Null)) | Ok(None) => {
                         //create and init list of car crashes
                         state.set(
                             "crash",
@@ -539,23 +534,19 @@ impl TransactionHandler for CartpTransactionHandler {
                         )?;
                         ()
                     },
+                    Ok(Some(mut crash_car)) => {
+                        //append to already existing list of car crashes
+                        let data_array = crash_car["data"].as_array_mut().unwrap();
+                        data_array.append(&mut vec![JsonValue::from(request.get_signature())]);
+                        state.set("crash", payload.get_car_id(), json!({ "data": data_array }))?;
+                        ()
+                    },                    
                     Err(err) => return Err(err),
                 };
 
-                match state.get("crash", payload.get_owner_id()) { //get crashes for owner_id
-                    Ok(Some(mut crash_owner))  => { 
-                        //append to already existing list of owner crashes
-                        let data_array = crash_owner["data"].as_array_mut().unwrap();
-                        data_array.append(&mut vec![JsonValue::from(request.get_signature())]);
-                        return state.set(
-                            "crash",
-                            payload.get_owner_id(),
-                            json!({
-                                "data": data_array
-                            }),
-                        )
-                    },
-                    Ok(None) => { 
+                match state.get("crash", payload.get_owner_id()) {
+                    //get crashes for owner_id
+                    Ok(Some(JsonValue::Null)) | Ok(None) => {
                         //create and init list of owner crashes
                         return state.set(
                             "crash",
@@ -565,11 +556,20 @@ impl TransactionHandler for CartpTransactionHandler {
                                     request.get_signature()
                                 ]
                             }),
-                        )
+                        );
+                    },
+                    Ok(Some(mut crash_owner)) => {
+                        //append to already existing list of owner crashes
+                        let data_array = crash_owner["data"].as_array_mut().unwrap();
+                        data_array.append(&mut vec![JsonValue::from(request.get_signature())]);
+                        return state.set(
+                            "crash",
+                            payload.get_owner_id(),
+                            json!({ "data": data_array }),
+                        );
                     },
                     Err(err) => return Err(err),
                 };
-
             }
         }
     }
