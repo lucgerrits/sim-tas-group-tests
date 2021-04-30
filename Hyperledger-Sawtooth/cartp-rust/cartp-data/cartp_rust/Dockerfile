@@ -14,7 +14,7 @@
 
 # docker build -f examples/cartp_rust/Dockerfile -t sawtooth-cartp-tp-rust-local .
 
-FROM ubuntu:bionic
+FROM ubuntu:bionic as build
 
 RUN apt-get update \
  && apt-get install -y \
@@ -66,7 +66,7 @@ RUN echo "\033[0;32m--- Building cartp-tp-rust ---\n\033[0m" \
 
 RUN cp ./target/release/cartp-tp-rust ./bin/cartp-tp-rust
 
-RUN ls -l && ls -l ./bin/
+# RUN ls -l && ls -l ./bin/
 
 # RUN cd examples/cartp_rust \
 #  && echo "\033[0;32m--- Building cartp-tp-rust ---\n\033[0m" \
@@ -74,5 +74,17 @@ RUN ls -l && ls -l ./bin/
 #  && mkdir -p ./bin/ \
 #  && cargo build --release \
 #  && cp ./target/release/cartp-tp-rust ./bin/cartp-tp-rust
+
+
+FROM ubuntu:bionic
+
+RUN apt-get update
+RUN apt-get install -y curl
+RUN apt-get install -y libssl-dev
+RUN apt-get install -y libzmq3-dev
+
+COPY --from=build /project/sawtooth-sdk-rust/ /project/sawtooth-sdk-rust/
+
+WORKDIR /project/sawtooth-sdk-rust/
 
 CMD echo "Try ./bin/cartp-tp-rust"
