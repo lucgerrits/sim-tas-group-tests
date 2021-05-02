@@ -58,7 +58,7 @@ services:
     command: |
       /bin/bash -c "
           echo '185.52.32.4 apirest.unice.cust.tasfrance.com' >> /etc/hosts
-          node test.js 5 1 10000
+          node test.js 20 0.5 20000 True
       "
     stop_signal: SIGKILL
 
