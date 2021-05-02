@@ -1,3 +1,9 @@
 {
-    "cmake.configureOnOpen": false
+    "cmake.configureOnOpen": false,
+    "files.watcherExclude": {
+        "*.log": true,
+        "*.out": true,
+        "**/substrate-node-template/**": true,
+        "**/target/**": true
+      }
 }

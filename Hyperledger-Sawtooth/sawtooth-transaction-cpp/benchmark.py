@@ -15,7 +15,7 @@ if RANCHER_BEARER_TOKEN == None:
 file_sender_log = "sender_log.log"
 file_stats_log = "stats_log.log"
 
-do_reboot=False #True/False
+do_reboot=True #True/False
 do_test_init=True #1/0
 
 # config doc: https://sawtooth.hyperledger.org/docs/pbft/nightly/master/configuring-pbft.html
