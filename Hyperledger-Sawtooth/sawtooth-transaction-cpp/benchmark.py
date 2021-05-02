@@ -15,173 +15,18 @@ if RANCHER_BEARER_TOKEN == None:
 file_sender_log = "sender_log.log"
 file_stats_log = "stats_log.log"
 
+do_reboot=False #True/False
+do_test_init=True #1/0
+
 # config doc: https://sawtooth.hyperledger.org/docs/pbft/nightly/master/configuring-pbft.html
 test_profiles = [
     {
         "sender_parameters": {
-            "limit": "10000",
-            "js_nb_parallele": "15",
+            "limit": "20000",
+            "js_nb_parallele": "20",
             "js_wait_time": "0.5"
         }
-    },
-#    {
-#        "sender_parameters": {
-#            "limit": "10000",
-#            "js_nb_parallele": "35",
-#            "js_wait_time": "0.5"
-#        }
-#    },
-#    {
-#        "sender_parameters": {
-#            "limit": "10000",
-#            "js_nb_parallele": "40",
-#            "js_wait_time": "0.5"
-#        }
-#    },
-#    {
-#        "sender_parameters": {
-#            "limit": "10000",
-#            "js_nb_parallele": "450",
-#            "js_wait_time": "0.5"
-#        }
-#    },
-#    {
-#        "sender_parameters": {
-#            "limit": "10000",
-#            "js_nb_parallele": "50",
-#            "js_wait_time": "0.5"
-#        }
-#    },
-#    {
-#        "sender_parameters": {
-#            "limit": "10000",
-#            "js_nb_parallele": "5",
-#            "js_wait_time": "1"
-#        }
-#    },
-#    {
-#        "sender_parameters": {
-#            "limit": "10000",
-#            "js_nb_parallele": "5",
-#            "js_wait_time": "1"
-#        }
-#    },
-#    {
-#        "sender_parameters": {
-#            "limit": "10000",
-#            "js_nb_parallele": "5",
-#            "js_wait_time": "1"
-#        }
-#    },
-#     ###############################
-#    {
-#        "sender_parameters": {
-#            "limit": "10000",
-#            "js_nb_parallele": "10",
-#            "js_wait_time": "1"
-#        }
-#    },
-#    {
-#        "sender_parameters": {
-#            "limit": "10000",
-#            "js_nb_parallele": "10",
-#            "js_wait_time": "1"
-#        }
-#    },
-#    {
-#        "sender_parameters": {
-#            "limit": "10000",
-#            "js_nb_parallele": "10",
-#            "js_wait_time": "1"
-#        }
-#    },
-#    {
-#        "sender_parameters": {
-#            "limit": "10000",
-#            "js_nb_parallele": "10",
-#            "js_wait_time": "1"
-#        }
-#    },
-#    {
-#        "sender_parameters": {
-#            "limit": "10000",
-#            "js_nb_parallele": "10",
-#            "js_wait_time": "1"
-#        }
-#    },
-#    ###############################
-#    {
-#        "sender_parameters": {
-#            "limit": "10000",
-#            "js_nb_parallele": "20",
-#            "js_wait_time": "1"
-#        }
-#    },
-#    {
-#        "sender_parameters": {
-#            "limit": "10000",
-#            "js_nb_parallele": "20",
-#            "js_wait_time": "1"
-#        }
-#    },
-#    {
-#        "sender_parameters": {
-#            "limit": "10000",
-#            "js_nb_parallele": "20",
-#            "js_wait_time": "1"
-#        }
-#    },
-#    {
-#        "sender_parameters": {
-#            "limit": "10000",
-#            "js_nb_parallele": "20",
-#            "js_wait_time": "1"
-#        }
-#    },
-#    {
-#        "sender_parameters": {
-#            "limit": "10000",
-#            "js_nb_parallele": "20",
-#            "js_wait_time": "1"
-#        }
-#    },
-   
-    # ################################
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "5",
-    #         "js_wait_time": "1"
-    #     }
-    # },
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "25",
-    #         "js_wait_time": "1"
-    #     }
-    # },
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "30",
-    #         "js_wait_time": "1"
-    #     }
-    # },
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "30",
-    #         "js_wait_time": "1"
-    #     }
-    # },
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "30",
-    #         "js_wait_time": "1"
-    #     }
-    # },
+    }
 ]
 ##################### DEF GENERAL #####################
 
@@ -252,23 +97,24 @@ def start_sender(sender_parameters, test_name):
     subprocess.check_output(
         ['docker-compose', '-f', 'docker-compose-sender.yaml.benchmark', 'down'], stderr=subprocess.STDOUT)
 
-    params = "{} {} {}".format(
-        sender_parameters["js_nb_parallele"], sender_parameters["js_wait_time"], sender_parameters["limit"])
+    params = "{} {} {} {}".format(
+        sender_parameters["js_nb_parallele"], sender_parameters["js_wait_time"], sender_parameters["limit"], do_test_init)
     set_file_params("docker-compose-sender.yaml.benchmark",
                     "<SENDER_TEST_JS_OPTIONS>", params)
     log(" OK", ts=False)
     log(" CMD SENDER: docker-compose -f docker-compose-sender.yaml.benchmark up --no-color --quiet-pull sender-js", ts=False)
-    append_file(file_sender_log,
-                "\n============= {} ============\n".format(test_name))
-    result = subprocess.check_output(
+    # append_file(file_sender_log,
+    #             "\n============= {} ============\n".format(test_name))
+    # result = 
+    subprocess.call(
         ['docker-compose', '-f', 'docker-compose-sender.yaml.benchmark', 'up', '--no-color', '--quiet-pull', 'sender-js'], stderr=subprocess.STDOUT)
 
-    log(result.decode("utf-8"), ts=False)
+    # log(result.decode("utf-8"), ts=False)
 
     # append_file(file_sender_log, result.decode("utf-8").split("Start loop")[1])
-    append_file(file_sender_log, result.decode("utf-8"))
-    append_file(file_sender_log,
-                "\n============= END {} ============\n".format(test_name))
+    # append_file(file_sender_log, result.decode("utf-8"))
+    # append_file(file_sender_log,
+    #             "\n============= END {} ============\n".format(test_name))
     log("Sleep {} sec for blockchain stabilize".format(60))
     time.sleep(60)
 
@@ -330,7 +176,9 @@ def main(profiles):
 
     for i in range(nb_profiles):
         log("Benchmark n°{}".format(i))
-        reboot_blockchain()
+
+        if do_reboot:
+            reboot_blockchain()
 
         start_sender(profiles[i]["sender_parameters"], "TEST n°{}".format(i))
 
@@ -339,7 +187,7 @@ def main(profiles):
     log("Finishing")
 
     log("Done {} benchmarks".format(nb_profiles))
-    os.system('spd-say "Benchmark finished"')
+    os.system('BEEP=/usr/share/sounds/freedesktop/stereo/complete.oga paplay $BEEP && paplay $BEEP && paplay $BEEP')
 
 
 # main(test_profiles)

@@ -3,10 +3,10 @@ const fs = require('fs');
 var exec = require('child_process').exec;
 
 const verbose = false;
-const do_init = true; //do the car and owner init ?
 const nb_batch_parallele = parseInt(process.argv[2]);
 const waiting_time = parseFloat(process.argv[3]) * 1000;
 const limit = parseInt(process.argv[4]);
+const do_init = process.argv[5] == "True" ? true : false; //do the car and owner init ?
 
 const init_limit = 500;
 
@@ -218,6 +218,7 @@ async.series([
     function (callback) {
         if (!do_init)
             return callback();
+        console.log("Sending new cars...")
         var tmp = 0;
         async.eachOfSeries(cars_keys, function (value, key, each_callback) {
             if (tmp < init_limit) {
@@ -243,8 +244,8 @@ async.series([
                 child.on('close', function (exit_code) {
                     if (exit_code != 0)
                         console.log('Closed before stop: Closing code: ', exit_code);
-                    // each_callback();
-                    setTimeout(each_callback, 5);//wait a little because we have 1000 keys 
+                    each_callback();
+                    // setTimeout(each_callback, 5);//wait a little because we have 1000 keys 
                 });
             } else {
                 each_callback()
@@ -255,6 +256,7 @@ async.series([
     function (callback) {
         if (!do_init)
             return callback();
+        console.log("Sending new owners...")
         var tmp = 0;
         async.eachOfSeries(drivers_keys, function (value, key, each_callback) {
             if (tmp < init_limit) {
@@ -281,8 +283,8 @@ async.series([
                 child.on('close', function (exit_code) {
                     if (exit_code != 0)
                         console.log('Closed before stop: Closing code: ', exit_code);
-                    // each_callback();
-                    setTimeout(each_callback, 5);//wait a little because we have 1000 keys 
+                    each_callback();
+                    // setTimeout(each_callback, 5);//wait a little because we have 1000 keys 
                 });
             } else {
                 each_callback()
@@ -293,10 +295,11 @@ async.series([
     function (callback) {
         if (!do_init)
             return callback();
-        console.log("Wait 10 sec for 1st stabilization...")
-        setTimeout(callback, 10000);
+        console.log("Wait 20 sec for 1st stabilization...")
+        setTimeout(callback, 20000);
     },
     function (callback) {
+        console.log("Sending...")
         send(sig_array, callback); //Do the benchmark
     },
     function (callback) {
