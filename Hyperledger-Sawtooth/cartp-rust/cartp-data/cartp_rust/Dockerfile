@@ -66,20 +66,10 @@ RUN echo "\033[0;32m--- Building cartp-tp-rust ---\n\033[0m" \
 
 RUN cp ./target/release/cartp-tp-rust ./bin/cartp-tp-rust
 
-# RUN ls -l && ls -l ./bin/
-
-# RUN cd examples/cartp_rust \
-#  && echo "\033[0;32m--- Building cartp-tp-rust ---\n\033[0m" \
-#  && rm -rf ./bin/ \
-#  && mkdir -p ./bin/ \
-#  && cargo build --release \
-#  && cp ./target/release/cartp-tp-rust ./bin/cartp-tp-rust
-
 
 FROM ubuntu:bionic
 
 RUN apt-get update
-RUN apt-get install -y curl
 RUN apt-get install -y libssl-dev
 RUN apt-get install -y libzmq3-dev
 
