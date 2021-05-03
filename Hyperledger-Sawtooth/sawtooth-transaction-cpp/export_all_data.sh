@@ -53,6 +53,15 @@ echo "6_nodes"
 ./export_influxdb_data.sh 1619556642345 1619557923786
 ./build_data.py "60tps|6_nodes|new_setup"
 
+
+./export_influxdb_data.sh 1619885713903 1619886815395
+./build_data.py "40tps|6_nodes|rust|bpb_300"
+./export_influxdb_data.sh 1619887409927 1619888341365
+./build_data.py "40tps|6_nodes|rust|bpb_100"
+./export_influxdb_data.sh 1619950582635 1619951688235
+./build_data.py "40tps|6_nodes|rust|bpb_50"
+
+
 echo "12_nodes"
 ./export_influxdb_data.sh 1618781571866 1618795969900
 ./build_data.py "5tps|12_nodes"
