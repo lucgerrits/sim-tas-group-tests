@@ -60,3 +60,8 @@ echo "6_nodes"
 ```
 
 4. Visualize the merged data of all tests with `./build_data_merged.py`
+
+
+
+
+<!-- kubectl exec -it -n sim-sawtooth-net node-0-66c7cddb4b-9xctj --container sawtooth-validator -- bash -c "du -sh /var/lib/sawtooth/" -->

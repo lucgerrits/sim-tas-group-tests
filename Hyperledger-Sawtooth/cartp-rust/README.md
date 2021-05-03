@@ -12,3 +12,5 @@
 <!-- docker-compose -f docker-compose-local-test.yaml down -->
 
 <!-- docker-compose -f docker-compose-local-test.yaml down && sudo -u $USER ./build.sh && docker-compose -f docker-compose-local-test.yaml up --scale cartp-tp-rust-0=10 --scale cartp-tp-rust-1=10 --scale cartp-tp-rust-2=10 --scale cartp-tp-rust-3=10 --scale cartp-tp-rust-4=10 -->
+
+<!-- docker build -f examples/cartp_rust/Dockerfile -t projetsim/cartp-tp-rust . -->

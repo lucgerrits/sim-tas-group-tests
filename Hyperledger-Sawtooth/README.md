@@ -19,3 +19,8 @@ Folder containing the files required to deploy Hyperledger Sawtooth in Kubernete
 ```bash
   kubectl apply -f pbft-keys-configmap.yaml
 ```
+
+
+## Other info
+
+batches accepted = (QUEUE_MULTIPLIER) * Ravg of published batches
