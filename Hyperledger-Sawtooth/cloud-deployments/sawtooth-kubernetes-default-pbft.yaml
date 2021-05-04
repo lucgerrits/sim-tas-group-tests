@@ -303,7 +303,7 @@ items:
                   /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "10Gi"
@@ -347,7 +347,7 @@ items:
                       sawtooth.consensus.algorithm.name=pbft \
                       sawtooth.consensus.algorithm.version=1.0\
                       sawtooth.consensus.pbft.members=["\"$pbft0pub\",\"$pbft1pub\",\"$pbft2pub\",\"$pbft3pub\",\"$pbft4pub\",\"$pbft5pub\""] \
-                      sawtooth.publisher.max_batches_per_block=1200 \
+                      sawtooth.publisher.max_batches_per_block=100 \
                       sawtooth.cartp.factory.members='[\"02a47084f6228bf7eb91e1628140f5b717cad1d1166b4ad7665e88204e74f92e5c\"]' \
                       -o config.batch
                   fi && \
@@ -711,7 +711,7 @@ items:
                   /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "10Gi"
@@ -1106,7 +1106,7 @@ items:
                   /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "10Gi"
@@ -1505,7 +1505,7 @@ items:
 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "10Gi"
@@ -1903,7 +1903,7 @@ items:
  
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "10Gi"
@@ -2301,7 +2301,7 @@ items:
                   /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "10Gi"
