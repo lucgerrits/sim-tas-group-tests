@@ -101,6 +101,8 @@ def start_sender(sender_parameters, test_name):
 
         log("Do init")
         log(" CMD SENDER: docker-compose -f docker-compose-sender.yaml.benchmark up --no-color --quiet-pull sender-js", ts=False)
+        subprocess.call(
+        ['docker-compose', '-f', 'docker-compose-sender.yaml.benchmark', 'up', '--no-color', '--quiet-pull', 'sender-js'], stderr=subprocess.STDOUT)
         log("Do init done")
 
     log("Set sender parameters")
