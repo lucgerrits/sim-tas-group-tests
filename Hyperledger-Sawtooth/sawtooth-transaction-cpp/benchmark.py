@@ -22,7 +22,7 @@ do_test_init=True #1/0
 test_profiles = [
     {
         "sender_parameters": {
-            "limit": "20000",
+            "limit": "10000",
             "js_nb_parallele": "20",
             "js_wait_time": "0.5"
         }
@@ -82,39 +82,44 @@ def set_file_params(filename, marker, data):
 def start_sender(sender_parameters, test_name):
     log("Start sender")
 
-    log("Set parameters", end="")
-    duplicate_file("docker-compose-sender.yaml",
-                   "docker-compose-sender.yaml.benchmark")
-    # params = "{} {} {}".format(
-    #     sender_parameters["limit"], sender_parameters["js_nb_parallele"], sender_parameters["js_wait_time"])
-    # set_file_params("docker-compose-sender.yaml.benchmark",
-    #                 "<SENDER_TEST_OPTIONS>", params)
-    # log(" OK", ts=False)
 
-    # result = subprocess.check_output(
-    #     ['docker-compose', '-f', 'docker-compose-sender.yaml.benchmark', 'up', 'sender'], stderr=subprocess.STDOUT)
+    if do_test_init:
+        log("Do init")
 
+        log("Set init parameters")
+        duplicate_file("docker-compose-sender.yaml", "docker-compose-sender.yaml.benchmark")
+        log(" CMD: docker-compose -f docker-compose-sender.yaml.benchmark down", ts=False)
+        subprocess.check_output(
+            ['docker-compose', '-f', 'docker-compose-sender.yaml.benchmark', 'down'], stderr=subprocess.STDOUT)
+        params = "{} {} {} {} {}".format(
+            sender_parameters["js_nb_parallele"], sender_parameters["js_wait_time"], sender_parameters["limit"], do_test_init, False)
+        set_file_params("docker-compose-sender.yaml.benchmark",
+                        "<SENDER_TEST_JS_OPTIONS>", params)
+        log("params= {}".format(params))
+
+        log("Set init parameters done")
+
+        log("Do init")
+        log(" CMD SENDER: docker-compose -f docker-compose-sender.yaml.benchmark up --no-color --quiet-pull sender-js", ts=False)
+        log("Do init done")
+
+    log("Set sender parameters")
+    duplicate_file("docker-compose-sender.yaml", "docker-compose-sender.yaml.benchmark")
+    log(" CMD: docker-compose -f docker-compose-sender.yaml.benchmark down", ts=False)
     subprocess.check_output(
         ['docker-compose', '-f', 'docker-compose-sender.yaml.benchmark', 'down'], stderr=subprocess.STDOUT)
-
-    params = "{} {} {} {}".format(
-        sender_parameters["js_nb_parallele"], sender_parameters["js_wait_time"], sender_parameters["limit"], do_test_init)
+    params = "{} {} {} {} {}".format(
+        sender_parameters["js_nb_parallele"], sender_parameters["js_wait_time"], sender_parameters["limit"], False, True)
     set_file_params("docker-compose-sender.yaml.benchmark",
                     "<SENDER_TEST_JS_OPTIONS>", params)
-    log(" OK", ts=False)
+    log("Set sender parameters done")
+
+    log("Do sender")
     log(" CMD SENDER: docker-compose -f docker-compose-sender.yaml.benchmark up --no-color --quiet-pull sender-js", ts=False)
-    # append_file(file_sender_log,
-    #             "\n============= {} ============\n".format(test_name))
-    # result = 
     subprocess.call(
         ['docker-compose', '-f', 'docker-compose-sender.yaml.benchmark', 'up', '--no-color', '--quiet-pull', 'sender-js'], stderr=subprocess.STDOUT)
+    log("Do sender done")
 
-    # log(result.decode("utf-8"), ts=False)
-
-    # append_file(file_sender_log, result.decode("utf-8").split("Start loop")[1])
-    # append_file(file_sender_log, result.decode("utf-8"))
-    # append_file(file_sender_log,
-    #             "\n============= END {} ============\n".format(test_name))
     log("Sleep {} sec for blockchain stabilize".format(60))
     time.sleep(60)
 

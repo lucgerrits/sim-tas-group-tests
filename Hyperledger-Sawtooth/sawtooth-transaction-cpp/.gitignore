@@ -12,3 +12,5 @@ backup_influxdb/
 
 influxdb-v1.8.5/
 backup_influxdb.sh
+
+.my_env

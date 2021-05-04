@@ -7,6 +7,7 @@ const nb_batch_parallele = parseInt(process.argv[2]);
 const waiting_time = parseFloat(process.argv[3]) * 1000;
 const limit = parseInt(process.argv[4]);
 const do_init = process.argv[5] == "True" ? true : false; //do the car and owner init ?
+const do_send = process.argv[6] == "True" ? true : false; //do the car and owner init ?
 
 const init_limit = 1000;
 
@@ -155,64 +156,9 @@ async function send(sig_array, next) {
 
 
 async.series([
-    // function (callback) {
-    //     //init new_car
-    //     var cmd = `./transaction --mode cartp \
-    //     --tnxprivatekey ${batchprivatekey} \
-    //     --tnxpublickey ${batchpublickey} \
-    //     --batchprivatekey 4540473db04512cdfb6decaa5cc14c2442d3d3c742b47bf19e0395c07aeb8d20 \
-    //     --batchpublickey 02a47084f6228bf7eb91e1628140f5b717cad1d1166b4ad7665e88204e74f92e5c \
-    //     --cmd new_car \
-    //     --car_brand "Kittmobile" \
-    //     --car_type "Danger" \
-    //     --car_licence "X1-102-10V" \
-    //     --url "http://${apiURL}/batches"`;
-    //     var child = exec(cmd);
-
-    //     // Listen for any response:
-    //     child.stdout.on('data', function (data) {
-    //         console.log(data);
-    //     });
-    //     // Listen if the process closed
-    //     child.on('close', function (exit_code) {
-    //         if (exit_code != 0)
-    //             console.log('Closed before stop: Closing code: ', exit_code);
-    //         callback();
-    //     });
-    // },
-    // function (callback) {
-    //     //init new_owner
-    //     var cmd = `./transaction --mode cartp \
-    //     --tnxprivatekey ${tnxprivatekey} \
-    //     --tnxpublickey ${tnxpublickey} \
-    //     --batchprivatekey ${batchprivatekey} \
-    //     --batchpublickey ${batchpublickey} \
-    //     --cmd new_owner \
-    //     --owner_lastname "Pikachou" \
-    //     --owner_name "Mr. V" \
-    //     --owner_address "1 av Atlantis" \
-    //     --owner_country "France" \
-    //     --url "http://${apiURL}/batches"`;
-    //     var child = exec(cmd);
-
-    //     // Listen for any response:
-    //     child.stdout.on('data', function (data) {
-    //         console.log(data);
-    //     });
-    //     // Listen if the process closed
-    //     child.on('close', function (exit_code) {
-    //         if (exit_code != 0)
-    //             console.log('Closed before stop: Closing code: ', exit_code);
-    //         callback();
-    //     });
-    // },
-
-
-    //////////////////////////////////////////////////////////////////////////////
-
-
-    //First init blockchain with 20 cars using one factory
-    //Then set the 20 owners of each car
+    
+    //First init blockchain with init_limit cars using one factory
+    //Then set the init_limit owners of each car
     //NOTE: index car == index car driver owner
 
     function (callback) {
@@ -299,6 +245,8 @@ async.series([
         setTimeout(callback, 20000);
     },
     function (callback) {
+        if (!do_send)
+            return callback();
         console.log("Sending...")
         send(sig_array, callback); //Do the benchmark
     },
