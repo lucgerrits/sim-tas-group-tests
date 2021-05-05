@@ -6,58 +6,29 @@ Everything should run in docker/docker-compose.
 
 ## Installation 
 
-You'll have to install the SIM pallet to be able to use it.
+## Direct
+
+Note: Rust must be installed on computer.
+
+Build from source with:
 
 ```bash
-#go to git root: cd <SOME PATH>/SIM-TAS-Group-tests
-git submodule update --init --recursive
-cd Substrate/substrate-node
-cp -r additional-pallets/sim/ substrate-node-template/pallets/
+./build.sh
 ```
 
-Add code in `./substrate-node-template/runtime/src/lib.rs` :
-```diff
-/// Configure the template pallet in pallets/template.
-impl pallet_template::Config for Runtime {
-	type Event = Event;
-}
+## Docker
 
-+impl pallet_sim::Config for Runtime {
-+	type Event = Event;
-+}
+Build the docker image using:
 
-// Create the runtime by composing the FRAME pallets that were previously configured.
-construct_runtime!(
-	pub enum Runtime where
-		Block = Block,
-		NodeBlock = opaque::Block,
-		UncheckedExtrinsic = UncheckedExtrinsic
-	{
-		System: frame_system::{Module, Call, Config, Storage, Event<T>},
-		RandomnessCollectiveFlip: pallet_randomness_collective_flip::{Module, Call, Storage},
-		Timestamp: pallet_timestamp::{Module, Call, Storage, Inherent},
-		Aura: pallet_aura::{Module, Config<T>},
-		Grandpa: pallet_grandpa::{Module, Call, Storage, Config, Event},
-		Balances: pallet_balances::{Module, Call, Storage, Config<T>, Event<T>},
-		TransactionPayment: pallet_transaction_payment::{Module, Storage},
-		Sudo: pallet_sudo::{Module, Call, Config<T>, Storage, Event<T>},
-		// Include the custom logic from the template pallet in the runtime.
-		TemplateModule: pallet_template::{Module, Call, Storage, Event<T>},
-+		SimModule: pallet_sim::{Module, Call, Storage, Event<T>},
-	}
-);
+```bash
+cd substrate-node-template/
+docker build -f Dockerfile-installed-bionic -t projetsim/substrate-sim-local .
 ```
-
-Add code in `./substrate-node-template/runtime/Cargo.toml` :
-```diff
-# local dependencies
-pallet-template = { path = '../pallets/template', default-features = false, version = '3.0.0' }
-+pallet-sim = { path = '../pallets/sim', default-features = false, version = '3.0.0' }
-```
-
 
 
 ## Docker compose
+
+Note: This will use latest image from [[dockerhub](https://hub.docker.com/r/projetsim/substrate-sim)](https://hub.docker.com/r/projetsim/substrate-sim).
 
 ### Local 1 node setup
 
@@ -66,6 +37,11 @@ Use the [docker-compose.yml](./docker-compose.yml) to run a local dev node.
 ### Local N node setup
 
 Use the [docker-compose-aura.yml](./docker-compose-aura.yml) to run a substrate network of N nodes.
+YOu need at least 5 nodes, this can be done using docker-compose scale:
+```bash
+docker-compose --project-name substrate_sim -f docker-compose-aura.yml up --scale substrate-peer=4
+```
+
 
 The docker compose file contains:
 - **Substrate Genesis:** definition of genesis configuration and start the first validator in a chain mode (local), using an account (alice), and a node key.

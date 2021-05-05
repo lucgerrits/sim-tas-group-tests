@@ -22,9 +22,8 @@ services:
 ##########################################################################
 
   substrate-genesis:
-    image: paritytech/ci-linux:production
+    image: projetsim/substrate-sim:latest
     container_name: substrate-genesis
-    working_dir: /var/www/node-template
     ports:
       - "9944:9944"
       - "9933:9933"
@@ -32,19 +31,15 @@ services:
       - "9615"
       - "9933"
       - "9944"
-    environment:
-      - CARGO_HOME=/var/www/node-template/.cargo
+    # environment:
       # - RUST_LOG=runtime=debug
-    volumes:
-      - ./substrate-node-template/:/var/www/node-template
-      # - ./node-data:/root/.local
     # command: bash -c "cargo build --release && ./target/release/node-template --dev --ws-external --prometheus-external"
     # command: bash -c "./target/release/node-template --dev --ws-external --prometheus-external"
     command: |
       bash -c " \
         # Start Alice's node
         RUST_LOG=runtime=debug
-        cargo build --release && ./target/release/node-template \
+        node-template \
           --base-path /tmp/alice \
           --chain local \
           --alice \
@@ -62,24 +57,18 @@ services:
           # --telemetry-url 'wss://telemetry.polkadot.io/submit/ 0' \
 
   substrate-peer:
-    image: paritytech/ci-linux:production
-    working_dir: /var/www/node-template
+    image: projetsim/substrate-sim:latest
     # ports:
       # - "9944:9944"
     expose: 
       - "9615"
       - "9933"
       - "9944"
-    environment:
-      - CARGO_HOME=/var/www/node-template/.cargo
-    volumes:
-      - ./substrate-node-template/:/var/www/node-template
-      # - ./node-data:/root/.local
     command: |
       bash -c " \
         # Bob join Alice's node
         RUST_LOG=runtime=debug
-        cargo build --release && ./target/release/node-template \
+        node-template \
           --base-path /tmp/bob \
           --chain local \
           --bob \

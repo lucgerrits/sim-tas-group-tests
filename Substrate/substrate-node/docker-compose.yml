@@ -3,19 +3,15 @@ version: "3.2"
 services:
   substrate:
     container_name: substrate
-    image: paritytech/ci-linux:974ba3ac-20201006
-    working_dir: /var/www/node-template
+    image: projetsim/substrate-sim:latest
     ports:
       - "9944:9944"
     expose: 
       - "9615"
-    environment:
-      - CARGO_HOME=/var/www/node-template/.cargo
     volumes:
-      - .:/var/www/node-template
       - ./node-data:/root/.local
     # command: bash -c "cargo build --release && RUST_LOG=runtime=debug ./target/release/node-template --dev --ws-external --prometheus-external"
-    command: bash -c "RUST_LOG=runtime=debug ./target/release/node-template --dev --ws-external --prometheus-external"
+    command: bash -c "RUST_LOG=runtime=debug node-template --dev --ws-external --prometheus-external"
 
   substrate-rest-api:
     image: docker.io/parity/substrate-api-sidecar:latest
@@ -53,22 +49,22 @@ services:
       - substrate
       - prometheus
 
-  substrate-interface:
-    build:
-        context: ./substrate-SIM-frontend
-        dockerfile: Dockerfile
-    container_name: substrate-interface
-    working_dir: /var/www/node-template-frontend
-    ports:
-      - 8000:8000
-    expose: 
-      - "9090"
-      - "9944"
-      - "9615"
-    volumes:
-      - ./substrate-SIM-frontend:/var/www/node-template-frontend
-    depends_on:
-      - substrate
-    environment:
-      - BROWSER=none
-    command: bash -c "yarn install && yarn start"
+  # substrate-interface:
+  #   build:
+  #       context: ./substrate-SIM-frontend
+  #       dockerfile: Dockerfile
+  #   container_name: substrate-interface
+  #   working_dir: /var/www/node-template-frontend
+  #   ports:
+  #     - 8000:8000
+  #   expose: 
+  #     - "9090"
+  #     - "9944"
+  #     - "9615"
+  #   volumes:
+  #     - ./substrate-SIM-frontend:/var/www/node-template-frontend
+  #   depends_on:
+  #     - substrate
+  #   environment:
+  #     - BROWSER=none
+  #   command: bash -c "yarn install && yarn start"
