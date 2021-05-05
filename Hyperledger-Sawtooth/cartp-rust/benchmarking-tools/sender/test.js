@@ -219,6 +219,7 @@ async.series([
         if (!do_init)
             return callback();
         var tmp = 0;
+        console.log("Sending init cars...")
         async.eachOfSeries(cars_keys, function (value, key, each_callback) {
             if (tmp < init_limit) {
                 tmp += 1;
@@ -256,6 +257,7 @@ async.series([
         if (!do_init)
             return callback();
         var tmp = 0;
+        console.log("Sending init owners...")
         async.eachOfSeries(drivers_keys, function (value, key, each_callback) {
             if (tmp < init_limit) {
                 tmp += 1;
@@ -293,8 +295,8 @@ async.series([
     function (callback) {
         if (!do_init)
             return callback();
-        console.log("Wait 30 sec for 1st stabilization...")
-        setTimeout(callback, 30000);
+        console.log("Wait 20 sec for 1st stabilization...")
+        setTimeout(callback, 20000);
     },
     function (callback) {
         console.log("Sending...")
