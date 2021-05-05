@@ -22,8 +22,8 @@ data_path = "./datas_csv/"
 conf_figsize=(20, 10)
 # conf_figsize=(6.4, 4.8)
 merge_on="time"
-filter_out_all_with_elements=["40tps", "17tps", "25tps"]
-filter_out_reverse=False
+filter_out_all_with_elements=["rust|bpb_100", "rust|bpb_50"] #"40tps", "17tps", "25tps", "30tps"
+filter_out_reverse=True
 #%%
 #
 # Get all CSV files and put it inside dataframes

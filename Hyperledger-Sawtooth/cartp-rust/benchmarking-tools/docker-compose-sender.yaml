@@ -34,6 +34,6 @@ services:
       - ./sender:/sender
     command: |
       /bin/bash -c "
-          node test.js 20 0.5 20000
+          node test.js 20 0.5 10000
       "
     stop_signal: SIGKILL
