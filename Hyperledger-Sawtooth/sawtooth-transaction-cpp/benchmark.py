@@ -20,10 +20,179 @@ do_test_init=True #1/0
 
 # config doc: https://sawtooth.hyperledger.org/docs/pbft/nightly/master/configuring-pbft.html
 test_profiles = [
+    ############ 5tps
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "5",
+    #         "js_wait_time": "1"
+    #     }
+    # },
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "5",
+    #         "js_wait_time": "1"
+    #     }
+    # },
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "5",
+    #         "js_wait_time": "1"
+    #     }
+    # },
+    # ############### 10tps
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "5",
+    #         "js_wait_time": "0.5"
+    #     }
+    # },
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "5",
+    #         "js_wait_time": "0.5"
+    #     }
+    # },
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "5",
+    #         "js_wait_time": "0.5"
+    #     }
+    # },
+    # ############### 15tps
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "15",
+    #         "js_wait_time": "1"
+    #     }
+    # },
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "15",
+    #         "js_wait_time": "1"
+    #     }
+    # },
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "15",
+    #         "js_wait_time": "1"
+    #     }
+    # },
+    # ############### 20tps
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "10",
+    #         "js_wait_time": "0.5"
+    #     }
+    # },
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "10",
+    #         "js_wait_time": "0.5"
+    #     }
+    # },
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "10",
+    #         "js_wait_time": "0.5"
+    #     }
+    # },
+    # ############### 25tps
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "25",
+    #         "js_wait_time": "1"
+    #     }
+    # },
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "25",
+    #         "js_wait_time": "1"
+    #     }
+    # },
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "25",
+    #         "js_wait_time": "1"
+    #     }
+    # },
+    # ############### 30tps
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "10",
+    #         "js_wait_time": "0.333"
+    #     }
+    # },
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "10",
+    #         "js_wait_time": "0.333"
+    #     }
+    # },
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "10",
+    #         "js_wait_time": "0.333"
+    #     }
+    # },
+    # ############### 40tps
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "20",
+    #         "js_wait_time": "0.5"
+    #     }
+    # },
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "20",
+    #         "js_wait_time": "0.5"
+    #     }
+    # },
+    # {
+    #     "sender_parameters": {
+    #         "limit": "10000",
+    #         "js_nb_parallele": "20",
+    #         "js_wait_time": "0.5"
+    #     }
+    # },
+    ############### 50tps
     {
         "sender_parameters": {
             "limit": "10000",
-            "js_nb_parallele": "20",
+            "js_nb_parallele": "25",
+            "js_wait_time": "0.5"
+        }
+    },
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "25",
+            "js_wait_time": "0.5"
+        }
+    },
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "25",
             "js_wait_time": "0.5"
         }
     }
@@ -122,8 +291,8 @@ def start_sender(sender_parameters, test_name):
         ['docker-compose', '-f', 'docker-compose-sender.yaml.benchmark', 'up', '--no-color', '--quiet-pull', 'sender-js'], stderr=subprocess.STDOUT)
     log("Do sender done")
 
-    log("Sleep {} sec for blockchain stabilize".format(60))
-    time.sleep(60)
+    log("Sleep {} sec for blockchain stabilize".format(1200))
+    time.sleep(1200)
 
 
 def start_stats(test_name):
@@ -157,14 +326,11 @@ def reboot_blockchain():
     log("Login in rancher")
     working_dir = pathlib.Path(__file__).parent.absolute() / 'rancher-v2.4.10'
 
-    subprocess.call(['bash', 'login.sh', RANCHER_BEARER_TOKEN],
-                    cwd=working_dir, stderr=subprocess.STDOUT)
-
-    subprocess.call(['bash', 'restart_blockchain.sh'],
+    subprocess.call(['bash', 'restart_blockchain.sh', RANCHER_BEARER_TOKEN],
                     cwd=working_dir, stderr=subprocess.STDOUT)
 
     log("Wainting for blockchain initialization (5min)")
-    time.sleep(200)
+    time.sleep(300)
 
     log("Rebooting blockchain Finished")
 
