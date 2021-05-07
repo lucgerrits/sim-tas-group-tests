@@ -123,7 +123,7 @@ items:
               - "sawtooth keygen && tail -f /dev/null"
 
           - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -138,17 +138,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -163,17 +156,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -188,17 +174,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -213,17 +192,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -238,17 +210,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -263,17 +228,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -288,17 +246,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -313,17 +264,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -338,17 +282,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -363,17 +300,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "9Gi"
@@ -417,7 +347,7 @@ items:
                       sawtooth.consensus.algorithm.name=pbft \
                       sawtooth.consensus.algorithm.version=1.0\
                       sawtooth.consensus.pbft.members=["\"$pbft0pub\",\"$pbft1pub\",\"$pbft2pub\",\"$pbft3pub\",\"$pbft4pub\",\"$pbft5pub\",\"$pbft6pub\",\"$pbft7pub\",\"$pbft8pub\",\"$pbft9pub\",\"$pbft10pub\",\"$pbft11pub\",\"$pbft12pub\",\"$pbft13pub\",\"$pbft14pub\",\"$pbft15pub\",\"$pbft16pub\",\"$pbft17pub\",\"$pbft18pub\",\"$pbft19pub\",\"$pbft20pub\",\"$pbft21pub\",\"$pbft22pub\",\"$pbft23pub\""] \
-                      sawtooth.publisher.max_batches_per_block=1100 \
+                      sawtooth.publisher.max_batches_per_block=100 \
                       sawtooth.cartp.factory.members='[\"02a47084f6228bf7eb91e1628140f5b717cad1d1166b4ad7665e88204e74f92e5c\"]' \
                       -o config.batch
                   fi && \
@@ -600,7 +530,7 @@ items:
               - "sawtooth keygen && tail -f /dev/null"
           
           - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -615,17 +545,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -640,17 +563,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -665,17 +581,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -690,17 +599,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -715,17 +617,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -740,17 +635,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -765,17 +653,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -790,17 +671,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -815,17 +689,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -840,17 +707,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "9Gi"
@@ -1064,7 +924,7 @@ items:
               - "sawtooth keygen && tail -f /dev/null"
 
           - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -1079,17 +939,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -1104,17 +957,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -1129,17 +975,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -1154,17 +993,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -1179,17 +1011,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -1204,17 +1029,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -1229,17 +1047,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -1254,17 +1065,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -1279,17 +1083,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -1304,17 +1101,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "9Gi"
@@ -1531,7 +1321,7 @@ items:
               - "sawtooth keygen && tail -f /dev/null"
 
           - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -1546,17 +1336,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -1571,17 +1354,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -1596,17 +1372,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -1621,17 +1390,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -1646,17 +1408,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -1671,17 +1426,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -1696,17 +1444,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -1721,17 +1462,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -1746,17 +1480,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -1771,18 +1498,11 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "9Gi"
@@ -1998,7 +1718,7 @@ items:
               - "sawtooth keygen && tail -f /dev/null"
 
           - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -2013,17 +1733,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -2038,17 +1751,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -2063,17 +1769,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -2088,17 +1787,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -2113,17 +1805,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -2138,17 +1823,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -2163,17 +1841,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -2188,17 +1859,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -2213,17 +1877,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -2238,18 +1895,11 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
  
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "9Gi"
@@ -2466,7 +2116,7 @@ items:
               - "sawtooth keygen && tail -f /dev/null"
 
           - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -2481,17 +2131,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -2506,17 +2149,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -2531,17 +2167,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -2556,17 +2185,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -2581,17 +2203,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -2606,17 +2221,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -2631,17 +2239,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -2656,17 +2257,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -2681,17 +2275,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -2706,17 +2293,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "9Gi"
@@ -2935,7 +2515,7 @@ items:
               - "sawtooth keygen && tail -f /dev/null"
           
           - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -2950,17 +2530,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -2975,17 +2548,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -3000,17 +2566,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -3025,17 +2584,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -3050,17 +2602,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -3075,17 +2620,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -3100,17 +2638,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -3125,17 +2656,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -3150,17 +2674,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -3175,17 +2692,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "9Gi"
@@ -3404,7 +2914,7 @@ items:
               - "sawtooth keygen && tail -f /dev/null"
 
           - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -3419,17 +2929,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -3444,17 +2947,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -3469,17 +2965,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -3494,17 +2983,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -3519,17 +3001,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -3544,17 +3019,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -3569,17 +3037,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -3594,17 +3055,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -3619,17 +3073,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -3644,17 +3091,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "9Gi"
@@ -3876,7 +3316,7 @@ items:
               - "sawtooth keygen && tail -f /dev/null"
 
           - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -3891,17 +3331,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -3916,17 +3349,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -3941,17 +3367,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -3966,17 +3385,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -3991,17 +3403,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -4016,17 +3421,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -4041,17 +3439,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -4066,17 +3457,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -4091,17 +3475,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -4116,18 +3493,11 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "9Gi"
@@ -4348,7 +3718,7 @@ items:
               - "sawtooth keygen && tail -f /dev/null"
 
           - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -4363,17 +3733,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -4388,17 +3751,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -4413,17 +3769,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -4438,17 +3787,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -4463,17 +3805,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -4488,17 +3823,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -4513,17 +3841,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -4538,17 +3859,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -4563,17 +3877,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -4588,18 +3895,11 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
  
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "9Gi"
@@ -4822,7 +4122,7 @@ items:
               - "sawtooth keygen && tail -f /dev/null"
 
           - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -4837,17 +4137,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -4862,17 +4155,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -4887,17 +4173,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -4912,17 +4191,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -4937,17 +4209,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -4962,17 +4227,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -4987,17 +4245,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -5012,17 +4263,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -5037,17 +4281,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -5062,17 +4299,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "9Gi"
@@ -5295,7 +4525,7 @@ items:
               - "sawtooth keygen && tail -f /dev/null"
 
           - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -5310,17 +4540,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -5335,17 +4558,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -5360,17 +4576,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -5385,17 +4594,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -5410,17 +4612,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -5435,17 +4630,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -5460,17 +4648,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -5485,17 +4666,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -5510,17 +4684,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -5535,17 +4702,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "9Gi"
@@ -5771,7 +4931,7 @@ items:
               - "sawtooth keygen && tail -f /dev/null"
 
           - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -5786,17 +4946,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -5811,17 +4964,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -5836,17 +4982,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -5861,17 +5000,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -5886,17 +5018,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -5911,17 +5036,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -5936,17 +5054,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -5961,17 +5072,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -5986,17 +5090,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -6011,17 +5108,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "9Gi"
@@ -6248,7 +5338,7 @@ items:
               - "sawtooth keygen && tail -f /dev/null"
 
           - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -6263,17 +5353,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -6288,17 +5371,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -6313,17 +5389,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -6338,17 +5407,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -6363,17 +5425,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -6388,17 +5443,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -6413,17 +5461,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -6438,17 +5479,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -6463,17 +5497,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -6488,18 +5515,11 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "9Gi"
@@ -6725,7 +5745,7 @@ items:
               - "sawtooth keygen && tail -f /dev/null"
 
           - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -6740,17 +5760,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -6765,17 +5778,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -6790,17 +5796,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -6815,17 +5814,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -6840,17 +5832,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -6865,17 +5850,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -6890,17 +5868,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -6915,17 +5886,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -6940,17 +5904,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -6965,18 +5922,11 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
  
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "9Gi"
@@ -7204,7 +6154,7 @@ items:
               - "sawtooth keygen && tail -f /dev/null"
 
           - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -7219,17 +6169,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -7244,17 +6187,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -7269,17 +6205,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -7294,17 +6223,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -7319,17 +6241,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -7344,17 +6259,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -7369,17 +6277,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -7394,17 +6295,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -7419,17 +6313,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -7444,17 +6331,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "9Gi"
@@ -7683,7 +6563,7 @@ items:
               - "sawtooth keygen && tail -f /dev/null"
 
           - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -7698,17 +6578,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -7723,17 +6596,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -7748,17 +6614,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -7773,17 +6632,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -7798,17 +6650,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -7823,17 +6668,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -7848,17 +6686,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -7873,17 +6704,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -7898,17 +6722,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -7923,17 +6740,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "9Gi"
@@ -8161,7 +6971,7 @@ items:
               - "sawtooth keygen && tail -f /dev/null"
 
           - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -8176,17 +6986,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -8201,17 +7004,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -8226,17 +7022,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -8251,17 +7040,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -8276,17 +7058,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -8301,17 +7076,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -8326,17 +7094,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -8351,17 +7112,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -8376,17 +7130,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -8401,17 +7148,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "9Gi"
@@ -8643,7 +7383,7 @@ items:
               - "sawtooth keygen && tail -f /dev/null"
 
           - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -8658,17 +7398,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -8683,17 +7416,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -8708,17 +7434,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -8733,17 +7452,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -8758,17 +7470,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -8783,17 +7488,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -8808,17 +7506,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -8833,17 +7524,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -8858,17 +7542,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -8883,17 +7560,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "9Gi"
@@ -9126,7 +7796,7 @@ items:
               - "sawtooth keygen && tail -f /dev/null"
 
           - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -9141,17 +7811,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -9166,17 +7829,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -9191,17 +7847,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -9216,17 +7865,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -9241,17 +7883,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -9266,17 +7901,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -9291,17 +7919,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -9316,17 +7937,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -9341,17 +7955,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -9366,18 +7973,11 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "9Gi"
@@ -9609,7 +8209,7 @@ items:
               - "sawtooth keygen && tail -f /dev/null"
 
           - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -9624,17 +8224,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -9649,17 +8242,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -9674,17 +8260,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -9699,17 +8278,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -9724,17 +8296,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -9749,17 +8314,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -9774,17 +8332,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -9799,17 +8350,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -9824,17 +8368,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -9849,18 +8386,11 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
  
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "9Gi"
@@ -10094,7 +8624,7 @@ items:
               - "sawtooth keygen && tail -f /dev/null"
 
           - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -10109,17 +8639,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -10134,17 +8657,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -10159,17 +8675,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -10184,17 +8693,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -10209,17 +8711,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -10234,17 +8729,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -10259,17 +8747,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -10284,17 +8765,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -10309,17 +8783,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -10334,17 +8801,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "9Gi"
@@ -10579,7 +9039,7 @@ items:
               - "sawtooth keygen && tail -f /dev/null"
 
           - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -10594,17 +9054,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -10619,17 +9072,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -10644,17 +9090,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -10669,17 +9108,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -10694,17 +9126,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -10719,17 +9144,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -10744,17 +9162,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -10769,17 +9180,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -10794,17 +9198,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -10819,17 +9216,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "9Gi"
@@ -11064,7 +9454,7 @@ items:
               - "sawtooth keygen && tail -f /dev/null"
 
           - name: sawtooth-car-tp-1
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -11079,17 +9469,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-2
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -11104,17 +9487,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-3
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -11129,17 +9505,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
           
           - name: sawtooth-car-tp-4
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -11154,17 +9523,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-5
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -11179,17 +9541,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-6
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -11204,17 +9559,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-7
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -11229,17 +9577,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-8
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -11254,17 +9595,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-9
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -11279,17 +9613,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-car-tp-10
-            image: projetsim/cartp-tp-python:latest
+            image: projetsim/cartp-tp-rust:latest
             resources:
               requests:
                 # memory: "50Mi"
@@ -11304,17 +9631,10 @@ items:
             args:
               - -c
               - | 
-                  pwd &&
-                  echo Executing_potogen &&
-                  bin/protogen &&
-                  echo cd_to_cartp_python &&
-                  cd examples/cartp_python &&
-                  python3 setup.py clean --all &&
-                  python3 setup.py build &&
-                  cartp-tp-python -C tcp://$HOSTNAME:4004 
+                  /project/sawtooth-sdk-rust/examples/cartp_rust/bin/cartp-tp-rust -C tcp://$HOSTNAME:4004 
 
           - name: sawtooth-validator
-            image: hyperledger/sawtooth-validator:chime
+            image: projetsim/sawtooth-validator:queuesize-200
             resources:
               requests:
                 memory: "9Gi"
