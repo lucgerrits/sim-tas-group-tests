@@ -35,7 +35,7 @@ rule_files:
 # Here it's Prometheus itself.
 scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-  - job_name: "substrate_node_genesis"
+  - job_name: "substrate-peer-0"
 
     # metrics_path defaults to '/metrics'
     # scheme defaults to 'http'.
@@ -46,26 +46,26 @@ scrape_configs:
     scrape_interval: 1s
 
     static_configs:
-      - targets: ["substrate-genesis:9615"]
+      - targets: ["substrate-peer-0:9615"]
 
 
-  - job_name: "substrate_node_1"
+  - job_name: "substrate-peer-1"
     scrape_interval: 1s
     static_configs:
         # note that the URL are the project name + scaled container name from docker compose
-      - targets: ["substrate_sim_substrate-peer_1:9615"]
+      - targets: ["substrate-peer-1:9615"]
 
-  - job_name: "substrate_node_2"
+  - job_name: "substrate-peer-2"
     scrape_interval: 1s
     static_configs:
-      - targets: ["substrate_sim_substrate-peer_2:9615"]
+      - targets: ["substrate-peer-2:9615"]
 
-  - job_name: "substrate_node_3"
+  - job_name: "substrate-peer-3"
     scrape_interval: 1s
     static_configs:
-      - targets: ["substrate_sim_substrate-peer_3:9615"]
+      - targets: ["substrate-peer-3:9615"]
 
-  - job_name: "substrate_node_4"
+  - job_name: "substrate-peer-4"
     scrape_interval: 1s
     static_configs:
-      - targets: ["substrate_sim_substrate-peer_4:9615"]
+      - targets: ["substrate-peer-4:9615"]

@@ -7,6 +7,19 @@ Javascript client for Substrate.
 
 - polkadot-api
 
+
+## Build & installation
+
+```bash
+npm install
+npm run-script build
+#Build two scripts:
+#-> Init blockchain: init.js
+#-> Send crashes: send.js
+```
+
+## Init blockchain
+
 ## Start
 
 ```bash

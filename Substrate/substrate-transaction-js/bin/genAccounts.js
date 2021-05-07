@@ -11,9 +11,7 @@ if (process.argv.length <= 2 ) {
 }
 
 async function main() {
-
-
-
+    console.log("Start genAccounts.js...")
     console.log("Delete old file...")
     if (existsSync(filename)) {
         unlinkSync(filename);
@@ -29,4 +27,4 @@ async function main() {
     console.log("Done")
 }
 
-main().catch(console.error).finally(() => process.exit());
+main().catch(console.error).finally(() => process.exit(0));

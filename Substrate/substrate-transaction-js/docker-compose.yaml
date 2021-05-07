@@ -1,0 +1,12 @@
+version: "3.2"
+
+networks: 
+    my_blockchain_network:
+      external: true
+
+services:
+    substrate-sim-tx:
+        image: projetsim/substrate-sim-tx:latest
+        networks:
+        - my_blockchain_network
+        command: bash -c "./bin/genAccounts.js 200 && ./bin/init.js true true && sleep 5 && ./bin/send.js 200 1 10" #limit 1000, 10x20=200tps

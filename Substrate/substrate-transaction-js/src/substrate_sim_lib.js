@@ -156,12 +156,13 @@ var substrate_sim = {
 
     },
     send: {
-        new_car_crash: async function (api, car) {
+        new_car_crash: async function (api, car, verbose = false) {
             const nonce = await api.rpc.system.accountNextIndex(car.address);
 
-            var rnd_bytes = randomBytes(32);
+            // var rnd_bytes = randomBytes(32);
             //process.hrtime().toString()
-            var data = "Hello world:" + rnd_bytes.toString("hex");
+            // var data = "Hello world:" + rnd_bytes.toString("hex");
+            var data = "Hello world";
             const hash = createHash('sha256');
             hash.update(data);
             var data_sha256sum = hash.digest();
@@ -172,7 +173,8 @@ var substrate_sim = {
                 .signAndSend(car,
                     { nonce: -1 },
                 );
-            console.log(`Transaction sent: ${tx}`);
+            if (verbose)
+                console.log(`Transaction sent: ${tx}`);
         },
         new_factory: async function (api, factory) {
             // https://polkadot.js.org/docs/api/start/api.tx.wrap/#sudo-use
@@ -204,7 +206,7 @@ var substrate_sim = {
     },
     sleep: function (ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
-      }
+    }
 }
 
 export default substrate_sim = substrate_sim
