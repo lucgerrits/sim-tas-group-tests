@@ -83,7 +83,7 @@ services:
         tail -f /dev/null \
         \"" 
   validator-0:
-    image: hyperledger/sawtooth-validator:chime
+    image: projetsim/sawtooth-validator:queuesize-200
     #mem_limit: 1000m
     container_name: sawtooth-validator-default-0
     networks:
@@ -123,7 +123,8 @@ services:
             sawtooth.consensus.algorithm.name=pbft \
             sawtooth.consensus.algorithm.version=1.0 \
             sawtooth.consensus.pbft.members=\\['\"'$$(cat /pbft-shared/validators/validator-0.pub)'\"','\"'$$(cat /pbft-shared/validators/validator-1.pub)'\"','\"'$$(cat /pbft-shared/validators/validator-2.pub)'\"','\"'$$(cat /pbft-shared/validators/validator-3.pub)'\"','\"'$$(cat /pbft-shared/validators/validator-4.pub)'\"'\\] \
-            sawtooth.publisher.max_batches_per_block=1000 \
+            sawtooth.publisher.max_batches_per_block=100 \
+            sawtooth.consensus.pbft.block_publishing_delay=1000 \
             sawtooth.cartp.factory.members='[\"02a47084f6228bf7eb91e1628140f5b717cad1d1166b4ad7665e88204e74f92e5c\"]' \
             -o config.batch
         fi &&
@@ -145,7 +146,7 @@ services:
       "
 
   validator-1:
-    image: hyperledger/sawtooth-validator:chime
+    image: projetsim/sawtooth-validator:queuesize-200
     #mem_limit: 1000m
     container_name: sawtooth-validator-default-1
     networks:
@@ -184,7 +185,7 @@ services:
       "
 
   validator-2:
-    image: hyperledger/sawtooth-validator:chime
+    image: projetsim/sawtooth-validator:queuesize-200
     #mem_limit: 1000m
     container_name: sawtooth-validator-default-2
     networks:
@@ -224,7 +225,7 @@ services:
       "
 
   validator-3:
-    image: hyperledger/sawtooth-validator:chime
+    image: projetsim/sawtooth-validator:queuesize-200
     #mem_limit: 1000m
     container_name: sawtooth-validator-default-3
     networks:
@@ -265,7 +266,7 @@ services:
       "
 
   validator-4:
-    image: hyperledger/sawtooth-validator:chime
+    image: projetsim/sawtooth-validator:queuesize-200
     #mem_limit: 1000m
     container_name: sawtooth-validator-default-4
     networks:

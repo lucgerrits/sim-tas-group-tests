@@ -9,7 +9,7 @@ const limit = parseInt(process.argv[4]);
 const do_init = process.argv[5] == "True" ? true : false; //do the car and owner init ?
 const do_send = process.argv[6] == "True" ? true : false; //do the car and owner init ?
 
-const init_limit = 1000;
+const init_limit = 500;
 
 // const apiURL = "10.1.0.222:8080";
 const apiURL = "apirest.unice.cust.tasfrance.com:80";
