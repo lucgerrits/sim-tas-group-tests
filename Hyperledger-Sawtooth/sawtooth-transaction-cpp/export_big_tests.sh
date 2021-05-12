@@ -83,16 +83,16 @@ echo "12_nodes"
 
 echo "18_nodes"
 
-# ./export_influxdb_data.sh 1620727892642 1620733389942
+# ./export_influxdb_data.sh 1620731958667 1620733674216
 # ./build_data.py "50tps|18_nodes"
 
-# ./export_influxdb_data.sh 1620734187981 1620739836837
+# ./export_influxdb_data.sh 1620738463459 1620740214749
 # ./build_data.py "40tps|18_nodes"
 
-# ./export_influxdb_data.sh 1620740574983 1620744895549
+# ./export_influxdb_data.sh 1620742809610 1620744736243
 # ./build_data.py "30tps|18_nodes"
 
-# ./export_influxdb_data.sh 1620748889084 1620755081477
+# ./export_influxdb_data.sh 1620748906726 1620750653298
 # ./build_data.py "25tps|18_nodes"
 
 # ./export_influxdb_data.sh 1620755879713 1620762109968
