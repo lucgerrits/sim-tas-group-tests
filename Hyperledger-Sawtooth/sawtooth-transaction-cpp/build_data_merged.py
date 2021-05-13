@@ -35,8 +35,12 @@ def butter_lowpass_filter(data, cutoff, fs, order=5):
 data_path = "./datas_csv/"
 conf_figsize=(20, 10)
 # conf_figsize=(6.4, 4.8)
-filter_out_all_with_elements=["18_nodes"] #["50tps|6_nodes", "40tps|6_nodes", "30tps|6_nodes", "50tps|12_nodes", "40tps|12_nodes", "30tps|12_nodes"] #"50tps", "40tps", "30tps"
-filter_out_reverse=True
+filter_out_all_with_elements= [] #["30tps|4_nodes", "30tps|6_nodes", "30tps|12_nodes", "30tps|18_nodes"] #["50tps|6_nodes", "40tps|6_nodes", "30tps|6_nodes", "50tps|12_nodes", "40tps|12_nodes", "30tps|12_nodes"] #"50tps", "40tps", "30tps"
+filter_out_reverse=False
+export_data_path = "./datas_csv_paper_ready/"
+
+if not os.path.exists(export_data_path):
+    os.makedirs(export_data_path)
 #%%
 #
 # Get all CSV files and put it inside dataframes
@@ -65,6 +69,21 @@ for field_key in all_df_iter:
     if longest_data_length< len(all_df[field_key]):
         longest_data_length = len(all_df[field_key])
         
+#%%
+#
+# Make new index to scale all graphs
+#
+
+all_df_iter=iter(all_df)
+for field_name in all_df_iter:
+    #create scaled x axis for better comparaison
+    all_df[field_name]["x_scaled"] = all_df[field_name].index.values*longest_data_length/len(all_df[field_name])
+    
+    #export for paper ready csv
+    filename=export_data_path +field_name+".csv"
+    all_df[field_name].to_csv(filename, index=False)
+
+
 #%%
 
 #Format for latex
@@ -101,94 +120,102 @@ def filter_out_all_with(text):
 
 #%%
 
-# fig, axs = pl.subplots(2,1,figsize=conf_figsize)
-# show="commits_rate"
-# all_df_iter=iter(all_df)
-# for field_name in all_df_iter:
-#     if filter_out_all_with(field_name):
-#         axs[0].plot(all_df[field_name].index.values*longest_data_length/len(all_df[field_name]), butter_lowpass_filter(all_df[field_name][show].values, 0.008, 1/10, 2), label=formatStrLatex("{}".format(field_name.replace(show+'_',''))))
-#         axs[0].set_title(formatStrLatex("{}".format(show)))
-#         axs[0].legend()
-   
-# show="commits_rate"
-# all_df_iter=iter(all_df)
-# for field_name in all_df_iter:
-#     if filter_out_all_with(field_name):
-#         axs[1].plot(all_df[field_name].index.values*longest_data_length/len(all_df[field_name]), all_df[field_name][show].values, label=formatStrLatex("{}".format(field_name.replace(show+'_',''))))
-#         axs[1].set_title(formatStrLatex("{}".format(show)))
-#         axs[1].legend()
-
-
-#%%
-
-
-fig, axs = pl.subplots(2,2,figsize=conf_figsize)
-show="commits_rate"
-all_df_iter=iter(all_df)
-for field_name in all_df_iter:
-    if filter_out_all_with(field_name):
-        axs[0][0].plot(all_df[field_name].index.values*longest_data_length/len(all_df[field_name]), all_df[field_name][show].values, label=formatStrLatex("{}".format(field_name.replace(show+'_',''))))
-        axs[0][0].set_title(formatStrLatex("{}".format(show)))
-        axs[0][0].legend()
-
-show="pending_tx_rate"
-all_df_iter=iter(all_df)
-for field_name in all_df_iter:
-    if filter_out_all_with(field_name):
-        axs[1][0].plot(all_df[field_name].index.values*longest_data_length/len(all_df[field_name]), all_df[field_name][show].values, label=formatStrLatex("{}".format(field_name.replace(show+'_',''))))
-        axs[1][0].set_title(formatStrLatex("{}".format(show)))
-        axs[1][0].legend()
-
-show="tx_exec_rate"
-all_df_iter=iter(all_df)
-for field_name in all_df_iter:
-    if filter_out_all_with(field_name):
-        axs[1][1].plot(all_df[field_name].index.values*longest_data_length/len(all_df[field_name]), all_df[field_name][show].values, label=formatStrLatex("{}".format(field_name.replace(show+'_',''))))
-        axs[1][1].set_title(formatStrLatex("{}".format(show)))
-        axs[1][1].legend()
-
-show="reject_rate"
-all_df_iter=iter(all_df)
-for field_name in all_df_iter:
-    if filter_out_all_with(field_name):
-        axs[0][1].plot(all_df[field_name].index.values*longest_data_length/len(all_df[field_name]), all_df[field_name][show].values, label=formatStrLatex("{}".format(field_name.replace(show+'_',''))))
-        axs[0][1].set_title(formatStrLatex("{}".format(show)))
-        axs[0][1].legend()
-
-
-
-fig, axs = pl.subplots(2,2,figsize=conf_figsize)
-show="rest_api_batch_rate"
-all_df_iter=iter(all_df)
-for field_name in all_df_iter:
-    if filter_out_all_with(field_name):
-        axs[0][0].plot(all_df[field_name].index.values*longest_data_length/len(all_df[field_name]), all_df[field_name][show].values, label=formatStrLatex("{}".format(field_name.replace(show+'_',''))))
-        axs[0][0].set_title(formatStrLatex("{}".format(show)))
-        axs[0][0].legend()
-
-show="block_num_rate"
-all_df_iter=iter(all_df)
-for field_name in all_df_iter:
-    if filter_out_all_with(field_name):
-        axs[1][0].plot(all_df[field_name].index.values*longest_data_length/len(all_df[field_name]), all_df[field_name][show].values, label=formatStrLatex("{}".format(field_name.replace(show+'_',''))))
-        axs[1][0].set_title(formatStrLatex("{}".format(show)))
-        axs[1][0].legend()
-
-show="tx_in_process_rate"
-all_df_iter=iter(all_df)
-for field_name in all_df_iter:
-    if filter_out_all_with(field_name):
-        axs[1][1].plot(all_df[field_name].index.values*longest_data_length/len(all_df[field_name]), all_df[field_name][show].values, label=formatStrLatex("{}".format(field_name.replace(show+'_',''))))
-        axs[1][1].set_title(formatStrLatex("{}".format(show)))
-        axs[1][1].legend()
-
+fig, axs = pl.subplots(2,1,figsize=conf_figsize)
 show="commits_tot"
 all_df_iter=iter(all_df)
 for field_name in all_df_iter:
     if filter_out_all_with(field_name):
-        axs[0][1].plot(all_df[field_name].index.values*longest_data_length/len(all_df[field_name]), all_df[field_name][show].values, label=formatStrLatex("{}".format(field_name.replace(show+'_',''))))
-        axs[0][1].set_title(formatStrLatex("{}".format(show)))
-        axs[0][1].legend()
+        axs[0].plot(all_df[field_name]["x_scaled"].values, butter_lowpass_filter(all_df[field_name][show].values, 0.008, 1/10, 2), label=formatStrLatex("{}".format(field_name.replace(show+'_',''))))
+        axs[0].set_title(formatStrLatex("{}".format(show)))
+        axs[0].legend()
+   
+show="commits_tot"
+all_df_iter=iter(all_df)
+for field_name in all_df_iter:
+    if filter_out_all_with(field_name):
+        axs[1].plot(all_df[field_name]["x_scaled"].values, all_df[field_name][show].values, label=formatStrLatex("{}".format(field_name.replace(show+'_',''))))
+        axs[1].set_title(formatStrLatex("{}".format(show)))
+        axs[1].legend()
+
+#%%
+
+print("config\tcommits_rate mean\tcommits_rate max\tcommits_rate var\trejects mean\tcommits max")
+show="commits_rate"
+all_df_iter=iter(all_df)
+for field_name in all_df_iter:
+    if filter_out_all_with(field_name):
+        print("{}\t{:.1f}\t{:.1f}\t{:.1f}\t{:.1f}\t{:.1f}".format(field_name, np.mean(all_df[field_name]["commits_rate"].values), np.max(all_df[field_name]["commits_rate"].values), np.var(all_df[field_name]["commits_rate"].values), np.mean(all_df[field_name]["reject_tot"].values), np.max(all_df[field_name]["commits_tot"].values)))
+
+exit()
+#%%
+
+# fig, axs = pl.subplots(2,2,figsize=conf_figsize)
+# show="commits_rate"
+# all_df_iter=iter(all_df)
+# for field_name in all_df_iter:
+#     if filter_out_all_with(field_name):
+#         axs[0][0].plot(all_df[field_name]["x_scaled"].values, all_df[field_name][show].values, label=formatStrLatex("{}".format(field_name.replace(show+'_',''))))
+#         axs[0][0].set_title(formatStrLatex("{}".format(show)))
+#         axs[0][0].legend()
+
+# show="pending_tx_rate"
+# all_df_iter=iter(all_df)
+# for field_name in all_df_iter:
+#     if filter_out_all_with(field_name):
+#         axs[1][0].plot(all_df[field_name]["x_scaled"].values, all_df[field_name][show].values, label=formatStrLatex("{}".format(field_name.replace(show+'_',''))))
+#         axs[1][0].set_title(formatStrLatex("{}".format(show)))
+#         axs[1][0].legend()
+
+# show="tx_exec_rate"
+# all_df_iter=iter(all_df)
+# for field_name in all_df_iter:
+#     if filter_out_all_with(field_name):
+#         axs[1][1].plot(all_df[field_name]["x_scaled"].values, all_df[field_name][show].values, label=formatStrLatex("{}".format(field_name.replace(show+'_',''))))
+#         axs[1][1].set_title(formatStrLatex("{}".format(show)))
+#         axs[1][1].legend()
+
+# show="reject_rate"
+# all_df_iter=iter(all_df)
+# for field_name in all_df_iter:
+#     if filter_out_all_with(field_name):
+#         axs[0][1].plot(all_df[field_name]["x_scaled"].values, all_df[field_name][show].values, label=formatStrLatex("{}".format(field_name.replace(show+'_',''))))
+#         axs[0][1].set_title(formatStrLatex("{}".format(show)))
+#         axs[0][1].legend()
+
+
+
+# fig, axs = pl.subplots(2,2,figsize=conf_figsize)
+# show="rest_api_batch_rate"
+# all_df_iter=iter(all_df)
+# for field_name in all_df_iter:
+#     if filter_out_all_with(field_name):
+#         axs[0][0].plot(all_df[field_name]["x_scaled"].values, all_df[field_name][show].values, label=formatStrLatex("{}".format(field_name.replace(show+'_',''))))
+#         axs[0][0].set_title(formatStrLatex("{}".format(show)))
+#         axs[0][0].legend()
+
+# show="block_num_rate"
+# all_df_iter=iter(all_df)
+# for field_name in all_df_iter:
+#     if filter_out_all_with(field_name):
+#         axs[1][0].plot(all_df[field_name]["x_scaled"].values, all_df[field_name][show].values, label=formatStrLatex("{}".format(field_name.replace(show+'_',''))))
+#         axs[1][0].set_title(formatStrLatex("{}".format(show)))
+#         axs[1][0].legend()
+
+# show="tx_in_process_rate"
+# all_df_iter=iter(all_df)
+# for field_name in all_df_iter:
+#     if filter_out_all_with(field_name):
+#         axs[1][1].plot(all_df[field_name]["x_scaled"].values, all_df[field_name][show].values, label=formatStrLatex("{}".format(field_name.replace(show+'_',''))))
+#         axs[1][1].set_title(formatStrLatex("{}".format(show)))
+#         axs[1][1].legend()
+
+# show="commits_tot"
+# all_df_iter=iter(all_df)
+# for field_name in all_df_iter:
+#     if filter_out_all_with(field_name):
+#         axs[0][1].plot(all_df[field_name]["x_scaled"].values, all_df[field_name][show].values, label=formatStrLatex("{}".format(field_name.replace(show+'_',''))))
+#         axs[0][1].set_title(formatStrLatex("{}".format(show)))
+#         axs[0][1].legend()
 
 
 pl.show()

@@ -109,4 +109,28 @@ echo "18_nodes"
 
 echo "24_nodes"
 
+./export_influxdb_data.sh 1620791553280 1620797635716
+./build_data.py "50tps|24_nodes"
+
+./export_influxdb_data.sh 1620793582712 1620799518987
+./build_data.py "40tps|24_nodes"
+
+./export_influxdb_data.sh 1620806529933 1620810460156
+./build_data.py "30tps|24_nodes"
+
+./export_influxdb_data.sh 1620811115194 1620815352466
+./build_data.py "25tps|24_nodes"
+
+./export_influxdb_data.sh 1620817972616 1620825157555
+./build_data.py "20tps|24_nodes"
+
+./export_influxdb_data.sh 1620825218965 1620830029394
+./build_data.py "15tps|24_nodes"
+
+./export_influxdb_data.sh 1620835748344 1620841021991
+./build_data.py "10tps|24_nodes"
+
+./export_influxdb_data.sh 1620841736000 1620853373294
+./build_data.py "5tps|24_nodes"
+
 echo "End compiling all results"
