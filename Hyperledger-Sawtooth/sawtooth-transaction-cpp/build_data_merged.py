@@ -139,6 +139,10 @@ for field_name in all_df_iter:
 
 #%%
 
+#
+# Print stats used in gnuplots
+#
+
 print("config\tcommits_rate mean\tcommits_rate max\tcommits_rate var\trejects mean\tcommits max")
 show="commits_rate"
 all_df_iter=iter(all_df)

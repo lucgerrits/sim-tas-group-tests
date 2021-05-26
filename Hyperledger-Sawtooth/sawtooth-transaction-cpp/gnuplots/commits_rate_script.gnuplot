@@ -28,7 +28,7 @@ set y2tics 25
 
 #set logscale y 10
 
-set key left top
+set key at graph 0.42, 1
 #set key right center
 
 #csv settings:

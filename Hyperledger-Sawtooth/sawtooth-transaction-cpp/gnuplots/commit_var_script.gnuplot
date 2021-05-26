@@ -3,14 +3,14 @@ set output "results_commit_rate_variation.eps"
 
 set terminal postscript eps enhanced color font 'Times-Roman,20'
 
-set title "Commit rate variation for 4 to 24 nodes"
+set title "Commit rate variance for 4 to 24 nodes"
 
 set grid ytics lc rgb "black" lw 1.5 lt 0.1
 set grid xtics lc rgb "black" lw 1.5 lt 0.1
 
 
 set xlabel "Input transactions per second"
-set ylabel "Commit Rate Variation"
+set ylabel "Commit Rate Variance"
 
 set yrange [0 to 130]
 set xrange [5 to 50]
