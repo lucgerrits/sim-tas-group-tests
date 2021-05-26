@@ -33,7 +33,7 @@ services:
 ##########################################################################
 
   substrate-peer-0:
-    image: projetsim/substrate-sim:latest
+    image: projetsim/substrate-sim:stable
     container_name: substrate-peer-0
     ports:
       - "9944:9944"
@@ -70,7 +70,7 @@ services:
           # --telemetry-url 'wss://telemetry.polkadot.io/submit/ 0' \
 
   substrate-peer-1:
-    image: projetsim/substrate-sim:latest
+    image: projetsim/substrate-sim:stable
     container_name: substrate-peer-1
     # ports:
       # - "9944:9944"
@@ -87,7 +87,7 @@ services:
         node-template \
           --base-path /tmp/peer \
           --chain local \
-          --name Peer-1 \
+          --bob \
           --port 30333 \
           --ws-port 9944 \
           --rpc-port 9933 \
@@ -102,7 +102,7 @@ services:
           # --telemetry-url 'wss://telemetry.polkadot.io/submit/ 0' \
 
   substrate-peer-2:
-    image: projetsim/substrate-sim:latest
+    image: projetsim/substrate-sim:stable
     container_name: substrate-peer-2
     # ports:
       # - "9944:9944"
@@ -119,7 +119,7 @@ services:
         node-template \
           --base-path /tmp/peer \
           --chain local \
-          --name Peer-2 \
+          --bob \
           --port 30333 \
           --ws-port 9944 \
           --rpc-port 9933 \
@@ -132,7 +132,7 @@ services:
           --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
         "
   substrate-peer-3:
-    image: projetsim/substrate-sim:latest
+    image: projetsim/substrate-sim:stable
     container_name: substrate-peer-3
     # ports:
       # - "9944:9944"
@@ -149,7 +149,7 @@ services:
         node-template \
           --base-path /tmp/peer \
           --chain local \
-          --name Peer-3 \
+          --bob \
           --port 30333 \
           --ws-port 9944 \
           --rpc-port 9933 \
@@ -162,7 +162,7 @@ services:
           --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
         "
   substrate-peer-4:
-    image: projetsim/substrate-sim:latest
+    image: projetsim/substrate-sim:stable
     container_name: substrate-peer-4
     # ports:
       # - "9944:9944"
@@ -179,7 +179,7 @@ services:
         node-template \
           --base-path /tmp/peer \
           --chain local \
-          --name Peer-4 \
+          --bob \
           --port 30333 \
           --ws-port 9944 \
           --rpc-port 9933 \
