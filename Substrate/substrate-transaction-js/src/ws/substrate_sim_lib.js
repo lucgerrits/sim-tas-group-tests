@@ -3,7 +3,7 @@
 //
 import { Keyring } from '@polkadot/keyring';
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import additionalTypes from "../additional_types.js";
+import additionalTypes from "../../additional_types.js";
 import { createHash, randomBytes } from 'crypto';
 import { cryptoWaitReady, mnemonicGenerate } from '@polkadot/util-crypto';
 import { readFileSync, existsSync } from 'fs'

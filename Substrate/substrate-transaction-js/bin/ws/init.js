@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import substrate_sim from "../src/substrate_sim_lib.js";
+import substrate_sim from "../../src/ws/substrate_sim_lib.js";
 
 if (process.argv.length <= 2) {
     console.error("Required 2 argument: \n\tSend new factory: true/false.\n\tSend new car: true/false")
@@ -9,7 +9,7 @@ if (process.argv.length <= 2) {
 
 async function main() {
     console.log("Start init.js...")
-    var api = await substrate_sim.initApi("ws://10.1.0.222:9944");
+    var api = await substrate_sim.initApi("ws://127.0.0.1:9944");
 
     await substrate_sim.print_header(api);
     console.log("Continue in 2s ...");
