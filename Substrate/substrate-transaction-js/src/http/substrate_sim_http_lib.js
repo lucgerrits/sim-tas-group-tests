@@ -13,16 +13,17 @@ const filename = "accounts.json"
 //init api
 var api = {
     params: {
+        address: "",
         blockHash: "",
-        blockNumber: "",
+        blockNumber: 0,
         genesisHash: "",
         metadataRpc: "",
-        specVersion: "",
-        transactionVersion: "",
+        specVersion: 0,
+        transactionVersion: 0,
+        nonce: -1,
         tip: 0,
         eraPeriod: 64, // number of blocks from checkpoint that transaction is valid
     },
-    head: ""
 };
 // init keyring
 var keyring;
@@ -38,11 +39,14 @@ async function reqSubstrateHTTPApi(url) {
         const response = await axios.get(url);
         return response.data;
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
         return false;
     }
 }
 
+async function getBlockHash(url, block_number) {
+    return (await reqSubstrateHTTPApi(url + "/blocks/" + block_number)).value
+}
 async function getGenesis(url) {
     return await reqSubstrateHTTPApi(url + "/blocks/0");
 }
@@ -56,41 +60,32 @@ async function getSpec(url) {
     return await reqSubstrateHTTPApi(url + "/runtime/spec");
 }
 
-async function get_balance(api, address) {
-    let { data: balance } = await api.query.system.account(address);
-    return balance.free.toBigInt();
+async function get_sudo_keyPair(url) {
+    return (await reqSubstrateHTTPApi(url + "/pallets/sudo/storage/key")).value;
 }
 
-async function get_sudo_keyPair(api) {
-    let key = await api.query.sudo.key();
-    return keyring.getPair(key.toString());
+async function get_factory(url, sudo_key) {
+    return (await reqSubstrateHTTPApi(url + "/pallets/simModule/storage/Factories?key1=" + sudo_key)).value;
 }
 
-async function get_factory(api, sudo_key) {
-    let data = await api.query.simModule.factories(sudo_key);
-    return data;
+// async function get_cars(api) { //not possible in http
+//     let data = await api.query.simModule.cars.keys();
+//     let a = data.map(({ args: [carId] }) => carId);
+//     return a;
+// }
+
+async function get_car(url, car_id) {
+    return (await reqSubstrateHTTPApi(url + "/pallets/simModule/storage/Cars?key1=" + car_id)).value;
 }
 
-async function get_cars(api) {
-    let data = await api.query.simModule.cars.keys();
-    let a = data.map(({ args: [carId] }) => carId);
-    return a;
-}
+// async function get_crashes(api) { //not possible in http
+//     let data = await api.query.simModule.crashes.keys();
+//     let a = data.map(({ args: [carId] }) => carId);
+//     return a;
+// }
 
-async function get_car(api, car_id) {
-    let data = await api.query.simModule.cars(car_id);
-    return data;
-}
-
-async function get_crashes(api) {
-    let data = await api.query.simModule.crashes.keys();
-    let a = data.map(({ args: [carId] }) => carId);
-    return a;
-}
-
-async function get_crash(api, car_id) {
-    let data = await api.query.simModule.crashes(car_id);
-    return data;
+async function get_crash(url, car_id) {
+    return (await reqSubstrateHTTPApi(url + "/pallets/simModule/storage/Crashes?key1=" + car_id)).value;
 }
 
 function getKeyring() {
@@ -102,10 +97,10 @@ var substrate_sim = {
     initApi: async function (url) {
         // Construct
         api.params.genesisHash = (await getGenesis(url)).hash;
-        api.params.head = await getHead(url);
+        api.params.head = (await getHead(url)).hash;
         api.params.metadataRpc = await getMetadata(url);
-        api.params.specVersion = (await getSpec(url)).specVersion;
-        api.params.transactionVersion = (await getSpec(url)).transactionVersion;
+        api.params.specVersion = parseInt((await getSpec(url)).specVersion);
+        api.params.transactionVersion = parseInt((await getSpec(url)).transactionVersion);
 
         await cryptoWaitReady();
         keyring = new Keyring({ type: 'sr25519' });
@@ -114,7 +109,7 @@ var substrate_sim = {
         bob = getKeyring().addFromUri('//Bob', { name: 'Bob default' });
         charlie = getKeyring().addFromUri('//Charlie', { name: 'Charlie default' });
 
-        // substrate_sim.accounts.makeAll() //init all accounts
+        substrate_sim.accounts.makeAll() //init all accounts
         return api;
     },
     accounts: {
@@ -145,48 +140,48 @@ var substrate_sim = {
             return ACCOUNT_PAIRS;
         }
     },
-    print_factories: async function (api, sudo_key) {
-        var factory = await get_factory(api, sudo_key);
-        if (factory.words && factory.words[0] == 0) {
+    print_factories: async function (url, sudo_key) {
+        var factory = await get_factory(url, sudo_key);
+        if (factory == 0) {
             console.log(`[+] ${sudo_key} is NOT a factory.`)
             return false;
         } else {
-            let factory_blockHash = await api.rpc.chain.getBlockHash(factory.words[0]);
-            console.log(`[+] ${sudo_key} is a factory.\n\tAdded in block number: ${factory.words[0]}\n\tBlock Hash: ${factory_blockHash}"`);
+            let factory_blockHash = await getBlockHash(url, factory);
+            console.log(`[+] ${sudo_key} is a factory.\n\tAdded in block number: ${factory}\n\tBlock Hash: ${factory_blockHash}"`);
             return true;
         }
     },
-    print_cars: async function (api, expand = false) {
-        var cars = await get_cars(api);
-        console.log(`[+] Stored cars: ${Object.keys(cars).length}`);
-        if (expand) {
-            for (const [key, car_id] of Object.entries(cars)) {
-                let car = await get_car(api, car_id);
-                console.log(`[+] Car: ${car_id}\n\tAdded by: ${car[0]}\n\tJoined on block: ${car[1]}`);
-            }
-        }
-    },
-    print_crashes: async function (api) {
-        var crashes = await get_crashes(api);
-        console.log(`[+] Stored cars that had crashed at least once: ${Object.keys(crashes).length}`);
+    // print_cars: async function (api, expand = false) {
+    //     var cars = await get_cars(api);
+    //     console.log(`[+] Stored cars: ${Object.keys(cars).length}`);
+    //     if (expand) {
+    //         for (const [key, car_id] of Object.entries(cars)) {
+    //             let car = await get_car(api, car_id);
+    //             console.log(`[+] Car: ${car_id}\n\tAdded by: ${car[0]}\n\tJoined on block: ${car[1]}`);
+    //         }
+    //     }
+    // },
+    // print_crashes: async function (api) {
+    //     var crashes = await get_crashes(api);
+    //     console.log(`[+] Stored cars that had crashed at least once: ${Object.keys(crashes).length}`);
 
-        for (const [key, car_id] of Object.entries(crashes)) {
-            let car_crashes = await get_crash(api, car_id);
-            // console.log(`[+] Car: ${car_id} \n\t${car_crashes}`);
-            console.log(`[+] Car: ${car_id}`);
-            console.log(`\t-Total crashes: ${car_crashes.length}`);
-            for (const crash of car_crashes) {
-                console.log(`\t\tCrashed at block: ${crash.block_number}`);
-                console.log(`\t\tData hash ${crash.data}\n`);
-            }
-        }
-    },
-    print_header: async (api) => {
+    //     for (const [key, car_id] of Object.entries(crashes)) {
+    //         let car_crashes = await get_crash(api, car_id);
+    //         // console.log(`[+] Car: ${car_id} \n\t${car_crashes}`);
+    //         console.log(`[+] Car: ${car_id}`);
+    //         console.log(`\t-Total crashes: ${car_crashes.length}`);
+    //         for (const crash of car_crashes) {
+    //             console.log(`\t\tCrashed at block: ${crash.block_number}`);
+    //             console.log(`\t\tData hash ${crash.data}\n`);
+    //         }
+    //     }
+    // },
+    print_header: async (url) => {
         // Retrieve the last timestamp
-        const now = await api.query.timestamp.now();
-        const now_human = new Date(now.toNumber()).toISOString();
+        const now = parseInt((await getHead(url)).extrinsics[0].args.now); //api.query.timestamp.now();
+        const now_human = new Date(now).toISOString();
         // Genesis Hash
-        const genesisHash = api.genesisHash.toHex()
+        const genesisHash = (await getGenesis(url)).hash //api.genesisHash.toHex()
         console.log("---------------------------------------------------------------------------------------------");
         console.log(`[+] Genesis Hash: ${genesisHash}`);
         console.log(`[+] Node time: ${now} (${now_human})`);

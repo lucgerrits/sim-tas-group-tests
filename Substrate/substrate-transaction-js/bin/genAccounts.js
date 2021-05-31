@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 // Import
-import substrate_sim from "../../src/ws/substrate_sim_lib.js";
+import substrate_sim from "../src/ws/substrate_sim_lib.js";
 import { writeFileSync, unlinkSync, existsSync } from 'fs'
 const filename = "accounts.json"
 
