@@ -10,7 +10,8 @@
   "author": "Luc Gerrits",
   "license": "ISC",
   "dependencies": {
-    "@polkadot/api": "^4.11.2",
+    "@polkadot/api": "^4.12.1",
+    "@polkadot/keyring": "^6.6.1",
     "@substrate/txwrapper-polkadot": "^1.1.2",
     "async": "^3.2.0",
     "axios": "^0.21.1",

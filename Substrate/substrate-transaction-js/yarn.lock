@@ -270,7 +270,7 @@
     "@polkadot/x-rxjs" "^6.6.1"
     bn.js "^4.11.9"
 
-"@polkadot/api@4.12.1", "@polkadot/api@^4.11.2":
+"@polkadot/api@4.12.1", "@polkadot/api@^4.12.1":
   version "4.12.1"
   resolved "https://registry.yarnpkg.com/@polkadot/api/-/api-4.12.1.tgz#dbdc35f15b8a51e971754feaa714f685eed6f167"
   integrity sha512-YHm/CD32/rgNlm3UIspiMYEqouT1zj0qrMYzUJXQK/xfmrXczCxgJFEgaAfi7oIVWNYfb/vma6xT8Swv7EoRFg==
@@ -492,28 +492,28 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-4.0.1.tgz#d26729db850fa327b7cacc5522252194404226f5"
   integrity sha512-Qm9hBEBu18wt1PO2flE7LPb30BHMQt1eQgbV76YntdNk73XZGpn3izvGTYxbGgzXKgbCjiia0uxTd3aTNQrY/g==
 
-"@substrate/txwrapper-core@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@substrate/txwrapper-core/-/txwrapper-core-1.1.2.tgz#1703e5c84cbefd49f221100e0e7a6075d622fca1"
-  integrity sha512-izOGCd6wLc3laoEreZtZAQ6KJYxdcKOScWgH7ddpyPUJ7Jo/Fs/GPBtZHxsCS25r1a7WT3GFdXGpgjYakGDgZQ==
+"@substrate/txwrapper-core@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@substrate/txwrapper-core/-/txwrapper-core-1.1.3.tgz#6c3eb22df391f3d63bb26bb99fcbcc083737c798"
+  integrity sha512-DO1v2HnvVLa3YWiazG3l/AGsdFnMzET9tXwthYC4WWyW3Fnh13N9qfw2HTugSSLDy4F+ArDPCeMwisNBgheovQ==
   dependencies:
-    "@polkadot/api" "^4.11.2"
+    "@polkadot/api" "^4.12.1"
     memoizee "0.4.15"
 
 "@substrate/txwrapper-polkadot@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@substrate/txwrapper-polkadot/-/txwrapper-polkadot-1.1.2.tgz#6aa2f74aacfb74859eacec701a7473ad145f6ca1"
-  integrity sha512-DNy/E40RAz4PErO+y/JCfvQZPcnk4sOYlC+nDxLfX97yyoYqZkXSC/LaK5umCz4tNmhpa7WFlzQo2eTanywl1Q==
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@substrate/txwrapper-polkadot/-/txwrapper-polkadot-1.1.3.tgz#cf0f1c186d4307fdc70e3778a266747de51e9f93"
+  integrity sha512-v4G/t8b3U0ykyEB9p+TIhzwyFny7sQwJzM7UXTbGmDz+wkISIAwSIA+NmvXIJx5mKhSmFZWu4sEhjWEx0GJEcA==
   dependencies:
-    "@substrate/txwrapper-core" "^1.1.2"
-    "@substrate/txwrapper-substrate" "^1.1.2"
+    "@substrate/txwrapper-core" "^1.1.3"
+    "@substrate/txwrapper-substrate" "^1.1.3"
 
-"@substrate/txwrapper-substrate@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@substrate/txwrapper-substrate/-/txwrapper-substrate-1.1.2.tgz#70f2c824c9edcb6d7d56dba3726d4c68503a423d"
-  integrity sha512-gya1juY9NS2NcpkK4sHEn54i35UeeS3GWEYSytRaE352SKClb5N5CXK2ake/3KD+YQrinho58Hr1uYoNZHeQvA==
+"@substrate/txwrapper-substrate@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@substrate/txwrapper-substrate/-/txwrapper-substrate-1.1.3.tgz#cd9fb506bd6029b5491cd798b5f62f8fe2fbb2e0"
+  integrity sha512-rgRMUXr9Dw4Xeeth8uoQ49bOKGJORQog336o0m0nuCKriRwj/QLGuvj3pPDa/CHWm9MhoV5ue2NEZvQ6uhf8zA==
   dependencies:
-    "@substrate/txwrapper-core" "^1.1.2"
+    "@substrate/txwrapper-core" "^1.1.3"
 
 "@szmarczak/http-timer@^4.0.5":
   version "4.0.5"
@@ -560,9 +560,9 @@
     form-data "^3.0.0"
 
 "@types/node@*":
-  version "15.6.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-15.6.1.tgz#32d43390d5c62c5b6ec486a9bc9c59544de39a08"
-  integrity sha512-7EIraBEyRHEe7CH+Fm1XvgqU6uwZN8Q7jppJGcqjROMT29qhAuuOxYB1uEY5UMYQKEmA5D+5tBnhdaPXSsLONA==
+  version "15.6.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-15.6.2.tgz#c61d49f38af70da32424b5322eee21f97e627175"
+  integrity sha512-dxcOx8801kMo3KlU+C+/ctWrzREAH7YvoF3aoVpRdqgs+Kf7flp+PJDN/EX5bME3suDUZHsxes9hpvBmzYlWbA==
 
 "@types/responselike@*", "@types/responselike@^1.0.0":
   version "1.0.0"
@@ -809,9 +809,9 @@ camelcase@^5.3.1:
   integrity sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==
 
 caniuse-lite@^1.0.30001219:
-  version "1.0.30001231"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001231.tgz#6c1f9b49fc27cc368b894e64b9b28b39ef80603b"
-  integrity sha512-WAFFv31GgU4DiwNAy77qMo3nNyycEhH3ikcCVHvkQpPe/fO8Tb2aRYzss8kgyLQBm8mJ7OryW4X6Y4vsBCIqag==
+  version "1.0.30001233"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001233.tgz#b7cb4a377a4b12ed240d2fa5c792951a06e5f2c4"
+  integrity sha512-BmkbxLfStqiPA7IEzQpIk0UFZFf3A4E6fzjPJ6OR+bFC2L8ES9J8zGA/asoi47p8XDVkev+WJo2I2Nc8c/34Yg==
 
 chalk@^2.0.0:
   version "2.4.2"
@@ -1035,9 +1035,9 @@ delayed-stream@~1.0.0:
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
 
 electron-to-chromium@^1.3.723:
-  version "1.3.742"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.742.tgz#7223215acbbd3a5284962ebcb6df85d88b95f200"
-  integrity sha512-ihL14knI9FikJmH2XUIDdZFWJxvr14rPSdOhJ7PpS27xbz8qmaRwCwyg/bmFwjWKmWK9QyamiCZVCvXm5CH//Q==
+  version "1.3.743"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.743.tgz#fcec24d6d647cb84fd796b42caa1b4039a180894"
+  integrity sha512-K2wXfo9iZQzNJNx67+Pld0DRF+9bYinj62gXCdgPhcu1vidwVuLPHQPPFnCdO55njWigXXpfBiT90jGUPbw8Zg==
 
 elliptic@^6.5.4:
   version "6.5.4"
@@ -1813,17 +1813,17 @@ micromatch@^3.1.10, micromatch@^3.1.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.2"
 
-mime-db@1.47.0:
-  version "1.47.0"
-  resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.47.0.tgz#8cb313e59965d3c05cfbf898915a267af46a335c"
-  integrity sha512-QBmA/G2y+IfeS4oktet3qRZ+P5kPhCKRXxXnQEudYqUaEioAU1/Lq2us3D/t1Jfo4hE9REQPrbB7K5sOczJVIw==
+mime-db@1.48.0:
+  version "1.48.0"
+  resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.48.0.tgz#e35b31045dd7eada3aaad537ed88a33afbef2d1d"
+  integrity sha512-FM3QwxV+TnZYQ2aRqhlKBMHxk10lTbMt3bBkMAp54ddrNeVSfcQYOOKuGuy3Ddrm38I04If834fOUSq1yzslJQ==
 
 mime-types@^2.1.12:
-  version "2.1.30"
-  resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.30.tgz#6e7be8b4c479825f85ed6326695db73f9305d62d"
-  integrity sha512-crmjA4bLtR8m9qLpHvgxSChT+XoSlZi8J4n/aIdn3z92e/U47Z0V/yl+Wh9W046GgFVAmoNR/fmdbZYcSSIUeg==
+  version "2.1.31"
+  resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.31.tgz#a00d76b74317c61f9c2db2218b8e9f8e9c5c9e6b"
+  integrity sha512-XGZnNzm3QvgKxa8dpzyhFTHmpP3l5YNusmne07VUOXxou9CqUqYa/HBy124RqtVh/O2pECas/MOcsDgpilPOPg==
   dependencies:
-    mime-db "1.47.0"
+    mime-db "1.48.0"
 
 mimic-response@^1.0.0:
   version "1.0.1"

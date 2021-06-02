@@ -87,12 +87,16 @@ var substrate_sim = {
         makeAll: () => {
             if (existsSync(filename)) {
                 var i = 0;
-                readFileSync(filename, 'utf-8').split(/\r?\n/).forEach(function (line) {
-                    if (line.trim().length > 5) {
-                        ACCOUNT_PAIRS.push(substrate_sim.accounts.genFromMnemonic(line, `Account ${i}`))
-                        i += 1;
+                var file_content = readFileSync(filename, 'utf-8');
+                try {
+                    var file_json_arr = JSON.parse(file_content);
+                    for (let i = 0; i < file_json_arr.length; i++) {
+                        ACCOUNT_PAIRS.push(substrate_sim.accounts.genFromMnemonic(file_json_arr[i], `Account ${i}`))
                     }
-                })
+                } catch (e) {
+                    console.log(e);
+                    console.log("Can't load account file: " + filename);
+                }
             } else {
                 console.error(`${filename} doesn't exist. Use genAccounts.js to build one.`)
                 process.exit(1);

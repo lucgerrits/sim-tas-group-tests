@@ -192,103 +192,103 @@ services:
           --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
         "
 
-  substrate-api-0:
-    image: docker.io/parity/substrate-api-sidecar:latest
-    container_name: substrate-api-0
-    expose: 
-      - "8888"
-    ports: 
-      - 8888:8888
-    networks:
-      - my_blockchain_network
-    volumes:
-      - ./additional_types.json:/additional_types.json
-    environment:
-      - SAS_EXPRESS_PORT=8888
-      - SAS_EXPRESS_BIND_HOST=0.0.0.0
-      - SAS_SUBSTRATE_TYPES=/additional_types.json
-      - SAS_SUBSTRATE_WS_URL=ws://substrate-peer-0:9944
+  # substrate-api-0:
+  #   image: docker.io/parity/substrate-api-sidecar:latest
+  #   container_name: substrate-api-0
+  #   expose: 
+  #     - "8888"
+  #   ports: 
+  #     - 8888:8888
+  #   networks:
+  #     - my_blockchain_network
+  #   volumes:
+  #     - ./additional_types.json:/additional_types.json
+  #   environment:
+  #     - SAS_EXPRESS_PORT=8888
+  #     - SAS_EXPRESS_BIND_HOST=0.0.0.0
+  #     - SAS_SUBSTRATE_TYPES=/additional_types.json
+  #     - SAS_SUBSTRATE_WS_URL=ws://substrate-peer-0:9944
 
-  substrate-api-1:
-    image: docker.io/parity/substrate-api-sidecar:latest
-    container_name: substrate-api-1
-    expose: 
-      - "8888"
-    networks:
-      - my_blockchain_network
-    volumes:
-      - ./additional_types.json:/additional_types.json
-    environment:
-      - SAS_EXPRESS_PORT=8888
-      - SAS_EXPRESS_BIND_HOST=0.0.0.0
-      - SAS_SUBSTRATE_TYPES=/additional_types.json
-      - SAS_SUBSTRATE_WS_URL=ws://substrate-peer-1:9944
+  # substrate-api-1:
+  #   image: docker.io/parity/substrate-api-sidecar:latest
+  #   container_name: substrate-api-1
+  #   expose: 
+  #     - "8888"
+  #   networks:
+  #     - my_blockchain_network
+  #   volumes:
+  #     - ./additional_types.json:/additional_types.json
+  #   environment:
+  #     - SAS_EXPRESS_PORT=8888
+  #     - SAS_EXPRESS_BIND_HOST=0.0.0.0
+  #     - SAS_SUBSTRATE_TYPES=/additional_types.json
+  #     - SAS_SUBSTRATE_WS_URL=ws://substrate-peer-1:9944
 
-  substrate-api-2:
-    image: docker.io/parity/substrate-api-sidecar:latest
-    container_name: substrate-api-2
-    expose: 
-      - "8888"
-    networks:
-      - my_blockchain_network
-    volumes:
-      - ./additional_types.json:/additional_types.json
-    environment:
-      - SAS_EXPRESS_PORT=8888
-      - SAS_EXPRESS_BIND_HOST=0.0.0.0
-      - SAS_SUBSTRATE_TYPES=/additional_types.json
-      - SAS_SUBSTRATE_WS_URL=ws://substrate-peer-2:9944
+  # substrate-api-2:
+  #   image: docker.io/parity/substrate-api-sidecar:latest
+  #   container_name: substrate-api-2
+  #   expose: 
+  #     - "8888"
+  #   networks:
+  #     - my_blockchain_network
+  #   volumes:
+  #     - ./additional_types.json:/additional_types.json
+  #   environment:
+  #     - SAS_EXPRESS_PORT=8888
+  #     - SAS_EXPRESS_BIND_HOST=0.0.0.0
+  #     - SAS_SUBSTRATE_TYPES=/additional_types.json
+  #     - SAS_SUBSTRATE_WS_URL=ws://substrate-peer-2:9944
 
-  substrate-api-3:
-    image: docker.io/parity/substrate-api-sidecar:latest
-    container_name: substrate-api-3
-    expose: 
-      - "8888"
-    networks:
-      - my_blockchain_network
-    volumes:
-      - ./additional_types.json:/additional_types.json
-    environment:
-      - SAS_EXPRESS_PORT=8888
-      - SAS_EXPRESS_BIND_HOST=0.0.0.0
-      - SAS_SUBSTRATE_TYPES=/additional_types.json
-      - SAS_SUBSTRATE_WS_URL=ws://substrate-peer-3:9944
+  # substrate-api-3:
+  #   image: docker.io/parity/substrate-api-sidecar:latest
+  #   container_name: substrate-api-3
+  #   expose: 
+  #     - "8888"
+  #   networks:
+  #     - my_blockchain_network
+  #   volumes:
+  #     - ./additional_types.json:/additional_types.json
+  #   environment:
+  #     - SAS_EXPRESS_PORT=8888
+  #     - SAS_EXPRESS_BIND_HOST=0.0.0.0
+  #     - SAS_SUBSTRATE_TYPES=/additional_types.json
+  #     - SAS_SUBSTRATE_WS_URL=ws://substrate-peer-3:9944
 
-  substrate-api-4:
-    image: docker.io/parity/substrate-api-sidecar:latest
-    container_name: substrate-api-4
-    expose: 
-      - "8888"
-    networks:
-      - my_blockchain_network
-    volumes:
-      - ./additional_types.json:/additional_types.json
-    environment:
-      - SAS_EXPRESS_PORT=8888
-      - SAS_EXPRESS_BIND_HOST=0.0.0.0
-      - SAS_SUBSTRATE_TYPES=/additional_types.json
-      - SAS_SUBSTRATE_WS_URL=ws://substrate-peer-4:9944
+  # substrate-api-4:
+  #   image: docker.io/parity/substrate-api-sidecar:latest
+  #   container_name: substrate-api-4
+  #   expose: 
+  #     - "8888"
+  #   networks:
+  #     - my_blockchain_network
+  #   volumes:
+  #     - ./additional_types.json:/additional_types.json
+  #   environment:
+  #     - SAS_EXPRESS_PORT=8888
+  #     - SAS_EXPRESS_BIND_HOST=0.0.0.0
+  #     - SAS_SUBSTRATE_TYPES=/additional_types.json
+  #     - SAS_SUBSTRATE_WS_URL=ws://substrate-peer-4:9944
 ####################################
 #
 #        Load balancer
 #
 ####################################
-  load-balancer:
-    image: nginx:latest
-    container_name: load-balancer
-    volumes:
-      - ./nginx-data/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx-data/dhparam.pem:/etc/nginx/dhparam.pem
-      - ./nginx-data/nginx-selfsigned.crt:/etc/nginx/nginx-selfsigned.crt
-      - ./nginx-data/nginx-selfsigned.key:/etc/nginx/nginx-selfsigned.key
-    # ports: 
-      # - 9944:9944
-      # - 9933:9933
-      # - 8888:8888
-    restart: always
-    networks:
-      my_blockchain_network:
-        ipv4_address: 10.1.0.222
+  # load-balancer:
+  #   image: nginx:latest
+  #   container_name: load-balancer
+  #   volumes:
+  #     - ./nginx-data/nginx.conf:/etc/nginx/nginx.conf
+  #     - ./nginx-data/dhparam.pem:/etc/nginx/dhparam.pem
+  #     - ./nginx-data/nginx-selfsigned.crt:/etc/nginx/nginx-selfsigned.crt
+  #     - ./nginx-data/nginx-selfsigned.key:/etc/nginx/nginx-selfsigned.key
+  #   # ports: 
+  #     # - 9944:9944
+  #     # - 9933:9933
+  #     # - 8888:8888
+  #   restart: always
+  #   networks:
+  #     my_blockchain_network:
+  #       ipv4_address: 10.1.0.222
 ##########################################################################
 #
 #
