@@ -3,7 +3,13 @@
 import substrate_sim from "../../src/http/substrate_sim_http_lib.js";
 import {
   methods,
+
 } from "@substrate/txwrapper-substrate";
+import {
+  getRegistry,
+  deriveAddress,
+  PolkadotSS58Format
+} from "@substrate/txwrapper-polkadot";
 // import { deriveAddress } from '@substrate/txwrapper';
 
 // if (process.argv.length <= 2) {
@@ -11,16 +17,37 @@ import {
 //     process.exit(1);
 // }
 const sidecarurl = "http://localhost:8888";
-const publicKey = "0x2ca17d26ca376087dc30ed52deb74bf0f64aca96fe78b05ec3e720a72adb1235";
+// const publicKey = "0x2ca17d26ca376087dc30ed52deb74bf0f64aca96fe78b05ec3e720a72adb1235";
 
 async function main() {
   console.log("Start init.js...")
   var api = await substrate_sim.initApi(sidecarurl);
   await substrate_sim.print_header(sidecarurl);
 
-  console.log(api.params);
+  console.log(api);
 
+  console.log(
+    "Alice's SS58-Encoded Address:",
+    deriveAddress(substrate_sim.accounts.alice().publicKey, PolkadotSS58Format.polkadot)
+  );
 
+  // Create Polkadot's type registry.
+  const registry = getRegistry({
+    chainName: 'Substrate',
+    specName: api.spec.specName,
+    specVersion: api.spec.specVersion,
+    metadataRpc: api.params.metadataRpc,
+  });
+  console.log(registry);
+
+  // Create transaction
+  const unsigned = methods.balances.transfer(
+    { //data
+      factory_id: substrate_sim.accounts.alice().publicKey
+    },
+    api.params
+  );
+  console.log(unsigned)
 
   // const unsigned = methods.balances.transferKeepAlive(
   //     { //data

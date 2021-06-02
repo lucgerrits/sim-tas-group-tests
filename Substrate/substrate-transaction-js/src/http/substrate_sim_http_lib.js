@@ -3,7 +3,7 @@
 //
 import { Keyring } from '@polkadot/keyring';
 import axios from 'axios';
-import { ApiPromise, WsProvider } from '@polkadot/api';
+// import { ApiPromise, WsProvider } from '@polkadot/api';
 import additionalTypes from "../../additional_types.js";
 import { createHash, randomBytes } from 'crypto';
 import { cryptoWaitReady, mnemonicGenerate } from '@polkadot/util-crypto';
@@ -12,6 +12,7 @@ const filename = "accounts.json"
 
 //init api
 var api = {
+    spec: "",
     params: {
         address: "",
         blockHash: "",
@@ -96,12 +97,12 @@ var substrate_sim = {
     reqSubstrateHTTPApi: reqSubstrateHTTPApi,
     initApi: async function (url) {
         // Construct
+        api.spec = await getSpec(url);
         api.params.genesisHash = (await getGenesis(url)).hash;
         api.params.head = (await getHead(url)).hash;
         api.params.metadataRpc = await getMetadata(url);
-        api.params.specVersion = parseInt((await getSpec(url)).specVersion);
+        api.params.specVersion = parseInt(api.spec.specVersion);
         api.params.transactionVersion = parseInt((await getSpec(url)).transactionVersion);
-
         await cryptoWaitReady();
         keyring = new Keyring({ type: 'sr25519' });
         // init alice and charlie accounts

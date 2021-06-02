@@ -1,0 +1,53 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn install
+
+PATH: 
+  /home/lgerrits/.local/bin:/home/lgerrits/.cargo/bin:/home/lgerrits/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  14.15.4
+
+Platform: 
+  linux x64
+
+Trace: 
+  SyntaxError: /home/lgerrits/Documents/github/SIM-TAS-Group-tests/Substrate/substrate-transaction-js/package.json: Unexpected token } in JSON at position 539
+      at JSON.parse (<anonymous>)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "substrate-transaction-js",
+    "version": "1.0.0",
+    "description": "Substrate Client for SIM use case.",
+    "main": "main.js",
+    "type": "module",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Luc Gerrits",
+    "license": "ISC",
+    "dependencies": {
+      "async": "^3.2.0",
+      "axios": "^0.21.1",
+      "got": "^11.8.2",
+      "@substrate/txwrapper-polkadot": "1.1.0"
+    },
+    "devDependencies": {
+      "@babel/cli": "^7.13.10",
+      "@babel/core": "^7.13.13",
+      "@babel/node": "^7.13.13",
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
