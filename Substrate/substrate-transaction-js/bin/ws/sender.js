@@ -5,10 +5,12 @@ import substrate_sim from "../../src/ws/substrate_sim_lib.js";
 // separate car_array into slices to prevent sending same transactions
 
 
-const tot_processes = parseInt(process.argv[2]);
 const process_id = parseInt(process.argv[2]);
-const process_id_str = '#' + process.argv[2] + ": ";
+const tot_processes = parseInt(process.argv[3]);
+const process_id_str = '#' + process_id + ": ";
 var api;
+var car_array;
+var car_count;
 
 if (process.send === undefined)
     console.log(process_id_str + "process.send === undefined")
@@ -21,15 +23,19 @@ process.on('message', async (message) => {
     else if (message.cmd == "init") {
         console.log(process_id_str + "init api...")
         api = await substrate_sim.initApi("ws://127.0.0.1:9944");
-        await substrate_sim.print_header(api);
+        // await substrate_sim.print_header(api);
         process.send({ "cmd": "init_ok" });
     }
     else if (message.cmd == "send") {
-        const car_array = substrate_sim.accounts.getAll();
-        const car_count = car_array.length;
+        car_array = substrate_sim.accounts.getAll();
+        car_count = parseInt(car_array.length / tot_processes);
+        car_array = car_array.slice(process_id * car_count, (process_id + 1) * car_count);
+        // console.log("car_count", car_count)
+        // console.log("car_array", car_array.length)
+        await substrate_sim.sleep(parseInt(5000)); //wait a little
 
         console.log(process_id_str + "Sending now...")
-        await send(car_array, message.limit, car_count, message.wait_time);
+        await send(message.limit, message.wait_time);
         console.log(process_id_str + "Done")
         process.send({ "cmd": "send_ok" });
     }
@@ -38,7 +44,7 @@ process.on('message', async (message) => {
     }
 });
 
-async function send(car_array, limit, car_count, wait_time) {
+async function send(limit, wait_time) {
     var finished = 0;
     var success = 0;
     var failed = 0;
