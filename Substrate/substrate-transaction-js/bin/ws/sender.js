@@ -21,15 +21,17 @@ process.on('message', async (message) => {
         process.exit(0);
     }
     else if (message.cmd == "init") {
-        console.log(process_id_str + "init api...")
-        api = await substrate_sim.initApi("ws://127.0.0.1:9944");
+        // console.log(process_id_str + "init api...")
+        api = await substrate_sim.initApi("ws://127.0.0.1:9944", process_id, tot_processes);
         // await substrate_sim.print_header(api);
         process.send({ "cmd": "init_ok" });
     }
     else if (message.cmd == "send") {
-        car_array = substrate_sim.accounts.getAll();
-        car_count = parseInt(car_array.length / tot_processes);
-        car_array = car_array.slice(process_id * car_count, (process_id + 1) * car_count);
+        car_array = substrate_sim.accounts.getAll(process_id);
+        car_count = car_array.length;
+        console.log(car_count)
+        // car_count = parseInt(car_array.length / tot_processes);
+        // car_array = car_array.slice(process_id * car_count, (process_id + 1) * car_count);
         // console.log("car_count", car_count)
         // console.log("car_array", car_array.length)
         await substrate_sim.sleep(parseInt(5000)); //wait a little
@@ -59,7 +61,7 @@ async function send(limit, wait_time) {
                     return;
                 })
                 .catch((e) => {
-                    console.log(process_id_str, e)
+                    console.log(process_id_str, e.message)
                     finished++;
                     failed++;
                     return;
@@ -68,7 +70,7 @@ async function send(limit, wait_time) {
         await substrate_sim.sleep(parseInt(wait_time)); //wait a little
     }
     while (finished < limit) {
-        console.log(process_id_str + "Wait for thread close")
+        console.log(process_id_str + "Wait new_car_crash() fct finished")
         await substrate_sim.sleep(parseInt(500)); //wait a little
     }
     console.log(process_id_str + `Total success: ${success}`)

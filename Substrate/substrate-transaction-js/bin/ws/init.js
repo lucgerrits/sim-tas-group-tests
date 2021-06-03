@@ -13,7 +13,7 @@ async function main() {
 
     await substrate_sim.print_header(api);
     console.log("Continue in 2s ...");
-    await substrate_sim.sleep(2000); //wait a little
+    await substrate_sim.sleep(1000); //wait a little
 
     // // print alice and charlie balance
     // var balance = await get_balance(api, alice.address);
@@ -21,7 +21,7 @@ async function main() {
     // balance = await get_balance(api, charlie.address);
     // console.log(`[+] Charlie balance: ${balance.toString()}`);
 
-    await substrate_sim.print_factories(api, substrate_sim.accounts.alice().address);
+    var already_factory = await substrate_sim.print_factories(api, substrate_sim.accounts.alice().address);
     await substrate_sim.print_cars(api);
     // await print_crashes(api);
 
@@ -29,20 +29,34 @@ async function main() {
     if (process.argv[2] == "true") {
         // console.log(`Add factory:\t ${substrate_sim.accounts.alice().address}`)
         try {
-            await substrate_sim.send.new_factory(api, substrate_sim.accounts.alice()); //alice is factory
+            if (already_factory) {
+                console.log(`Already factory:\t ${substrate_sim.accounts.alice().address}`)
+            } else {
+                await substrate_sim.send.new_factory(api, substrate_sim.accounts.alice()); //alice is factory
+            }
         } catch (e) {
             console.log("Init factory failed. Maybe already there or concurrent process already send it.")
+            console.log(e)
         }
     }
-    await substrate_sim.sleep(2000); //wait a little
 
-    console.log("Send new cars...")
     const car_array = substrate_sim.accounts.getAll();
     if (process.argv[3] == "true") {
+        console.log("Send new cars...")
+        await substrate_sim.sleep(2000); //wait a little
         for (let i = 0; i < car_array.length; i++) {
             // console.log(`Add car:\t ${car_array[i].address}`)
-            await substrate_sim.send.new_car(api, substrate_sim.accounts.alice(), car_array[i]); //add car_array[i] as a car
+            try {
+                await substrate_sim.send.new_car(api, substrate_sim.accounts.alice(), car_array[i]); //add car_array[i] as a car
+                process.stdout.write(".");
+                await substrate_sim.sleep(50); //wait a little: get error "tx outdated" when one account sends too many tx/sec
+                if (i % 100 == 0)
+                    console.log(`\n${(i*100)/car_array.length}%`)
+            } catch (e) {
+                console.log(e)
+            }
         }
+        console.log("")
     }
     console.log("Done")
 }

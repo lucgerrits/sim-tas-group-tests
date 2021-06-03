@@ -15,7 +15,7 @@ var keyring;
 var alice;
 var bob;
 var charlie;
-var ACCOUNT_PAIRS = [];
+var ACCOUNT_PAIRS = {};
 
 async function get_balance(api, address) {
     let { data: balance } = await api.query.system.account(address);
@@ -59,7 +59,7 @@ function getKeyring() {
 }
 
 var substrate_sim = {
-    initApi: async function (url) {
+    initApi: async function (url, process_id = -1, tot_processes = -1) { //if a process if given then we only get a piece of the accounts
         // Construct
         const wsProvider = new WsProvider(url);
         const api = await ApiPromise.create({ provider: wsProvider, types: additionalTypes });
@@ -71,7 +71,7 @@ var substrate_sim = {
         bob = getKeyring().addFromUri('//Bob', { name: 'Bob default' });
         charlie = getKeyring().addFromUri('//Charlie', { name: 'Charlie default' });
 
-        substrate_sim.accounts.makeAll() //init all accounts
+        substrate_sim.accounts.makeAll(process_id, tot_processes) //init all accounts
         return api;
     },
     accounts: {
@@ -84,14 +84,31 @@ var substrate_sim = {
         genFromMnemonic: (mnemonic, name) => {
             return getKeyring().addFromUri(mnemonic, { name: name }, 'ed25519');
         },
-        makeAll: () => {
+        makeAll: (process_id, tot_processes) => {
             if (existsSync(filename)) {
-                var i = 0;
                 var file_content = readFileSync(filename, 'utf-8');
                 try {
                     var file_json_arr = JSON.parse(file_content);
-                    for (let i = 0; i < file_json_arr.length; i++) {
-                        ACCOUNT_PAIRS.push(substrate_sim.accounts.genFromMnemonic(file_json_arr[i], `Account ${i}`))
+                    var tot_accounts = file_json_arr.length;
+
+                    if (process_id == -1 || tot_processes == -1) {
+                        console.log("Loading all accounts...");
+                        ACCOUNT_PAIRS[0] = [];
+                        for (let i = 0; i < tot_accounts; i++) {
+                            ACCOUNT_PAIRS[0].push(substrate_sim.accounts.genFromMnemonic(file_json_arr[i], `Account ${i}`))
+                        }
+                    } else {
+                        var account_count = parseInt(tot_accounts / tot_processes);
+                        var account_start_index = process_id;
+                        // console.log("tot_processes", tot_processes)
+                        // console.log("process_id", process_id)
+                        // console.log("account_start_index * account_count", account_start_index * account_count)
+                        // console.log("account_start_index", account_start_index)
+                        // console.log("account_start_index + account_count", (account_start_index + 1) * account_count)
+                        ACCOUNT_PAIRS[process_id] = [];
+                        for (let i = (account_start_index * account_count); i < ((account_start_index + 1) * account_count); i++) {
+                            ACCOUNT_PAIRS[process_id].push(substrate_sim.accounts.genFromMnemonic(file_json_arr[i], `Account ${i}`))
+                        }
                     }
                 } catch (e) {
                     console.log(e);
@@ -102,8 +119,10 @@ var substrate_sim = {
                 process.exit(1);
             }
         },
-        getAll: () => {
-            return ACCOUNT_PAIRS;
+        getAll: (process_id = -1) => {
+            if (process_id == -1)
+                return ACCOUNT_PAIRS[0];
+            return ACCOUNT_PAIRS[process_id];
         }
     },
     print_factories: async function (api, sudo_key) {
@@ -197,7 +216,7 @@ var substrate_sim = {
                 .signAndSend(factory,
                     { nonce: -1 },
                 );
-            console.log(`Transaction sent: ${tx}`);
+            // console.log(`Transaction sent: ${tx}`);
             return tx;
         },
         // new_owner: async function (api, sudo_account, car) {

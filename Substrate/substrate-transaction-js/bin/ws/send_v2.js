@@ -14,9 +14,9 @@ var processes_arr = [];
 var processes_exited = 0;
 var processes_init_ok = 0;
 
-console.log("Start processes")
 console.log("Benchmark settings:")
-console.log("\t", nb_processes * (1/parseFloat(process.argv[3])), "Tx/sec")
+console.log("\t", nb_processes * (1 / parseFloat(process.argv[3])), "Tx/sec")
+console.log("Start processes")
 // Create the worker.
 for (let i = 0; i < nb_processes; i++) {
     processes_arr[i] = child.fork(path.join(".", "bin", "ws", "/sender.js"), [i, nb_processes]);
@@ -31,6 +31,7 @@ for (let i = 0; i < nb_processes; i++) {
             processes_init_ok++;
             if (processes_init_ok == nb_processes) { //all processes ready
                 //start send all processes 
+                console.log("All processes synced")
                 for (let j = 0; j < nb_processes; j++)
                     processes_arr[j].send({ cmd: "send", limit: parseInt(limit / nb_processes), wait_time: wait_time }); //start send
             }

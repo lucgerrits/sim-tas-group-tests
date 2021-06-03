@@ -9,3 +9,5 @@ Hyperledger-Sawtooth/sawtooth-transaction-cpp/gnuplots/results_commits_6_nodes_o
 *.out
 Hyperledger-Sawtooth/cartp-rust/benchmarking-tools/sender/tmp.txt
 Substrate/substrate-transaction-js/accounts.json
+Substrate/substrate-transaction-js/package-lock.json
+Substrate/substrate-transaction-js/yarn-error.log
