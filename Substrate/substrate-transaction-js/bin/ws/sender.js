@@ -29,7 +29,7 @@ process.on('message', async (message) => {
     else if (message.cmd == "send") {
         car_array = substrate_sim.accounts.getAll(process_id);
         car_count = car_array.length;
-        console.log(car_count)
+        // console.log(car_count)
         // car_count = parseInt(car_array.length / tot_processes);
         // car_array = car_array.slice(process_id * car_count, (process_id + 1) * car_count);
         // console.log("car_count", car_count)
