@@ -69,8 +69,12 @@ async function send(limit, wait_time) {
         })(i)
         await substrate_sim.sleep(parseInt(wait_time)); //wait a little
     }
+    var a = true;
     while (finished < limit) {
-        console.log(process_id_str + "Wait new_car_crash() fct finished")
+        if (a) {
+            console.log(process_id_str + "Wait new_car_crash() fct finished");
+            a = false;
+        }
         await substrate_sim.sleep(parseInt(500)); //wait a little
     }
     console.log(process_id_str + `Total success: ${success}`)
