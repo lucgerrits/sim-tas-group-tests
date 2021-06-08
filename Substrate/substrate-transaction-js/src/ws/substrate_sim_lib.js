@@ -59,10 +59,9 @@ function getKeyring() {
 }
 
 var substrate_sim = {
-    initApi: async function (url, process_id = -1, tot_processes = -1) { //if a process if given then we only get a piece of the accounts
+    initApi: async function (url, process_id = -1, tot_processes = -1) { //if a process if given then we only get a piece of the accounts        
         // Construct
         const wsProvider = new WsProvider(url);
-        const api = await ApiPromise.create({ provider: wsProvider, types: additionalTypes });
 
         await cryptoWaitReady();
         keyring = new Keyring({ type: 'sr25519' });
@@ -72,6 +71,9 @@ var substrate_sim = {
         charlie = getKeyring().addFromUri('//Charlie', { name: 'Charlie default' });
 
         substrate_sim.accounts.makeAll(process_id, tot_processes) //init all accounts
+        
+        const api = await ApiPromise.create({ provider: wsProvider, types: additionalTypes });
+
         return api;
     },
     accounts: {

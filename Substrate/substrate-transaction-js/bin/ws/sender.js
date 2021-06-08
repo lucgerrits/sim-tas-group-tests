@@ -4,6 +4,8 @@ import substrate_sim from "../../src/ws/substrate_sim_lib.js";
 //TODO:
 // separate car_array into slices to prevent sending same transactions
 
+// const url = "ws://127.0.0.1:9944";
+const url = "ws://substrate-ws.unice.cust.tasfrance.com";
 
 const process_id = parseInt(process.argv[2]);
 const tot_processes = parseInt(process.argv[3]);
@@ -22,7 +24,7 @@ process.on('message', async (message) => {
     }
     else if (message.cmd == "init") {
         // console.log(process_id_str + "init api...")
-        api = await substrate_sim.initApi("ws://127.0.0.1:9944", process_id, tot_processes);
+        api = await substrate_sim.initApi(url, process_id, tot_processes);
         // await substrate_sim.print_header(api);
         process.send({ "cmd": "init_ok" });
     }

@@ -6,10 +6,12 @@ if (process.argv.length <= 2) {
     console.error("Required 2 argument: \n\tSend new factory: true/false.\n\tSend new car: true/false")
     process.exit(1);
 }
+// const url = "ws://127.0.0.1:9944";
+const url = "ws://substrate-ws.unice.cust.tasfrance.com";
 
 async function main() {
     console.log("Start init.js...")
-    var api = await substrate_sim.initApi("ws://127.0.0.1:9944");
+    var api = await substrate_sim.initApi(url);
 
     await substrate_sim.print_header(api);
     console.log("Continue in 2s ...");
@@ -49,7 +51,7 @@ async function main() {
             try {
                 await substrate_sim.send.new_car(api, substrate_sim.accounts.alice(), car_array[i]); //add car_array[i] as a car
                 process.stdout.write(".");
-                await substrate_sim.sleep(50); //wait a little: get error "tx outdated" when one account sends too many tx/sec
+                await substrate_sim.sleep(20); //wait a little: get error "tx outdated" when one account sends too many tx/sec
                 if (i % 100 == 0)
                     console.log(`\n${(i*100)/car_array.length}%`)
             } catch (e) {

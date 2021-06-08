@@ -29,3 +29,10 @@ npm start
 npm run-script build
 node ./out.js
 ```
+
+## View using Polkadot Dashboard
+
+
+```bash
+docker run --rm -it --name polkadot-ui -e WS_URL=ws://substrate-ws.unice.cust.tasfrance.com -p 80:80 jacogr/polkadot-js-apps:latest
+```
