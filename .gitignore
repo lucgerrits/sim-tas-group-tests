@@ -11,3 +11,6 @@ Hyperledger-Sawtooth/cartp-rust/benchmarking-tools/sender/tmp.txt
 Substrate/substrate-transaction-js/accounts.json
 Substrate/substrate-transaction-js/package-lock.json
 Substrate/substrate-transaction-js/yarn-error.log
+kompose
+tmp.yaml
+Substrate/cloud-deployments/1-substrate-aura-4-nodes.yaml

@@ -1,0 +1,289 @@
+apiVersion: v1
+kind: List
+
+items:
+
+
+# --------------------------=== POD DEPLOYMENT 0 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: node-0
+    namespace: substrate-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: substrate-0
+    template:
+      metadata:
+        labels:
+          name: substrate-0
+          serviceSelector: substrate-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: substrate-node
+            image: projetsim/substrate-sim:latest
+            resources:
+              requests:
+                memory: "10Gi"
+                #cpu: "0.5"
+                ephemeral-storage: "1500Mi"
+              limits:
+                memory: "11Gi"
+                #cpu: "1.1"
+                ephemeral-storage: "2Gi"
+            ports:
+              - name: p2p
+                containerPort: 30333
+              - name: websocket
+                containerPort: 9944
+              - name: rpc
+                containerPort: 9933
+              - name: prometheus
+                containerPort: 9615
+            # envFrom:
+            #   - configMapRef:
+            #       name: keys-config
+            command:
+              - bash
+            args:
+              - -c
+              - |
+                    # Start Alice's node
+                    RUST_LOG=runtime=debug
+                    node-template \
+                        --base-path /tmp/peer-data \
+                        --chain local \
+                        --alice \
+                        --port 30333 \
+                        --ws-port 9944 \
+                        --rpc-port 9933 \
+                        --node-key 0000000000000000000000000000000000000000000000000000000000000001 \
+                        --unsafe-ws-external \
+                        --unsafe-rpc-external \
+                        --rpc-cors=all \
+                        --prometheus-external \
+                        -lmydebug=debug \
+                        --validator 
+                    
+            volumeMounts:
+              - name: sawtooth-data-0
+                mountPath: /tmp/peer-data
+
+        volumes:
+          - name: sawtooth-data-0
+            persistentVolumeClaim:
+            claimName: sawtooth-data-0
+
+#---------------------------------=NODES SERVICES 0=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: substrate-0
+    namespace: substrate-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: substrate-0
+    ports:
+      - name: "30333"
+        protocol: TCP
+        port: 30333
+        targetPort: 30333
+      - name: "9944"
+        protocol: TCP
+        port: 9944
+        targetPort: 9944
+      - name: "9933"
+        protocol: TCP
+        port: 9933
+        targetPort: 9933
+      - name: "9615"
+        protocol: TCP
+        port: 9615
+        targetPort: 9615
+#---------------------------------=NODES PERSISTANT VOLUME 0=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: substrate-0
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/substrate-0"
+#--------------------------=PERSISTENT VOLUME CLAIM 0=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: substrate-data
+    name: substrate-data-0
+    namespace: substrate-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 1 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: node-1
+    namespace: substrate-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: substrate-1
+    template:
+      metadata:
+        labels:
+          name: substrate-1
+          serviceSelector: substrate-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: substrate-node
+            image: projetsim/substrate-sim:latest
+            resources:
+              requests:
+                memory: "10Gi"
+                #cpu: "0.5"
+                ephemeral-storage: "1500Mi"
+              limits:
+                memory: "11Gi"
+                #cpu: "1.1"
+                ephemeral-storage: "2Gi"
+            ports:
+              - name: p2p
+                containerPort: 30333
+              - name: websocket
+                containerPort: 9944
+              - name: rpc
+                containerPort: 9933
+              - name: prometheus
+                containerPort: 9615
+            # envFrom:
+            #   - configMapRef:
+            #       name: keys-config
+            command:
+              - bash
+            args:
+              - -c
+              - |
+                    RUST_LOG=runtime=debug
+                    node-template \
+                        --base-path /tmp/peer-data \
+                        --chain local \
+                        --bob \
+                        --port 30333 \
+                        --ws-port 9944 \
+                        --rpc-port 9933 \
+                        --unsafe-ws-external \
+                        --unsafe-rpc-external \
+                        --rpc-cors=all \
+                        --prometheus-external \
+                        -lmydebug=debug \
+                        --validator \
+                        --bootnodes /ip4/$SUBSTRATE_0_SERVICE_HOST/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
+                    
+            volumeMounts:
+              - name: sawtooth-data-1
+                mountPath: /tmp/peer-data
+
+        volumes:
+          - name: sawtooth-data-1
+            persistentVolumeClaim:
+            claimName: sawtooth-data-1
+
+#---------------------------------=NODES SERVICES 1=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: substrate-1
+    namespace: substrate-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: substrate-1
+    ports:
+      - name: "30333"
+        protocol: TCP
+        port: 30333
+        targetPort: 30333
+      - name: "9944"
+        protocol: TCP
+        port: 9944
+        targetPort: 9944
+      - name: "9933"
+        protocol: TCP
+        port: 9933
+        targetPort: 9933
+      - name: "9615"
+        protocol: TCP
+        port: 9615
+        targetPort: 9615
+#---------------------------------=NODES PERSISTANT VOLUME 1=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: substrate-1
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/substrate-1"
+#--------------------------=PERSISTENT VOLUME CLAIM 1=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: substrate-data
+    name: substrate-data-1
+    namespace: substrate-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+#--------------------------=ONE SERVICE FOR ALL NODE (websocket)=--------------------------------
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: substrate-ws-service
+    namespace: substrate-net
+  spec:
+    type: ClusterIP
+    selector:
+      serviceSelector: substrate-node
+    ports:
+      - name: "9944"
+        protocol: TCP
+        port: 9944
+        targetPort: 9944
