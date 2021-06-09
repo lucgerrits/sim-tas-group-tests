@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import substrate_sim from "../../src/ws/substrate_sim_lib.js";
+import * as async from "async";
 
 if (process.argv.length <= 2) {
     console.error("Required 2 argument: \n\tSend new factory: true/false.\n\tSend new car: true/false")
@@ -22,44 +23,56 @@ async function main() {
     // console.log(`[+] Alice balance: ${balance.toString()}`);
     // balance = await get_balance(api, charlie.address);
     // console.log(`[+] Charlie balance: ${balance.toString()}`);
-
-    var already_factory = await substrate_sim.print_factories(api, substrate_sim.accounts.alice().address);
-    await substrate_sim.print_cars(api);
     // await print_crashes(api);
+    const factory_array = substrate_sim.accounts.getAllFactories();
+    const car_array = substrate_sim.accounts.getAllAccounts();
 
-    console.log("Send new factory...")
     if (process.argv[2] == "true") {
-        // console.log(`Add factory:\t ${substrate_sim.accounts.alice().address}`)
-        try {
-            if (already_factory) {
-                console.log(`Already factory:\t ${substrate_sim.accounts.alice().address}`)
-            } else {
-                await substrate_sim.send.new_factory(api, substrate_sim.accounts.alice()); //alice is factory
+        console.log("Send new factory...")
+        await substrate_sim.sleep(2000); //wait a little
+
+        for (let i = 0; i < factory_array.length; i++) {
+            var already_factory = await substrate_sim.print_factories(api, factory_array[i].address);
+            try {
+                if (already_factory) {
+                    console.log(`Already factory:\t ${factory_array[i].address}`)
+                } else {
+                    await substrate_sim.send.new_factory(api, factory_array[i]); //alice is factory
+                    await substrate_sim.sleep(500); //wait a little: get error "tx outdated" when one account sends too many tx/sec
+                }
+            } catch (e) {
+                console.log("Init factory failed. Maybe already there or concurrent process already send it.")
+                console.log(e)
             }
-        } catch (e) {
-            console.log("Init factory failed. Maybe already there or concurrent process already send it.")
-            console.log(e)
         }
+        console.log("Wait block finalised")
+        await substrate_sim.sleep(18000); //wait block finalised
     }
 
-    const car_array = substrate_sim.accounts.getAll();
     if (process.argv[3] == "true") {
         console.log("Send new cars...")
         await substrate_sim.sleep(2000); //wait a little
         for (let i = 0; i < car_array.length; i++) {
             // console.log(`Add car:\t ${car_array[i].address}`)
             try {
-                await substrate_sim.send.new_car(api, substrate_sim.accounts.alice(), car_array[i]); //add car_array[i] as a car
+                //round robin factories to remove outdated issue - thus faster init because we can remove sleep
+                await substrate_sim.send.new_car(api, factory_array[i % factory_array.length], car_array[i]); //add car_array[i] as a car
                 process.stdout.write(".");
-                await substrate_sim.sleep(20); //wait a little: get error "tx outdated" when one account sends too many tx/sec
+                //await substrate_sim.sleep(20); //wait a little: get error "tx outdated" when one account sends too many tx/sec
                 if (i % 100 == 0)
-                    console.log(`\n${(i*100)/car_array.length}%`)
+                    console.log(`\n${(i * 100) / car_array.length}%`)
             } catch (e) {
-                console.log(e)
+                console.log("")
+                console.log(e.message)
             }
         }
         console.log("")
     }
+
+    console.log("Wait block finalised")
+    await substrate_sim.sleep(18000); //wait block finalised
+    await substrate_sim.print_cars(api);
+
     console.log("Done")
 }
 

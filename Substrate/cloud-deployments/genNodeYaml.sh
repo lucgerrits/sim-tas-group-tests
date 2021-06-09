@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#list of validators available
+#Max 6 validator for the moment
+accountArray=('alice' 'bob' 'charlie' 'dave' 'eve' 'ferdie')
+
 cat << EOF
 apiVersion: v1
 kind: List
@@ -8,7 +12,7 @@ items:
 
 EOF
 
-for i in {0..1}
+for i in {0..5}
 do
    echo ""
    echo "# --------------------------=== POD DEPLOYMENT $i ===--------------------------"
@@ -69,7 +73,7 @@ cat << EOF
                     node-template \\
                         --base-path /tmp/peer-data \\
                         --chain local \\
-                        --alice \\
+                        --${accountArray[i]} \\
                         --port 30333 \\
                         --ws-port 9944 \\
                         --rpc-port 9933 \\
@@ -78,7 +82,7 @@ cat << EOF
                         --unsafe-rpc-external \\
                         --rpc-cors=all \\
                         --prometheus-external \\
-                        -lmydebug=debug \\
+                        --log info \\
                         --validator 
                     
             volumeMounts:
@@ -146,7 +150,7 @@ cat << EOF
                     node-template \\
                         --base-path /tmp/peer-data \\
                         --chain local \\
-                        --bob \\
+                        --${accountArray[i]} \\
                         --port 30333 \\
                         --ws-port 9944 \\
                         --rpc-port 9933 \\
@@ -154,7 +158,7 @@ cat << EOF
                         --unsafe-rpc-external \\
                         --rpc-cors=all \\
                         --prometheus-external \\
-                        -lmydebug=debug \\
+                        --log info \\
                         --validator \\
                         --bootnodes /ip4/\$SUBSTRATE_0_SERVICE_HOST/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
                     

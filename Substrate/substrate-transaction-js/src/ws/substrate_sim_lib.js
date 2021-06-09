@@ -7,7 +7,8 @@ import additionalTypes from "../../additional_types.js";
 import { createHash, randomBytes } from 'crypto';
 import { cryptoWaitReady, mnemonicGenerate } from '@polkadot/util-crypto';
 import { readFileSync, existsSync } from 'fs'
-const filename = "accounts.json"
+const filename_accounts = "accounts.json"
+const filename_factories = "factories.json"
 
 // init keyring
 var keyring;
@@ -16,6 +17,7 @@ var alice;
 var bob;
 var charlie;
 var ACCOUNT_PAIRS = {};
+var FACTORIES_ACCOUNT_PAIRS = [];
 
 async function get_balance(api, address) {
     let { data: balance } = await api.query.system.account(address);
@@ -27,8 +29,8 @@ async function get_sudo_keyPair(api) {
     return keyring.getPair(key.toString());
 }
 
-async function get_factory(api, sudo_key) {
-    let data = await api.query.simModule.factories(sudo_key);
+async function get_factory(api, factory_address) {
+    let data = await api.query.simModule.factories(factory_address);
     return data;
 }
 
@@ -71,7 +73,7 @@ var substrate_sim = {
         charlie = getKeyring().addFromUri('//Charlie', { name: 'Charlie default' });
 
         substrate_sim.accounts.makeAll(process_id, tot_processes) //init all accounts
-        
+
         const api = await ApiPromise.create({ provider: wsProvider, types: additionalTypes });
 
         return api;
@@ -87,8 +89,28 @@ var substrate_sim = {
             return getKeyring().addFromUri(mnemonic, { name: name }, 'ed25519');
         },
         makeAll: (process_id, tot_processes) => {
-            if (existsSync(filename)) {
-                var file_content = readFileSync(filename, 'utf-8');
+            if (existsSync(filename_factories)) {
+                var file_content = readFileSync(filename_factories, 'utf-8');
+                try {
+                    var file_json_arr = JSON.parse(file_content);
+                    var tot_accounts = file_json_arr.length;
+                    console.log("Loading all factory accounts...");
+                    for (let i = 0; i < tot_accounts; i++) {
+                        FACTORIES_ACCOUNT_PAIRS.push(substrate_sim.accounts.genFromMnemonic(file_json_arr[i], `Factory Account ${i}`))
+                    }
+                } catch (e) {
+                    console.log(e);
+                    console.log("Can't load factory account file: " + filename_accounts);
+                }
+
+            } else {
+                console.error(`${filename_factories} doesn't exist. Use genAccounts.js to build one.`)
+                process.exit(1);
+            }
+
+
+            if (existsSync(filename_accounts)) {
+                var file_content = readFileSync(filename_accounts, 'utf-8');
                 try {
                     var file_json_arr = JSON.parse(file_content);
                     var tot_accounts = file_json_arr.length;
@@ -114,27 +136,30 @@ var substrate_sim = {
                     }
                 } catch (e) {
                     console.log(e);
-                    console.log("Can't load account file: " + filename);
+                    console.log("Can't load account file: " + filename_accounts);
                 }
             } else {
-                console.error(`${filename} doesn't exist. Use genAccounts.js to build one.`)
+                console.error(`${filename_accounts} doesn't exist. Use genAccounts.js to build one.`)
                 process.exit(1);
             }
         },
-        getAll: (process_id = -1) => {
+        getAllAccounts: (process_id = -1) => {
             if (process_id == -1)
                 return ACCOUNT_PAIRS[0];
             return ACCOUNT_PAIRS[process_id];
+        },
+        getAllFactories: () => {
+            return FACTORIES_ACCOUNT_PAIRS;
         }
     },
-    print_factories: async function (api, sudo_key) {
-        var factory = await get_factory(api, sudo_key);
+    print_factories: async function (api, factory_address) {
+        var factory = await get_factory(api, factory_address);
         if (factory.words && factory.words[0] == 0) {
-            console.log(`[+] ${sudo_key} is NOT a factory.`)
+            console.log(`[+] ${factory_address} is NOT a factory.`)
             return false;
         } else {
             let factory_blockHash = await api.rpc.chain.getBlockHash(factory.words[0]);
-            console.log(`[+] ${sudo_key} is a factory.\n\tAdded in block number: ${factory.words[0]}\n\tBlock Hash: ${factory_blockHash}"`);
+            console.log(`[+] ${factory_address} is a factory.\n\tAdded in block number: ${factory.words[0]}\n\tBlock Hash: ${factory_blockHash}"`);
             return true;
         }
     },
@@ -176,7 +201,8 @@ var substrate_sim = {
         console.log(`\t Alice:\t\t${substrate_sim.accounts.alice().address}`);
         console.log(`\t Bob:\t\t${substrate_sim.accounts.bob().address}`);
         console.log(`\t Charlie:\t${substrate_sim.accounts.charlie().address}`);
-        console.log(`[+] Auto generated accounts: ${substrate_sim.accounts.getAll().length}`);
+        console.log(`[+] Auto generated accounts: ${substrate_sim.accounts.getAllAccounts().length}`);
+        console.log(`[+] Auto generated factories accounts: ${substrate_sim.accounts.getAllFactories().length}`);
         console.log("---------------------------------------------------------------------------------------------");
 
     },
@@ -204,11 +230,11 @@ var substrate_sim = {
         new_factory: async function (api, factory) {
             // https://polkadot.js.org/docs/api/start/api.tx.wrap/#sudo-use
             const sudoPair = await get_sudo_keyPair(api);
-            const { nonce } = await api.query.system.account(sudoPair.address);
+            // const { nonce } = await api.query.system.account(sudoPair.address);
             // console.log(`nonce: ${nonce}`)
             let tx = await api.tx.sudo.sudo(
                 api.tx.simModule.storeFactory(factory.address)
-            ).signAndSend(sudoPair, { nonce });
+            ).signAndSend(sudoPair, { nonce:-1 });
             console.log(`Transaction sent: ${tx}`);
             return tx;
         },

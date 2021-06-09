@@ -29,7 +29,7 @@ process.on('message', async (message) => {
         process.send({ "cmd": "init_ok" });
     }
     else if (message.cmd == "send") {
-        car_array = substrate_sim.accounts.getAll(process_id);
+        car_array = substrate_sim.accounts.getAllAccounts(process_id);
         car_count = car_array.length;
         // console.log(car_count)
         // car_count = parseInt(car_array.length / tot_processes);
@@ -63,7 +63,8 @@ async function send(limit, wait_time) {
                     return;
                 })
                 .catch((e) => {
-                    console.log(process_id_str, e.message)
+                    // process.stdout.write(".");
+                    // console.log(process_id_str, e.message)
                     finished++;
                     failed++;
                     return;

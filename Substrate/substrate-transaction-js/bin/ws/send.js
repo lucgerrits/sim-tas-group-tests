@@ -57,7 +57,7 @@ async function main() {
     const limit = parseInt(process.argv[2]);
     const wait_time = parseFloat(process.argv[3]) * 1000;
     const nb_parallel = parseInt(process.argv[4]);
-    const car_array = substrate_sim.accounts.getAll();
+    const car_array = substrate_sim.accounts.getAllAccounts();
     const car_count = car_array.length;
 
 
