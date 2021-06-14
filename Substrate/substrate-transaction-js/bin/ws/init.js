@@ -52,11 +52,17 @@ async function main() {
     if (process.argv[3] == "true") {
         console.log("Send new cars...")
         await substrate_sim.sleep(2000); //wait a little
-        for (let i = 0; i < car_array.length; i++) {
+        for (let i = 0; i < car_array.length; i += factory_array.length) {
             // console.log(`Add car:\t ${car_array[i].address}`)
+            var arr = [];
+            for (let j = 0; j < factory_array.length; j++) {
+                arr.push(substrate_sim.send.new_car(api, factory_array[j], car_array[i + j])) //add car_array[i] as a car
+            }
+
             try {
                 //round robin factories to remove outdated issue - thus faster init because we can remove sleep
-                await substrate_sim.send.new_car(api, factory_array[i % factory_array.length], car_array[i]); //add car_array[i] as a car
+                await Promise.all(arr);
+                // await substrate_sim.send.new_car(api, factory_array[i % factory_array.length], car_array[i]); //add car_array[i] as a car
                 process.stdout.write(".");
                 //await substrate_sim.sleep(20); //wait a little: get error "tx outdated" when one account sends too many tx/sec
                 if (i % 100 == 0)
