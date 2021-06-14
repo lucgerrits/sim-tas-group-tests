@@ -14,6 +14,10 @@ var processes_arr = [];
 var processes_exited = 0;
 var processes_init_ok = 0;
 
+var tot_success = 0;
+var tot_failed = 0;
+var tot_finished = 0;
+
 console.log("Benchmark settings:")
 console.log("\t", nb_processes * (1 / parseFloat(process.argv[3])), "Tx/sec")
 console.log("Start processes")
@@ -36,6 +40,12 @@ for (let i = 0; i < nb_processes; i++) {
                     processes_arr[j].send({ cmd: "send", limit: parseInt(limit / nb_processes), wait_time: wait_time }); //start send
             }
         }
+        else if (message.cmd == "send_stats") {
+            console.log(message)
+            tot_success += message.success;
+            tot_failed += message.failed;
+            tot_finished += message.finished;
+        }
         else if (message.cmd == "send_ok") {
             processes_arr[i].send({ cmd: "exit" }); //exit when done
         }
@@ -50,6 +60,11 @@ for (let i = 0; i < nb_processes; i++) {
             //if all processes exited -> stop main process
             console.log("All processes exited.")
             console.log("Done main worker")
+
+            console.log(`Total success: ${tot_success}`)
+            console.log(`Total failed: ${tot_failed}`)
+            console.log(`Total finished: ${tot_finished}`)
+
             process.exit(0);
         }
 

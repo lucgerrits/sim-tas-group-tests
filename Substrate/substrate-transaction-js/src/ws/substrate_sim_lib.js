@@ -17,7 +17,9 @@ var alice;
 var bob;
 var charlie;
 var ACCOUNT_PAIRS = {};
-var FACTORIES_ACCOUNT_PAIRS = [];
+var FACTORIES_ACCOUNT_PAIRS = {};
+var ACCOUNT_PAIRS_NONCES = {};
+var FACTORIES_ACCOUNT_PAIRS_NONCES = {};
 
 async function get_balance(api, address) {
     let { data: balance } = await api.query.system.account(address);
@@ -61,18 +63,19 @@ function getKeyring() {
 }
 
 var substrate_sim = {
-    initApi: async function (url, process_id = -1, tot_processes = -1) { //if a process if given then we only get a piece of the accounts        
+    initApi: async function (url) { //if a process if given then we only get a piece of the accounts        
         // Construct
         const wsProvider = new WsProvider(url);
 
         await cryptoWaitReady();
         keyring = new Keyring({ type: 'sr25519' });
+
         // init alice and charlie accounts
         alice = getKeyring().addFromUri('//Alice', { name: 'Alice default' });
         bob = getKeyring().addFromUri('//Bob', { name: 'Bob default' });
         charlie = getKeyring().addFromUri('//Charlie', { name: 'Charlie default' });
 
-        substrate_sim.accounts.makeAll(process_id, tot_processes) //init all accounts
+        // substrate_sim.accounts.makeAll(process_id, tot_processes) //init all accounts
 
         const api = await ApiPromise.create({ provider: wsProvider, types: additionalTypes });
 
@@ -86,17 +89,40 @@ var substrate_sim = {
             return mnemonicGenerate();
         },
         genFromMnemonic: (mnemonic, name) => {
-            return getKeyring().addFromUri(mnemonic, { name: name }, 'ed25519');
+            //TODO: maybe use createFromUri ???
+            // https://polkadot.js.org/docs/keyring/start/create/#revisiting-crypto
+            return getKeyring().createFromUri(mnemonic, { name: name }, 'ed25519');
         },
-        makeAll: (process_id, tot_processes) => {
+        makeAll: (process_id = -1, tot_processes = -1) => {
+            substrate_sim.accounts.makeAllFactories(process_id, tot_processes);
+            substrate_sim.accounts.makeAllAccounts(process_id, tot_processes);
+        },
+        makeAllFactories: (process_id = -1, tot_processes = -1) => {
             if (existsSync(filename_factories)) {
                 var file_content = readFileSync(filename_factories, 'utf-8');
                 try {
                     var file_json_arr = JSON.parse(file_content);
                     var tot_accounts = file_json_arr.length;
-                    console.log("Loading all factory accounts...");
-                    for (let i = 0; i < tot_accounts; i++) {
-                        FACTORIES_ACCOUNT_PAIRS.push(substrate_sim.accounts.genFromMnemonic(file_json_arr[i], `Factory Account ${i}`))
+
+                    if (process_id == -1 || tot_processes == -1) {
+                        console.log("Loading all factory accounts...");
+                        FACTORIES_ACCOUNT_PAIRS[0] = [];
+                        FACTORIES_ACCOUNT_PAIRS_NONCES[0] = [];
+                        for (let i = 0; i < tot_accounts; i++) {
+                            // if (i % 500 == 0)
+                            //     console.log(`\n${(i * 100) / tot_accounts}%`)
+                            FACTORIES_ACCOUNT_PAIRS[0].push(substrate_sim.accounts.genFromMnemonic(file_json_arr[i], `Factory Account ${i}`))
+                            FACTORIES_ACCOUNT_PAIRS_NONCES[0].push(0); //init 0
+                        }
+                    } else {
+                        var account_count = parseInt(tot_accounts / tot_processes);
+                        var account_start_index = process_id;
+                        FACTORIES_ACCOUNT_PAIRS[process_id] = [];
+                        FACTORIES_ACCOUNT_PAIRS_NONCES[process_id] = [];
+                        for (let i = (account_start_index * account_count); i < ((account_start_index + 1) * account_count); i++) {
+                            FACTORIES_ACCOUNT_PAIRS[process_id].push(substrate_sim.accounts.genFromMnemonic(file_json_arr[i], `Factory Account ${i}`))
+                            FACTORIES_ACCOUNT_PAIRS_NONCES[process_id].push(0); //init 0
+                        }
                     }
                 } catch (e) {
                     console.log(e);
@@ -107,8 +133,8 @@ var substrate_sim = {
                 console.error(`${filename_factories} doesn't exist. Use genAccounts.js to build one.`)
                 process.exit(1);
             }
-
-
+        },
+        makeAllAccounts: (process_id = -1, tot_processes = -1) => {
             if (existsSync(filename_accounts)) {
                 var file_content = readFileSync(filename_accounts, 'utf-8');
                 try {
@@ -118,20 +144,21 @@ var substrate_sim = {
                     if (process_id == -1 || tot_processes == -1) {
                         console.log("Loading all accounts...");
                         ACCOUNT_PAIRS[0] = [];
+                        ACCOUNT_PAIRS_NONCES[0] = [];
                         for (let i = 0; i < tot_accounts; i++) {
+                            // if (i % 500 == 0)
+                            //     console.log(`\n${(i * 100) / tot_accounts}%`)
                             ACCOUNT_PAIRS[0].push(substrate_sim.accounts.genFromMnemonic(file_json_arr[i], `Account ${i}`))
+                            ACCOUNT_PAIRS_NONCES[0].push(0); //init 0
                         }
                     } else {
                         var account_count = parseInt(tot_accounts / tot_processes);
                         var account_start_index = process_id;
-                        // console.log("tot_processes", tot_processes)
-                        // console.log("process_id", process_id)
-                        // console.log("account_start_index * account_count", account_start_index * account_count)
-                        // console.log("account_start_index", account_start_index)
-                        // console.log("account_start_index + account_count", (account_start_index + 1) * account_count)
                         ACCOUNT_PAIRS[process_id] = [];
+                        ACCOUNT_PAIRS_NONCES[process_id] = [];
                         for (let i = (account_start_index * account_count); i < ((account_start_index + 1) * account_count); i++) {
                             ACCOUNT_PAIRS[process_id].push(substrate_sim.accounts.genFromMnemonic(file_json_arr[i], `Account ${i}`))
+                            ACCOUNT_PAIRS_NONCES[process_id].push(0); //init 0
                         }
                     }
                 } catch (e) {
@@ -148,8 +175,20 @@ var substrate_sim = {
                 return ACCOUNT_PAIRS[0];
             return ACCOUNT_PAIRS[process_id];
         },
-        getAllFactories: () => {
-            return FACTORIES_ACCOUNT_PAIRS;
+        getAllFactories: (process_id = -1) => {
+            if (process_id == -1)
+                return FACTORIES_ACCOUNT_PAIRS[0];
+            return FACTORIES_ACCOUNT_PAIRS[process_id];
+        },
+        getAllAccountsNonces: (process_id = -1) => {
+            if (process_id == -1)
+                return ACCOUNT_PAIRS_NONCES[0];
+            return ACCOUNT_PAIRS_NONCES[process_id];
+        },
+        getAllFactoriesNonces: (process_id = -1) => {
+            if (process_id == -1)
+                return FACTORIES_ACCOUNT_PAIRS_NONCES[0];
+            return FACTORIES_ACCOUNT_PAIRS_NONCES[process_id];
         }
     },
     print_factories: async function (api, factory_address) {
@@ -188,7 +227,7 @@ var substrate_sim = {
             }
         }
     },
-    print_header: async (api) => {
+    print_header: async (api, process_id = -1, tot_processes = -1) => {
         // Retrieve the last timestamp
         const now = await api.query.timestamp.now();
         const now_human = new Date(now.toNumber()).toISOString();
@@ -201,14 +240,14 @@ var substrate_sim = {
         console.log(`\t Alice:\t\t${substrate_sim.accounts.alice().address}`);
         console.log(`\t Bob:\t\t${substrate_sim.accounts.bob().address}`);
         console.log(`\t Charlie:\t${substrate_sim.accounts.charlie().address}`);
-        console.log(`[+] Auto generated accounts: ${substrate_sim.accounts.getAllAccounts().length}`);
-        console.log(`[+] Auto generated factories accounts: ${substrate_sim.accounts.getAllFactories().length}`);
+        console.log(`[+] Auto generated accounts: ${substrate_sim.accounts.getAllAccounts(process_id).length}`);
+        console.log(`[+] Auto generated factories accounts: ${substrate_sim.accounts.getAllFactories(process_id).length}`);
         console.log("---------------------------------------------------------------------------------------------");
 
     },
     send: {
-        new_car_crash: async function (api, car, verbose = false) {
-            const nonce = await api.rpc.system.accountNextIndex(car.address);
+        new_car_crash: async function (api, car, nonce = -1, verbose = false) {
+            // const nonce = await api.rpc.system.accountNextIndex(car.address);
 
             // var rnd_bytes = randomBytes(32);
             //process.hrtime().toString()
@@ -222,7 +261,7 @@ var substrate_sim = {
             const tx = await api.tx.simModule
                 .storeCrash(data_sha256sum.buffer.toString())
                 .signAndSend(car,
-                    { nonce: -1 },
+                    { nonce: nonce },
                 );
             if (verbose)
                 console.log(`Transaction sent: ${tx}`);
@@ -234,15 +273,15 @@ var substrate_sim = {
             // console.log(`nonce: ${nonce}`)
             let tx = await api.tx.sudo.sudo(
                 api.tx.simModule.storeFactory(factory.address)
-            ).signAndSend(sudoPair, { nonce:-1 });
+            ).signAndSend(sudoPair, { nonce: -1 });
             console.log(`Transaction sent: ${tx}`);
             return tx;
         },
-        new_car: async function (api, factory, car) {
+        new_car: async function (api, factory, car, nonce = -1) {
             let tx = await api.tx.simModule
                 .storeCar(car.address)
                 .signAndSend(factory,
-                    { nonce: -1 },
+                    { nonce: nonce },
                 );
             // console.log(`Transaction sent: ${tx}`);
             return tx;
