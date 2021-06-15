@@ -35,10 +35,13 @@ process.on('message', async (message) => {
 
         //update nonces
         console.log(process_id_str + "update nonces...")
-        for (let i = 0; i < car_array.length; i++) {
-            car_array_nonces[i] = await api.rpc.system.accountNextIndex(car_array[i].address);
+        try {
+            for (let i = 0; i < car_array.length; i++) {
+                car_array_nonces[i] = await api.rpc.system.accountNextIndex(car_array[i].address);
+            }
+        } catch (e) {
+            console.log(process_id_str, e.message);
         }
-
 
         await substrate_sim.sleep(5000); //wait a little
 
@@ -58,8 +61,8 @@ async function send(limit, wait_time) {
     var failed = 0;
     for (let i = 0; i < limit; i++) {
         (async function (i) {
-            if (i % 100 == 0)
-                console.log(process_id_str + `N=${i}`)
+            // if (i % 100 == 0)
+            //     console.log(process_id_str + `N=${i}`)
             let car_index = i % car_array.length;
             substrate_sim.send.new_car_crash(api, car_array[car_index], car_array_nonces[car_index])
                 .then(() => {
