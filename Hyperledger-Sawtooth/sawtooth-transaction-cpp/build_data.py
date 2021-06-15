@@ -23,7 +23,7 @@ image_directory="./images/"
 final_df = None
 conf_figsize=(15,8)
 #detect_benchmarks_on="commits"
-detect_benchmarks_on="commits"
+detect_benchmarks_on="commits_tot"
 
 #jump of N detect_benchmarks_on (= change of test)
 detect_benchmark_threshold=5000
@@ -37,9 +37,9 @@ detect_benchmark_stop=True
 #Delete all data between start of detected consecutive element and jump of detect_benchmark_threshold
 #Using 2, stop detected when 2 consecutive elements are strictly equal
 #Note: minimum=2, recommended=4
-detect_benchmark_stop_elements=4 #use something low (<5)
-detect_benchmark_stop_elements_std=0.1 #use something low (<0.5)
-detect_benchmark_stop_previous_elements=6
+detect_benchmark_stop_elements=10 #use something low (<5)
+detect_benchmark_stop_elements_std=0.01 #use something low (<0.5)
+detect_benchmark_stop_previous_elements=1
 
 if not os.path.exists(image_directory):
     os.makedirs(image_directory)

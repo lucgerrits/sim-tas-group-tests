@@ -5,10 +5,15 @@ version: "3.2"
 # to view the chain data.
 #
 #Example:
-#docker-compose --project-name substrate_sim -f docker-compose-aura.yml up --scale substrate-peer=4
+#docker-compose -f docker-compose-aura.yml up
+#old: docker-compose --project-name substrate_sim -f docker-compose-aura.yml up --scale substrate-peer=4
 #
 #View telemetry:
-#https://polkadot.js.org/apps/#/settings?rpc=ws://127.0.0.1:9944.
+#https://polkadot.js.org/apps/#/settings?rpc=wss://10.1.0.222:9944
+
+#https://polkadot.js.org/apps/#/settings?rpc=ws://localhost:9944
+#old:https://polkadot.js.org/apps/#/settings?rpc=ws://127.0.0.1:9944.
+
 networks: 
   my_blockchain_network:
     ipam:
@@ -28,10 +33,10 @@ services:
 ##########################################################################
 
   substrate-peer-0:
-    image: projetsim/substrate-sim:latest
+    image: projetsim/substrate-sim:stable
     container_name: substrate-peer-0
-    # ports:
-    #   - "9944:9944"
+    ports:
+      - "9944:9944"
     #   - "9933:9933"
     expose: 
       - "9615"
@@ -65,7 +70,7 @@ services:
           # --telemetry-url 'wss://telemetry.polkadot.io/submit/ 0' \
 
   substrate-peer-1:
-    image: projetsim/substrate-sim:latest
+    image: projetsim/substrate-sim:stable
     container_name: substrate-peer-1
     # ports:
       # - "9944:9944"
@@ -82,7 +87,7 @@ services:
         node-template \
           --base-path /tmp/peer \
           --chain local \
-          --name Peer-1 \
+          --bob \
           --port 30333 \
           --ws-port 9944 \
           --rpc-port 9933 \
@@ -97,7 +102,7 @@ services:
           # --telemetry-url 'wss://telemetry.polkadot.io/submit/ 0' \
 
   substrate-peer-2:
-    image: projetsim/substrate-sim:latest
+    image: projetsim/substrate-sim:stable
     container_name: substrate-peer-2
     # ports:
       # - "9944:9944"
@@ -114,7 +119,7 @@ services:
         node-template \
           --base-path /tmp/peer \
           --chain local \
-          --name Peer-2 \
+          --bob \
           --port 30333 \
           --ws-port 9944 \
           --rpc-port 9933 \
@@ -127,7 +132,7 @@ services:
           --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
         "
   substrate-peer-3:
-    image: projetsim/substrate-sim:latest
+    image: projetsim/substrate-sim:stable
     container_name: substrate-peer-3
     # ports:
       # - "9944:9944"
@@ -144,7 +149,7 @@ services:
         node-template \
           --base-path /tmp/peer \
           --chain local \
-          --name Peer-3 \
+          --bob \
           --port 30333 \
           --ws-port 9944 \
           --rpc-port 9933 \
@@ -157,7 +162,7 @@ services:
           --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
         "
   substrate-peer-4:
-    image: projetsim/substrate-sim:latest
+    image: projetsim/substrate-sim:stable
     container_name: substrate-peer-4
     # ports:
       # - "9944:9944"
@@ -174,7 +179,7 @@ services:
         node-template \
           --base-path /tmp/peer \
           --chain local \
-          --name Peer-4 \
+          --bob \
           --port 30333 \
           --ws-port 9944 \
           --rpc-port 9933 \
@@ -186,16 +191,83 @@ services:
           --validator \
           --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
         "
-  # substrate-rest-api:
-  #   image: docker.io/parity/substrate-api-sidecar:latest
-  #   container_name: substrate-rest-api
-  #   ports:
-  #     - 8888:8888
-  #   networks:
-  #     - my_blockchain_network
-  #   environment:
-  #     - SAS_EXPRESS_PORT=8888
-  #     - SAS_SUBSTRATE_WS_URL=ws://substrate-genesis:9944
+
+  substrate-api-0:
+    image: docker.io/parity/substrate-api-sidecar:latest
+    container_name: substrate-api-0
+    expose: 
+      - "8888"
+    ports: 
+      - 8888:8888
+    networks:
+      - my_blockchain_network
+    volumes:
+      - ./additional_types.json:/additional_types.json
+    environment:
+      - SAS_EXPRESS_PORT=8888
+      - SAS_EXPRESS_BIND_HOST=0.0.0.0
+      - SAS_SUBSTRATE_TYPES=/additional_types.json
+      - SAS_SUBSTRATE_WS_URL=ws://substrate-peer-0:9944
+
+  substrate-api-1:
+    image: docker.io/parity/substrate-api-sidecar:latest
+    container_name: substrate-api-1
+    expose: 
+      - "8888"
+    networks:
+      - my_blockchain_network
+    volumes:
+      - ./additional_types.json:/additional_types.json
+    environment:
+      - SAS_EXPRESS_PORT=8888
+      - SAS_EXPRESS_BIND_HOST=0.0.0.0
+      - SAS_SUBSTRATE_TYPES=/additional_types.json
+      - SAS_SUBSTRATE_WS_URL=ws://substrate-peer-1:9944
+
+  substrate-api-2:
+    image: docker.io/parity/substrate-api-sidecar:latest
+    container_name: substrate-api-2
+    expose: 
+      - "8888"
+    networks:
+      - my_blockchain_network
+    volumes:
+      - ./additional_types.json:/additional_types.json
+    environment:
+      - SAS_EXPRESS_PORT=8888
+      - SAS_EXPRESS_BIND_HOST=0.0.0.0
+      - SAS_SUBSTRATE_TYPES=/additional_types.json
+      - SAS_SUBSTRATE_WS_URL=ws://substrate-peer-2:9944
+
+  substrate-api-3:
+    image: docker.io/parity/substrate-api-sidecar:latest
+    container_name: substrate-api-3
+    expose: 
+      - "8888"
+    networks:
+      - my_blockchain_network
+    volumes:
+      - ./additional_types.json:/additional_types.json
+    environment:
+      - SAS_EXPRESS_PORT=8888
+      - SAS_EXPRESS_BIND_HOST=0.0.0.0
+      - SAS_SUBSTRATE_TYPES=/additional_types.json
+      - SAS_SUBSTRATE_WS_URL=ws://substrate-peer-3:9944
+
+  substrate-api-4:
+    image: docker.io/parity/substrate-api-sidecar:latest
+    container_name: substrate-api-4
+    expose: 
+      - "8888"
+    networks:
+      - my_blockchain_network
+    volumes:
+      - ./additional_types.json:/additional_types.json
+    environment:
+      - SAS_EXPRESS_PORT=8888
+      - SAS_EXPRESS_BIND_HOST=0.0.0.0
+      - SAS_SUBSTRATE_TYPES=/additional_types.json
+      - SAS_SUBSTRATE_WS_URL=ws://substrate-peer-4:9944
 ####################################
 #
 #        Load balancer
@@ -209,9 +281,10 @@ services:
       - ./nginx-data/dhparam.pem:/etc/nginx/dhparam.pem
       - ./nginx-data/nginx-selfsigned.crt:/etc/nginx/nginx-selfsigned.crt
       - ./nginx-data/nginx-selfsigned.key:/etc/nginx/nginx-selfsigned.key
-    ports: 
-      - 9944:9944
-      - 9933:9933
+    # ports: 
+      # - 9944:9944
+      # - 9933:9933
+      # - 8888:8888
     restart: always
     networks:
       my_blockchain_network:
