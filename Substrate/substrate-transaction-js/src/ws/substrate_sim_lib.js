@@ -79,6 +79,8 @@ var substrate_sim = {
 
         const api = await ApiPromise.create({ provider: wsProvider, types: additionalTypes });
 
+        ACCOUNT_PAIRS[0] = [];
+        FACTORIES_ACCOUNT_PAIRS[0] = [];
         return api;
     },
     accounts: {
@@ -233,9 +235,11 @@ var substrate_sim = {
         const now_human = new Date(now.toNumber()).toISOString();
         // Genesis Hash
         const genesisHash = api.genesisHash.toHex()
+        const last_block = await api.rpc.chain.getHeader();
         console.log("---------------------------------------------------------------------------------------------");
         console.log(`[+] Genesis Hash: ${genesisHash}`);
         console.log(`[+] Node time: ${now} (${now_human})`);
+        console.log(`[+] Last block: ${last_block.number.toString()} -> ${last_block.hash.toString()}`);
         console.log(`[+] Accounts:`);
         console.log(`\t Alice:\t\t${substrate_sim.accounts.alice().address}`);
         console.log(`\t Bob:\t\t${substrate_sim.accounts.bob().address}`);
