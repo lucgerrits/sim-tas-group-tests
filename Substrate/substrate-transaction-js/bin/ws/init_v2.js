@@ -3,14 +3,16 @@
 import substrate_sim from "../../src/ws/substrate_sim_lib.js";
 import * as child from 'child_process';
 import * as path from 'path';
+import * as os from 'os';
 
-if (process.argv.length <= 2) {
-    console.error("Required 3 argument: \n\tlimit, ex: 10000\n\twait_time, ex: 1 (sec)\n\tnb_processes, ex: 2")
-    process.exit(1);
-}
+// if (process.argv.length <= 2) {
+//     console.error("Required 3 argument: \n\twait_time, ex: 1 (sec)\n\tnb_processes, ex: 2")
+//     process.exit(1);
+// }
+const cpuCount = os.cpus().length
 const url = "ws://substrate-ws.unice.cust.tasfrance.com";
-const wait_time = parseFloat(process.argv[2]) * 1000;
-const nb_processes = parseInt(process.argv[3]);
+const wait_time = 0.2; //parseFloat(process.argv[2]) * 1000;
+const nb_processes = Math.round(cpuCount/1.5); //parseInt(process.argv[3]);
 var processes_arr = [];
 var processes_exited = 0;
 var processes_init_ok = 0;
@@ -22,6 +24,8 @@ var tot_finished = 0;
 console.log("Start init_v2.js...")
 console.log("Settings:")
 console.log("\t", nb_processes * (1 / parseFloat(process.argv[2])), "Tx/sec (times the number of factories !)")
+console.log("\t", nb_processes, "processes")
+console.log("\t", wait_time, "wait time (ms)")
 
 async function initFactories() {
     //init
