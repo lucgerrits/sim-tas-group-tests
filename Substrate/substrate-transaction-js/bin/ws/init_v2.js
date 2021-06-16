@@ -11,8 +11,8 @@ import * as os from 'os';
 // }
 const cpuCount = os.cpus().length
 const url = "ws://substrate-ws.unice.cust.tasfrance.com";
-const wait_time = 0.2; //parseFloat(process.argv[2]) * 1000;
-const nb_processes = Math.round(cpuCount/1.5); //parseInt(process.argv[3]);
+const wait_time = 100; //parseFloat(process.argv[2]) * 1000;
+const nb_processes = 10; //Math.round(cpuCount/1.5); //parseInt(process.argv[3]);
 var processes_arr = [];
 var processes_exited = 0;
 var processes_init_ok = 0;
@@ -23,7 +23,7 @@ var tot_finished = 0;
 
 console.log("Start init_v2.js...")
 console.log("Settings:")
-console.log("\t", nb_processes * (1 / parseFloat(process.argv[2])), "Tx/sec (times the number of factories !)")
+console.log("\t", nb_processes * (1 / (wait_time / 1000)), "Tx/sec (times the number of factories !)")
 console.log("\t", nb_processes, "processes")
 console.log("\t", wait_time, "wait time (ms)")
 
