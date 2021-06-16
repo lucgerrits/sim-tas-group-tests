@@ -83,6 +83,11 @@ cat << EOF
                         --rpc-cors=all \\
                         --prometheus-external \\
                         --log info \\
+                        --wasm-execution Compiled \\
+                        --ws-max-connections 1000 \\
+                        --pool-limit 10000 \\
+                        --pool-kbytes 20480 \\
+                        --max-runtime-instances 100 \\
                         --validator 
                     
             volumeMounts:
@@ -161,8 +166,8 @@ cat << EOF
                         --log info \\
                         --wasm-execution Compiled \\
                         --ws-max-connections 1000 \\
-                        --pool-limit 16384 \\
-                        --pool-kbytes 40960 \\
+                        --pool-limit 10000 \\
+                        --pool-kbytes 20480 \\
                         --max-runtime-instances 100 \\
                         --validator \\
                         --bootnodes /ip4/\$SUBSTRATE_0_SERVICE_HOST/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
