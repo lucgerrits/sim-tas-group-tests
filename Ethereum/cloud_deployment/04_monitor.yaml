@@ -133,8 +133,7 @@ spec:
         - name: monitor-configmap-volume
           mountPath: /monitor-configmap/app.json
           subPath: app.json
-          # we need to mount an extra volume to be able to change a value in the configmap
-        - name: monitor-config-persistent-storage
+        - name: monitor-config-temp
           mountPath: /ethmonitor
       containers:
       - name: eth-netstats-container
@@ -151,7 +150,7 @@ spec:
         image: ijsfd/eth-net-intelligence-api
         imagePullPolicy: IfNotPresent
         volumeMounts:
-        - name: monitor-configmap-volume #monitor-config-persistent-storage
+        - name: monitor-config-temp 
           mountPath: /eth-net-intelligence-api/app.json
           subPath: app.json
       volumes:
@@ -164,3 +163,5 @@ spec:
       - name: monitor-config-persistent-storage
         persistentVolumeClaim:
           claimName: volume-ethmonitor
+      - name: monitor-config-temp
+        emptyDir: {} 
