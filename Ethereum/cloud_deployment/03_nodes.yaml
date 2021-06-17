@@ -150,11 +150,11 @@ data:
     HTTPPort = 8545
     HTTPCors = ["*"]
     HTTPVirtualHosts = ["*"]
-    HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique"]
+    HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
     WSHost = "0.0.0.0"
     WSPort = 8546
     WSOrigins = ["*"]
-    WSModules = ["net", "web3", "eth", "shh"]
+    WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
     
     [Node.P2P]
     MaxPeers = 25
@@ -226,11 +226,11 @@ data:
     HTTPPort = 8545
     HTTPCors = ["*"]
     HTTPVirtualHosts = ["*"]
-    HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique"]
+    HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
     WSHost = "0.0.0.0"
     WSPort = 8546
     WSOrigins = ["*"]
-    WSModules = ["net", "web3", "eth", "shh"]
+    WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
     
     [Node.P2P]
     MaxPeers = 25
@@ -302,11 +302,11 @@ data:
     HTTPPort = 8545
     HTTPCors = ["*"]
     HTTPVirtualHosts = ["*"]
-    HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique"]
+    HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
     WSHost = "0.0.0.0"
     WSPort = 8546
     WSOrigins = ["*"]
-    WSModules = ["net", "web3", "eth", "shh"]
+    WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
     
     [Node.P2P]
     MaxPeers = 25
@@ -463,6 +463,9 @@ spec:
            --dashboard \
            --mine \
            --verbosity 3  \
+           --nousb \
+           --rpc \
+           --ws \
            --unlock 0xc11ba4c7c24f70e7a581c7daa92eac108099acec --allow-insecure-unlock --password /etc/testnet/miner01/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
            --config /etc/geth/miner01/gethconfig.toml;"
         ports:
@@ -553,6 +556,9 @@ spec:
            --dashboard \
            --mine \
            --verbosity 3  \
+           --nousb \
+           --rpc \
+           --ws \
            --unlock 0x4c92786b90d848eaa3f4ef46918af724a309ae79 --allow-insecure-unlock --password /etc/testnet/miner02/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
            --config /etc/geth/miner02/gethconfig.toml;"
         ports:
@@ -643,6 +649,9 @@ spec:
            --dashboard \
            --mine \
            --verbosity 3  \
+           --nousb \
+           --rpc \
+           --ws \
            --unlock 0x4e7afbdc9413eeb582b3f1be49d652fa714484da --allow-insecure-unlock --password /etc/testnet/miner03/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
            --config /etc/geth/miner03/gethconfig.toml;"
         ports:
