@@ -13,6 +13,7 @@ const process_id_str = '#' + process_id + ": ";
 var api;
 var car_array;
 var car_array_nonces; //keep trak only factory nonces
+var transactions = {};
 
 if (process.send === undefined)
     console.log(process_id_str + "process.send === undefined")
@@ -29,7 +30,7 @@ process.on('message', async (message) => {
         // await substrate_sim.print_header(api);
         process.send({ "cmd": "init_ok" });
     }
-    else if (message.cmd == "send") {
+    else if (message.cmd == "prepare") {
         car_array = substrate_sim.accounts.getAllAccounts(process_id);
         car_array_nonces = substrate_sim.accounts.getAllAccountsNonces(process_id);
 
@@ -45,44 +46,63 @@ process.on('message', async (message) => {
 
         await substrate_sim.sleep(5000); //wait a little
 
+        console.log(process_id_str + "Preparing now...")
+        await prepare(message.limit);
+        process.send({ "cmd": "prepare_ok" });
+    }
+    else if (message.cmd == "send") {
         console.log(process_id_str + "Sending now...")
-        await send(message.limit, message.wait_time);
-        console.log(process_id_str + "Done")
+        await send(message.wait_time);
+        // console.log(process_id_str + "Done")
         process.send({ "cmd": "send_ok" });
+    }
+    else if (message.cmd == "get_head") {
+        var tmp = await substrate_sim.getLastBlock(api);
+        process.send({ "cmd": "get_head_ok", "type": message.type, "hash": tmp.hash.toString(), "number": tmp.number.toString() });
     }
     else {
         console.log(process_id_str + "Unknown message", message);
     }
 });
 
-async function send(limit, wait_time) {
+async function prepare(limit) {
+    var finished = 0;
+    for (let i = 0; i < limit; i++) {
+        let car_index = i % car_array.length;
+        transactions[i] = await substrate_sim.send.prepare_new_car_crash(api, car_array[car_index], car_array_nonces[car_index])
+        car_array_nonces[car_index]++;
+        finished++;
+    }
+    process.send({ "cmd": "prepare_stats", "finished": finished });
+}
+
+async function send(wait_time) {
     var finished = 0;
     var success = 0;
     var failed = 0;
-    for (let i = 0; i < limit; i++) {
-        (async function (i) {
-            // if (i % 100 == 0)
-            //     console.log(process_id_str + `N=${i}`)
-            let car_index = i % car_array.length;
-            substrate_sim.send.new_car_crash(api, car_array[car_index], car_array_nonces[car_index])
-                .then(() => {
-                    finished++;
-                    success++;
-                    return;
-                })
-                .catch((e) => {
-                    // process.stdout.write(".");
-                    // console.log(process_id_str, e.message)
-                    finished++;
-                    failed++;
-                    return;
-                });
-            car_array_nonces[car_index]++;
-        })(i)
+    for (let i = 0; i < Object.keys(transactions).length; i++) {
+        // (async function (i) {
+        transactions[i].send()
+            .then((data) => {
+                // console.log(process_id_str, data)
+                finished++;
+                success++;
+                // return;
+            })
+            .catch((e) => {
+                // process.stdout.write(".");
+                // console.log(process_id_str, e.message)
+                finished++;
+                failed++;
+                // return;
+            });
+        // })(i)
+        // console.log(transactions[i])
+        // break
         await substrate_sim.sleep(parseInt(wait_time)); //wait a little
     }
     var a = true;
-    while (finished < limit) {
+    while (finished < Object.keys(transactions).length) {
         if (a) {
             console.log(process_id_str + "Wait new_car_crash() fct finished");
             a = false;
@@ -90,6 +110,4 @@ async function send(limit, wait_time) {
         await substrate_sim.sleep(500); //wait a little
     }
     process.send({ "cmd": "send_stats", "success": success, "failed": failed, "finished": finished });
-    // console.log(process_id_str + `Total success: ${success}`)
-    // console.log(process_id_str + `Total failed: ${failed}`)
 }

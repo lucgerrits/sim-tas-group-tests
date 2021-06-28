@@ -250,6 +250,25 @@ var substrate_sim = {
 
     },
     send: {
+        prepare_new_car_crash: async function (api, car, nonce = -1, verbose = false) {
+            // const nonce = await api.rpc.system.accountNextIndex(car.address);
+
+            // var rnd_bytes = randomBytes(32);
+            //process.hrtime().toString()
+            // var data = "Hello world:" + rnd_bytes.toString("hex");
+            var data = "Hello world";
+            const hash = createHash('sha256');
+            hash.update(data);
+            var data_sha256sum = hash.digest();
+            // console.log(`Hash "${data}" = ${data_sha256sum.toString("hex")}`)
+            // Sign and send a new crash from Bob car
+            const tx = api.tx.simModule.storeCrash(data_sha256sum.buffer.toString())
+            // const tx_signed = tx.sign(car, { nonce: nonce , era: 0 });
+            const tx_signed = await tx.signAsync(car, { nonce: nonce , era: 99 });
+            if (verbose)
+                console.log(`Transaction sent: ${tx}`);
+            return tx_signed;
+        },
         new_car_crash: async function (api, car, nonce = -1, verbose = false) {
             // const nonce = await api.rpc.system.accountNextIndex(car.address);
 
@@ -269,6 +288,7 @@ var substrate_sim = {
                 );
             if (verbose)
                 console.log(`Transaction sent: ${tx}`);
+            return tx;
         },
         new_factory: async function (api, factory) {
             // https://polkadot.js.org/docs/api/start/api.tx.wrap/#sudo-use
@@ -300,6 +320,9 @@ var substrate_sim = {
     },
     sleep: function (ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
+    },
+    getLastBlock: async (api) => {
+        return await api.rpc.chain.getHeader();
     }
 }
 

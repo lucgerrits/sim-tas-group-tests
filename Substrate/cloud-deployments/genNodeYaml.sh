@@ -71,7 +71,7 @@ cat << EOF
                     # Start Alice's node
                     RUST_LOG=runtime=debug
                     node-template \\
-                        --base-path /tmp/peer-data \\
+                        --base-path /peer-data \\
                         --chain local \\
                         --${accountArray[i]} \\
                         --port 30333 \\
@@ -92,7 +92,7 @@ cat << EOF
                     
             volumeMounts:
               - name: sawtooth-data-$i
-                mountPath: /tmp/peer-data
+                mountPath: /peer-data
 
         volumes:
           - name: sawtooth-data-$i
@@ -153,7 +153,7 @@ cat << EOF
               - |
                     RUST_LOG=runtime=debug
                     node-template \\
-                        --base-path /tmp/peer-data \\
+                        --base-path /peer-data \\
                         --chain local \\
                         --${accountArray[i]} \\
                         --port 30333 \\
@@ -174,7 +174,7 @@ cat << EOF
                     
             volumeMounts:
               - name: sawtooth-data-$i
-                mountPath: /tmp/peer-data
+                mountPath: /peer-data
 
         volumes:
           - name: sawtooth-data-$i

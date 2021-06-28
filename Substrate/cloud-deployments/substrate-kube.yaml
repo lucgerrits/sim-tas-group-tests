@@ -19,7 +19,7 @@ items:
       metadata:
         labels:
           name: substrate-0
-          serviceSelector: substrate-node
+          # serviceSelector: substrate-node
       spec:
         securityContext:
           fsGroup: 101
@@ -55,7 +55,7 @@ items:
                     # Start Alice's node
                     RUST_LOG=runtime=debug
                     node-template \
-                        --base-path /tmp/peer-data \
+                        --base-path /peer-data \
                         --chain local \
                         --alice \
                         --port 30333 \
@@ -66,12 +66,17 @@ items:
                         --unsafe-rpc-external \
                         --rpc-cors=all \
                         --prometheus-external \
-                        -lmydebug=debug \
+                        --log info \
+                        --wasm-execution Compiled \
+                        --ws-max-connections 1000 \
+                        --pool-limit 10000 \
+                        --pool-kbytes 20480 \
+                        --max-runtime-instances 100 \
                         --validator 
                     
             volumeMounts:
               - name: sawtooth-data-0
-                mountPath: /tmp/peer-data
+                mountPath: /peer-data
 
         volumes:
           - name: sawtooth-data-0
@@ -188,7 +193,7 @@ items:
               - |
                     RUST_LOG=runtime=debug
                     node-template \
-                        --base-path /tmp/peer-data \
+                        --base-path /peer-data \
                         --chain local \
                         --bob \
                         --port 30333 \
@@ -198,13 +203,18 @@ items:
                         --unsafe-rpc-external \
                         --rpc-cors=all \
                         --prometheus-external \
-                        -lmydebug=debug \
+                        --log info \
+                        --wasm-execution Compiled \
+                        --ws-max-connections 1000 \
+                        --pool-limit 10000 \
+                        --pool-kbytes 20480 \
+                        --max-runtime-instances 100 \
                         --validator \
                         --bootnodes /ip4/$SUBSTRATE_0_SERVICE_HOST/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
                     
             volumeMounts:
               - name: sawtooth-data-1
-                mountPath: /tmp/peer-data
+                mountPath: /peer-data
 
         volumes:
           - name: sawtooth-data-1
@@ -321,7 +331,7 @@ items:
               - |
                     RUST_LOG=runtime=debug
                     node-template \
-                        --base-path /tmp/peer-data \
+                        --base-path /peer-data \
                         --chain local \
                         --charlie \
                         --port 30333 \
@@ -331,13 +341,18 @@ items:
                         --unsafe-rpc-external \
                         --rpc-cors=all \
                         --prometheus-external \
-                        -lmydebug=debug \
+                        --log info \
+                        --wasm-execution Compiled \
+                        --ws-max-connections 1000 \
+                        --pool-limit 10000 \
+                        --pool-kbytes 20480 \
+                        --max-runtime-instances 100 \
                         --validator \
                         --bootnodes /ip4/$SUBSTRATE_0_SERVICE_HOST/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
                     
             volumeMounts:
               - name: sawtooth-data-2
-                mountPath: /tmp/peer-data
+                mountPath: /peer-data
 
         volumes:
           - name: sawtooth-data-2
@@ -454,7 +469,7 @@ items:
               - |
                     RUST_LOG=runtime=debug
                     node-template \
-                        --base-path /tmp/peer-data \
+                        --base-path /peer-data \
                         --chain local \
                         --dave \
                         --port 30333 \
@@ -464,13 +479,18 @@ items:
                         --unsafe-rpc-external \
                         --rpc-cors=all \
                         --prometheus-external \
-                        -lmydebug=debug \
+                        --log info \
+                        --wasm-execution Compiled \
+                        --ws-max-connections 1000 \
+                        --pool-limit 10000 \
+                        --pool-kbytes 20480 \
+                        --max-runtime-instances 100 \
                         --validator \
                         --bootnodes /ip4/$SUBSTRATE_0_SERVICE_HOST/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
                     
             volumeMounts:
               - name: sawtooth-data-3
-                mountPath: /tmp/peer-data
+                mountPath: /peer-data
 
         volumes:
           - name: sawtooth-data-3
@@ -587,7 +607,7 @@ items:
               - |
                     RUST_LOG=runtime=debug
                     node-template \
-                        --base-path /tmp/peer-data \
+                        --base-path /peer-data \
                         --chain local \
                         --eve \
                         --port 30333 \
@@ -597,13 +617,18 @@ items:
                         --unsafe-rpc-external \
                         --rpc-cors=all \
                         --prometheus-external \
-                        -lmydebug=debug \
+                        --log info \
+                        --wasm-execution Compiled \
+                        --ws-max-connections 1000 \
+                        --pool-limit 10000 \
+                        --pool-kbytes 20480 \
+                        --max-runtime-instances 100 \
                         --validator \
                         --bootnodes /ip4/$SUBSTRATE_0_SERVICE_HOST/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
                     
             volumeMounts:
               - name: sawtooth-data-4
-                mountPath: /tmp/peer-data
+                mountPath: /peer-data
 
         volumes:
           - name: sawtooth-data-4
@@ -720,7 +745,7 @@ items:
               - |
                     RUST_LOG=runtime=debug
                     node-template \
-                        --base-path /tmp/peer-data \
+                        --base-path /peer-data \
                         --chain local \
                         --ferdie \
                         --port 30333 \
@@ -730,13 +755,18 @@ items:
                         --unsafe-rpc-external \
                         --rpc-cors=all \
                         --prometheus-external \
-                        -lmydebug=debug \
+                        --log info \
+                        --wasm-execution Compiled \
+                        --ws-max-connections 1000 \
+                        --pool-limit 10000 \
+                        --pool-kbytes 20480 \
+                        --max-runtime-instances 100 \
                         --validator \
                         --bootnodes /ip4/$SUBSTRATE_0_SERVICE_HOST/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
                     
             volumeMounts:
               - name: sawtooth-data-5
-                mountPath: /tmp/peer-data
+                mountPath: /peer-data
 
         volumes:
           - name: sawtooth-data-5
