@@ -9,6 +9,10 @@ import * as async from "async";
 //     console.error("Required 3 argument: \n\tlimit, ex: 10000\n\twait_time, ex: 1 (sec)\n\tnb_processes, ex: 2")
 //     process.exit(1);
 // }
+
+// const url = "ws://127.0.0.1:9944";
+const url = "ws://substrate-ws.unice.cust.tasfrance.com";
+
 const limit = parseInt(process.argv[2]);
 const nb_processes = 14; //parseInt(process.argv[4]);
 const wait_time = (nb_processes / parseFloat(process.argv[3])) * 1000;// parseFloat(process.argv[3]) * 1000;
@@ -23,8 +27,15 @@ var tot_failed = 0;
 var tot_finished = 0;
 var tot_prepared_finished = 0;
 
-var firstBlock;
-var lastBlock;
+var firstBlock = {
+    hash: '0x95f9902f60296a61e9fc5b687475ee53f0ecfc4f722996515a314d4b0eadfd22',
+    number: '60906'
+};
+var lastBlock = {
+    hash: '0x313031342394db57b3f2756c8a6c2979defad17583b7b1a8ef7bf379e26408b9',
+    number: '60909'
+}
+    ;
 
 function do_benchmark(callback) {
     console.log("Benchmark settings:")
@@ -92,7 +103,7 @@ function do_benchmark(callback) {
                 if (processes_finished == nb_processes) { //all processes finished
                     //start send all processes 
                     console.log("All processes finished")
-                    await substrate_sim.sleep(6000); //wait a little
+                    await substrate_sim.sleep(18000); //wait a little
 
                     processes_arr[0].send({ cmd: "get_head", type: "last" }); //get last block
                 }
@@ -113,43 +124,52 @@ function do_benchmark(callback) {
                 console.log(`Total failed: ${tot_failed}`)
                 console.log(`Total finished: ${tot_finished}`)
 
-                console.log("firstBlock", firstBlock)
-                console.log("lastBlock", lastBlock)
                 callback()
             }
         });
     }
 }
 
-async function do_stats(callback) {
-    console.log("Retrieving stats");
+function do_stats(callback) {
+    (async () => {
+        console.log("Retrieving stats");
 
-    var api = await substrate_sim.initApi(url);
+        console.log("firstBlock", firstBlock)
+        console.log("lastBlock", lastBlock)
 
-    await substrate_sim.print_header(api);
-    console.log("Continue in 2s ...");
-    await substrate_sim.sleep(1000); //wait a little
+        var api = await substrate_sim.initApi(url);
 
-    var last_block = await api.rpc.chain.getHeader();
-    var last_block_number = last_block.number.toNumber();
+        await substrate_sim.print_header(api);
 
-    for (var block_number = 0; block_number < last_block_number; block_number++) {
-        console.log(block_number);
-        let block_hash = await api.rpc.chain.getBlockHash(block_number);
-        let block_data = await api.rpc.chain.getBlock(block_hash);
-        if (block_data.block.extrinsics.length > 3) {
-            console.log(block_data.block.toJSON());
-            break;
+        var nb_blocks = 0;
+        var current_hash = lastBlock.hash;
+        var block = await api.rpc.chain.getBlock(current_hash);
+        var stop_timestamp = new Date(parseInt(block.block.extrinsics[0].method.args.toString().slice(0, 10)));
+        var tot_tx = 0;
+        while (firstBlock.hash !== current_hash) {
+            tot_tx += block.block.extrinsics.length - 1;
+            block = await api.rpc.chain.getBlock(current_hash);
+            current_hash = block.block.header.parentHash.toString();
+            nb_blocks++;
+            process.stdout.write(".");
         }
-    }
-
-    console.log("Done retrieving stats")
-    callback()
+        process.stdout.write("\n");
+        var start_timestamp = new Date(parseInt(block.block.extrinsics[0].method.args.toString().slice(0, 10)));
+        console.log("stop_timestamp ", stop_timestamp)
+        console.log("start_timestamp ", start_timestamp)
+        var date_diff = (stop_timestamp - start_timestamp);
+        console.log("Done in " + date_diff + " sec");
+        console.log("Transactions " + tot_tx)
+        console.log("Transactions/sec " + tot_tx / date_diff)
+        console.log("Blocks " + nb_blocks)
+        console.log("Done retrieving stats")
+        callback()
+    })()
 }
 
 async.series([
     do_benchmark,
-    // do_stats
+    do_stats
 ], () => {
     console.log("End main program")
     process.exit(0);

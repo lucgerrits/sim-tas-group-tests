@@ -107,7 +107,7 @@ async function send(wait_time) {
             console.log(process_id_str + "Wait new_car_crash() fct finished");
             a = false;
         }
-        await substrate_sim.sleep(500); //wait a little
+        await substrate_sim.sleep(100); //wait a little
     }
     process.send({ "cmd": "send_stats", "success": success, "failed": failed, "finished": finished });
 }
