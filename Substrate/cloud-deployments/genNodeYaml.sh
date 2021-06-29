@@ -91,13 +91,13 @@ cat << EOF
                         --validator 
                     
             volumeMounts:
-              - name: sawtooth-data-$i
+              - name: substrate-data-$i
                 mountPath: /peer-data
 
         volumes:
-          - name: sawtooth-data-$i
+          - name: substrate-data-$i
             persistentVolumeClaim:
-            claimName: sawtooth-data-$i
+            claimName: substrate-data-$i
 EOF
 
     else
@@ -173,13 +173,13 @@ cat << EOF
                         --bootnodes /ip4/\$SUBSTRATE_0_SERVICE_HOST/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
                     
             volumeMounts:
-              - name: sawtooth-data-$i
+              - name: substrate-data-$i
                 mountPath: /peer-data
 
         volumes:
-          - name: sawtooth-data-$i
+          - name: substrate-data-$i
             persistentVolumeClaim:
-            claimName: sawtooth-data-$i
+            claimName: substrate-data-$i
 EOF
 
 fi # end if
