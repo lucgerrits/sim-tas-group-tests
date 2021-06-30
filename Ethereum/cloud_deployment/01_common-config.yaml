@@ -19,7 +19,7 @@ data:
         "eip158Block": 3,
         "byzantiumBlock": 4,
         "clique": {
-          "period": 15,
+          "period": 5,
           "epoch": 30000
         }
       },
@@ -30,7 +30,17 @@ data:
       "difficulty" : "",
       "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
       "coinbase": "0x0000000000000000000000000000000000000000",
-      "alloc": {},
+      "alloc": {
+          "c11ba4c7c24f70e7a581c7daa92eac108099acec": {
+            "balance": "0x200000000000000000000000000000000000000000000000000000000000000"
+          },
+          "4c92786b90d848eaa3f4ef46918af724a309ae79": {
+            "balance": "0x200000000000000000000000000000000000000000000000000000000000000"
+          },
+          "4e7afbdc9413eeb582b3f1be49d652fa714484da": {
+            "balance": "0x200000000000000000000000000000000000000000000000000000000000000"
+          }
+      },
       "number": "0x0",
       "gasUsed": "0x0",
       "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
@@ -75,13 +85,18 @@ spec:
       containers:
       - name: mongodb
         image: mongo:latest
+        env:
+          - name: MONGO_INITDB_ROOT_USERNAME
+            value: guest
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            value: guest
         resources:
           limits:
-            cpu: "1"
-            memory: "1Gi"
-          requests:
             cpu: "2"
             memory: "2Gi"
+          requests:
+            cpu: "1"
+            memory: "1Gi"
         imagePullPolicy: IfNotPresent
         ports:
         - name: mongodb
@@ -93,3 +108,38 @@ spec:
       - name: mongodb-persistent-storage
         persistentVolumeClaim:
           claimName: volume-mongodb
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubuntu
+  namespace: ethereum-net
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+        name: ubuntu-deployment
+  template:
+    metadata:
+      name: ubuntu-deployment
+      labels:
+        app: ubuntu
+        tier: backend
+        name: ubuntu-deployment
+    spec:
+      containers:
+      - name: ubuntu
+        image: ubuntu
+        command:
+          - "sleep"
+          - "604800"
+        resources:
+          limits:
+            cpu: "2"
+            memory: "2Gi"
+          requests:
+            cpu: "1"
+            memory: "1Gi"
+        imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+       

@@ -130,7 +130,7 @@ data:
     PriceBump = 10
     AccountSlots = 16
     GlobalSlots = 4096
-    AccountQueue = 64
+    AccountQueue = 100000
     GlobalQueue = 1024
     Lifetime = 10800000000000
     
@@ -206,7 +206,7 @@ data:
     PriceBump = 10
     AccountSlots = 16
     GlobalSlots = 4096
-    AccountQueue = 64
+    AccountQueue = 100000
     GlobalQueue = 1024
     Lifetime = 10800000000000
     
@@ -282,7 +282,7 @@ data:
     PriceBump = 10
     AccountSlots = 16
     GlobalSlots = 4096
-    AccountQueue = 64
+    AccountQueue = 100000
     GlobalQueue = 1024
     Lifetime = 10800000000000
     
