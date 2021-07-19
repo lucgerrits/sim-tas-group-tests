@@ -1,0 +1,145 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: genesis-config
+  namespace: ethereum-net
+  labels:
+    app: kuberneteth
+    name: genesis-config
+data:
+  genesis-geth.json: |-
+    {
+      "config": {
+        "chainId": 123456,
+        "homesteadBlock": 1,
+        "eip150Block": 2,
+        "eip150Hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "eip155Block": 3,
+        "eip158Block": 3,
+        "byzantiumBlock": 4,
+        "clique": {
+          "period": 5,
+          "epoch": 30000
+        }
+      },
+      "nonce": "0x0",
+      "timestamp": "0x5cdec502",
+      "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000c11ba4c7c24f70e7a581c7daa92eac108099acec4c92786b90d848eaa3f4ef46918af724a309ae794e7afbdc9413eeb582b3f1be49d652fa714484da0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "gasLimit": "9000000000000",
+      "difficulty" : "",
+      "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "coinbase": "0x0000000000000000000000000000000000000000",
+      "alloc": {
+          "c11ba4c7c24f70e7a581c7daa92eac108099acec": {
+            "balance": "0x200000000000000000000000000000000000000000000000000000000000000"
+          },
+          "4c92786b90d848eaa3f4ef46918af724a309ae79": {
+            "balance": "0x200000000000000000000000000000000000000000000000000000000000000"
+          },
+          "4e7afbdc9413eeb582b3f1be49d652fa714484da": {
+            "balance": "0x200000000000000000000000000000000000000000000000000000000000000"
+          }
+      },
+      "number": "0x0",
+      "gasUsed": "0x0",
+      "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
+    }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-svc
+  namespace: ethereum-net
+  labels:
+    name: mongodb-svc
+    app: kuberneteth
+    tier: backend
+spec:
+  ports:
+    - port: 27017
+      targetPort: 27017
+  selector:
+    app: kuberneteth
+    tier: backend
+    name: mongodb-deployment
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb
+  namespace: ethereum-net
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+        name: mongodb-deployment
+  template:
+    metadata:
+      name: mongodb-deployment
+      labels:
+        app: kuberneteth
+        tier: backend
+        name: mongodb-deployment
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo:latest
+        env:
+          - name: MONGO_INITDB_ROOT_USERNAME
+            value: guest
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            value: guest
+        resources:
+          limits:
+            cpu: "2"
+            memory: "2Gi"
+          requests:
+            cpu: "1"
+            memory: "1Gi"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: mongodb
+          containerPort: 27017
+        volumeMounts:
+        - name: mongodb-persistent-storage
+          mountPath: /data/db
+      volumes:
+      - name: mongodb-persistent-storage
+        persistentVolumeClaim:
+          claimName: volume-mongodb
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubuntu
+  namespace: ethereum-net
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+        name: ubuntu-deployment
+  template:
+    metadata:
+      name: ubuntu-deployment
+      labels:
+        app: ubuntu
+        tier: backend
+        name: ubuntu-deployment
+    spec:
+      containers:
+      - name: ubuntu
+        image: ubuntu
+        command:
+          - "sleep"
+          - "604800"
+        resources:
+          limits:
+            cpu: "2"
+            memory: "2Gi"
+          requests:
+            cpu: "1"
+            memory: "1Gi"
+        imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+       
