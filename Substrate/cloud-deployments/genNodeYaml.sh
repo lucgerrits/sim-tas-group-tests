@@ -71,7 +71,7 @@ cat << EOF
                     # Start Alice's node
                     RUST_LOG=runtime=debug
                     node-template \\
-                        --base-path /peer-data \\
+                        --base-path /peer-data-$i \\
                         --chain local \\
                         --${accountArray[i]} \\
                         --port 30333 \\
@@ -92,7 +92,7 @@ cat << EOF
                     
             volumeMounts:
               - name: substrate-data-$i
-                mountPath: /peer-data
+                mountPath: /peer-data-$i
 
         volumes:
           - name: substrate-data-$i
@@ -153,7 +153,7 @@ cat << EOF
               - |
                     RUST_LOG=runtime=debug
                     node-template \\
-                        --base-path /peer-data \\
+                        --base-path /peer-data-$i \\
                         --chain local \\
                         --${accountArray[i]} \\
                         --port 30333 \\
@@ -174,7 +174,7 @@ cat << EOF
                     
             volumeMounts:
               - name: substrate-data-$i
-                mountPath: /peer-data
+                mountPath: /peer-data-$i
 
         volumes:
           - name: substrate-data-$i
