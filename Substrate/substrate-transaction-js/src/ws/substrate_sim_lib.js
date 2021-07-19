@@ -264,7 +264,7 @@ var substrate_sim = {
             // Sign and send a new crash from Bob car
             const tx = api.tx.simModule.storeCrash(data_sha256sum.buffer.toString())
             // const tx_signed = tx.sign(car, { nonce: nonce , era: 0 });
-            const tx_signed = await tx.signAsync(car, { nonce: nonce , era: 99 });
+            const tx_signed = await tx.signAsync(car, { nonce: nonce , era: 0 });
             if (verbose)
                 console.log(`Transaction sent: ${tx}`);
             return tx_signed;

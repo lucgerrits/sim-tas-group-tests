@@ -34,8 +34,9 @@ var firstBlock = {
 var lastBlock = {
     hash: '0x313031342394db57b3f2756c8a6c2979defad17583b7b1a8ef7bf379e26408b9',
     number: '60909'
-}
-    ;
+};
+var start_time;
+var stop_time;
 
 function do_benchmark(callback) {
     console.log("Benchmark settings:")
@@ -78,6 +79,7 @@ function do_benchmark(callback) {
                     hash: message.hash,
                     number: message.number
                 }
+                start_time = new Date();
                 for (let j = 0; j < nb_processes; j++)
                     processes_arr[j].send({ cmd: "send", wait_time: wait_time }); //start send
             }
@@ -103,6 +105,7 @@ function do_benchmark(callback) {
                 if (processes_finished == nb_processes) { //all processes finished
                     //start send all processes 
                     console.log("All processes finished")
+                    stop_time = new Date();
                     await substrate_sim.sleep(18000); //wait a little
 
                     processes_arr[0].send({ cmd: "get_head", type: "last" }); //get last block
@@ -158,7 +161,9 @@ function do_stats(callback) {
         console.log("stop_timestamp ", stop_timestamp)
         console.log("start_timestamp ", start_timestamp)
         var date_diff = (stop_timestamp - start_timestamp);
+        var time_diff = (stop_time - start_time);
         console.log("Done in " + date_diff + " sec");
+        console.log("Done in " + time_diff + " sec");
         console.log("Transactions " + tot_tx)
         console.log("Transactions/sec " + tot_tx / date_diff)
         console.log("Blocks " + nb_blocks)
