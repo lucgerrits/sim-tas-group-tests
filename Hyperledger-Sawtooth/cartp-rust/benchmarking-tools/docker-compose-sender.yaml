@@ -1,0 +1,39 @@
+####################################
+#
+#        Test for Sawtooth & IPFS: Sender
+#     - by Luc
+#
+####################################
+version: "2.1"
+
+networks: 
+  my_blockchain_network_pbft:
+    external: true
+
+services:
+
+  #########################################################
+  #
+  #  sender
+  #
+  #########################################################
+
+  sender-js:
+    networks:
+      - my_blockchain_network_pbft
+    build:
+      context: ./sender/
+      dockerfile: ./Dockerfile
+      args:
+        - http_proxy
+        - https_proxy
+        - no_proxy
+    image: sender-js
+    container_name: sender-js
+    volumes:
+      - ./sender:/sender
+    command: |
+      /bin/bash -c "
+          node test.js 20 0.5 10000
+      "
+    stop_signal: SIGKILL

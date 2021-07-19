@@ -1,0 +1,383 @@
+version: "3.2"
+
+#
+# Use https://polkadot.js.org/apps/#/explorer/node
+# to view the chain data.
+#
+#Example:
+#docker-compose -f docker-compose-aura.yml up
+#old: docker-compose --project-name substrate_sim -f docker-compose-aura.yml up --scale substrate-peer=4
+#
+#View telemetry:
+#https://polkadot.js.org/apps/#/settings?rpc=wss://10.1.0.222:9944
+
+#https://polkadot.js.org/apps/#/settings?rpc=ws://localhost:9944
+#old:https://polkadot.js.org/apps/#/settings?rpc=ws://127.0.0.1:9944.
+
+networks: 
+  my_blockchain_network:
+    ipam:
+      config:
+        - subnet: 10.1.0.0/24
+    name: "my_blockchain_network"
+
+services:
+
+##########################################################################
+#
+#
+#                         substrate genesis + peer
+#
+#           Note: use the scale cmd line option to scale to N peers
+#
+##########################################################################
+
+  substrate-peer-0:
+    image: projetsim/substrate-sim:latest
+    container_name: substrate-peer-0
+    ports:
+      - "9944:9944"
+    #   - "9933:9933"
+    expose: 
+      - "9615"
+      - "9933"
+      - "9944"
+    networks:
+      - my_blockchain_network
+    # environment:
+      # - RUST_LOG=runtime=debug
+    # command: bash -c "cargo build --release && ./target/release/node-template --dev --ws-external --prometheus-external"
+    # command: bash -c "./target/release/node-template --dev --ws-external --prometheus-external"
+    command: |
+      bash -c " \
+        # Start Alice's node
+        RUST_LOG=runtime=debug
+        node-template \
+          --base-path /tmp/alice \
+          --chain local \
+          --alice \
+          --port 30333 \
+          --ws-port 9944 \
+          --rpc-port 9933 \
+          --node-key 0000000000000000000000000000000000000000000000000000000000000001 \
+          --unsafe-ws-external \
+          --unsafe-rpc-external \
+          --rpc-cors=all \
+          --prometheus-external \
+          -lmydebug=debug \
+          --validator 
+        "
+          # --telemetry-url 'wss://telemetry.polkadot.io/submit/ 0' \
+
+  substrate-peer-1:
+    image: projetsim/substrate-sim:latest
+    container_name: substrate-peer-1
+    # ports:
+      # - "9944:9944"
+    expose: 
+      - "9615"
+      - "9933"
+      - "9944"
+    networks:
+      - my_blockchain_network
+    command: |
+      bash -c " \
+        # Bob join Alice's node
+        RUST_LOG=runtime=debug
+        node-template \
+          --base-path /tmp/peer \
+          --chain local \
+          --bob \
+          --port 30333 \
+          --ws-port 9944 \
+          --rpc-port 9933 \
+          --unsafe-ws-external \
+          --unsafe-rpc-external \
+          --rpc-cors=all \
+          --prometheus-external \
+          -lmydebug=debug \
+          --validator \
+          --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
+        "
+          # --telemetry-url 'wss://telemetry.polkadot.io/submit/ 0' \
+
+  substrate-peer-2:
+    image: projetsim/substrate-sim:latest
+    container_name: substrate-peer-2
+    # ports:
+      # - "9944:9944"
+    expose: 
+      - "9615"
+      - "9933"
+      - "9944"
+    networks:
+      - my_blockchain_network
+    command: |
+      bash -c " \
+        # Bob join Alice's node
+        RUST_LOG=runtime=debug
+        node-template \
+          --base-path /tmp/peer \
+          --chain local \
+          --bob \
+          --port 30333 \
+          --ws-port 9944 \
+          --rpc-port 9933 \
+          --unsafe-ws-external \
+          --unsafe-rpc-external \
+          --rpc-cors=all \
+          --prometheus-external \
+          -lmydebug=debug \
+          --validator \
+          --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
+        "
+  substrate-peer-3:
+    image: projetsim/substrate-sim:latest
+    container_name: substrate-peer-3
+    # ports:
+      # - "9944:9944"
+    expose: 
+      - "9615"
+      - "9933"
+      - "9944"
+    networks:
+      - my_blockchain_network
+    command: |
+      bash -c " \
+        # Bob join Alice's node
+        RUST_LOG=runtime=debug
+        node-template \
+          --base-path /tmp/peer \
+          --chain local \
+          --bob \
+          --port 30333 \
+          --ws-port 9944 \
+          --rpc-port 9933 \
+          --unsafe-ws-external \
+          --unsafe-rpc-external \
+          --rpc-cors=all \
+          --prometheus-external \
+          -lmydebug=debug \
+          --validator \
+          --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
+        "
+  substrate-peer-4:
+    image: projetsim/substrate-sim:latest
+    container_name: substrate-peer-4
+    # ports:
+      # - "9944:9944"
+    expose: 
+      - "9615"
+      - "9933"
+      - "9944"
+    networks:
+      - my_blockchain_network
+    command: |
+      bash -c " \
+        # Bob join Alice's node
+        RUST_LOG=runtime=debug
+        node-template \
+          --base-path /tmp/peer \
+          --chain local \
+          --bob \
+          --port 30333 \
+          --ws-port 9944 \
+          --rpc-port 9933 \
+          --unsafe-ws-external \
+          --unsafe-rpc-external \
+          --rpc-cors=all \
+          --prometheus-external \
+          -lmydebug=debug \
+          --validator \
+          --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
+        "
+
+  # substrate-api-0:
+  #   image: docker.io/parity/substrate-api-sidecar:latest
+  #   container_name: substrate-api-0
+  #   expose: 
+  #     - "8888"
+  #   ports: 
+  #     - 8888:8888
+  #   networks:
+  #     - my_blockchain_network
+  #   volumes:
+  #     - ./additional_types.json:/additional_types.json
+  #   environment:
+  #     - SAS_EXPRESS_PORT=8888
+  #     - SAS_EXPRESS_BIND_HOST=0.0.0.0
+  #     - SAS_SUBSTRATE_TYPES=/additional_types.json
+  #     - SAS_SUBSTRATE_WS_URL=ws://substrate-peer-0:9944
+
+  # substrate-api-1:
+  #   image: docker.io/parity/substrate-api-sidecar:latest
+  #   container_name: substrate-api-1
+  #   expose: 
+  #     - "8888"
+  #   networks:
+  #     - my_blockchain_network
+  #   volumes:
+  #     - ./additional_types.json:/additional_types.json
+  #   environment:
+  #     - SAS_EXPRESS_PORT=8888
+  #     - SAS_EXPRESS_BIND_HOST=0.0.0.0
+  #     - SAS_SUBSTRATE_TYPES=/additional_types.json
+  #     - SAS_SUBSTRATE_WS_URL=ws://substrate-peer-1:9944
+
+  # substrate-api-2:
+  #   image: docker.io/parity/substrate-api-sidecar:latest
+  #   container_name: substrate-api-2
+  #   expose: 
+  #     - "8888"
+  #   networks:
+  #     - my_blockchain_network
+  #   volumes:
+  #     - ./additional_types.json:/additional_types.json
+  #   environment:
+  #     - SAS_EXPRESS_PORT=8888
+  #     - SAS_EXPRESS_BIND_HOST=0.0.0.0
+  #     - SAS_SUBSTRATE_TYPES=/additional_types.json
+  #     - SAS_SUBSTRATE_WS_URL=ws://substrate-peer-2:9944
+
+  # substrate-api-3:
+  #   image: docker.io/parity/substrate-api-sidecar:latest
+  #   container_name: substrate-api-3
+  #   expose: 
+  #     - "8888"
+  #   networks:
+  #     - my_blockchain_network
+  #   volumes:
+  #     - ./additional_types.json:/additional_types.json
+  #   environment:
+  #     - SAS_EXPRESS_PORT=8888
+  #     - SAS_EXPRESS_BIND_HOST=0.0.0.0
+  #     - SAS_SUBSTRATE_TYPES=/additional_types.json
+  #     - SAS_SUBSTRATE_WS_URL=ws://substrate-peer-3:9944
+
+  # substrate-api-4:
+  #   image: docker.io/parity/substrate-api-sidecar:latest
+  #   container_name: substrate-api-4
+  #   expose: 
+  #     - "8888"
+  #   networks:
+  #     - my_blockchain_network
+  #   volumes:
+  #     - ./additional_types.json:/additional_types.json
+  #   environment:
+  #     - SAS_EXPRESS_PORT=8888
+  #     - SAS_EXPRESS_BIND_HOST=0.0.0.0
+  #     - SAS_SUBSTRATE_TYPES=/additional_types.json
+  #     - SAS_SUBSTRATE_WS_URL=ws://substrate-peer-4:9944
+####################################
+#
+#        Load balancer
+#
+####################################
+  # load-balancer:
+  #   image: nginx:latest
+  #   container_name: load-balancer
+  #   volumes:
+  #     - ./nginx-data/nginx.conf:/etc/nginx/nginx.conf
+  #     - ./nginx-data/dhparam.pem:/etc/nginx/dhparam.pem
+  #     - ./nginx-data/nginx-selfsigned.crt:/etc/nginx/nginx-selfsigned.crt
+  #     - ./nginx-data/nginx-selfsigned.key:/etc/nginx/nginx-selfsigned.key
+  #   # ports: 
+  #     # - 9944:9944
+  #     # - 9933:9933
+  #     # - 8888:8888
+  #   restart: always
+  #   networks:
+  #     my_blockchain_network:
+  #       ipv4_address: 10.1.0.222
+##########################################################################
+#
+#
+#                         Metrics
+#
+#
+##########################################################################
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - ./prometheus-data:/prometheus
+    user: "root"
+    expose: 
+      - "9090"
+    networks:
+      - my_blockchain_network
+
+  grafana-substrate:
+    image: grafana/grafana
+    container_name: grafana-substrate
+    ports:
+      - 3000:3000
+    expose: 
+      - "9090"
+      - "9615"
+    volumes:
+      - ./grafana-data:/var/lib/grafana
+    user: "472" #don't forget to do a: sudo chown 472 -R ./grafana-data/
+    depends_on:
+      - prometheus
+    networks:
+      - my_blockchain_network
+
+  # influxdb:
+  #   image: influxdb:1.8.5
+  #   container_name: influxdb
+  #   ports: 
+  #     - 8086:8086
+  #   expose:
+  #     - 8086
+  #   volumes:
+  #     - ./stats-data/influx-data:/var/lib/influxdb
+  #   environment:
+  #     - INFLUXDB_DB=metrics
+  #     - INFLUXDB_HTTP_AUTH_ENABLED=true
+  #     - INFLUXDB_ADMIN_USER=admin
+  #     - INFLUXDB_ADMIN_PASSWORD=admin
+  #     - INFLUXDB_USER=lrdata
+  #     - INFLUXDB_USER_PASSWORD=lrdata
+  #     - INFLUXDB_HTTP_LOG_ENABLED=false
+  #     - INFLUXDB_DATA_QUERY_LOG_ENABLED=false
+  #   networks:
+  #     - my_blockchain_network
+      
+  # this interface is not mendatory at all, polkadot-js app can do everything
+  # substrate-interface:
+  #   build:
+  #       context: ./substrate-SIM-frontend
+  #       dockerfile: Dockerfile
+  #   container_name: substrate-interface
+  #   working_dir: /var/www/node-template-frontend
+  #   ports:
+  #     - 8000:8000
+  #   expose: 
+  #     - "9090"
+  #     - "9944"
+  #     - "9615"
+  #   volumes:
+  #     - ./substrate-SIM-frontend:/var/www/node-template-frontend
+  #   environment:
+  #     - BROWSER=none
+  #   command: bash -c "yarn install && yarn start"
+
+
+  # polkadot-ui:
+  #   build:
+  #       context: ./polkadot_UI
+  #       dockerfile: Dockerfile_polkadot_ui
+  #   container_name: polkadot-ui
+  #   ports:
+  #     - 8080:8080
+  #   expose: 
+  #     - "9090"
+  #     - "9944"
+  #     - "9615"
+  #     - "9933"
+  #   environment:
+  #     - WS_URL=ws://127.0.0.1:9944
+    
