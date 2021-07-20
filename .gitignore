@@ -16,3 +16,4 @@ tmp.yaml
 Substrate/cloud-deployments/1-substrate-aura-4-nodes.yaml
 Substrate/substrate-transaction-js/factories.json
 Substrate/cloud-deployments/substrate-kube.yaml
+**/__pycache__/**

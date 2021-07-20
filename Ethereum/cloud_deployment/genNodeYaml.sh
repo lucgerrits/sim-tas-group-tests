@@ -839,3 +839,41 @@ cat << EOF
           emptyDir: {} 
 
 EOF
+
+cat << EOF
+####################################### ETH MONITOR STUFF #########################
+
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: ubuntu
+    namespace: ethereum-net
+  spec:
+    replicas: 1
+    selector:
+        matchLabels:
+          name: ubuntu-deployment
+    template:
+      metadata:
+        name: ubuntu-deployment
+        labels:
+          app: ubuntu
+          tier: backend
+          name: ubuntu-deployment
+      spec:
+        containers:
+        - name: ubuntu
+          image: ubuntu
+          command:
+            - "sleep"
+            - "604800"
+          resources:
+            limits:
+              cpu: "12"
+              memory: "12Gi"
+            requests:
+              cpu: "10"
+              memory: "10Gi"
+          imagePullPolicy: IfNotPresent
+        restartPolicy: Always
+EOF
