@@ -3,7 +3,9 @@
 
 Javascript client for Substrate.
 
-## Dependencies
+**Note**: Ignore all other substrate-transaction-XXX projects ! Only the JS version of the client works fine.
+
+## Dependencies
 
 - polkadot-api
 - TODO
@@ -26,6 +28,18 @@ Javascript client for Substrate.
 ./bin/ws/send_v2.js 10000 100
 #this will send 10k transactions at a 100tx/sec rate
 ```
+
+### File description
+
+- main scripts:
+  - send_v2.js
+  - init_v2.js
+- sub process scripts:
+  - sender.js
+  - init_sender.js
+
+
+**Note**: Ignore all other files !!!
 
 ## View using Polkadot Dashboard
 
