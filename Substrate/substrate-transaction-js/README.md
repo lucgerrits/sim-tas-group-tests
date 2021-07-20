@@ -6,28 +6,25 @@ Javascript client for Substrate.
 ## Dependencies
 
 - polkadot-api
-
-
-## Build & installation
-
-```bash
-npm install
-npm run-script build
-#Build two scripts:
-#-> Init blockchain: init.js
-#-> Send crashes: send.js
-```
+- TODO
 
 ## Init blockchain
 
-## Start
+```bash
+#first create car and factories identities
+./bin/genAccounts.js 5000 10 #5000 cars and 10 factories
+
+#init the identities in the blockchain
+./bin/ws/init_v2.js
+#this will add factory and cars public keys in the smart contract
+```
+
+## Start a benchmark
 
 ```bash
-npm start
-
-#or build
-npm run-script build
-node ./out.js
+#to start a benchmark give the total transaction limit and transaction per second
+./bin/ws/send_v2.js 10000 100
+#this will send 10k transactions at a 100tx/sec rate
 ```
 
 ## View using Polkadot Dashboard
