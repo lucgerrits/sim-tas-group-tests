@@ -440,7 +440,8 @@ items:
             --nousb \
             --rpc \
             --ws \
-            --unlock 0x6c72e4c3c645a5d84b44f6f143ce559c9e8d8153 --allow-insecure-unlock --password /etc/testnet/miner1/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0x6c72e4c3c645a5d84b44f6f143ce559c9e8d8153 --allow-insecure-unlock --password /etc/testnet/miner1/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
             --config /etc/geth/miner1/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -688,7 +689,8 @@ items:
             --nousb \
             --rpc \
             --ws \
-            --unlock 0x77c1113fb3da88e6a0f6b8b1af7c5f15286f5253 --allow-insecure-unlock --password /etc/testnet/miner2/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0x77c1113fb3da88e6a0f6b8b1af7c5f15286f5253 --allow-insecure-unlock --password /etc/testnet/miner2/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
             --config /etc/geth/miner2/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -936,7 +938,8 @@ items:
             --nousb \
             --rpc \
             --ws \
-            --unlock 0x5708c9ed0dc25097f24903d27c13c9b4c18f3e54 --allow-insecure-unlock --password /etc/testnet/miner3/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0x5708c9ed0dc25097f24903d27c13c9b4c18f3e54 --allow-insecure-unlock --password /etc/testnet/miner3/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
             --config /etc/geth/miner3/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -1184,7 +1187,8 @@ items:
             --nousb \
             --rpc \
             --ws \
-            --unlock 0x5e99b8f68e317e40f5b64fb427d6ddd86fb6d89b --allow-insecure-unlock --password /etc/testnet/miner4/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0x5e99b8f68e317e40f5b64fb427d6ddd86fb6d89b --allow-insecure-unlock --password /etc/testnet/miner4/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
             --config /etc/geth/miner4/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -1432,7 +1436,8 @@ items:
             --nousb \
             --rpc \
             --ws \
-            --unlock 0xc36194ca819c884d556eab67a0a3a1d760dcdff4 --allow-insecure-unlock --password /etc/testnet/miner5/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0xc36194ca819c884d556eab67a0a3a1d760dcdff4 --allow-insecure-unlock --password /etc/testnet/miner5/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
             --config /etc/geth/miner5/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -1680,7 +1685,8 @@ items:
             --nousb \
             --rpc \
             --ws \
-            --unlock 0xb5c9fcfe7acf4473f6369a93e947f73aebb4646c --allow-insecure-unlock --password /etc/testnet/miner6/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0xb5c9fcfe7acf4473f6369a93e947f73aebb4646c --allow-insecure-unlock --password /etc/testnet/miner6/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
             --config /etc/geth/miner6/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -1928,7 +1934,8 @@ items:
             --nousb \
             --rpc \
             --ws \
-            --unlock 0xe6b1c4a245d8ddab785dc321b3b87c066e91cacd --allow-insecure-unlock --password /etc/testnet/miner7/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0xe6b1c4a245d8ddab785dc321b3b87c066e91cacd --allow-insecure-unlock --password /etc/testnet/miner7/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
             --config /etc/geth/miner7/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -2176,7 +2183,8 @@ items:
             --nousb \
             --rpc \
             --ws \
-            --unlock 0x3eeb48c7eaa2b850fe3b1bfd69c1dedc93cf8333 --allow-insecure-unlock --password /etc/testnet/miner8/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0x3eeb48c7eaa2b850fe3b1bfd69c1dedc93cf8333 --allow-insecure-unlock --password /etc/testnet/miner8/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
             --config /etc/geth/miner8/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -2424,7 +2432,8 @@ items:
             --nousb \
             --rpc \
             --ws \
-            --unlock 0xff8ebc1a54092d738680c9092abae5cefa0005b2 --allow-insecure-unlock --password /etc/testnet/miner9/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0xff8ebc1a54092d738680c9092abae5cefa0005b2 --allow-insecure-unlock --password /etc/testnet/miner9/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
             --config /etc/geth/miner9/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -2672,7 +2681,8 @@ items:
             --nousb \
             --rpc \
             --ws \
-            --unlock 0xefe7a9c39ec64864d23eb306054d2570b234d3f2 --allow-insecure-unlock --password /etc/testnet/miner10/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0xefe7a9c39ec64864d23eb306054d2570b234d3f2 --allow-insecure-unlock --password /etc/testnet/miner10/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
             --config /etc/geth/miner10/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -2920,7 +2930,8 @@ items:
             --nousb \
             --rpc \
             --ws \
-            --unlock 0xb42a184af3bd28c96f4904025d3833a83ebfd74e --allow-insecure-unlock --password /etc/testnet/miner11/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0xb42a184af3bd28c96f4904025d3833a83ebfd74e --allow-insecure-unlock --password /etc/testnet/miner11/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
             --config /etc/geth/miner11/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -3168,7 +3179,8 @@ items:
             --nousb \
             --rpc \
             --ws \
-            --unlock 0x1dc8a2ae48ec97f2ef5c3a5712abbf02667d11d2 --allow-insecure-unlock --password /etc/testnet/miner12/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0x1dc8a2ae48ec97f2ef5c3a5712abbf02667d11d2 --allow-insecure-unlock --password /etc/testnet/miner12/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
             --config /etc/geth/miner12/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -3416,7 +3428,8 @@ items:
             --nousb \
             --rpc \
             --ws \
-            --unlock 0xd1dfa6cdbb5ce03c9629a52a3fff5793146cb89f --allow-insecure-unlock --password /etc/testnet/miner13/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0xd1dfa6cdbb5ce03c9629a52a3fff5793146cb89f --allow-insecure-unlock --password /etc/testnet/miner13/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
             --config /etc/geth/miner13/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -3664,7 +3677,8 @@ items:
             --nousb \
             --rpc \
             --ws \
-            --unlock 0xcb856028b25efde34192df0722abeb583033ee52 --allow-insecure-unlock --password /etc/testnet/miner14/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0xcb856028b25efde34192df0722abeb583033ee52 --allow-insecure-unlock --password /etc/testnet/miner14/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
             --config /etc/geth/miner14/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -3912,7 +3926,8 @@ items:
             --nousb \
             --rpc \
             --ws \
-            --unlock 0xd113a83240df4cbf61ea093664d97737662ad52b --allow-insecure-unlock --password /etc/testnet/miner15/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0xd113a83240df4cbf61ea093664d97737662ad52b --allow-insecure-unlock --password /etc/testnet/miner15/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
             --config /etc/geth/miner15/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -4160,7 +4175,8 @@ items:
             --nousb \
             --rpc \
             --ws \
-            --unlock 0x878348425db945254ee759040e383c8897839454 --allow-insecure-unlock --password /etc/testnet/miner16/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0x878348425db945254ee759040e383c8897839454 --allow-insecure-unlock --password /etc/testnet/miner16/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
             --config /etc/geth/miner16/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -4408,7 +4424,8 @@ items:
             --nousb \
             --rpc \
             --ws \
-            --unlock 0xd70abedc871f939abd60b36164ca443cfe6063ea --allow-insecure-unlock --password /etc/testnet/miner17/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0xd70abedc871f939abd60b36164ca443cfe6063ea --allow-insecure-unlock --password /etc/testnet/miner17/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
             --config /etc/geth/miner17/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -4656,7 +4673,8 @@ items:
             --nousb \
             --rpc \
             --ws \
-            --unlock 0x5e71729cf96c2fdb16265cb708d1df2cb91cd6a9 --allow-insecure-unlock --password /etc/testnet/miner18/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0x5e71729cf96c2fdb16265cb708d1df2cb91cd6a9 --allow-insecure-unlock --password /etc/testnet/miner18/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
             --config /etc/geth/miner18/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -4904,7 +4922,8 @@ items:
             --nousb \
             --rpc \
             --ws \
-            --unlock 0x697a5d50fcea7d9ab93fcefd6570f0fa15e945ab --allow-insecure-unlock --password /etc/testnet/miner19/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0x697a5d50fcea7d9ab93fcefd6570f0fa15e945ab --allow-insecure-unlock --password /etc/testnet/miner19/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
             --config /etc/geth/miner19/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -5152,7 +5171,8 @@ items:
             --nousb \
             --rpc \
             --ws \
-            --unlock 0x58d5a1fda3be5ac1ef6d9bd4f575c2321e44b1c6 --allow-insecure-unlock --password /etc/testnet/miner20/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0x58d5a1fda3be5ac1ef6d9bd4f575c2321e44b1c6 --allow-insecure-unlock --password /etc/testnet/miner20/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
             --config /etc/geth/miner20/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -5400,7 +5420,8 @@ items:
             --nousb \
             --rpc \
             --ws \
-            --unlock 0xc6962fd176d408568bf32642ccfdbad501eec92d --allow-insecure-unlock --password /etc/testnet/miner21/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0xc6962fd176d408568bf32642ccfdbad501eec92d --allow-insecure-unlock --password /etc/testnet/miner21/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
             --config /etc/geth/miner21/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -5648,7 +5669,8 @@ items:
             --nousb \
             --rpc \
             --ws \
-            --unlock 0x928cf91fa667b5b82cc745f0a1503fed4faffbf6 --allow-insecure-unlock --password /etc/testnet/miner22/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0x928cf91fa667b5b82cc745f0a1503fed4faffbf6 --allow-insecure-unlock --password /etc/testnet/miner22/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
             --config /etc/geth/miner22/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -5896,7 +5918,8 @@ items:
             --nousb \
             --rpc \
             --ws \
-            --unlock 0x7e4f41306fb48540a317e0f96a89f0ffa3db12fc --allow-insecure-unlock --password /etc/testnet/miner23/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0x7e4f41306fb48540a317e0f96a89f0ffa3db12fc --allow-insecure-unlock --password /etc/testnet/miner23/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
             --config /etc/geth/miner23/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -6144,7 +6167,8 @@ items:
             --nousb \
             --rpc \
             --ws \
-            --unlock 0x9ba86e41f9b1dda4e6c93b34d3e1653d88112a0a --allow-insecure-unlock --password /etc/testnet/miner24/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0x9ba86e41f9b1dda4e6c93b34d3e1653d88112a0a --allow-insecure-unlock --password /etc/testnet/miner24/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
             --config /etc/geth/miner24/gethconfig.toml;"
           ports:
             - containerPort: 8545

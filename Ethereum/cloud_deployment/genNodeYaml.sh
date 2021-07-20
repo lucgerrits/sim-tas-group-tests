@@ -449,7 +449,8 @@ cat << EOF
             --nousb \\
             --rpc \\
             --ws \\
-            --unlock 0x${accountArrayPublic[i]} --allow-insecure-unlock --password /etc/testnet/miner$i/password.txt --gasprice '0x0' --targetgaslimit '9000000000000'  \\
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \\
+            --unlock 0x${accountArrayPublic[i]} --allow-insecure-unlock --password /etc/testnet/miner$i/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \\
             --config /etc/geth/miner$i/gethconfig.toml;"
           ports:
             - containerPort: 8545
