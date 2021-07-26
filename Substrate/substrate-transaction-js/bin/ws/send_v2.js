@@ -5,10 +5,10 @@ import * as child from 'child_process';
 import * as path from 'path';
 import * as async from "async";
 
-// if (process.argv.length <= 2) {
-//     console.error("Required 3 argument: \n\tlimit, ex: 10000\n\twait_time, ex: 1 (sec)\n\tnb_processes, ex: 2")
-//     process.exit(1);
-// }
+if (process.argv.length <= 3) {
+    console.error("Required 2 argument: \n\tlimit, ex: 10000\n\ttx/sec, ex: 10 (tx/sec)")
+    process.exit(1);
+}
 
 // const url = "ws://127.0.0.1:9944";
 const url = "ws://substrate-ws.unice.cust.tasfrance.com";
@@ -42,7 +42,8 @@ function do_benchmark(callback) {
     console.log("Benchmark settings:")
     // console.log("\t", nb_processes * (1 / parseFloat(process.argv[3])), "Tx/sec")
     console.log("\t", parseFloat(process.argv[3]), "Tx/sec")
-    console.log("\t wait_time=", wait_time, "ms")
+    console.log("\t wait_time=", wait_time, "ms (in each thread)")
+    console.log("\t nb threads=", nb_processes, "threads")
     console.log("Start processes")
     // Create the worker.
     for (let i = 0; i < nb_processes; i++) {
@@ -145,8 +146,8 @@ function do_stats(callback) {
         await substrate_sim.print_header(api);
 
         var nb_blocks = 0;
-        var current_hash = lastBlock.hash;
-        var block = await api.rpc.chain.getBlock(current_hash);
+        var current_hash = lastBlock.hash; //init the current_hash var
+        var block = await api.rpc.chain.getBlock(current_hash); //init the block var
         var stop_timestamp = new Date(parseInt(block.block.extrinsics[0].method.args.toString().slice(0, 10)));
         var tot_tx = 0;
         while (firstBlock.hash !== current_hash) {
@@ -156,6 +157,7 @@ function do_stats(callback) {
             nb_blocks++;
             process.stdout.write(".");
         }
+        
         process.stdout.write("\n");
         var start_timestamp = new Date(parseInt(block.block.extrinsics[0].method.args.toString().slice(0, 10)));
         console.log("stop_timestamp ", stop_timestamp)
