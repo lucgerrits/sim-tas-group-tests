@@ -12,6 +12,15 @@ contract Accident {
     address public admin;
     
     address public factory;
+
+    uint public admin_counter = 0;
+    
+    uint public factory_counter = 0;
+
+    uint public car_storage_counter = 0;
+    
+    uint public accidents_storage_counter = 0;
+    
     
     // (CarID --> FactoryID)
     
@@ -62,6 +71,7 @@ contract Accident {
     function addFactory(address factoryaddress) public isAdmin {
        
         factory = factoryaddress;
+        factory_counter = factory_counter+1;
 
     }
     
@@ -69,23 +79,24 @@ contract Accident {
    function addCar(address caraddress) public isfactory {
        
         car_storage[caraddress] = msg.sender;
+        car_storage_counter = car_storage_counter+1;
 
     }
     
     
-    function declareAccident(bytes32 hash) public isValidCar {
+     function declareAccident(bytes32 hash) public isValidCar {
         bytes32[] storage data = accidents_storage[msg.sender];
         data.push(hash);
+        accidents_storage_counter = accidents_storage_counter+1;
 
     }
-    
-    
     
     /**
      * @dev Set contract deployer as owner
      */
     constructor() {
         admin = msg.sender; // 'msg.sender' is sender of current call, contract deployer for a constructor
+        admin_counter = admin_counter+1;
         emit AdminSet(address(0), admin);
     }
 
