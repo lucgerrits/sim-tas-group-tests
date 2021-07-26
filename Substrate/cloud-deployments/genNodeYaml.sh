@@ -437,8 +437,8 @@ cat << EOF
               cpu: "20"
               memory: "20Gi"
             requests:
-              cpu: "10"
-              memory: "10Gi"
+              cpu: "20"
+              memory: "20Gi"
           imagePullPolicy: IfNotPresent
         restartPolicy: Always
 EOF
