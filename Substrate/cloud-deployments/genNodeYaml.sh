@@ -409,31 +409,33 @@ cat << EOF
 - apiVersion: apps/v1
   kind: Deployment
   metadata:
-    name: ubuntu
+    name: benchmark
     namespace: substrate-net
   spec:
     replicas: 1
     selector:
         matchLabels:
-          name: ubuntu-deployment
+          name: benchmark-deployment
     template:
       metadata:
-        name: ubuntu-deployment
         labels:
-          app: ubuntu
-          tier: backend
-          name: ubuntu-deployment
+          name: benchmark-deployment
+          serviceSelector: benchmark-deployment
       spec:
+        hostAliases:
+        - ip: "185.52.32.4"
+          hostnames:
+          - "substrate-ws.unice.cust.tasfrance.com"
         containers:
-        - name: ubuntu
-          image: ubuntu
+        - name: substrate-sim-transaction-js
+          image: projetsim/substrate-sim-transaction-js:latest
           command:
             - "sleep"
             - "604800"
           resources:
             limits:
-              cpu: "12"
-              memory: "12Gi"
+              cpu: "20"
+              memory: "20Gi"
             requests:
               cpu: "10"
               memory: "10Gi"

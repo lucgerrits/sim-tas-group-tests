@@ -10,7 +10,7 @@ WORKDIR /project/
 
 RUN npm install
 
-RUN ./bin/genAccounts.js 10000 10
+# RUN ./bin/genAccounts.js 10000 10
 
 ENTRYPOINT ["tail"]
 CMD ["-f","/dev/null"]
