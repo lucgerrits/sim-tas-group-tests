@@ -842,7 +842,7 @@ cat << EOF
 EOF
 
 cat << EOF
-####################################### ETH MONITOR STUFF #########################
+####################################### BENCHMARK MACHINE #########################
 
 - apiVersion: apps/v1
   kind: Deployment

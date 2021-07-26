@@ -1,8 +1,15 @@
 #!/bin/bash
+my_dir="$(dirname "$0")"
 
+NBNODES=5
 #list of validators available
 #Max 6 validator for the moment
-accountArray=('alice' 'bob' 'charlie' 'dave' 'eve' 'ferdie')
+#array built with generateKeys.sh script
+# accountArray=('alice' 'bob' 'charlie' 'dave' 'eve' 'ferdie')
+
+#include the keys file:
+chmod +x $my_dir/keys_file.sh
+source $my_dir/keys_file.sh
 
 cat << EOF
 apiVersion: v1
@@ -12,13 +19,29 @@ items:
 
 EOF
 
-for i in {0..5}
+for (( i=0; i<=$NBNODES; i++ ))
 do
    echo ""
    echo "# --------------------------=== POD DEPLOYMENT $i ===--------------------------"
 
     if [[ "$i" -eq 0 ]]; then
     #first node is bootnode
+
+###################### set all in keystore in bootnode
+cmd_add_to_keystore=""
+for (( j=1; j<=$NBNODES; j++ )) # start 1 => no bootnode
+do
+cmd_add_to_keystore+=$(cat <<EOF
+
+                    node-template key insert --base-path /peer-data-$i --chain local --key-type aura --suri "${Ed25519_arr_secretSeed[j]}";
+                    node-template key insert --base-path /peer-data-$i --chain local --key-type gran --suri "${Ed25519_arr_secretSeed[j]}";
+
+EOF
+)
+
+done
+###################### end set all in keystore in bootnode
+
 
 cat << EOF
 - apiVersion: apps/v1
@@ -60,20 +83,31 @@ cat << EOF
                 containerPort: 9933
               - name: prometheus
                 containerPort: 9615
-            # envFrom:
-            #   - configMapRef:
-            #       name: keys-config
             command:
               - bash
             args:
               - -c
               - |
+                    rm -r /peer-data-$i/*;
+                    node-template key insert \\
+                        --base-path /peer-data-$i \\
+                        --chain local \\
+                        --key-type aura \\
+                        --scheme Sr25519 \\
+                        --suri "0x0000000000000000000000000000000000000000000000000000000000000001";
+                    node-template key insert \\
+                        --base-path /peer-data-$i \\
+                        --chain local \\
+                        --key-type gran \\
+                        --scheme Ed25519 \\
+                        --suri "0x0000000000000000000000000000000000000000000000000000000000000001";
+                    ls -l /peer-data-$i/chains/local_testnet/keystore;
                     # Start Alice's node
                     RUST_LOG=runtime=debug
                     node-template \\
                         --base-path /peer-data-$i \\
-                        --chain local \\
-                        --${accountArray[i]} \\
+                        --name Node$i \\
+                        --chain /genesis/customSpecRaw.json \\
                         --port 30333 \\
                         --ws-port 9944 \\
                         --rpc-port 9933 \\
@@ -87,17 +121,24 @@ cat << EOF
                         --ws-max-connections 1000 \\
                         --pool-limit 10000 \\
                         --pool-kbytes 20480 \\
-                        --max-runtime-instances 100 \\
-                        --validator 
+                        --max-runtime-instances 100
                     
             volumeMounts:
               - name: substrate-data-$i
                 mountPath: /peer-data-$i
+              - name: substrate-genesis-$i
+                mountPath: /genesis/
 
         volumes:
           - name: substrate-data-$i
             persistentVolumeClaim:
             claimName: substrate-data-$i
+          - name: substrate-genesis-$i
+            configMap:
+              name: chain-spec
+              items:
+              - key: customSpecRaw.json
+                path: customSpecRaw.json
 EOF
 
     else
@@ -143,19 +184,31 @@ cat << EOF
                 containerPort: 9933
               - name: prometheus
                 containerPort: 9615
-            # envFrom:
-            #   - configMapRef:
-            #       name: keys-config
             command:
               - bash
             args:
               - -c
               - |
+                    node-template key insert \\
+                        --base-path /peer-data-$i \\
+                        --chain local \\
+                        --key-type aura \\
+                        --scheme Sr25519 \\
+                        --suri "${Sr25519_arr_secretSeed[i]}";
+                    node-template key insert \\
+                        --base-path /peer-data-$i \\
+                        --chain local \\
+                        --key-type gran \\
+                        --scheme Ed25519 \\
+                        --suri "${Ed25519_arr_secretSeed[i]}";
+                    ls -l /peer-data-$i/chains/local_testnet/keystore;
                     RUST_LOG=runtime=debug
                     node-template \\
                         --base-path /peer-data-$i \\
-                        --chain local \\
-                        --${accountArray[i]} \\
+                        --name Node$i \\
+                        --chain /genesis/customSpecRaw.json \\
+                        --keystore-path /peer-data-$i/chains/local_testnet/keystore/ \\
+                        --node-key ${Ed25519_arr_secretSeed[i]:2:64} \\
                         --port 30333 \\
                         --ws-port 9944 \\
                         --rpc-port 9933 \\
@@ -175,11 +228,19 @@ cat << EOF
             volumeMounts:
               - name: substrate-data-$i
                 mountPath: /peer-data-$i
+              - name: substrate-genesis-$i
+                mountPath: /genesis/
 
         volumes:
           - name: substrate-data-$i
             persistentVolumeClaim:
             claimName: substrate-data-$i
+          - name: substrate-genesis-$i
+            configMap:
+              name: chain-spec
+              items:
+              - key: customSpecRaw.json
+                path: customSpecRaw.json
 EOF
 
 fi # end if
@@ -277,4 +338,107 @@ cat << EOF
         protocol: TCP
         port: 9944
         targetPort: 9944
+EOF
+
+################################## chain spec build #################################
+
+#first get chain spec
+@docker pull projetsim/substrate-sim:latest > out.log 2> err.log
+docker run -it projetsim/substrate-sim:latest node-template build-spec --disable-default-bootnode --chain local > customSpec.json
+chainSpec=$(cat customSpec.json | sed 1d) #get file content and remove first line (has some unwanted output)
+echo $chainSpec > customSpec.json #write file content
+
+###################### make palletAura authorities (Sr25519 keys)
+palletAura_authorities="["
+for (( i=1; i<=$NBNODES; i++ )) # start 1 => no bootnode
+do
+palletAura_authorities+=$(cat <<EOF
+    "${Sr25519_arr_ss58PublicKey[i]}",
+
+EOF
+)
+
+done
+palletAura_authorities=${palletAura_authorities::-1} #DON'T FORGET TO REMOVE LAST CHARACTER: ${palletAura_authorities::-1}
+palletAura_authorities+="]"
+palletAura_authorities=$(echo "$palletAura_authorities" | jq -c) #format json to a one line
+###################### end make palletAura authorities
+
+###################### make palletGrandpa authorities (Ed25519 keys)
+palletGrandpa_authorities="["
+for (( i=1; i<=$NBNODES; i++ )) # start 1 => no bootnode
+do
+palletGrandpa_authorities+=$(cat <<EOF
+    [
+    "${Ed25519_arr_ss58PublicKey[i]}",
+    1
+    ],
+
+EOF
+)
+
+done
+palletGrandpa_authorities=${palletGrandpa_authorities::-1} #DON'T FORGET TO REMOVE LAST CHARACTER: ${palletGrandpa_authorities::-1}
+palletGrandpa_authorities+="]"
+palletGrandpa_authorities=$(echo "$palletGrandpa_authorities" | jq -c) #format json to a one line
+###################### end make palletAura authorities
+
+
+#edit json to replace the two arrays
+#jq
+chainSpec=$(echo $chainSpec | jq ".genesis.runtime.palletAura.authorities = ${palletAura_authorities}")
+chainSpec=$(echo $chainSpec | jq ".genesis.runtime.palletGrandpa.authorities = ${palletGrandpa_authorities}")
+chainSpec=$(echo $chainSpec | jq '.name = "The Batman Chain"')
+chainSpec=$(echo $chainSpec | jq '.id = "TBC_testnet"')
+
+echo $chainSpec | jq > customSpec.json #write changes to file
+
+#build raw chainSpec
+docker run -it -v $(pwd)/customSpec.json:/customSpec.json projetsim/substrate-sim:latest node-template build-spec --chain=/customSpec.json --raw --disable-default-bootnode > customSpecRaw.json
+chainSpecRaw=$(cat customSpecRaw.json | sed 1d) #get file content and remove first line (has some unwanted output)
+#finish up json formating to a one line
+echo $chainSpecRaw | jq | sed 's/^/      /' > customSpecRaw.json #write changes to file and add indentation
+chainSpecRaw=$(cat customSpecRaw.json) #write changes to file
+
+
+
+
+cat << EOF
+####################################### BENCHMARK MACHINE #########################
+
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: benchmark
+    namespace: substrate-net
+  spec:
+    replicas: 1
+    selector:
+        matchLabels:
+          name: benchmark-deployment
+    template:
+      metadata:
+        labels:
+          name: benchmark-deployment
+          serviceSelector: benchmark-deployment
+      spec:
+        hostAliases:
+        - ip: "185.52.32.4"
+          hostnames:
+          - "substrate-ws.unice.cust.tasfrance.com"
+        containers:
+        - name: substrate-sim-transaction-js
+          image: projetsim/substrate-sim-transaction-js:latest
+          command:
+            - "sleep"
+            - "604800"
+          resources:
+            limits:
+              cpu: "20"
+              memory: "20Gi"
+            requests:
+              cpu: "20"
+              memory: "20Gi"
+          imagePullPolicy: IfNotPresent
+        restartPolicy: Always
 EOF
