@@ -6,7 +6,7 @@ import * as path from 'path';
 import * as async from "async";
 
 if (process.argv.length <= 3) {
-    console.error("Required 2 argument: \n\tlimit, ex: 10000\n\ttx/sec, ex: 10 (tx/sec)")
+    console.error("Required 2 argument: \n\tlimit, ex: 10000\n\ttx/sec, ex: 10 (tx/sec)\n\tnb_processes, ex: 10 (optional)")
     process.exit(1);
 }
 
@@ -14,7 +14,7 @@ if (process.argv.length <= 3) {
 const url = "ws://substrate-ws.unice.cust.tasfrance.com";
 
 const limit = parseInt(process.argv[2]);
-const nb_processes = 14; //parseInt(process.argv[4]);
+const nb_processes = process.argv[4] ? parseInt(process.argv[4]) : 14; //parseInt(process.argv[4]);
 const wait_time = (nb_processes / parseFloat(process.argv[3])) * 1000;// parseFloat(process.argv[3]) * 1000;
 var processes_arr = [];
 var processes_exited = 0;
