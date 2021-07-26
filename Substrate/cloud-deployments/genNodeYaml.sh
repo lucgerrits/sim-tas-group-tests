@@ -410,7 +410,7 @@ cat << EOF
   kind: Deployment
   metadata:
     name: ubuntu
-    namespace: ethereum-net
+    namespace: substrate-net
   spec:
     replicas: 1
     selector:
