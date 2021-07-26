@@ -400,17 +400,43 @@ chainSpecRaw=$(cat customSpecRaw.json | sed 1d) #get file content and remove fir
 echo $chainSpecRaw | jq | sed 's/^/      /' > customSpecRaw.json #write changes to file and add indentation
 chainSpecRaw=$(cat customSpecRaw.json) #write changes to file
 
-# cat << EOF
-
-# #--------------------------= chain spec =--------------------------------
-# - apiVersion: v1
-#   kind: ConfigMap
-#   metadata:
-#     name: chain-spec
-#     namespace: substrate-net
-#   data:
-#     customSpecRaw.json: |-
-# ${chainSpecRaw}
 
 
-# EOF
+
+cat << EOF
+####################################### BENCHMARK MACHINE #########################
+
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: ubuntu
+    namespace: ethereum-net
+  spec:
+    replicas: 1
+    selector:
+        matchLabels:
+          name: ubuntu-deployment
+    template:
+      metadata:
+        name: ubuntu-deployment
+        labels:
+          app: ubuntu
+          tier: backend
+          name: ubuntu-deployment
+      spec:
+        containers:
+        - name: ubuntu
+          image: ubuntu
+          command:
+            - "sleep"
+            - "604800"
+          resources:
+            limits:
+              cpu: "12"
+              memory: "12Gi"
+            requests:
+              cpu: "10"
+              memory: "10Gi"
+          imagePullPolicy: IfNotPresent
+        restartPolicy: Always
+EOF
