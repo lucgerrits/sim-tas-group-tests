@@ -25,8 +25,8 @@ async function main() {
     console.log(`Creating ${account_pair_size} accounts...`)
     var ACCOUNT_PAIRS = [];
     for (let i = 0; i < account_pair_size; i++) {
-        console.clear();
-        console.log(`Loading account list ${i * 100 / account_pair_size}%`)
+        //console.clear();
+        //console.log(`Loading account list ${i * 100 / account_pair_size}%`)
         ACCOUNT_PAIRS.push(substrate_sim.accounts.genMnemonic())
     }
     writeFileSync(filename_accounts, JSON.stringify(ACCOUNT_PAIRS, null, 1), { encoding: "utf8", flag: "a+" })
@@ -35,8 +35,8 @@ async function main() {
     console.log(`Creating ${factory_account_pair_size} factory accounts...`)
     var FACTORY_ACCOUNT_PAIRS = [];
     for (let i = 0; i < factory_account_pair_size; i++) {
-        console.clear();
-        console.log(`Loading factory account list ${i * 100 / factory_account_pair_size}%`)
+        //console.clear();
+        //console.log(`Loading factory account list ${i * 100 / factory_account_pair_size}%`)
         FACTORY_ACCOUNT_PAIRS.push(substrate_sim.accounts.genMnemonic())
     }
     writeFileSync(filename_factories, JSON.stringify(FACTORY_ACCOUNT_PAIRS, null, 1), { encoding: "utf8", flag: "a+" })
