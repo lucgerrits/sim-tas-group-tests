@@ -19,3 +19,4 @@ Substrate/cloud-deployments/substrate-kube.yaml
 **/__pycache__/**
 Substrate/cloud-deployments/err.log
 Substrate/cloud-deployments/out.log
+**.log

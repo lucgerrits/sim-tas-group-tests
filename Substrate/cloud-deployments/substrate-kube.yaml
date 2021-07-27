@@ -49,24 +49,24 @@ items:
             args:
               - -c
               - |
-                    rm -r /peer-data-0/*;
+                    rm -rf /datas/substrate-0/*;
                     node-template key insert \
-                        --base-path /peer-data-0 \
+                        --base-path /datas/substrate-0 \
                         --chain local \
                         --key-type aura \
                         --scheme Sr25519 \
                         --suri "0x0000000000000000000000000000000000000000000000000000000000000001";
                     node-template key insert \
-                        --base-path /peer-data-0 \
+                        --base-path /datas/substrate-0 \
                         --chain local \
                         --key-type gran \
                         --scheme Ed25519 \
                         --suri "0x0000000000000000000000000000000000000000000000000000000000000001";
-                    ls -l /peer-data-0/chains/local_testnet/keystore;
+                    ls -l /datas/substrate-0/chains/local_testnet/keystore;
                     # Start Alice's node
                     RUST_LOG=runtime=debug
                     node-template \
-                        --base-path /peer-data-0 \
+                        --base-path /datas/substrate-0 \
                         --name Node0 \
                         --chain /genesis/customSpecRaw.json \
                         --port 30333 \
@@ -86,7 +86,7 @@ items:
                     
             volumeMounts:
               - name: substrate-data-0
-                mountPath: /peer-data-0
+                mountPath: /datas/substrate-0
               - name: substrate-genesis-0
                 mountPath: /genesis/
 
@@ -206,25 +206,26 @@ items:
             args:
               - -c
               - |
+                    rm -rf /datas/substrate-1/*;
                     node-template key insert \
-                        --base-path /peer-data-1 \
+                        --base-path /datas/substrate-1 \
                         --chain local \
                         --key-type aura \
                         --scheme Sr25519 \
                         --suri "0xf5458e038f2bfcf7b0a72d42276647ceb9915a93c181e68a4490509cf3fcb599";
                     node-template key insert \
-                        --base-path /peer-data-1 \
+                        --base-path /datas/substrate-1 \
                         --chain local \
                         --key-type gran \
                         --scheme Ed25519 \
                         --suri "0xf5458e038f2bfcf7b0a72d42276647ceb9915a93c181e68a4490509cf3fcb599";
-                    ls -l /peer-data-1/chains/local_testnet/keystore;
+                    ls -l /datas/substrate-1/chains/local_testnet/keystore;
                     RUST_LOG=runtime=debug
                     node-template \
-                        --base-path /peer-data-1 \
+                        --base-path /datas/substrate-1 \
                         --name Node1 \
                         --chain /genesis/customSpecRaw.json \
-                        --keystore-path /peer-data-1/chains/local_testnet/keystore/ \
+                        --keystore-path /datas/substrate-1/chains/local_testnet/keystore/ \
                         --node-key f5458e038f2bfcf7b0a72d42276647ceb9915a93c181e68a4490509cf3fcb599 \
                         --port 30333 \
                         --ws-port 9944 \
@@ -244,7 +245,7 @@ items:
                     
             volumeMounts:
               - name: substrate-data-1
-                mountPath: /peer-data-1
+                mountPath: /datas/substrate-1
               - name: substrate-genesis-1
                 mountPath: /genesis/
 
@@ -364,25 +365,26 @@ items:
             args:
               - -c
               - |
+                    rm -rf /datas/substrate-2/*;
                     node-template key insert \
-                        --base-path /peer-data-2 \
+                        --base-path /datas/substrate-2 \
                         --chain local \
                         --key-type aura \
                         --scheme Sr25519 \
                         --suri "0x21944d1415c6bad043d96bb13ccacdd7c5704702daa57d55df62463fb622859d";
                     node-template key insert \
-                        --base-path /peer-data-2 \
+                        --base-path /datas/substrate-2 \
                         --chain local \
                         --key-type gran \
                         --scheme Ed25519 \
                         --suri "0x21944d1415c6bad043d96bb13ccacdd7c5704702daa57d55df62463fb622859d";
-                    ls -l /peer-data-2/chains/local_testnet/keystore;
+                    ls -l /datas/substrate-2/chains/local_testnet/keystore;
                     RUST_LOG=runtime=debug
                     node-template \
-                        --base-path /peer-data-2 \
+                        --base-path /datas/substrate-2 \
                         --name Node2 \
                         --chain /genesis/customSpecRaw.json \
-                        --keystore-path /peer-data-2/chains/local_testnet/keystore/ \
+                        --keystore-path /datas/substrate-2/chains/local_testnet/keystore/ \
                         --node-key 21944d1415c6bad043d96bb13ccacdd7c5704702daa57d55df62463fb622859d \
                         --port 30333 \
                         --ws-port 9944 \
@@ -402,7 +404,7 @@ items:
                     
             volumeMounts:
               - name: substrate-data-2
-                mountPath: /peer-data-2
+                mountPath: /datas/substrate-2
               - name: substrate-genesis-2
                 mountPath: /genesis/
 
@@ -522,25 +524,26 @@ items:
             args:
               - -c
               - |
+                    rm -rf /datas/substrate-3/*;
                     node-template key insert \
-                        --base-path /peer-data-3 \
+                        --base-path /datas/substrate-3 \
                         --chain local \
                         --key-type aura \
                         --scheme Sr25519 \
                         --suri "0xa039410db78b4154d845333a4c619ddc622d4b5496b851375c1d6393596cdf27";
                     node-template key insert \
-                        --base-path /peer-data-3 \
+                        --base-path /datas/substrate-3 \
                         --chain local \
                         --key-type gran \
                         --scheme Ed25519 \
                         --suri "0xa039410db78b4154d845333a4c619ddc622d4b5496b851375c1d6393596cdf27";
-                    ls -l /peer-data-3/chains/local_testnet/keystore;
+                    ls -l /datas/substrate-3/chains/local_testnet/keystore;
                     RUST_LOG=runtime=debug
                     node-template \
-                        --base-path /peer-data-3 \
+                        --base-path /datas/substrate-3 \
                         --name Node3 \
                         --chain /genesis/customSpecRaw.json \
-                        --keystore-path /peer-data-3/chains/local_testnet/keystore/ \
+                        --keystore-path /datas/substrate-3/chains/local_testnet/keystore/ \
                         --node-key a039410db78b4154d845333a4c619ddc622d4b5496b851375c1d6393596cdf27 \
                         --port 30333 \
                         --ws-port 9944 \
@@ -560,7 +563,7 @@ items:
                     
             volumeMounts:
               - name: substrate-data-3
-                mountPath: /peer-data-3
+                mountPath: /datas/substrate-3
               - name: substrate-genesis-3
                 mountPath: /genesis/
 
@@ -680,25 +683,26 @@ items:
             args:
               - -c
               - |
+                    rm -rf /datas/substrate-4/*;
                     node-template key insert \
-                        --base-path /peer-data-4 \
+                        --base-path /datas/substrate-4 \
                         --chain local \
                         --key-type aura \
                         --scheme Sr25519 \
                         --suri "0x08b10797b1d376f2e65051e0be7cc932ca2ee331bad58db1083353acc8503d28";
                     node-template key insert \
-                        --base-path /peer-data-4 \
+                        --base-path /datas/substrate-4 \
                         --chain local \
                         --key-type gran \
                         --scheme Ed25519 \
                         --suri "0x08b10797b1d376f2e65051e0be7cc932ca2ee331bad58db1083353acc8503d28";
-                    ls -l /peer-data-4/chains/local_testnet/keystore;
+                    ls -l /datas/substrate-4/chains/local_testnet/keystore;
                     RUST_LOG=runtime=debug
                     node-template \
-                        --base-path /peer-data-4 \
+                        --base-path /datas/substrate-4 \
                         --name Node4 \
                         --chain /genesis/customSpecRaw.json \
-                        --keystore-path /peer-data-4/chains/local_testnet/keystore/ \
+                        --keystore-path /datas/substrate-4/chains/local_testnet/keystore/ \
                         --node-key 08b10797b1d376f2e65051e0be7cc932ca2ee331bad58db1083353acc8503d28 \
                         --port 30333 \
                         --ws-port 9944 \
@@ -718,7 +722,7 @@ items:
                     
             volumeMounts:
               - name: substrate-data-4
-                mountPath: /peer-data-4
+                mountPath: /datas/substrate-4
               - name: substrate-genesis-4
                 mountPath: /genesis/
 
@@ -838,25 +842,26 @@ items:
             args:
               - -c
               - |
+                    rm -rf /datas/substrate-5/*;
                     node-template key insert \
-                        --base-path /peer-data-5 \
+                        --base-path /datas/substrate-5 \
                         --chain local \
                         --key-type aura \
                         --scheme Sr25519 \
                         --suri "0x78fdd7b537aeac75051015745e2802b9cb256139dce4fb03a5397cc56630b2f3";
                     node-template key insert \
-                        --base-path /peer-data-5 \
+                        --base-path /datas/substrate-5 \
                         --chain local \
                         --key-type gran \
                         --scheme Ed25519 \
                         --suri "0x78fdd7b537aeac75051015745e2802b9cb256139dce4fb03a5397cc56630b2f3";
-                    ls -l /peer-data-5/chains/local_testnet/keystore;
+                    ls -l /datas/substrate-5/chains/local_testnet/keystore;
                     RUST_LOG=runtime=debug
                     node-template \
-                        --base-path /peer-data-5 \
+                        --base-path /datas/substrate-5 \
                         --name Node5 \
                         --chain /genesis/customSpecRaw.json \
-                        --keystore-path /peer-data-5/chains/local_testnet/keystore/ \
+                        --keystore-path /datas/substrate-5/chains/local_testnet/keystore/ \
                         --node-key 78fdd7b537aeac75051015745e2802b9cb256139dce4fb03a5397cc56630b2f3 \
                         --port 30333 \
                         --ws-port 9944 \
@@ -876,7 +881,7 @@ items:
                     
             volumeMounts:
               - name: substrate-data-5
-                mountPath: /peer-data-5
+                mountPath: /datas/substrate-5
               - name: substrate-genesis-5
                 mountPath: /genesis/
 
@@ -967,3 +972,40 @@ items:
         protocol: TCP
         port: 9944
         targetPort: 9944
+####################################### BENCHMARK MACHINE #########################
+
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: benchmark
+    namespace: substrate-net
+  spec:
+    replicas: 1
+    selector:
+        matchLabels:
+          name: benchmark-deployment
+    template:
+      metadata:
+        labels:
+          name: benchmark-deployment
+          serviceSelector: benchmark-deployment
+      spec:
+        hostAliases:
+        - ip: "185.52.32.4"
+          hostnames:
+          - "substrate-ws.unice.cust.tasfrance.com"
+        containers:
+        - name: substrate-sim-transaction-js
+          image: projetsim/substrate-sim-transaction-js:latest
+          command:
+            - "sleep"
+            - "604800"
+          resources:
+            limits:
+              cpu: "20"
+              memory: "20Gi"
+            requests:
+              cpu: "20"
+              memory: "20Gi"
+          imagePullPolicy: IfNotPresent
+        restartPolicy: Always
