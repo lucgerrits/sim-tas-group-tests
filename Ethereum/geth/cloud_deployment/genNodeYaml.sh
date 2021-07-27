@@ -357,7 +357,7 @@ cat << EOF
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
