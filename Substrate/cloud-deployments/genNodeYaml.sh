@@ -33,8 +33,8 @@ for (( j=1; j<=$NBNODES; j++ )) # start 1 => no bootnode
 do
 cmd_add_to_keystore+=$(cat <<EOF
 
-                    node-template key insert --base-path /peer-data-$i --chain local --key-type aura --suri "${Ed25519_arr_secretSeed[j]}";
-                    node-template key insert --base-path /peer-data-$i --chain local --key-type gran --suri "${Ed25519_arr_secretSeed[j]}";
+                    node-template key insert --base-path /datas/substrate-$i --chain local --key-type aura --suri "${Ed25519_arr_secretSeed[j]}";
+                    node-template key insert --base-path /datas/substrate-$i --chain local --key-type gran --suri "${Ed25519_arr_secretSeed[j]}";
 
 EOF
 )
@@ -88,24 +88,24 @@ cat << EOF
             args:
               - -c
               - |
-                    rm -r /peer-data-$i/*;
+                    rm -rf /datas/substrate-$i/*;
                     node-template key insert \\
-                        --base-path /peer-data-$i \\
+                        --base-path /datas/substrate-$i \\
                         --chain local \\
                         --key-type aura \\
                         --scheme Sr25519 \\
                         --suri "0x0000000000000000000000000000000000000000000000000000000000000001";
                     node-template key insert \\
-                        --base-path /peer-data-$i \\
+                        --base-path /datas/substrate-$i \\
                         --chain local \\
                         --key-type gran \\
                         --scheme Ed25519 \\
                         --suri "0x0000000000000000000000000000000000000000000000000000000000000001";
-                    ls -l /peer-data-$i/chains/local_testnet/keystore;
+                    ls -l /datas/substrate-$i/chains/local_testnet/keystore;
                     # Start Alice's node
                     RUST_LOG=runtime=debug
                     node-template \\
-                        --base-path /peer-data-$i \\
+                        --base-path /datas/substrate-$i \\
                         --name Node$i \\
                         --chain /genesis/customSpecRaw.json \\
                         --port 30333 \\
@@ -125,7 +125,7 @@ cat << EOF
                     
             volumeMounts:
               - name: substrate-data-$i
-                mountPath: /peer-data-$i
+                mountPath: /datas/substrate-$i
               - name: substrate-genesis-$i
                 mountPath: /genesis/
 
@@ -189,25 +189,26 @@ cat << EOF
             args:
               - -c
               - |
+                    rm -rf /datas/substrate-$i/*;
                     node-template key insert \\
-                        --base-path /peer-data-$i \\
+                        --base-path /datas/substrate-$i \\
                         --chain local \\
                         --key-type aura \\
                         --scheme Sr25519 \\
                         --suri "${Sr25519_arr_secretSeed[i]}";
                     node-template key insert \\
-                        --base-path /peer-data-$i \\
+                        --base-path /datas/substrate-$i \\
                         --chain local \\
                         --key-type gran \\
                         --scheme Ed25519 \\
                         --suri "${Ed25519_arr_secretSeed[i]}";
-                    ls -l /peer-data-$i/chains/local_testnet/keystore;
+                    ls -l /datas/substrate-$i/chains/local_testnet/keystore;
                     RUST_LOG=runtime=debug
                     node-template \\
-                        --base-path /peer-data-$i \\
+                        --base-path /datas/substrate-$i \\
                         --name Node$i \\
                         --chain /genesis/customSpecRaw.json \\
-                        --keystore-path /peer-data-$i/chains/local_testnet/keystore/ \\
+                        --keystore-path /datas/substrate-$i/chains/local_testnet/keystore/ \\
                         --node-key ${Ed25519_arr_secretSeed[i]:2:64} \\
                         --port 30333 \\
                         --ws-port 9944 \\
@@ -227,7 +228,7 @@ cat << EOF
                     
             volumeMounts:
               - name: substrate-data-$i
-                mountPath: /peer-data-$i
+                mountPath: /datas/substrate-$i
               - name: substrate-genesis-$i
                 mountPath: /genesis/
 
