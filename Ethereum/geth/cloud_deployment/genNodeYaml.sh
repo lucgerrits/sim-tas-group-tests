@@ -411,6 +411,7 @@ cat << EOF
       app: miner
       tier: backend
       name: geth-miner$i
+      serviceSelector: ethereum-node
     name: geth-miner$i
   spec:
     selector:
@@ -580,6 +581,27 @@ EOF
 
 done ############## end for loop
 
+#####################Added a Single WebSocket Services to access
+cat << EOF
+
+#--------------------------=ONE SERVICE FOR ALL NODE (websocket)=--------------------------------
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: ethereum-ws-service
+    namespace: ethereum-net
+  spec:
+    type: ClusterIP
+    selector:
+      serviceSelector: ethereum-node
+    ports:
+      - name: "9944"
+        protocol: TCP
+        port: 9944
+        targetPort: 9944
+EOF
+
 
 ###################### create weird extraData field
 filed_extraData=""
@@ -627,14 +649,14 @@ cat << EOF
           "eip158Block": 3,
           "byzantiumBlock": 4,
           "clique": {
-            "period": 5,
+            "period": 2,
             "epoch": 30000
           }
         },
         "nonce": "0x0",
         "timestamp": "0x5cdec502",
         "gasLimit": "9000000000000",
-        "difficulty" : "",
+        "difficulty" : "0x1",
         "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "coinbase": "0x0000000000000000000000000000000000000000",
         "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000${filed_extraData}0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
