@@ -352,7 +352,7 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
@@ -402,6 +402,7 @@ items:
       app: miner
       tier: backend
       name: geth-miner1
+      serviceSelector: ethereum-node
     name: geth-miner1
   spec:
     selector:
@@ -601,7 +602,7 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
@@ -651,6 +652,7 @@ items:
       app: miner
       tier: backend
       name: geth-miner2
+      serviceSelector: ethereum-node
     name: geth-miner2
   spec:
     selector:
@@ -850,7 +852,7 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
@@ -900,6 +902,7 @@ items:
       app: miner
       tier: backend
       name: geth-miner3
+      serviceSelector: ethereum-node
     name: geth-miner3
   spec:
     selector:
@@ -1099,7 +1102,7 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
@@ -1149,6 +1152,7 @@ items:
       app: miner
       tier: backend
       name: geth-miner4
+      serviceSelector: ethereum-node
     name: geth-miner4
   spec:
     selector:
@@ -1348,7 +1352,7 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
@@ -1398,6 +1402,7 @@ items:
       app: miner
       tier: backend
       name: geth-miner5
+      serviceSelector: ethereum-node
     name: geth-miner5
   spec:
     selector:
@@ -1597,7 +1602,7 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
@@ -1647,6 +1652,7 @@ items:
       app: miner
       tier: backend
       name: geth-miner6
+      serviceSelector: ethereum-node
     name: geth-miner6
   spec:
     selector:
@@ -1846,7 +1852,7 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
@@ -1896,6 +1902,7 @@ items:
       app: miner
       tier: backend
       name: geth-miner7
+      serviceSelector: ethereum-node
     name: geth-miner7
   spec:
     selector:
@@ -2095,7 +2102,7 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
@@ -2145,6 +2152,7 @@ items:
       app: miner
       tier: backend
       name: geth-miner8
+      serviceSelector: ethereum-node
     name: geth-miner8
   spec:
     selector:
@@ -2344,7 +2352,7 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
@@ -2394,6 +2402,7 @@ items:
       app: miner
       tier: backend
       name: geth-miner9
+      serviceSelector: ethereum-node
     name: geth-miner9
   spec:
     selector:
@@ -2593,7 +2602,7 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
@@ -2643,6 +2652,7 @@ items:
       app: miner
       tier: backend
       name: geth-miner10
+      serviceSelector: ethereum-node
     name: geth-miner10
   spec:
     selector:
@@ -2842,7 +2852,7 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
@@ -2892,6 +2902,7 @@ items:
       app: miner
       tier: backend
       name: geth-miner11
+      serviceSelector: ethereum-node
     name: geth-miner11
   spec:
     selector:
@@ -3091,7 +3102,7 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
@@ -3141,6 +3152,7 @@ items:
       app: miner
       tier: backend
       name: geth-miner12
+      serviceSelector: ethereum-node
     name: geth-miner12
   spec:
     selector:
@@ -3340,7 +3352,7 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
@@ -3390,6 +3402,7 @@ items:
       app: miner
       tier: backend
       name: geth-miner13
+      serviceSelector: ethereum-node
     name: geth-miner13
   spec:
     selector:
@@ -3589,7 +3602,7 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
@@ -3639,6 +3652,7 @@ items:
       app: miner
       tier: backend
       name: geth-miner14
+      serviceSelector: ethereum-node
     name: geth-miner14
   spec:
     selector:
@@ -3838,7 +3852,7 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
@@ -3888,6 +3902,7 @@ items:
       app: miner
       tier: backend
       name: geth-miner15
+      serviceSelector: ethereum-node
     name: geth-miner15
   spec:
     selector:
@@ -4087,7 +4102,7 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
@@ -4137,6 +4152,7 @@ items:
       app: miner
       tier: backend
       name: geth-miner16
+      serviceSelector: ethereum-node
     name: geth-miner16
   spec:
     selector:
@@ -4336,7 +4352,7 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
@@ -4386,6 +4402,7 @@ items:
       app: miner
       tier: backend
       name: geth-miner17
+      serviceSelector: ethereum-node
     name: geth-miner17
   spec:
     selector:
@@ -4585,7 +4602,7 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
@@ -4635,6 +4652,7 @@ items:
       app: miner
       tier: backend
       name: geth-miner18
+      serviceSelector: ethereum-node
     name: geth-miner18
   spec:
     selector:
@@ -4834,7 +4852,7 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
@@ -4884,6 +4902,7 @@ items:
       app: miner
       tier: backend
       name: geth-miner19
+      serviceSelector: ethereum-node
     name: geth-miner19
   spec:
     selector:
@@ -5083,7 +5102,7 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
@@ -5133,6 +5152,7 @@ items:
       app: miner
       tier: backend
       name: geth-miner20
+      serviceSelector: ethereum-node
     name: geth-miner20
   spec:
     selector:
@@ -5332,7 +5352,7 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
@@ -5382,6 +5402,7 @@ items:
       app: miner
       tier: backend
       name: geth-miner21
+      serviceSelector: ethereum-node
     name: geth-miner21
   spec:
     selector:
@@ -5581,7 +5602,7 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
@@ -5631,6 +5652,7 @@ items:
       app: miner
       tier: backend
       name: geth-miner22
+      serviceSelector: ethereum-node
     name: geth-miner22
   spec:
     selector:
@@ -5830,7 +5852,7 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
@@ -5880,6 +5902,7 @@ items:
       app: miner
       tier: backend
       name: geth-miner23
+      serviceSelector: ethereum-node
     name: geth-miner23
   spec:
     selector:
@@ -6079,7 +6102,7 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
+      GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 1024
       Lifetime = 10800000000000
@@ -6129,6 +6152,7 @@ items:
       app: miner
       tier: backend
       name: geth-miner24
+      serviceSelector: ethereum-node
     name: geth-miner24
   spec:
     selector:
@@ -6278,6 +6302,23 @@ items:
       requests:
         storage: 20Gi
 
+
+#--------------------------=ONE SERVICE FOR ALL NODE (websocket)=--------------------------------
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: ethereum-ws-service
+    namespace: ethereum-net
+  spec:
+    type: ClusterIP
+    selector:
+      serviceSelector: ethereum-node
+    ports:
+      - name: "9944"
+        protocol: TCP
+        port: 9944
+        targetPort: 9944
 #--------------------------= genesis-config =--------------------------------
 - apiVersion: v1
   kind: ConfigMap
@@ -6299,14 +6340,14 @@ items:
           "eip158Block": 3,
           "byzantiumBlock": 4,
           "clique": {
-            "period": 5,
+            "period": 2,
             "epoch": 30000
           }
         },
         "nonce": "0x0",
         "timestamp": "0x5cdec502",
         "gasLimit": "9000000000000",
-        "difficulty" : "",
+        "difficulty" : "0x1",
         "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "coinbase": "0x0000000000000000000000000000000000000000",
         "extraData": "0x00000000000000000000000000000000000000000000000000000000000000006c72e4c3c645a5d84b44f6f143ce559c9e8d815377c1113fb3da88e6a0f6b8b1af7c5f15286f52535708c9ed0dc25097f24903d27c13c9b4c18f3e545e99b8f68e317e40f5b64fb427d6ddd86fb6d89bc36194ca819c884d556eab67a0a3a1d760dcdff4b5c9fcfe7acf4473f6369a93e947f73aebb4646ce6b1c4a245d8ddab785dc321b3b87c066e91cacd3eeb48c7eaa2b850fe3b1bfd69c1dedc93cf8333ff8ebc1a54092d738680c9092abae5cefa0005b2efe7a9c39ec64864d23eb306054d2570b234d3f2b42a184af3bd28c96f4904025d3833a83ebfd74e1dc8a2ae48ec97f2ef5c3a5712abbf02667d11d2d1dfa6cdbb5ce03c9629a52a3fff5793146cb89fcb856028b25efde34192df0722abeb583033ee52d113a83240df4cbf61ea093664d97737662ad52b878348425db945254ee759040e383c8897839454d70abedc871f939abd60b36164ca443cfe6063ea5e71729cf96c2fdb16265cb708d1df2cb91cd6a9697a5d50fcea7d9ab93fcefd6570f0fa15e945ab58d5a1fda3be5ac1ef6d9bd4f575c2321e44b1c6c6962fd176d408568bf32642ccfdbad501eec92d928cf91fa667b5b82cc745f0a1503fed4faffbf67e4f41306fb48540a317e0f96a89f0ffa3db12fc9ba86e41f9b1dda4e6c93b34d3e1653d88112a0a0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
@@ -7028,7 +7069,7 @@ items:
         - name: monitor-config-temp
           emptyDir: {} 
 
-####################################### ETH MONITOR STUFF #########################
+####################################### BENCHMARK MACHINE #########################
 
 - apiVersion: apps/v1
   kind: Deployment
