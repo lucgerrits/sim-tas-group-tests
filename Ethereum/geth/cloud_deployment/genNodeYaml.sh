@@ -109,8 +109,8 @@ cat << EOF
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
-      AccountQueue = 64
+      GlobalSlots = 1000000
+      AccountQueue = 1000000
       GlobalQueue = 1024
       Lifetime = 10800000000000
       
@@ -337,7 +337,7 @@ cat << EOF
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
