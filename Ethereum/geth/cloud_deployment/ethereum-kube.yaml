@@ -87,8 +87,8 @@ items:
       PriceLimit = 1
       PriceBump = 10
       AccountSlots = 16
-      GlobalSlots = 4096
-      AccountQueue = 64
+      GlobalSlots = 1000000
+      AccountQueue = 1000000
       GlobalQueue = 1024
       Lifetime = 10800000000000
       
@@ -332,7 +332,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -582,7 +582,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -832,7 +832,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -1082,7 +1082,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -1332,7 +1332,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -1582,7 +1582,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -1832,7 +1832,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -2082,7 +2082,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -2332,7 +2332,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -2582,7 +2582,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -2832,7 +2832,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -3082,7 +3082,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -3332,7 +3332,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -3582,7 +3582,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -3832,7 +3832,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -4082,7 +4082,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -4332,7 +4332,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -4582,7 +4582,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -4832,7 +4832,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -5082,7 +5082,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -5332,7 +5332,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -5582,7 +5582,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -5832,7 +5832,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -6082,7 +6082,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -6313,12 +6313,12 @@ items:
   spec:
     type: ClusterIP
     selector:
-      serviceSelector: ethereum-node
+      app: miner 
     ports:
-      - name: "9944"
+      - name: "8546"
         protocol: TCP
-        port: 9944
-        targetPort: 9944
+        port: 8546
+        targetPort: 8546
 #--------------------------= genesis-config =--------------------------------
 - apiVersion: v1
   kind: ConfigMap
@@ -6352,7 +6352,9 @@ items:
         "coinbase": "0x0000000000000000000000000000000000000000",
         "extraData": "0x00000000000000000000000000000000000000000000000000000000000000006c72e4c3c645a5d84b44f6f143ce559c9e8d815377c1113fb3da88e6a0f6b8b1af7c5f15286f52535708c9ed0dc25097f24903d27c13c9b4c18f3e545e99b8f68e317e40f5b64fb427d6ddd86fb6d89bc36194ca819c884d556eab67a0a3a1d760dcdff4b5c9fcfe7acf4473f6369a93e947f73aebb4646ce6b1c4a245d8ddab785dc321b3b87c066e91cacd3eeb48c7eaa2b850fe3b1bfd69c1dedc93cf8333ff8ebc1a54092d738680c9092abae5cefa0005b2efe7a9c39ec64864d23eb306054d2570b234d3f2b42a184af3bd28c96f4904025d3833a83ebfd74e1dc8a2ae48ec97f2ef5c3a5712abbf02667d11d2d1dfa6cdbb5ce03c9629a52a3fff5793146cb89fcb856028b25efde34192df0722abeb583033ee52d113a83240df4cbf61ea093664d97737662ad52b878348425db945254ee759040e383c8897839454d70abedc871f939abd60b36164ca443cfe6063ea5e71729cf96c2fdb16265cb708d1df2cb91cd6a9697a5d50fcea7d9ab93fcefd6570f0fa15e945ab58d5a1fda3be5ac1ef6d9bd4f575c2321e44b1c6c6962fd176d408568bf32642ccfdbad501eec92d928cf91fa667b5b82cc745f0a1503fed4faffbf67e4f41306fb48540a317e0f96a89f0ffa3db12fc9ba86e41f9b1dda4e6c93b34d3e1653d88112a0a0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         "alloc": {
-                        "6c72e4c3c645a5d84b44f6f143ce559c9e8d8153": {
+                        "284971d0df1bf4a2e5b053261b8beffdc6ca8e0a": {
+              "balance": "0x200000000000000000000000000000000000000000000000000000000000000"
+            },            "6c72e4c3c645a5d84b44f6f143ce559c9e8d8153": {
               "balance": "0x200000000000000000000000000000000000000000000000000000000000000"
             },            "77c1113fb3da88e6a0f6b8b1af7c5f15286f5253": {
               "balance": "0x200000000000000000000000000000000000000000000000000000000000000"

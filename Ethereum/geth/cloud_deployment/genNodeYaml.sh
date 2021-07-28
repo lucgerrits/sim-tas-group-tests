@@ -594,12 +594,12 @@ cat << EOF
   spec:
     type: ClusterIP
     selector:
-      serviceSelector: ethereum-node
+      app: miner 
     ports:
-      - name: "9944"
+      - name: "8546"
         protocol: TCP
-        port: 9944
-        targetPort: 9944
+        port: 8546
+        targetPort: 8546
 EOF
 
 
@@ -613,7 +613,7 @@ done
 
 ###################### init balances
 filed_balances=""
-for (( i=1; i<=$NBNODES; i++ )) # start 1 => no bootnode
+for (( i=0; i<=$NBNODES; i++ )) # start 0 => include bootnode
 do
 filed_balances+=$(cat <<EOF
             "${accountArrayPublic[i]}": {
