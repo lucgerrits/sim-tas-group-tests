@@ -602,6 +602,27 @@ cat << EOF
         targetPort: 8546
 EOF
 
+#####################Added a Single WebSocket Services to access
+cat << EOF
+
+#--------------------------=ONE SERVICE FOR ALL NODE (HTTP)=--------------------------------
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: ethereum-http-service
+    namespace: ethereum-net
+  spec:
+    type: ClusterIP
+    selector:
+      app: miner 
+    ports:
+      - name: "8545"
+        protocol: TCP
+        port: 8545
+        targetPort: 8545
+EOF
+
 
 ###################### create weird extraData field
 filed_extraData=""
