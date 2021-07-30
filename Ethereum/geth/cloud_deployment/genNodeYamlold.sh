@@ -106,9 +106,9 @@ cat << EOF
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 0
-      PriceBump = 0
-      AccountSlots = 1000000
+      PriceLimit = 1
+      PriceBump = 10
+      AccountSlots = 16
       GlobalSlots = 1000000
       AccountQueue = 1000000
       GlobalQueue = 1000000
@@ -118,6 +118,9 @@ cat << EOF
       Blocks = 20
       Percentile = 60
       
+      [Shh]
+      MaxMessageSize = 1048576
+      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "bootnode"
@@ -127,11 +130,11 @@ cat << EOF
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique"]
+      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth"]
+      WSModules = ["net", "web3", "eth", "shh"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -142,6 +145,11 @@ cat << EOF
       TrustedNodes = []
       ListenAddr = ":30303"
       EnableMsgEvents = false
+      
+      [Dashboard]
+      Host = "0.0.0.0"
+      Port = 8080
+      Refresh = 3000000000
 
 EOF
 
@@ -194,7 +202,7 @@ cat << EOF
       spec:
         containers:
         - name: geth-boot-node-setup-container
-          image: ethereum/client-go:v1.10.0
+          image: ethereum/client-go:alltools-v1.10.0
           imagePullPolicy: IfNotPresent
           command: [ "sh" ]
           args:
@@ -236,7 +244,7 @@ cat << EOF
       spec:
         containers:
         - name: geth-bootnode-container
-          image: ethereum/client-go:v1.10.0
+          image: ethereum/client-go:alltools-v1.10.0
           imagePullPolicy: IfNotPresent
           command: [ "sh" ]
           args:
@@ -249,7 +257,7 @@ cat << EOF
             cp /etc/gethconfigmap/bootnode/gethconfig.toml /etc/geth/bootnode;
             /usr/local/bin/geth \\
             --verbosity 3  \\
-            --unlock 0x${accountArrayPublic[i]} --allow-insecure-unlock --password /etc/testnet/bootnode/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \\
+            --unlock 0x${accountArrayPublic[i]} --allow-insecure-unlock --password /etc/testnet/bootnode/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \\
             --config /etc/geth/bootnode/gethconfig.toml;"
           volumeMounts:
           - name: bootnode-persistent-storage
@@ -346,9 +354,9 @@ cat << EOF
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 0
-      PriceBump = 0
-      AccountSlots = 1000000
+      PriceLimit = 1
+      PriceBump = 10
+      AccountSlots = 16
       GlobalSlots = 1000000
       AccountQueue = 100000
       GlobalQueue = 100000
@@ -358,6 +366,10 @@ cat << EOF
       Blocks = 20
       Percentile = 60
       
+      [Shh]
+      MaxMessageSize = 1048576
+      MinimumAcceptedPOW = 2e-01
+      
       [Node]
       UserIdent = "miner$i"
       DataDir = "/etc/testnet/miner$i"
@@ -366,11 +378,11 @@ cat << EOF
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -382,6 +394,10 @@ cat << EOF
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
+      [Dashboard]
+      Host = "0.0.0.0"
+      Port = 8080
+      Refresh = 3000000000
 
 EOF
 
@@ -428,13 +444,14 @@ cat << EOF
             sed -i \"s/BootstrapNodes = \\\\[\\\\]/BootstrapNodes = [\\\\\"\$ENODE_ESC\\\\\"]/g\" /etc/geth/miner$i/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\\\[\\\\]/BootstrapNodesV5 = [\\\\\"\$ENODE_ESC\\\\\"]/g\" /etc/geth/miner$i/gethconfig.toml;
             /usr/local/bin/geth \\
+            --dashboard \\
             --mine \\
             --verbosity 3  \\
             --nousb \\
             --rpc \\
             --ws \\
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \\
-            --unlock 0x${accountArrayPublic[i]} --allow-insecure-unlock --password /etc/testnet/miner$i/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \\
+            --unlock 0x${accountArrayPublic[i]} --allow-insecure-unlock --password /etc/testnet/miner$i/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \\
             --config /etc/geth/miner$i/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -512,6 +529,10 @@ cat << EOF
         protocol: TCP
         port: 30303
         targetPort: 30303
+      - name: miner$i-dashboard
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
 EOF
 
 #end else
