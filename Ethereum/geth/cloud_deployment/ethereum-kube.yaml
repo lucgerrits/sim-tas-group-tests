@@ -166,7 +166,7 @@ items:
       spec:
         containers:
         - name: geth-boot-node-setup-container
-          image: ethereum/client-go:v1.10.0
+          image: ethereum/client-go:alltools-v1.10.0
           imagePullPolicy: IfNotPresent
           command: [ "sh" ]
           args:
@@ -208,7 +208,7 @@ items:
       spec:
         containers:
         - name: geth-bootnode-container
-          image: ethereum/client-go:v1.10.0
+          image: ethereum/client-go:alltools-v1.10.0
           imagePullPolicy: IfNotPresent
           command: [ "sh" ]
           args:
@@ -219,7 +219,7 @@ items:
             echo 123 > /etc/testnet/bootnode/password.txt;
             mkdir -p /etc/geth/bootnode;
             cp /etc/gethconfigmap/bootnode/gethconfig.toml /etc/geth/bootnode;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/bootnode \
             --verbosity 3  \
             --unlock 0x284971d0df1bf4a2e5b053261b8beffdc6ca8e0a --allow-insecure-unlock --password /etc/testnet/bootnode/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/bootnode/gethconfig.toml;"
@@ -418,7 +418,7 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner1/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner1/gethconfig.toml;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/miner1 \
             --mine \
             --verbosity 3  \
             --nousb \
@@ -655,7 +655,7 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner2/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner2/gethconfig.toml;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/miner2 \
             --mine \
             --verbosity 3  \
             --nousb \
@@ -892,7 +892,7 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner3/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner3/gethconfig.toml;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/miner3 \
             --mine \
             --verbosity 3  \
             --nousb \
@@ -1129,7 +1129,7 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner4/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner4/gethconfig.toml;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/miner4 \
             --mine \
             --verbosity 3  \
             --nousb \
@@ -1366,7 +1366,7 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner5/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner5/gethconfig.toml;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/miner5 \
             --mine \
             --verbosity 3  \
             --nousb \
@@ -1603,7 +1603,7 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner6/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner6/gethconfig.toml;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/miner6 \
             --mine \
             --verbosity 3  \
             --nousb \
@@ -1840,7 +1840,7 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner7/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner7/gethconfig.toml;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/miner7 \
             --mine \
             --verbosity 3  \
             --nousb \
@@ -2077,7 +2077,7 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner8/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner8/gethconfig.toml;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/miner8 \
             --mine \
             --verbosity 3  \
             --nousb \
@@ -2314,7 +2314,7 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner9/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner9/gethconfig.toml;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/miner9 \
             --mine \
             --verbosity 3  \
             --nousb \
@@ -2551,7 +2551,7 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner10/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner10/gethconfig.toml;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/miner10 \
             --mine \
             --verbosity 3  \
             --nousb \
@@ -2788,7 +2788,7 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner11/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner11/gethconfig.toml;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/miner11 \
             --mine \
             --verbosity 3  \
             --nousb \
@@ -3025,7 +3025,7 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner12/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner12/gethconfig.toml;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/miner12 \
             --mine \
             --verbosity 3  \
             --nousb \
@@ -3262,7 +3262,7 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner13/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner13/gethconfig.toml;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/miner13 \
             --mine \
             --verbosity 3  \
             --nousb \
@@ -3499,7 +3499,7 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner14/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner14/gethconfig.toml;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/miner14 \
             --mine \
             --verbosity 3  \
             --nousb \
@@ -3736,7 +3736,7 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner15/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner15/gethconfig.toml;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/miner15 \
             --mine \
             --verbosity 3  \
             --nousb \
@@ -3973,7 +3973,7 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner16/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner16/gethconfig.toml;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/miner16 \
             --mine \
             --verbosity 3  \
             --nousb \
@@ -4210,7 +4210,7 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner17/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner17/gethconfig.toml;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/miner17 \
             --mine \
             --verbosity 3  \
             --nousb \
@@ -4447,7 +4447,7 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner18/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner18/gethconfig.toml;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/miner18 \
             --mine \
             --verbosity 3  \
             --nousb \
@@ -4684,7 +4684,7 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner19/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner19/gethconfig.toml;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/miner19 \
             --mine \
             --verbosity 3  \
             --nousb \
@@ -4921,7 +4921,7 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner20/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner20/gethconfig.toml;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/miner20 \
             --mine \
             --verbosity 3  \
             --nousb \
@@ -5158,7 +5158,7 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner21/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner21/gethconfig.toml;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/miner21 \
             --mine \
             --verbosity 3  \
             --nousb \
@@ -5395,7 +5395,7 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner22/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner22/gethconfig.toml;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/miner22 \
             --mine \
             --verbosity 3  \
             --nousb \
@@ -5632,7 +5632,7 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner23/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner23/gethconfig.toml;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/miner23 \
             --mine \
             --verbosity 3  \
             --nousb \
@@ -5869,7 +5869,7 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner24/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner24/gethconfig.toml;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/miner24 \
             --mine \
             --verbosity 3  \
             --nousb \
@@ -6047,7 +6047,7 @@ items:
         "difficulty" : "0x1",
         "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "coinbase": "0x0000000000000000000000000000000000000000",
-        "extraData": "0x00000000000000000000000000000000000000000000000000000000000000006c72e4c3c645a5d84b44f6f143ce559c9e8d815377c1113fb3da88e6a0f6b8b1af7c5f15286f52535708c9ed0dc25097f24903d27c13c9b4c18f3e545e99b8f68e317e40f5b64fb427d6ddd86fb6d89bc36194ca819c884d556eab67a0a3a1d760dcdff4b5c9fcfe7acf4473f6369a93e947f73aebb4646ce6b1c4a245d8ddab785dc321b3b87c066e91cacd3eeb48c7eaa2b850fe3b1bfd69c1dedc93cf8333ff8ebc1a54092d738680c9092abae5cefa0005b2efe7a9c39ec64864d23eb306054d2570b234d3f2b42a184af3bd28c96f4904025d3833a83ebfd74e1dc8a2ae48ec97f2ef5c3a5712abbf02667d11d2d1dfa6cdbb5ce03c9629a52a3fff5793146cb89fcb856028b25efde34192df0722abeb583033ee52d113a83240df4cbf61ea093664d97737662ad52b878348425db945254ee759040e383c8897839454d70abedc871f939abd60b36164ca443cfe6063ea5e71729cf96c2fdb16265cb708d1df2cb91cd6a9697a5d50fcea7d9ab93fcefd6570f0fa15e945ab58d5a1fda3be5ac1ef6d9bd4f575c2321e44b1c6c6962fd176d408568bf32642ccfdbad501eec92d928cf91fa667b5b82cc745f0a1503fed4faffbf67e4f41306fb48540a317e0f96a89f0ffa3db12fc9ba86e41f9b1dda4e6c93b34d3e1653d88112a0a0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000284971d0df1bf4a2e5b053261b8beffdc6ca8e0a6c72e4c3c645a5d84b44f6f143ce559c9e8d815377c1113fb3da88e6a0f6b8b1af7c5f15286f52535708c9ed0dc25097f24903d27c13c9b4c18f3e545e99b8f68e317e40f5b64fb427d6ddd86fb6d89bc36194ca819c884d556eab67a0a3a1d760dcdff4b5c9fcfe7acf4473f6369a93e947f73aebb4646ce6b1c4a245d8ddab785dc321b3b87c066e91cacd3eeb48c7eaa2b850fe3b1bfd69c1dedc93cf8333ff8ebc1a54092d738680c9092abae5cefa0005b2efe7a9c39ec64864d23eb306054d2570b234d3f2b42a184af3bd28c96f4904025d3833a83ebfd74e1dc8a2ae48ec97f2ef5c3a5712abbf02667d11d2d1dfa6cdbb5ce03c9629a52a3fff5793146cb89fcb856028b25efde34192df0722abeb583033ee52d113a83240df4cbf61ea093664d97737662ad52b878348425db945254ee759040e383c8897839454d70abedc871f939abd60b36164ca443cfe6063ea5e71729cf96c2fdb16265cb708d1df2cb91cd6a9697a5d50fcea7d9ab93fcefd6570f0fa15e945ab58d5a1fda3be5ac1ef6d9bd4f575c2321e44b1c6c6962fd176d408568bf32642ccfdbad501eec92d928cf91fa667b5b82cc745f0a1503fed4faffbf67e4f41306fb48540a317e0f96a89f0ffa3db12fc9ba86e41f9b1dda4e6c93b34d3e1653d88112a0a0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         "alloc": {
                         "284971d0df1bf4a2e5b053261b8beffdc6ca8e0a": {
               "balance": "0x200000000000000000000000000000000000000000000000000000000000000"

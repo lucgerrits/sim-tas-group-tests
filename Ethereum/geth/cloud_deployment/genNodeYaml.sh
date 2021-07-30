@@ -194,7 +194,7 @@ cat << EOF
       spec:
         containers:
         - name: geth-boot-node-setup-container
-          image: ethereum/client-go:v1.10.0
+          image: ethereum/client-go:alltools-v1.10.0
           imagePullPolicy: IfNotPresent
           command: [ "sh" ]
           args:
@@ -236,7 +236,7 @@ cat << EOF
       spec:
         containers:
         - name: geth-bootnode-container
-          image: ethereum/client-go:v1.10.0
+          image: ethereum/client-go:alltools-v1.10.0
           imagePullPolicy: IfNotPresent
           command: [ "sh" ]
           args:
@@ -247,7 +247,7 @@ cat << EOF
             echo 123 > /etc/testnet/bootnode/password.txt;
             mkdir -p /etc/geth/bootnode;
             cp /etc/gethconfigmap/bootnode/gethconfig.toml /etc/geth/bootnode;
-            /usr/local/bin/geth \\
+            /usr/local/bin/geth --datadir /etc/testnet/bootnode \\
             --verbosity 3  \\
             --unlock 0x${accountArrayPublic[i]} --allow-insecure-unlock --password /etc/testnet/bootnode/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \\
             --config /etc/geth/bootnode/gethconfig.toml;"
@@ -427,7 +427,7 @@ cat << EOF
             ENODE_ESC=\$(echo \$ENODE | sed 's@//@\\\\\\\/\\\\\\\/@g');
             sed -i \"s/BootstrapNodes = \\\\[\\\\]/BootstrapNodes = [\\\\\"\$ENODE_ESC\\\\\"]/g\" /etc/geth/miner$i/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\\\[\\\\]/BootstrapNodesV5 = [\\\\\"\$ENODE_ESC\\\\\"]/g\" /etc/geth/miner$i/gethconfig.toml;
-            /usr/local/bin/geth \\
+            /usr/local/bin/geth --datadir /etc/testnet/miner$i \\
             --mine \\
             --verbosity 3  \\
             --nousb \\
@@ -605,7 +605,7 @@ EOF
 
 ###################### create weird extraData field
 filed_extraData=""
-for (( i=1; i<=$NBNODES; i++ )) # start 1 => no bootnode
+for (( i=0; i<=$NBNODES; i++ )) # start 1 => no bootnode
 do
 filed_extraData+=${accountArrayPublic[i]}
 done
