@@ -84,21 +84,18 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
-      GlobalSlots = 4096
-      AccountQueue = 64
-      GlobalQueue = 1024
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
+      GlobalSlots = 1000000
+      AccountQueue = 1000000
+      GlobalQueue = 1000000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
       
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "bootnode"
@@ -108,11 +105,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh"]
+      WSModules = ["net", "web3", "eth"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -123,11 +120,6 @@ items:
       TrustedNodes = []
       ListenAddr = ":30303"
       EnableMsgEvents = false
-      
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 #---------------------------------= BOOT NODE SERVICE =---------------------------------------
 
@@ -174,7 +166,7 @@ items:
       spec:
         containers:
         - name: geth-boot-node-setup-container
-          image: ijsfd/geth-node:alltools-v1.9.0
+          image: ethereum/client-go:alltools-v1.10.0
           imagePullPolicy: IfNotPresent
           command: [ "sh" ]
           args:
@@ -216,7 +208,7 @@ items:
       spec:
         containers:
         - name: geth-bootnode-container
-          image: ijsfd/geth-node:alltools-v1.9.0
+          image: ethereum/client-go:alltools-v1.10.0
           imagePullPolicy: IfNotPresent
           command: [ "sh" ]
           args:
@@ -227,9 +219,9 @@ items:
             echo 123 > /etc/testnet/bootnode/password.txt;
             mkdir -p /etc/geth/bootnode;
             cp /etc/gethconfigmap/bootnode/gethconfig.toml /etc/geth/bootnode;
-            /usr/local/bin/geth \
+            /usr/local/bin/geth --datadir /etc/testnet/bootnode \
             --verbosity 3  \
-            --unlock 0x284971d0df1bf4a2e5b053261b8beffdc6ca8e0a --allow-insecure-unlock --password /etc/testnet/bootnode/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0x284971d0df1bf4a2e5b053261b8beffdc6ca8e0a --allow-insecure-unlock --password /etc/testnet/bootnode/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/bootnode/gethconfig.toml;"
           volumeMounts:
           - name: bootnode-persistent-storage
@@ -332,7 +324,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -349,21 +341,17 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
       GlobalSlots = 1000000
       AccountQueue = 100000
-      GlobalQueue = 1024
+      GlobalQueue = 100000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
-      
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "miner1"
@@ -373,11 +361,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -389,10 +377,6 @@ items:
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -420,7 +404,7 @@ items:
       spec:
         containers:
         - name: miner1-container
-          image: ethereum/client-go:v1.9.0
+          image: ethereum/client-go:v1.10.0
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -434,15 +418,14 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner1/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner1/gethconfig.toml;
-            /usr/local/bin/geth \
-            --dashboard \
+            /usr/local/bin/geth --datadir /etc/testnet/miner1 \
             --mine \
             --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0x6c72e4c3c645a5d84b44f6f143ce559c9e8d8153 --allow-insecure-unlock --password /etc/testnet/miner1/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0x6c72e4c3c645a5d84b44f6f143ce559c9e8d8153 --allow-insecure-unlock --password /etc/testnet/miner1/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/miner1/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -516,10 +499,6 @@ items:
         protocol: TCP
         port: 30303
         targetPort: 30303
-      - name: miner1-dashboard
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
 #---------------------------------=NODES PERSISTANT VOLUME 1=---------------------------------------
 - apiVersion: v1
   kind: PersistentVolume
@@ -582,7 +561,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -599,21 +578,17 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
       GlobalSlots = 1000000
       AccountQueue = 100000
-      GlobalQueue = 1024
+      GlobalQueue = 100000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
-      
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "miner2"
@@ -623,11 +598,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -639,10 +614,6 @@ items:
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -670,7 +641,7 @@ items:
       spec:
         containers:
         - name: miner2-container
-          image: ethereum/client-go:v1.9.0
+          image: ethereum/client-go:v1.10.0
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -684,15 +655,14 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner2/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner2/gethconfig.toml;
-            /usr/local/bin/geth \
-            --dashboard \
+            /usr/local/bin/geth --datadir /etc/testnet/miner2 \
             --mine \
             --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0x77c1113fb3da88e6a0f6b8b1af7c5f15286f5253 --allow-insecure-unlock --password /etc/testnet/miner2/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0x77c1113fb3da88e6a0f6b8b1af7c5f15286f5253 --allow-insecure-unlock --password /etc/testnet/miner2/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/miner2/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -766,10 +736,6 @@ items:
         protocol: TCP
         port: 30303
         targetPort: 30303
-      - name: miner2-dashboard
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
 #---------------------------------=NODES PERSISTANT VOLUME 2=---------------------------------------
 - apiVersion: v1
   kind: PersistentVolume
@@ -832,7 +798,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -849,21 +815,17 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
       GlobalSlots = 1000000
       AccountQueue = 100000
-      GlobalQueue = 1024
+      GlobalQueue = 100000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
-      
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "miner3"
@@ -873,11 +835,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -889,10 +851,6 @@ items:
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -920,7 +878,7 @@ items:
       spec:
         containers:
         - name: miner3-container
-          image: ethereum/client-go:v1.9.0
+          image: ethereum/client-go:v1.10.0
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -934,15 +892,14 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner3/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner3/gethconfig.toml;
-            /usr/local/bin/geth \
-            --dashboard \
+            /usr/local/bin/geth --datadir /etc/testnet/miner3 \
             --mine \
             --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0x5708c9ed0dc25097f24903d27c13c9b4c18f3e54 --allow-insecure-unlock --password /etc/testnet/miner3/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0x5708c9ed0dc25097f24903d27c13c9b4c18f3e54 --allow-insecure-unlock --password /etc/testnet/miner3/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/miner3/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -1016,10 +973,6 @@ items:
         protocol: TCP
         port: 30303
         targetPort: 30303
-      - name: miner3-dashboard
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
 #---------------------------------=NODES PERSISTANT VOLUME 3=---------------------------------------
 - apiVersion: v1
   kind: PersistentVolume
@@ -1082,7 +1035,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -1099,21 +1052,17 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
       GlobalSlots = 1000000
       AccountQueue = 100000
-      GlobalQueue = 1024
+      GlobalQueue = 100000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
-      
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "miner4"
@@ -1123,11 +1072,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -1139,10 +1088,6 @@ items:
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -1170,7 +1115,7 @@ items:
       spec:
         containers:
         - name: miner4-container
-          image: ethereum/client-go:v1.9.0
+          image: ethereum/client-go:v1.10.0
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -1184,15 +1129,14 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner4/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner4/gethconfig.toml;
-            /usr/local/bin/geth \
-            --dashboard \
+            /usr/local/bin/geth --datadir /etc/testnet/miner4 \
             --mine \
             --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0x5e99b8f68e317e40f5b64fb427d6ddd86fb6d89b --allow-insecure-unlock --password /etc/testnet/miner4/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0x5e99b8f68e317e40f5b64fb427d6ddd86fb6d89b --allow-insecure-unlock --password /etc/testnet/miner4/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/miner4/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -1266,10 +1210,6 @@ items:
         protocol: TCP
         port: 30303
         targetPort: 30303
-      - name: miner4-dashboard
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
 #---------------------------------=NODES PERSISTANT VOLUME 4=---------------------------------------
 - apiVersion: v1
   kind: PersistentVolume
@@ -1332,7 +1272,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -1349,21 +1289,17 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
       GlobalSlots = 1000000
       AccountQueue = 100000
-      GlobalQueue = 1024
+      GlobalQueue = 100000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
-      
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "miner5"
@@ -1373,11 +1309,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -1389,10 +1325,6 @@ items:
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -1420,7 +1352,7 @@ items:
       spec:
         containers:
         - name: miner5-container
-          image: ethereum/client-go:v1.9.0
+          image: ethereum/client-go:v1.10.0
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -1434,15 +1366,14 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner5/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner5/gethconfig.toml;
-            /usr/local/bin/geth \
-            --dashboard \
+            /usr/local/bin/geth --datadir /etc/testnet/miner5 \
             --mine \
             --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0xc36194ca819c884d556eab67a0a3a1d760dcdff4 --allow-insecure-unlock --password /etc/testnet/miner5/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0xc36194ca819c884d556eab67a0a3a1d760dcdff4 --allow-insecure-unlock --password /etc/testnet/miner5/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/miner5/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -1516,10 +1447,6 @@ items:
         protocol: TCP
         port: 30303
         targetPort: 30303
-      - name: miner5-dashboard
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
 #---------------------------------=NODES PERSISTANT VOLUME 5=---------------------------------------
 - apiVersion: v1
   kind: PersistentVolume
@@ -1582,7 +1509,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -1599,21 +1526,17 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
       GlobalSlots = 1000000
       AccountQueue = 100000
-      GlobalQueue = 1024
+      GlobalQueue = 100000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
-      
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "miner6"
@@ -1623,11 +1546,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -1639,10 +1562,6 @@ items:
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -1670,7 +1589,7 @@ items:
       spec:
         containers:
         - name: miner6-container
-          image: ethereum/client-go:v1.9.0
+          image: ethereum/client-go:v1.10.0
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -1684,15 +1603,14 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner6/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner6/gethconfig.toml;
-            /usr/local/bin/geth \
-            --dashboard \
+            /usr/local/bin/geth --datadir /etc/testnet/miner6 \
             --mine \
             --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0xb5c9fcfe7acf4473f6369a93e947f73aebb4646c --allow-insecure-unlock --password /etc/testnet/miner6/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0xb5c9fcfe7acf4473f6369a93e947f73aebb4646c --allow-insecure-unlock --password /etc/testnet/miner6/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/miner6/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -1766,10 +1684,6 @@ items:
         protocol: TCP
         port: 30303
         targetPort: 30303
-      - name: miner6-dashboard
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
 #---------------------------------=NODES PERSISTANT VOLUME 6=---------------------------------------
 - apiVersion: v1
   kind: PersistentVolume
@@ -1832,7 +1746,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -1849,21 +1763,17 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
       GlobalSlots = 1000000
       AccountQueue = 100000
-      GlobalQueue = 1024
+      GlobalQueue = 100000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
-      
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "miner7"
@@ -1873,11 +1783,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -1889,10 +1799,6 @@ items:
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -1920,7 +1826,7 @@ items:
       spec:
         containers:
         - name: miner7-container
-          image: ethereum/client-go:v1.9.0
+          image: ethereum/client-go:v1.10.0
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -1934,15 +1840,14 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner7/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner7/gethconfig.toml;
-            /usr/local/bin/geth \
-            --dashboard \
+            /usr/local/bin/geth --datadir /etc/testnet/miner7 \
             --mine \
             --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0xe6b1c4a245d8ddab785dc321b3b87c066e91cacd --allow-insecure-unlock --password /etc/testnet/miner7/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0xe6b1c4a245d8ddab785dc321b3b87c066e91cacd --allow-insecure-unlock --password /etc/testnet/miner7/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/miner7/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -2016,10 +1921,6 @@ items:
         protocol: TCP
         port: 30303
         targetPort: 30303
-      - name: miner7-dashboard
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
 #---------------------------------=NODES PERSISTANT VOLUME 7=---------------------------------------
 - apiVersion: v1
   kind: PersistentVolume
@@ -2082,7 +1983,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -2099,21 +2000,17 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
       GlobalSlots = 1000000
       AccountQueue = 100000
-      GlobalQueue = 1024
+      GlobalQueue = 100000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
-      
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "miner8"
@@ -2123,11 +2020,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -2139,10 +2036,6 @@ items:
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -2170,7 +2063,7 @@ items:
       spec:
         containers:
         - name: miner8-container
-          image: ethereum/client-go:v1.9.0
+          image: ethereum/client-go:v1.10.0
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -2184,15 +2077,14 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner8/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner8/gethconfig.toml;
-            /usr/local/bin/geth \
-            --dashboard \
+            /usr/local/bin/geth --datadir /etc/testnet/miner8 \
             --mine \
             --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0x3eeb48c7eaa2b850fe3b1bfd69c1dedc93cf8333 --allow-insecure-unlock --password /etc/testnet/miner8/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0x3eeb48c7eaa2b850fe3b1bfd69c1dedc93cf8333 --allow-insecure-unlock --password /etc/testnet/miner8/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/miner8/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -2266,10 +2158,6 @@ items:
         protocol: TCP
         port: 30303
         targetPort: 30303
-      - name: miner8-dashboard
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
 #---------------------------------=NODES PERSISTANT VOLUME 8=---------------------------------------
 - apiVersion: v1
   kind: PersistentVolume
@@ -2332,7 +2220,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -2349,21 +2237,17 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
       GlobalSlots = 1000000
       AccountQueue = 100000
-      GlobalQueue = 1024
+      GlobalQueue = 100000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
-      
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "miner9"
@@ -2373,11 +2257,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -2389,10 +2273,6 @@ items:
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -2420,7 +2300,7 @@ items:
       spec:
         containers:
         - name: miner9-container
-          image: ethereum/client-go:v1.9.0
+          image: ethereum/client-go:v1.10.0
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -2434,15 +2314,14 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner9/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner9/gethconfig.toml;
-            /usr/local/bin/geth \
-            --dashboard \
+            /usr/local/bin/geth --datadir /etc/testnet/miner9 \
             --mine \
             --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0xff8ebc1a54092d738680c9092abae5cefa0005b2 --allow-insecure-unlock --password /etc/testnet/miner9/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0xff8ebc1a54092d738680c9092abae5cefa0005b2 --allow-insecure-unlock --password /etc/testnet/miner9/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/miner9/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -2516,10 +2395,6 @@ items:
         protocol: TCP
         port: 30303
         targetPort: 30303
-      - name: miner9-dashboard
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
 #---------------------------------=NODES PERSISTANT VOLUME 9=---------------------------------------
 - apiVersion: v1
   kind: PersistentVolume
@@ -2582,7 +2457,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -2599,21 +2474,17 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
       GlobalSlots = 1000000
       AccountQueue = 100000
-      GlobalQueue = 1024
+      GlobalQueue = 100000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
-      
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "miner10"
@@ -2623,11 +2494,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -2639,10 +2510,6 @@ items:
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -2670,7 +2537,7 @@ items:
       spec:
         containers:
         - name: miner10-container
-          image: ethereum/client-go:v1.9.0
+          image: ethereum/client-go:v1.10.0
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -2684,15 +2551,14 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner10/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner10/gethconfig.toml;
-            /usr/local/bin/geth \
-            --dashboard \
+            /usr/local/bin/geth --datadir /etc/testnet/miner10 \
             --mine \
             --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0xefe7a9c39ec64864d23eb306054d2570b234d3f2 --allow-insecure-unlock --password /etc/testnet/miner10/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0xefe7a9c39ec64864d23eb306054d2570b234d3f2 --allow-insecure-unlock --password /etc/testnet/miner10/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/miner10/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -2766,10 +2632,6 @@ items:
         protocol: TCP
         port: 30303
         targetPort: 30303
-      - name: miner10-dashboard
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
 #---------------------------------=NODES PERSISTANT VOLUME 10=---------------------------------------
 - apiVersion: v1
   kind: PersistentVolume
@@ -2832,7 +2694,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -2849,21 +2711,17 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
       GlobalSlots = 1000000
       AccountQueue = 100000
-      GlobalQueue = 1024
+      GlobalQueue = 100000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
-      
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "miner11"
@@ -2873,11 +2731,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -2889,10 +2747,6 @@ items:
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -2920,7 +2774,7 @@ items:
       spec:
         containers:
         - name: miner11-container
-          image: ethereum/client-go:v1.9.0
+          image: ethereum/client-go:v1.10.0
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -2934,15 +2788,14 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner11/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner11/gethconfig.toml;
-            /usr/local/bin/geth \
-            --dashboard \
+            /usr/local/bin/geth --datadir /etc/testnet/miner11 \
             --mine \
             --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0xb42a184af3bd28c96f4904025d3833a83ebfd74e --allow-insecure-unlock --password /etc/testnet/miner11/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0xb42a184af3bd28c96f4904025d3833a83ebfd74e --allow-insecure-unlock --password /etc/testnet/miner11/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/miner11/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -3016,10 +2869,6 @@ items:
         protocol: TCP
         port: 30303
         targetPort: 30303
-      - name: miner11-dashboard
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
 #---------------------------------=NODES PERSISTANT VOLUME 11=---------------------------------------
 - apiVersion: v1
   kind: PersistentVolume
@@ -3082,7 +2931,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -3099,21 +2948,17 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
       GlobalSlots = 1000000
       AccountQueue = 100000
-      GlobalQueue = 1024
+      GlobalQueue = 100000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
-      
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "miner12"
@@ -3123,11 +2968,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -3139,10 +2984,6 @@ items:
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -3170,7 +3011,7 @@ items:
       spec:
         containers:
         - name: miner12-container
-          image: ethereum/client-go:v1.9.0
+          image: ethereum/client-go:v1.10.0
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -3184,15 +3025,14 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner12/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner12/gethconfig.toml;
-            /usr/local/bin/geth \
-            --dashboard \
+            /usr/local/bin/geth --datadir /etc/testnet/miner12 \
             --mine \
             --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0x1dc8a2ae48ec97f2ef5c3a5712abbf02667d11d2 --allow-insecure-unlock --password /etc/testnet/miner12/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0x1dc8a2ae48ec97f2ef5c3a5712abbf02667d11d2 --allow-insecure-unlock --password /etc/testnet/miner12/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/miner12/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -3266,10 +3106,6 @@ items:
         protocol: TCP
         port: 30303
         targetPort: 30303
-      - name: miner12-dashboard
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
 #---------------------------------=NODES PERSISTANT VOLUME 12=---------------------------------------
 - apiVersion: v1
   kind: PersistentVolume
@@ -3332,7 +3168,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -3349,21 +3185,17 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
       GlobalSlots = 1000000
       AccountQueue = 100000
-      GlobalQueue = 1024
+      GlobalQueue = 100000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
-      
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "miner13"
@@ -3373,11 +3205,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -3389,10 +3221,6 @@ items:
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -3420,7 +3248,7 @@ items:
       spec:
         containers:
         - name: miner13-container
-          image: ethereum/client-go:v1.9.0
+          image: ethereum/client-go:v1.10.0
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -3434,15 +3262,14 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner13/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner13/gethconfig.toml;
-            /usr/local/bin/geth \
-            --dashboard \
+            /usr/local/bin/geth --datadir /etc/testnet/miner13 \
             --mine \
             --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0xd1dfa6cdbb5ce03c9629a52a3fff5793146cb89f --allow-insecure-unlock --password /etc/testnet/miner13/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0xd1dfa6cdbb5ce03c9629a52a3fff5793146cb89f --allow-insecure-unlock --password /etc/testnet/miner13/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/miner13/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -3516,10 +3343,6 @@ items:
         protocol: TCP
         port: 30303
         targetPort: 30303
-      - name: miner13-dashboard
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
 #---------------------------------=NODES PERSISTANT VOLUME 13=---------------------------------------
 - apiVersion: v1
   kind: PersistentVolume
@@ -3582,7 +3405,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -3599,21 +3422,17 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
       GlobalSlots = 1000000
       AccountQueue = 100000
-      GlobalQueue = 1024
+      GlobalQueue = 100000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
-      
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "miner14"
@@ -3623,11 +3442,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -3639,10 +3458,6 @@ items:
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -3670,7 +3485,7 @@ items:
       spec:
         containers:
         - name: miner14-container
-          image: ethereum/client-go:v1.9.0
+          image: ethereum/client-go:v1.10.0
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -3684,15 +3499,14 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner14/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner14/gethconfig.toml;
-            /usr/local/bin/geth \
-            --dashboard \
+            /usr/local/bin/geth --datadir /etc/testnet/miner14 \
             --mine \
             --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0xcb856028b25efde34192df0722abeb583033ee52 --allow-insecure-unlock --password /etc/testnet/miner14/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0xcb856028b25efde34192df0722abeb583033ee52 --allow-insecure-unlock --password /etc/testnet/miner14/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/miner14/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -3766,10 +3580,6 @@ items:
         protocol: TCP
         port: 30303
         targetPort: 30303
-      - name: miner14-dashboard
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
 #---------------------------------=NODES PERSISTANT VOLUME 14=---------------------------------------
 - apiVersion: v1
   kind: PersistentVolume
@@ -3832,7 +3642,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -3849,21 +3659,17 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
       GlobalSlots = 1000000
       AccountQueue = 100000
-      GlobalQueue = 1024
+      GlobalQueue = 100000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
-      
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "miner15"
@@ -3873,11 +3679,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -3889,10 +3695,6 @@ items:
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -3920,7 +3722,7 @@ items:
       spec:
         containers:
         - name: miner15-container
-          image: ethereum/client-go:v1.9.0
+          image: ethereum/client-go:v1.10.0
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -3934,15 +3736,14 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner15/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner15/gethconfig.toml;
-            /usr/local/bin/geth \
-            --dashboard \
+            /usr/local/bin/geth --datadir /etc/testnet/miner15 \
             --mine \
             --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0xd113a83240df4cbf61ea093664d97737662ad52b --allow-insecure-unlock --password /etc/testnet/miner15/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0xd113a83240df4cbf61ea093664d97737662ad52b --allow-insecure-unlock --password /etc/testnet/miner15/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/miner15/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -4016,10 +3817,6 @@ items:
         protocol: TCP
         port: 30303
         targetPort: 30303
-      - name: miner15-dashboard
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
 #---------------------------------=NODES PERSISTANT VOLUME 15=---------------------------------------
 - apiVersion: v1
   kind: PersistentVolume
@@ -4082,7 +3879,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -4099,21 +3896,17 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
       GlobalSlots = 1000000
       AccountQueue = 100000
-      GlobalQueue = 1024
+      GlobalQueue = 100000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
-      
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "miner16"
@@ -4123,11 +3916,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -4139,10 +3932,6 @@ items:
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -4170,7 +3959,7 @@ items:
       spec:
         containers:
         - name: miner16-container
-          image: ethereum/client-go:v1.9.0
+          image: ethereum/client-go:v1.10.0
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -4184,15 +3973,14 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner16/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner16/gethconfig.toml;
-            /usr/local/bin/geth \
-            --dashboard \
+            /usr/local/bin/geth --datadir /etc/testnet/miner16 \
             --mine \
             --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0x878348425db945254ee759040e383c8897839454 --allow-insecure-unlock --password /etc/testnet/miner16/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0x878348425db945254ee759040e383c8897839454 --allow-insecure-unlock --password /etc/testnet/miner16/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/miner16/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -4266,10 +4054,6 @@ items:
         protocol: TCP
         port: 30303
         targetPort: 30303
-      - name: miner16-dashboard
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
 #---------------------------------=NODES PERSISTANT VOLUME 16=---------------------------------------
 - apiVersion: v1
   kind: PersistentVolume
@@ -4332,7 +4116,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -4349,21 +4133,17 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
       GlobalSlots = 1000000
       AccountQueue = 100000
-      GlobalQueue = 1024
+      GlobalQueue = 100000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
-      
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "miner17"
@@ -4373,11 +4153,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -4389,10 +4169,6 @@ items:
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -4420,7 +4196,7 @@ items:
       spec:
         containers:
         - name: miner17-container
-          image: ethereum/client-go:v1.9.0
+          image: ethereum/client-go:v1.10.0
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -4434,15 +4210,14 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner17/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner17/gethconfig.toml;
-            /usr/local/bin/geth \
-            --dashboard \
+            /usr/local/bin/geth --datadir /etc/testnet/miner17 \
             --mine \
             --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0xd70abedc871f939abd60b36164ca443cfe6063ea --allow-insecure-unlock --password /etc/testnet/miner17/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0xd70abedc871f939abd60b36164ca443cfe6063ea --allow-insecure-unlock --password /etc/testnet/miner17/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/miner17/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -4516,10 +4291,6 @@ items:
         protocol: TCP
         port: 30303
         targetPort: 30303
-      - name: miner17-dashboard
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
 #---------------------------------=NODES PERSISTANT VOLUME 17=---------------------------------------
 - apiVersion: v1
   kind: PersistentVolume
@@ -4582,7 +4353,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -4599,21 +4370,17 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
       GlobalSlots = 1000000
       AccountQueue = 100000
-      GlobalQueue = 1024
+      GlobalQueue = 100000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
-      
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "miner18"
@@ -4623,11 +4390,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -4639,10 +4406,6 @@ items:
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -4670,7 +4433,7 @@ items:
       spec:
         containers:
         - name: miner18-container
-          image: ethereum/client-go:v1.9.0
+          image: ethereum/client-go:v1.10.0
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -4684,15 +4447,14 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner18/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner18/gethconfig.toml;
-            /usr/local/bin/geth \
-            --dashboard \
+            /usr/local/bin/geth --datadir /etc/testnet/miner18 \
             --mine \
             --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0x5e71729cf96c2fdb16265cb708d1df2cb91cd6a9 --allow-insecure-unlock --password /etc/testnet/miner18/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0x5e71729cf96c2fdb16265cb708d1df2cb91cd6a9 --allow-insecure-unlock --password /etc/testnet/miner18/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/miner18/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -4766,10 +4528,6 @@ items:
         protocol: TCP
         port: 30303
         targetPort: 30303
-      - name: miner18-dashboard
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
 #---------------------------------=NODES PERSISTANT VOLUME 18=---------------------------------------
 - apiVersion: v1
   kind: PersistentVolume
@@ -4832,7 +4590,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -4849,21 +4607,17 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
       GlobalSlots = 1000000
       AccountQueue = 100000
-      GlobalQueue = 1024
+      GlobalQueue = 100000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
-      
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "miner19"
@@ -4873,11 +4627,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -4889,10 +4643,6 @@ items:
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -4920,7 +4670,7 @@ items:
       spec:
         containers:
         - name: miner19-container
-          image: ethereum/client-go:v1.9.0
+          image: ethereum/client-go:v1.10.0
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -4934,15 +4684,14 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner19/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner19/gethconfig.toml;
-            /usr/local/bin/geth \
-            --dashboard \
+            /usr/local/bin/geth --datadir /etc/testnet/miner19 \
             --mine \
             --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0x697a5d50fcea7d9ab93fcefd6570f0fa15e945ab --allow-insecure-unlock --password /etc/testnet/miner19/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0x697a5d50fcea7d9ab93fcefd6570f0fa15e945ab --allow-insecure-unlock --password /etc/testnet/miner19/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/miner19/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -5016,10 +4765,6 @@ items:
         protocol: TCP
         port: 30303
         targetPort: 30303
-      - name: miner19-dashboard
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
 #---------------------------------=NODES PERSISTANT VOLUME 19=---------------------------------------
 - apiVersion: v1
   kind: PersistentVolume
@@ -5082,7 +4827,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -5099,21 +4844,17 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
       GlobalSlots = 1000000
       AccountQueue = 100000
-      GlobalQueue = 1024
+      GlobalQueue = 100000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
-      
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "miner20"
@@ -5123,11 +4864,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -5139,10 +4880,6 @@ items:
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -5170,7 +4907,7 @@ items:
       spec:
         containers:
         - name: miner20-container
-          image: ethereum/client-go:v1.9.0
+          image: ethereum/client-go:v1.10.0
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -5184,15 +4921,14 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner20/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner20/gethconfig.toml;
-            /usr/local/bin/geth \
-            --dashboard \
+            /usr/local/bin/geth --datadir /etc/testnet/miner20 \
             --mine \
             --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0x58d5a1fda3be5ac1ef6d9bd4f575c2321e44b1c6 --allow-insecure-unlock --password /etc/testnet/miner20/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0x58d5a1fda3be5ac1ef6d9bd4f575c2321e44b1c6 --allow-insecure-unlock --password /etc/testnet/miner20/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/miner20/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -5266,10 +5002,6 @@ items:
         protocol: TCP
         port: 30303
         targetPort: 30303
-      - name: miner20-dashboard
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
 #---------------------------------=NODES PERSISTANT VOLUME 20=---------------------------------------
 - apiVersion: v1
   kind: PersistentVolume
@@ -5332,7 +5064,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -5349,21 +5081,17 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
       GlobalSlots = 1000000
       AccountQueue = 100000
-      GlobalQueue = 1024
+      GlobalQueue = 100000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
-      
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "miner21"
@@ -5373,11 +5101,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -5389,10 +5117,6 @@ items:
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -5420,7 +5144,7 @@ items:
       spec:
         containers:
         - name: miner21-container
-          image: ethereum/client-go:v1.9.0
+          image: ethereum/client-go:v1.10.0
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -5434,15 +5158,14 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner21/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner21/gethconfig.toml;
-            /usr/local/bin/geth \
-            --dashboard \
+            /usr/local/bin/geth --datadir /etc/testnet/miner21 \
             --mine \
             --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0xc6962fd176d408568bf32642ccfdbad501eec92d --allow-insecure-unlock --password /etc/testnet/miner21/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0xc6962fd176d408568bf32642ccfdbad501eec92d --allow-insecure-unlock --password /etc/testnet/miner21/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/miner21/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -5516,10 +5239,6 @@ items:
         protocol: TCP
         port: 30303
         targetPort: 30303
-      - name: miner21-dashboard
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
 #---------------------------------=NODES PERSISTANT VOLUME 21=---------------------------------------
 - apiVersion: v1
   kind: PersistentVolume
@@ -5582,7 +5301,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -5599,21 +5318,17 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
       GlobalSlots = 1000000
       AccountQueue = 100000
-      GlobalQueue = 1024
+      GlobalQueue = 100000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
-      
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "miner22"
@@ -5623,11 +5338,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -5639,10 +5354,6 @@ items:
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -5670,7 +5381,7 @@ items:
       spec:
         containers:
         - name: miner22-container
-          image: ethereum/client-go:v1.9.0
+          image: ethereum/client-go:v1.10.0
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -5684,15 +5395,14 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner22/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner22/gethconfig.toml;
-            /usr/local/bin/geth \
-            --dashboard \
+            /usr/local/bin/geth --datadir /etc/testnet/miner22 \
             --mine \
             --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0x928cf91fa667b5b82cc745f0a1503fed4faffbf6 --allow-insecure-unlock --password /etc/testnet/miner22/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0x928cf91fa667b5b82cc745f0a1503fed4faffbf6 --allow-insecure-unlock --password /etc/testnet/miner22/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/miner22/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -5766,10 +5476,6 @@ items:
         protocol: TCP
         port: 30303
         targetPort: 30303
-      - name: miner22-dashboard
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
 #---------------------------------=NODES PERSISTANT VOLUME 22=---------------------------------------
 - apiVersion: v1
   kind: PersistentVolume
@@ -5832,7 +5538,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -5849,21 +5555,17 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
       GlobalSlots = 1000000
       AccountQueue = 100000
-      GlobalQueue = 1024
+      GlobalQueue = 100000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
-      
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "miner23"
@@ -5873,11 +5575,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -5889,10 +5591,6 @@ items:
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -5920,7 +5618,7 @@ items:
       spec:
         containers:
         - name: miner23-container
-          image: ethereum/client-go:v1.9.0
+          image: ethereum/client-go:v1.10.0
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -5934,15 +5632,14 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner23/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner23/gethconfig.toml;
-            /usr/local/bin/geth \
-            --dashboard \
+            /usr/local/bin/geth --datadir /etc/testnet/miner23 \
             --mine \
             --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0x7e4f41306fb48540a317e0f96a89f0ffa3db12fc --allow-insecure-unlock --password /etc/testnet/miner23/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0x7e4f41306fb48540a317e0f96a89f0ffa3db12fc --allow-insecure-unlock --password /etc/testnet/miner23/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/miner23/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -6016,10 +5713,6 @@ items:
         protocol: TCP
         port: 30303
         targetPort: 30303
-      - name: miner23-dashboard
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
 #---------------------------------=NODES PERSISTANT VOLUME 23=---------------------------------------
 - apiVersion: v1
   kind: PersistentVolume
@@ -6082,7 +5775,7 @@ items:
       NetworkId = 123456
       SyncMode = "full"
       LightPeers = 100
-      DatabaseCache = 768
+      DatabaseCache = 1024
       EnablePreimageRecording = false
       
       [Eth.Ethash]
@@ -6099,21 +5792,17 @@ items:
       NoLocals = false
       Journal = "transactions.rlp"
       Rejournal = 3600000000000
-      PriceLimit = 1
-      PriceBump = 10
-      AccountSlots = 16
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
       GlobalSlots = 1000000
       AccountQueue = 100000
-      GlobalQueue = 1024
+      GlobalQueue = 100000
       Lifetime = 10800000000000
       
       [Eth.GPO]
       Blocks = 20
       Percentile = 60
-      
-      [Shh]
-      MaxMessageSize = 1048576
-      MinimumAcceptedPOW = 2e-01
       
       [Node]
       UserIdent = "miner24"
@@ -6123,11 +5812,11 @@ items:
       HTTPPort = 8545
       HTTPCors = ["*"]
       HTTPVirtualHosts = ["*"]
-      HTTPModules = ["db", "eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
       WSHost = "0.0.0.0"
       WSPort = 8546
       WSOrigins = ["*"]
-      WSModules = ["net", "web3", "eth", "shh", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
       
       [Node.P2P]
       MaxPeers = 25
@@ -6139,10 +5828,6 @@ items:
       ListenAddr = ":30303"
       EnableMsgEvents = false
       
-      [Dashboard]
-      Host = "0.0.0.0"
-      Port = 8080
-      Refresh = 3000000000
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -6170,7 +5855,7 @@ items:
       spec:
         containers:
         - name: miner24-container
-          image: ethereum/client-go:v1.9.0
+          image: ethereum/client-go:v1.10.0
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -6184,15 +5869,14 @@ items:
             ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
             sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner24/gethconfig.toml;
             sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner24/gethconfig.toml;
-            /usr/local/bin/geth \
-            --dashboard \
+            /usr/local/bin/geth --datadir /etc/testnet/miner24 \
             --mine \
             --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0x9ba86e41f9b1dda4e6c93b34d3e1653d88112a0a --allow-insecure-unlock --password /etc/testnet/miner24/password.txt --gasprice '0x0' --targetgaslimit '9000000000000' \
+            --unlock 0x9ba86e41f9b1dda4e6c93b34d3e1653d88112a0a --allow-insecure-unlock --password /etc/testnet/miner24/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \
             --config /etc/geth/miner24/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -6266,10 +5950,6 @@ items:
         protocol: TCP
         port: 30303
         targetPort: 30303
-      - name: miner24-dashboard
-        protocol: TCP
-        port: 8080
-        targetPort: 8080
 #---------------------------------=NODES PERSISTANT VOLUME 24=---------------------------------------
 - apiVersion: v1
   kind: PersistentVolume
@@ -6313,12 +5993,29 @@ items:
   spec:
     type: ClusterIP
     selector:
-      serviceSelector: ethereum-node
+      app: miner 
     ports:
-      - name: "9944"
+      - name: "8546"
         protocol: TCP
-        port: 9944
-        targetPort: 9944
+        port: 8546
+        targetPort: 8546
+
+#--------------------------=ONE SERVICE FOR ALL NODE (HTTP)=--------------------------------
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: ethereum-http-service
+    namespace: ethereum-net
+  spec:
+    type: ClusterIP
+    selector:
+      app: miner 
+    ports:
+      - name: "8545"
+        protocol: TCP
+        port: 8545
+        targetPort: 8545
 #--------------------------= genesis-config =--------------------------------
 - apiVersion: v1
   kind: ConfigMap
@@ -6350,9 +6047,11 @@ items:
         "difficulty" : "0x1",
         "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "coinbase": "0x0000000000000000000000000000000000000000",
-        "extraData": "0x00000000000000000000000000000000000000000000000000000000000000006c72e4c3c645a5d84b44f6f143ce559c9e8d815377c1113fb3da88e6a0f6b8b1af7c5f15286f52535708c9ed0dc25097f24903d27c13c9b4c18f3e545e99b8f68e317e40f5b64fb427d6ddd86fb6d89bc36194ca819c884d556eab67a0a3a1d760dcdff4b5c9fcfe7acf4473f6369a93e947f73aebb4646ce6b1c4a245d8ddab785dc321b3b87c066e91cacd3eeb48c7eaa2b850fe3b1bfd69c1dedc93cf8333ff8ebc1a54092d738680c9092abae5cefa0005b2efe7a9c39ec64864d23eb306054d2570b234d3f2b42a184af3bd28c96f4904025d3833a83ebfd74e1dc8a2ae48ec97f2ef5c3a5712abbf02667d11d2d1dfa6cdbb5ce03c9629a52a3fff5793146cb89fcb856028b25efde34192df0722abeb583033ee52d113a83240df4cbf61ea093664d97737662ad52b878348425db945254ee759040e383c8897839454d70abedc871f939abd60b36164ca443cfe6063ea5e71729cf96c2fdb16265cb708d1df2cb91cd6a9697a5d50fcea7d9ab93fcefd6570f0fa15e945ab58d5a1fda3be5ac1ef6d9bd4f575c2321e44b1c6c6962fd176d408568bf32642ccfdbad501eec92d928cf91fa667b5b82cc745f0a1503fed4faffbf67e4f41306fb48540a317e0f96a89f0ffa3db12fc9ba86e41f9b1dda4e6c93b34d3e1653d88112a0a0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000284971d0df1bf4a2e5b053261b8beffdc6ca8e0a6c72e4c3c645a5d84b44f6f143ce559c9e8d815377c1113fb3da88e6a0f6b8b1af7c5f15286f52535708c9ed0dc25097f24903d27c13c9b4c18f3e545e99b8f68e317e40f5b64fb427d6ddd86fb6d89bc36194ca819c884d556eab67a0a3a1d760dcdff4b5c9fcfe7acf4473f6369a93e947f73aebb4646ce6b1c4a245d8ddab785dc321b3b87c066e91cacd3eeb48c7eaa2b850fe3b1bfd69c1dedc93cf8333ff8ebc1a54092d738680c9092abae5cefa0005b2efe7a9c39ec64864d23eb306054d2570b234d3f2b42a184af3bd28c96f4904025d3833a83ebfd74e1dc8a2ae48ec97f2ef5c3a5712abbf02667d11d2d1dfa6cdbb5ce03c9629a52a3fff5793146cb89fcb856028b25efde34192df0722abeb583033ee52d113a83240df4cbf61ea093664d97737662ad52b878348425db945254ee759040e383c8897839454d70abedc871f939abd60b36164ca443cfe6063ea5e71729cf96c2fdb16265cb708d1df2cb91cd6a9697a5d50fcea7d9ab93fcefd6570f0fa15e945ab58d5a1fda3be5ac1ef6d9bd4f575c2321e44b1c6c6962fd176d408568bf32642ccfdbad501eec92d928cf91fa667b5b82cc745f0a1503fed4faffbf67e4f41306fb48540a317e0f96a89f0ffa3db12fc9ba86e41f9b1dda4e6c93b34d3e1653d88112a0a0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         "alloc": {
-                        "6c72e4c3c645a5d84b44f6f143ce559c9e8d8153": {
+                        "284971d0df1bf4a2e5b053261b8beffdc6ca8e0a": {
+              "balance": "0x200000000000000000000000000000000000000000000000000000000000000"
+            },            "6c72e4c3c645a5d84b44f6f143ce559c9e8d8153": {
               "balance": "0x200000000000000000000000000000000000000000000000000000000000000"
             },            "77c1113fb3da88e6a0f6b8b1af7c5f15286f5253": {
               "balance": "0x200000000000000000000000000000000000000000000000000000000000000"
@@ -7104,3 +6803,38 @@ items:
               memory: "10Gi"
           imagePullPolicy: IfNotPresent
         restartPolicy: Always
+####################################### MongoDB MACHINE #########################
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    name: mongodb-standalone
+  spec:
+    serviceName: database
+    replicas: 1
+    selector:
+      matchLabels:
+        app: database
+    template:
+      metadata:
+        labels:
+          app: database
+          selector: mongodb-standalone
+      spec:
+        containers:
+        - name: mongodb-standalone
+          image: mongo:4.0.8
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: guest
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: guest
+          resources:
+              limits:
+                cpu: "12"
+                memory: "12Gi"
+              requests:
+                cpu: "10"
+                memory: "10Gi"
+          imagePullPolicy: IfNotPresent
+        restartPolicy: Always
+

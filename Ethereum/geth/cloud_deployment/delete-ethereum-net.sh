@@ -1,32 +1,14 @@
 #!/bin/bash
 cd ./rancher-v2.4.10/
 
-#$1 is the rancher login token
+# Remember for BootNode:
 
-./login.sh $1
+#Volume: /etc/testnet/bootnode is not deleted automatically
 
-echo "Delete Deployments"
-./rancher kubectl -n ethereum-net delete deployments --all
+#REf: https://stackoverflow.com/questions/61747724/how-to-remove-mounted-volumes-pv-pvc-wont-deleteeditpatch
 
-echo "Delete statefulsets"
-./rancher kubectl -n ethereum-net delete statefulsets --all
+#Deleting manually in the pod seems to work rm -rf /etc/testnet/bootnode
 
-echo "Delete daemonset"
-./rancher kubectl -n ethereum-net delete daemonset --all
-
-echo "Delete PVC"
-./rancher kubectl -n ethereum-net delete pvc --all
-
-echo "Delete PV"
-
-./rancher kubectl -n ethereum-net get pv | awk '/ethereum-/{print $1}' | xargs ./rancher kubectl -n ethereum-net delete pv
-
-echo "Delete Services"
-./rancher kubectl -n ethereum-net delete services --all
-
-echo "Delete ConfigMaps"
-./rancher kubectl -n ethereum-net delete configmaps --all
-
-# ./rancher kubectl -n ethereum-net delete pv --all
+./rancher kubectl delete -f ../ethereum-kube.yaml --force
 
 echo "Done"
