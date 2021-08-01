@@ -1,7 +1,7 @@
 #!/bin/bash
 my_dir="$(dirname "$0")"
 
-NBNODES=5
+NBNODES=$1
 #list of validators available
 #Max 6 validator for the moment
 #array built with generateKeys.sh script
@@ -132,7 +132,7 @@ cat << EOF
         volumes:
           - name: substrate-data-$i
             persistentVolumeClaim:
-            claimName: substrate-data-$i
+              claimName: substrate-data-$i
           - name: substrate-genesis-$i
             configMap:
               name: chain-spec
@@ -235,7 +235,7 @@ cat << EOF
         volumes:
           - name: substrate-data-$i
             persistentVolumeClaim:
-            claimName: substrate-data-$i
+              claimName: substrate-data-$i
           - name: substrate-genesis-$i
             configMap:
               name: chain-spec
@@ -429,7 +429,7 @@ cat << EOF
           - "substrate-ws.unice.cust.tasfrance.com"
         containers:
         - name: substrate-sim-transaction-js
-          image: projetsim/substrate-sim-transaction-js:latest
+          image: projetsim/substrate-sim-transaction-js:v1.0
           command:
             - "sleep"
             - "604800"
@@ -440,6 +440,6 @@ cat << EOF
             requests:
               cpu: "20"
               memory: "20Gi"
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
         restartPolicy: Always
 EOF
