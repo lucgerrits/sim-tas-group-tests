@@ -176,7 +176,7 @@ function do_stats(callback) {
 
 async.series([
     do_benchmark,
-    do_stats
+    // do_stats
 ], () => {
     console.log("End main program")
     process.exit(0);
