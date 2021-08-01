@@ -1,0 +1,5 @@
+*.log
+*.out
+datas/
+images/
+#datas_csv/
