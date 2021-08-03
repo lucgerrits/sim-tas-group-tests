@@ -199,7 +199,7 @@ cat << EOF
           command: [ "sh" ]
           args:
           - "-cx"
-          - "cd /etc/testnet/bootnode;
+          - " rm -rf /etc/testnet/bootnode; cd /etc/testnet/bootnode;
             echo \"enode://e33304a6d22d07a61d038b17155bbd89e34987e5ac5cddf7e89125630d8339b61da4e18974bc4e249340a878db8b0472b54799f1636fe4887bc905989f276836@\$GETH_BOOTNODE_SVC_SERVICE_HOST:30303\" > enode.address;
             set +x;
             while true; do :; done;"
@@ -418,7 +418,7 @@ cat << EOF
           command: [ "sh" ]
           args:
           - "-cx"
-          - "/usr/local/bin/geth --datadir /etc/testnet/miner$i init /etc/geth/genesis/genesis-geth.json;
+          - "rm -rf /etc/testnet/miner$i; /usr/local/bin/geth --datadir /etc/testnet/miner$i init /etc/geth/genesis/genesis-geth.json;
             touch /etc/testnet/miner$i/genesis_created;
             echo 123 > /etc/testnet/miner$i/password.txt;
             mkdir -p /etc/geth/miner$i;
