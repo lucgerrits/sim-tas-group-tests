@@ -249,7 +249,7 @@ cat << EOF
             cp /etc/gethconfigmap/bootnode/gethconfig.toml /etc/geth/bootnode;
             /usr/local/bin/geth --datadir /etc/testnet/bootnode \\
             --verbosity 3  \\
-            --unlock 0x${accountArrayPublic[i]} --allow-insecure-unlock --password /etc/testnet/bootnode/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \\
+            --unlock 0x${accountArrayPublic[i]} --allow-insecure-unlock --password /etc/testnet/bootnode/password.txt --miner.gasprice '0x0' --miner.gaslimit '357500000' \\
             --config /etc/geth/bootnode/gethconfig.toml;"
           volumeMounts:
           - name: bootnode-persistent-storage
@@ -434,7 +434,7 @@ cat << EOF
             --rpc \\
             --ws \\
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \\
-            --unlock 0x${accountArrayPublic[i]} --allow-insecure-unlock --password /etc/testnet/miner$i/password.txt --miner.gasprice '0x0' --miner.gaslimit '9000000000000' \\
+            --unlock 0x${accountArrayPublic[i]} --allow-insecure-unlock --password /etc/testnet/miner$i/password.txt --miner.gasprice '0x0' --miner.gaslimit '357500000' \\
             --config /etc/geth/miner$i/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -655,7 +655,7 @@ cat << EOF
         },
         "nonce": "0x0",
         "timestamp": "0x5cdec502",
-        "gasLimit": "9000000000000",
+        "gasLimit": "357500000",
         "difficulty" : "0x1",
         "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "coinbase": "0x0000000000000000000000000000000000000000",

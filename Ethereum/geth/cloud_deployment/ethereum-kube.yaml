@@ -34,7 +34,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/bootnode"
@@ -275,7 +275,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner0"
@@ -512,7 +512,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner1"
@@ -749,7 +749,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner2"
@@ -986,7 +986,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner3"
@@ -1223,7 +1223,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner4"
@@ -1460,7 +1460,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner5"
@@ -1697,7 +1697,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner6"
@@ -1934,7 +1934,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner7"
@@ -2171,7 +2171,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner8"
@@ -2408,7 +2408,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner9"
@@ -2645,7 +2645,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner10"
@@ -2882,7 +2882,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner11"
@@ -3119,7 +3119,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner12"
@@ -3356,7 +3356,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner13"
@@ -3593,7 +3593,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner14"
@@ -3830,7 +3830,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner15"
@@ -4067,7 +4067,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner16"
@@ -4304,7 +4304,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner17"
@@ -4541,7 +4541,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner18"
@@ -4778,7 +4778,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner19"
@@ -5015,7 +5015,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner20"
@@ -5252,7 +5252,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner21"
@@ -5489,7 +5489,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner22"
@@ -5726,7 +5726,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner23"
@@ -5963,7 +5963,7 @@ items:
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner24"
@@ -6134,7 +6134,7 @@ items:
       storage: 10Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/monitor"
