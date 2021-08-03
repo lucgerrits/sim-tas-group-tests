@@ -56,7 +56,7 @@ cat << EOF
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/bootnode"
@@ -533,7 +533,7 @@ cat << EOF
       storage: 20Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/miner$i"
@@ -755,7 +755,7 @@ cat << EOF
       storage: 10Gi
     accessModes:
       - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Delete
     hostPath:
       #type: DirectoryOrCreate
       path: "/datas/monitor"
