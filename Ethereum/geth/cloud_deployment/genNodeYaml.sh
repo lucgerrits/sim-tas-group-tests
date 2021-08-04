@@ -249,7 +249,7 @@ cat << EOF
             cp /etc/gethconfigmap/bootnode/gethconfig.toml /etc/geth/bootnode;
             /usr/local/bin/geth --datadir /etc/testnet/bootnode \\
             --verbosity 3  \\
-            --unlock 0x${accountArrayPublic[i]} --allow-insecure-unlock --password /etc/testnet/bootnode/password.txt --miner.gasprice '0x0' --miner.gaslimit '357500000' \\
+            --unlock 0x${accountArrayPublic[i]} --allow-insecure-unlock --password /etc/testnet/bootnode/password.txt --miner.gasprice '0x0' --miner.gaslimit '357500000' --miner.gastarget '357500000' \\
             --config /etc/geth/bootnode/gethconfig.toml;"
           volumeMounts:
           - name: bootnode-persistent-storage
@@ -434,7 +434,7 @@ cat << EOF
             --rpc \\
             --ws \\
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \\
-            --unlock 0x${accountArrayPublic[i]} --allow-insecure-unlock --password /etc/testnet/miner$i/password.txt --miner.gasprice '0x0' --miner.gaslimit '357500000' \\
+            --unlock 0x${accountArrayPublic[i]} --allow-insecure-unlock --password /etc/testnet/miner$i/password.txt --miner.gasprice '0x0' --miner.gaslimit '357500000' --miner.gastarget '357500000' \\
             --config /etc/geth/miner$i/gethconfig.toml;"
           ports:
             - containerPort: 8545
@@ -642,12 +642,14 @@ cat << EOF
       {
         "config": {
           "chainId": 123456,
-          "homesteadBlock": 1,
-          "eip150Block": 2,
+          "homesteadBlock": 0,
+          "eip150Block": 0,
           "eip150Hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "eip155Block": 3,
-          "eip158Block": 3,
-          "byzantiumBlock": 4,
+          "eip155Block": 0,
+          "eip158Block": 0,
+          "byzantiumBlock": 0,
+          "constantinopleBlock": 0,
+          "petersburgBlock": 0,
           "clique": {
             "period": 2,
             "epoch": 30000
@@ -655,7 +657,7 @@ cat << EOF
         },
         "nonce": "0x0",
         "timestamp": "0x5cdec502",
-        "gasLimit": "357500000",
+        "gasLimit": "0x154F0460",
         "difficulty" : "0x1",
         "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "coinbase": "0x0000000000000000000000000000000000000000",
