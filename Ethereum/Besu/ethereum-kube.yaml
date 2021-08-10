@@ -75,7 +75,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -139,7 +139,7 @@ items:
           - "rm -rf /etc/besu/bootnode;rm -rf /etc/testnet/bootnode; mkdir -p /etc/testnet/bootnode;
             mkdir -p /etc/besu/bootnode;
             cp /etc/besuconfigmap/bootnode/besuconfig.toml /etc/besu/bootnode;
-            /opt/besu/bin/besu --data-path=/etc/testnet/bootnode --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/bootnode/besuconfig.toml --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/bootnode --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/bootnode/besuconfig.toml;"
           volumeMounts:
           - name: bootnode-persistent-storage
             mountPath: /etc/testnet/bootnode/storage
@@ -251,7 +251,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -292,7 +292,7 @@ items:
           - "rm -rf /etc/testnet/miner1; mkdir /etc/testnet/miner1; rm -rf /etc/besu/miner1;
             mkdir -p /etc/besu/miner1;
             cp /etc/besuconfigmap/miner1/besuconfig.toml /etc/besu/miner1;
-            /opt/besu/bin/besu --data-path=/etc/testnet/miner1/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner1/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303 --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/miner1/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner1/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -443,7 +443,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -484,7 +484,7 @@ items:
           - "rm -rf /etc/testnet/miner2; mkdir /etc/testnet/miner2; rm -rf /etc/besu/miner2;
             mkdir -p /etc/besu/miner2;
             cp /etc/besuconfigmap/miner2/besuconfig.toml /etc/besu/miner2;
-            /opt/besu/bin/besu --data-path=/etc/testnet/miner2/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner2/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303 --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/miner2/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner2/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -635,7 +635,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -676,7 +676,7 @@ items:
           - "rm -rf /etc/testnet/miner3; mkdir /etc/testnet/miner3; rm -rf /etc/besu/miner3;
             mkdir -p /etc/besu/miner3;
             cp /etc/besuconfigmap/miner3/besuconfig.toml /etc/besu/miner3;
-            /opt/besu/bin/besu --data-path=/etc/testnet/miner3/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner3/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303 --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/miner3/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner3/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -827,7 +827,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -868,7 +868,7 @@ items:
           - "rm -rf /etc/testnet/miner4; mkdir /etc/testnet/miner4; rm -rf /etc/besu/miner4;
             mkdir -p /etc/besu/miner4;
             cp /etc/besuconfigmap/miner4/besuconfig.toml /etc/besu/miner4;
-            /opt/besu/bin/besu --data-path=/etc/testnet/miner4/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner4/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303 --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/miner4/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner4/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -1019,7 +1019,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -1060,7 +1060,7 @@ items:
           - "rm -rf /etc/testnet/miner5; mkdir /etc/testnet/miner5; rm -rf /etc/besu/miner5;
             mkdir -p /etc/besu/miner5;
             cp /etc/besuconfigmap/miner5/besuconfig.toml /etc/besu/miner5;
-            /opt/besu/bin/besu --data-path=/etc/testnet/miner5/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner5/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303 --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/miner5/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner5/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -1211,7 +1211,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -1252,7 +1252,7 @@ items:
           - "rm -rf /etc/testnet/miner6; mkdir /etc/testnet/miner6; rm -rf /etc/besu/miner6;
             mkdir -p /etc/besu/miner6;
             cp /etc/besuconfigmap/miner6/besuconfig.toml /etc/besu/miner6;
-            /opt/besu/bin/besu --data-path=/etc/testnet/miner6/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner6/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303 --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/miner6/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner6/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -1403,7 +1403,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -1444,7 +1444,7 @@ items:
           - "rm -rf /etc/testnet/miner7; mkdir /etc/testnet/miner7; rm -rf /etc/besu/miner7;
             mkdir -p /etc/besu/miner7;
             cp /etc/besuconfigmap/miner7/besuconfig.toml /etc/besu/miner7;
-            /opt/besu/bin/besu --data-path=/etc/testnet/miner7/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner7/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303 --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/miner7/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner7/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -1595,7 +1595,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -1636,7 +1636,7 @@ items:
           - "rm -rf /etc/testnet/miner8; mkdir /etc/testnet/miner8; rm -rf /etc/besu/miner8;
             mkdir -p /etc/besu/miner8;
             cp /etc/besuconfigmap/miner8/besuconfig.toml /etc/besu/miner8;
-            /opt/besu/bin/besu --data-path=/etc/testnet/miner8/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner8/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303 --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/miner8/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner8/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -1787,7 +1787,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -1828,7 +1828,7 @@ items:
           - "rm -rf /etc/testnet/miner9; mkdir /etc/testnet/miner9; rm -rf /etc/besu/miner9;
             mkdir -p /etc/besu/miner9;
             cp /etc/besuconfigmap/miner9/besuconfig.toml /etc/besu/miner9;
-            /opt/besu/bin/besu --data-path=/etc/testnet/miner9/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner9/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303 --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/miner9/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner9/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -1979,7 +1979,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -2020,7 +2020,7 @@ items:
           - "rm -rf /etc/testnet/miner10; mkdir /etc/testnet/miner10; rm -rf /etc/besu/miner10;
             mkdir -p /etc/besu/miner10;
             cp /etc/besuconfigmap/miner10/besuconfig.toml /etc/besu/miner10;
-            /opt/besu/bin/besu --data-path=/etc/testnet/miner10/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner10/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303 --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/miner10/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner10/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -2171,7 +2171,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -2212,7 +2212,7 @@ items:
           - "rm -rf /etc/testnet/miner11; mkdir /etc/testnet/miner11; rm -rf /etc/besu/miner11;
             mkdir -p /etc/besu/miner11;
             cp /etc/besuconfigmap/miner11/besuconfig.toml /etc/besu/miner11;
-            /opt/besu/bin/besu --data-path=/etc/testnet/miner11/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner11/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303 --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/miner11/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner11/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -2363,7 +2363,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -2404,7 +2404,7 @@ items:
           - "rm -rf /etc/testnet/miner12; mkdir /etc/testnet/miner12; rm -rf /etc/besu/miner12;
             mkdir -p /etc/besu/miner12;
             cp /etc/besuconfigmap/miner12/besuconfig.toml /etc/besu/miner12;
-            /opt/besu/bin/besu --data-path=/etc/testnet/miner12/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner12/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303 --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/miner12/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner12/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -2555,7 +2555,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -2596,7 +2596,7 @@ items:
           - "rm -rf /etc/testnet/miner13; mkdir /etc/testnet/miner13; rm -rf /etc/besu/miner13;
             mkdir -p /etc/besu/miner13;
             cp /etc/besuconfigmap/miner13/besuconfig.toml /etc/besu/miner13;
-            /opt/besu/bin/besu --data-path=/etc/testnet/miner13/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner13/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303 --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/miner13/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner13/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -2747,7 +2747,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -2788,7 +2788,7 @@ items:
           - "rm -rf /etc/testnet/miner14; mkdir /etc/testnet/miner14; rm -rf /etc/besu/miner14;
             mkdir -p /etc/besu/miner14;
             cp /etc/besuconfigmap/miner14/besuconfig.toml /etc/besu/miner14;
-            /opt/besu/bin/besu --data-path=/etc/testnet/miner14/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner14/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303 --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/miner14/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner14/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -2939,7 +2939,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -2980,7 +2980,7 @@ items:
           - "rm -rf /etc/testnet/miner15; mkdir /etc/testnet/miner15; rm -rf /etc/besu/miner15;
             mkdir -p /etc/besu/miner15;
             cp /etc/besuconfigmap/miner15/besuconfig.toml /etc/besu/miner15;
-            /opt/besu/bin/besu --data-path=/etc/testnet/miner15/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner15/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303 --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/miner15/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner15/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -3131,7 +3131,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -3172,7 +3172,7 @@ items:
           - "rm -rf /etc/testnet/miner16; mkdir /etc/testnet/miner16; rm -rf /etc/besu/miner16;
             mkdir -p /etc/besu/miner16;
             cp /etc/besuconfigmap/miner16/besuconfig.toml /etc/besu/miner16;
-            /opt/besu/bin/besu --data-path=/etc/testnet/miner16/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner16/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303 --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/miner16/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner16/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -3323,7 +3323,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -3364,7 +3364,7 @@ items:
           - "rm -rf /etc/testnet/miner17; mkdir /etc/testnet/miner17; rm -rf /etc/besu/miner17;
             mkdir -p /etc/besu/miner17;
             cp /etc/besuconfigmap/miner17/besuconfig.toml /etc/besu/miner17;
-            /opt/besu/bin/besu --data-path=/etc/testnet/miner17/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner17/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303 --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/miner17/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner17/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -3515,7 +3515,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -3556,7 +3556,7 @@ items:
           - "rm -rf /etc/testnet/miner18; mkdir /etc/testnet/miner18; rm -rf /etc/besu/miner18;
             mkdir -p /etc/besu/miner18;
             cp /etc/besuconfigmap/miner18/besuconfig.toml /etc/besu/miner18;
-            /opt/besu/bin/besu --data-path=/etc/testnet/miner18/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner18/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303 --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/miner18/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner18/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -3707,7 +3707,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -3748,7 +3748,7 @@ items:
           - "rm -rf /etc/testnet/miner19; mkdir /etc/testnet/miner19; rm -rf /etc/besu/miner19;
             mkdir -p /etc/besu/miner19;
             cp /etc/besuconfigmap/miner19/besuconfig.toml /etc/besu/miner19;
-            /opt/besu/bin/besu --data-path=/etc/testnet/miner19/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner19/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303 --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/miner19/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner19/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -3899,7 +3899,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -3940,7 +3940,7 @@ items:
           - "rm -rf /etc/testnet/miner20; mkdir /etc/testnet/miner20; rm -rf /etc/besu/miner20;
             mkdir -p /etc/besu/miner20;
             cp /etc/besuconfigmap/miner20/besuconfig.toml /etc/besu/miner20;
-            /opt/besu/bin/besu --data-path=/etc/testnet/miner20/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner20/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303 --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/miner20/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner20/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -4091,7 +4091,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -4132,7 +4132,7 @@ items:
           - "rm -rf /etc/testnet/miner21; mkdir /etc/testnet/miner21; rm -rf /etc/besu/miner21;
             mkdir -p /etc/besu/miner21;
             cp /etc/besuconfigmap/miner21/besuconfig.toml /etc/besu/miner21;
-            /opt/besu/bin/besu --data-path=/etc/testnet/miner21/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner21/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303 --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/miner21/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner21/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -4283,7 +4283,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -4324,7 +4324,7 @@ items:
           - "rm -rf /etc/testnet/miner22; mkdir /etc/testnet/miner22; rm -rf /etc/besu/miner22;
             mkdir -p /etc/besu/miner22;
             cp /etc/besuconfigmap/miner22/besuconfig.toml /etc/besu/miner22;
-            /opt/besu/bin/besu --data-path=/etc/testnet/miner22/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner22/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303 --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/miner22/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner22/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -4475,7 +4475,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -4516,7 +4516,7 @@ items:
           - "rm -rf /etc/testnet/miner23; mkdir /etc/testnet/miner23; rm -rf /etc/besu/miner23;
             mkdir -p /etc/besu/miner23;
             cp /etc/besuconfigmap/miner23/besuconfig.toml /etc/besu/miner23;
-            /opt/besu/bin/besu --data-path=/etc/testnet/miner23/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner23/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303 --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/miner23/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner23/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -4667,7 +4667,7 @@ items:
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="228894000"
+      target-gas-limit="357500000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -4708,7 +4708,7 @@ items:
           - "rm -rf /etc/testnet/miner24; mkdir /etc/testnet/miner24; rm -rf /etc/besu/miner24;
             mkdir -p /etc/besu/miner24;
             cp /etc/besuconfigmap/miner24/besuconfig.toml /etc/besu/miner24;
-            /opt/besu/bin/besu --data-path=/etc/testnet/miner24/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner24/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303 --metrics-enabled;"
+            /opt/besu/bin/besu --data-path=/etc/testnet/miner24/data --genesis-file=/etc/besu/genesis/genesis-besu.json --config-file=/etc/besu/miner24/besuconfig.toml --bootnodes=enode://80492727fe2e43dfa991496b6bfa7cedd28d7a48a6582350226cf96a5157073cff1543a4689342d364b6fb0f671e5bf9b9fdecf44cb099ffe3e75d2719e199fc@$BESU_BOOTNODE_SVC_SERVICE_HOST:30303;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -5638,129 +5638,6 @@ items:
               memory: "10Gi"
           imagePullPolicy: IfNotPresent
         restartPolicy: Always
-####################################### PROMETHEUS MACHINE #########################
-
-
-
-- apiVersion: v1
-  kind: PersistentVolumeClaim
-  metadata:
-    #creationTimestamp: null
-    namespace: ethereum-net
-    labels:
-      name: volume-ethprometheus
-    name: volume-ethprometheus
-  spec:
-    storageClassName: manual
-    accessModes:
-    - ReadWriteOnce
-    resources:
-      requests:
-        storage: 10Gi
-
-- apiVersion: v1
-  kind: PersistentVolume
-  metadata:
-    name: prometheus
-    labels:
-      type: local
-  spec:
-    storageClassName: manual
-    capacity:
-      storage: 10Gi
-    accessModes:
-      - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Delete
-    hostPath:
-      #type: DirectoryOrCreate
-      path: "/datas/prometheus_ethereum"
-
-- apiVersion: v1
-  kind: ConfigMap
-  metadata:
-    name: prometheus-config
-    namespace: ethereum-net
-    labels:
-      app: kuberneteth
-      name: prometheus-config
-  data:
-    prometheus.yml: |-
-      global:
-        scrape_interval: 15s
-
-      scrape_configs:
-         - job_name: "prometheus"
-           static_configs:
-           - targets: ["localhost:9090"]
-         - job_name: besu
-           scrape_interval: 15s
-           scrape_timeout: 10s
-           metrics_path: /metrics
-           scheme: http
-           static_configs:
-           - targets: ["miner7-svc.ethereum-net:9545"]
-
-- apiVersion: v1
-  kind: Service
-  metadata:
-    namespace: ethereum-net
-    name: prometheus-svc
-    labels:
-      app: kuberneteth
-      tier: backend
-      name: prometheus-svc
-  spec:
-    selector:
-      app: kuberneteth
-      tier: backend
-      name: prometheus
-    type: ClusterIP
-    ports:
-      - name: prometheus-port
-        protocol: TCP
-        port: 9090
-
-- apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    name: prometheus
-    namespace: ethereum-net
-  spec:
-    replicas: 1
-    selector:
-        matchLabels:
-          name: prometheus-deployment
-    template:
-      metadata:
-        name: prometheus-deployment
-        labels:
-          app: prometheus
-          tier: backend
-          name: prometheus-deployment
-      spec:
-        containers:
-        - name: prometheus
-          image: prom/prometheus
-          resources:
-            limits:
-              cpu: "12"
-              memory: "12Gi"
-            requests:
-              cpu: "10"
-              memory: "10Gi"
-          imagePullPolicy: IfNotPresent
-          volumeMounts:
-          - name: prometheus-configmap-volume 
-            mountPath: /etc/prometheus/prometheus.yml
-            subPath: prometheus.yml
-        restartPolicy: Always
-        volumes:
-        - name: prometheus-configmap-volume
-          configMap:
-            name: prometheus-config
-            items:
-            - key: prometheus.yml
-              path: prometheus.yml
 ####################################### MongoDB MACHINE #########################
 - apiVersion: apps/v1
   kind: StatefulSet

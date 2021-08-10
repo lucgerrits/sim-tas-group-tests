@@ -115,6 +115,7 @@ cat << EOF
       
 EOF
 # Configure Gas Free Networks
+# Gas Free Network
 #https://besu.hyperledger.org/en/stable/HowTo/Configure/FreeGas/
 cat << EOF
 #---------------------------------= BOOT NODE SERVICE =---------------------------------------
