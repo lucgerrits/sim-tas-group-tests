@@ -825,3 +825,24 @@ cat << EOF
         restartPolicy: Always
 
 EOF
+
+#####################Added a Single WebSocket Services to access
+cat << EOF
+
+#--------------------------= SERVICE FOR MONGODB=--------------------------------
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: mongodb-service
+    namespace: ethereum-net
+  spec:
+    type: ClusterIP
+    selector:
+      app: database 
+    ports:
+      - name: "27017"
+        protocol: TCP
+        port: 27017
+        targetPort: 27017
+EOF
