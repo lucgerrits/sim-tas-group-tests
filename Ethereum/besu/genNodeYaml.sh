@@ -1,5 +1,7 @@
 #!/bin/bash
-
+# Gas Limit: 715000000
+# Gas for Accident Transaction = 55844
+# Ratio of 12000 txs
 NBNODES=24
 #list of validators available
 #Max 6 validator for the moment
@@ -109,7 +111,7 @@ cat << EOF
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="357500000"
+      target-gas-limit="715000000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -270,7 +272,7 @@ cat << EOF
       rpc-ws-port=8546
       rpc-ws-api=["ETH","NET","CLIQUE","WEB3","ADMIN","TXPOOL"]
       min-gas-price=0
-      target-gas-limit="357500000"
+      target-gas-limit="715000000"
       tx-pool-max-size="80000000"
       tx-pool-hashes-max-size="80000000"
       
@@ -537,7 +539,7 @@ cat << EOF
         },
         "nonce": "0x0",
         "timestamp": "0x5cdec502",
-        "gasLimit": "0x154F0460",
+        "gasLimit": "0x2A9E08C0",
         "difficulty" : "0x1",
         "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "coinbase": "0x0000000000000000000000000000000000000000",
