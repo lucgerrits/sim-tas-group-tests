@@ -373,7 +373,6 @@ items:
             cp /etc/gethconfigmap/miner1/gethconfig.toml /etc/geth/miner1;
             /usr/local/bin/geth --datadir /etc/testnet/miner1 \
             --mine \
-            --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
@@ -606,7 +605,6 @@ items:
             cp /etc/gethconfigmap/miner2/gethconfig.toml /etc/geth/miner2;
             /usr/local/bin/geth --datadir /etc/testnet/miner2 \
             --mine \
-            --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
@@ -839,7 +837,6 @@ items:
             cp /etc/gethconfigmap/miner3/gethconfig.toml /etc/geth/miner3;
             /usr/local/bin/geth --datadir /etc/testnet/miner3 \
             --mine \
-            --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
@@ -1072,7 +1069,6 @@ items:
             cp /etc/gethconfigmap/miner4/gethconfig.toml /etc/geth/miner4;
             /usr/local/bin/geth --datadir /etc/testnet/miner4 \
             --mine \
-            --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
@@ -1305,7 +1301,6 @@ items:
             cp /etc/gethconfigmap/miner5/gethconfig.toml /etc/geth/miner5;
             /usr/local/bin/geth --datadir /etc/testnet/miner5 \
             --mine \
-            --verbosity 3  \
             --nousb \
             --rpc \
             --ws \
