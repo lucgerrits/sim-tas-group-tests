@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NBNODES=5
+NBNODES=11
 #list of validators available
 #Max 6 validator for the moment
 bootnodekey="82a5635ba83da5d215c1588692fb0c7e9b244af0c265731dac69c39ad7dcf83f"
@@ -383,7 +383,6 @@ cat << EOF
             cp /etc/gethconfigmap/miner$i/gethconfig.toml /etc/geth/miner$i;
             /usr/local/bin/geth --datadir /etc/testnet/miner$i \\
             --mine \\
-            --verbosity 3  \\
             --nousb \\
             --rpc \\
             --ws \\
