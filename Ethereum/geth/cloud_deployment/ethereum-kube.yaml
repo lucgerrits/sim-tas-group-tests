@@ -49,8 +49,8 @@ items:
       app: bootnode
       name: keystore-config-bootnode
   data:
-    UTC--2021-07-19T13-43-12.906030662Z--284971d0df1bf4a2e5b053261b8beffdc6ca8e0a: |-
-      {"address":"284971d0df1bf4a2e5b053261b8beffdc6ca8e0a","crypto":{"cipher":"aes-128-ctr","ciphertext":"06ae995a68b9ceae39b496d40cb913d7e92a27852b5ebc9144555f7e86144078","cipherparams":{"iv":"8a2db752fc1f4eb77f4f4151ddbfe977"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"b05b78b23158b1ff7f66b3d3711070212511a929832c2763186437b6ef31636f"},"mac":"9b835a5c889f6ca7b36aa2286303d906ea6a113e5dfd843e301d6e37399e4580"},"id":"1f90a98e-9fb7-4f49-88e3-9dddeddc98d5","version":3}
+    bootnode.key: |-
+      82a5635ba83da5d215c1588692fb0c7e9b244af0c265731dac69c39ad7dcf83f
 
 #------------------- config file for bootnode ------------------
 - apiVersion: v1
@@ -144,44 +144,11 @@ items:
         protocol: UDP
         port: 30303
         targetPort: 30303
+      - name: geth-bootnode-discovery
+        protocol: UDP
+        port: 30301
+        targetPort: 30301
 
-
-- apiVersion: apps/v1
-  kind: DaemonSet
-  metadata:
-    namespace: ethereum-net
-    name: geth-boot-node-setup-pod
-    labels:
-      app: bootnode
-      name: bootnode-setup-pod
-  spec:
-    selector:
-      matchLabels:
-        name: bootnode-setup-pod
-    template:
-      metadata:
-        labels:
-          app: bootnode
-          name: bootnode-setup-pod
-      spec:
-        containers:
-        - name: geth-boot-node-setup-container
-          image: ethereum/client-go:alltools-v1.10.0
-          imagePullPolicy: IfNotPresent
-          command: [ "sh" ]
-          args:
-          - "-cx"
-          - " rm -rf /etc/testnet/bootnode; cd /etc/testnet/bootnode;
-            echo \"enode://e33304a6d22d07a61d038b17155bbd89e34987e5ac5cddf7e89125630d8339b61da4e18974bc4e249340a878db8b0472b54799f1636fe4887bc905989f276836@$GETH_BOOTNODE_SVC_SERVICE_HOST:30303\" > enode.address;
-            set +x;
-            while true; do :; done;"
-          volumeMounts:
-          - name: geth-boot-node-persistent-storage
-            mountPath: /etc/testnet/bootnode
-        volumes:
-        - name: geth-boot-node-persistent-storage
-          hostPath:
-            path: /var/lib/docker/geth-storage/bootnode
 
 - apiVersion: apps/v1
   kind: StatefulSet
@@ -208,29 +175,19 @@ items:
       spec:
         containers:
         - name: geth-bootnode-container
-          image: ethereum/client-go:alltools-v1.10.0
+          image: ethereum/client-go:alltools-stable
           imagePullPolicy: IfNotPresent
           command: [ "sh" ]
           args:
           - "-cx"
-          - "cd /etc/testnet/bootnode;
-            /usr/local/bin/geth --datadir /etc/testnet/bootnode init /etc/geth/genesis/genesis-geth.json;
-            touch /etc/testnet/bootnode/genesis_created;
-            echo 123 > /etc/testnet/bootnode/password.txt;
-            mkdir -p /etc/geth/bootnode;
-            cp /etc/gethconfigmap/bootnode/gethconfig.toml /etc/geth/bootnode;
-            /usr/local/bin/geth --datadir /etc/testnet/bootnode \
-            --verbosity 3  \
-            --unlock 0x284971d0df1bf4a2e5b053261b8beffdc6ca8e0a --allow-insecure-unlock --password /etc/testnet/bootnode/password.txt --miner.gasprice '0x0' --miner.gaslimit '357500000' --miner.gastarget '357500000' \
-            --config /etc/geth/bootnode/gethconfig.toml;"
+          - " rm -rf /etc/testnet/bootnode;
+            echo 82a5635ba83da5d215c1588692fb0c7e9b244af0c265731dac69c39ad7dcf83f > /etc/testnet/bootnode/bootnode.key;
+            /usr/local/bin/bootnode -nodekey /etc/testnet/bootnode/bootnode.key;"
           volumeMounts:
           - name: bootnode-persistent-storage
             mountPath: /etc/testnet/bootnode/storage
           - name: bootnode-config-persistent-storage
             mountPath: /etc/gethconfigmap/bootnode
-          - name: keystore-config-persistent-storage
-            mountPath: /etc/testnet/bootnode/keystore/UTC--2021-07-19T13-43-12.906030662Z--284971d0df1bf4a2e5b053261b8beffdc6ca8e0a
-            subPath: UTC--2021-07-19T13-43-12.906030662Z--284971d0df1bf4a2e5b053261b8beffdc6ca8e0a
           - name: geth-boot-node-persistent-storage
             mountPath: /etc/testnet/bootnode
           - name: genesis-config-persistent-storage
@@ -404,7 +361,7 @@ items:
       spec:
         containers:
         - name: miner1-container
-          image: ethereum/client-go:v1.10.0
+          image: ethereum/client-go:stable
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -414,10 +371,6 @@ items:
             echo 123 > /etc/testnet/miner1/password.txt;
             mkdir -p /etc/geth/miner1;
             cp /etc/gethconfigmap/miner1/gethconfig.toml /etc/geth/miner1;
-            ENODE=$(cat /etc/testnet/bootnode/enode.address);
-            ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
-            sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner1/gethconfig.toml;
-            sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner1/gethconfig.toml;
             /usr/local/bin/geth --datadir /etc/testnet/miner1 \
             --mine \
             --verbosity 3  \
@@ -425,8 +378,8 @@ items:
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0x6c72e4c3c645a5d84b44f6f143ce559c9e8d8153 --allow-insecure-unlock --password /etc/testnet/miner1/password.txt --miner.gasprice '0x0' --miner.gaslimit '357500000' --miner.gastarget '357500000' \
-            --config /etc/geth/miner1/gethconfig.toml;"
+            --unlock 0x6c72e4c3c645a5d84b44f6f143ce559c9e8d8153 --allow-insecure-unlock --password /etc/testnet/miner1/password.txt --miner.gasprice '0x0' --miner.gaslimit '357500000' --miner.gastarget '357500000' --bootnodes 'enode://b35312c02f067d69549fb4c68d494af4ea2f758075ce925246ce62ce73ed2a5f25d5fc935bacab20d39bb734f78f1d131203b4f2ee6482de9367092271f21454@'$GETH_BOOTNODE_SVC_SERVICE_HOST':0?discport=30301' \
+            --config /etc/geth/miner1/gethconfig.toml --maxpendpeers 25 ;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -641,7 +594,7 @@ items:
       spec:
         containers:
         - name: miner2-container
-          image: ethereum/client-go:v1.10.0
+          image: ethereum/client-go:stable
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -651,10 +604,6 @@ items:
             echo 123 > /etc/testnet/miner2/password.txt;
             mkdir -p /etc/geth/miner2;
             cp /etc/gethconfigmap/miner2/gethconfig.toml /etc/geth/miner2;
-            ENODE=$(cat /etc/testnet/bootnode/enode.address);
-            ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
-            sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner2/gethconfig.toml;
-            sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner2/gethconfig.toml;
             /usr/local/bin/geth --datadir /etc/testnet/miner2 \
             --mine \
             --verbosity 3  \
@@ -662,8 +611,8 @@ items:
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0x77c1113fb3da88e6a0f6b8b1af7c5f15286f5253 --allow-insecure-unlock --password /etc/testnet/miner2/password.txt --miner.gasprice '0x0' --miner.gaslimit '357500000' --miner.gastarget '357500000' \
-            --config /etc/geth/miner2/gethconfig.toml;"
+            --unlock 0x77c1113fb3da88e6a0f6b8b1af7c5f15286f5253 --allow-insecure-unlock --password /etc/testnet/miner2/password.txt --miner.gasprice '0x0' --miner.gaslimit '357500000' --miner.gastarget '357500000' --bootnodes 'enode://b35312c02f067d69549fb4c68d494af4ea2f758075ce925246ce62ce73ed2a5f25d5fc935bacab20d39bb734f78f1d131203b4f2ee6482de9367092271f21454@'$GETH_BOOTNODE_SVC_SERVICE_HOST':0?discport=30301' \
+            --config /etc/geth/miner2/gethconfig.toml --maxpendpeers 25 ;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -878,7 +827,7 @@ items:
       spec:
         containers:
         - name: miner3-container
-          image: ethereum/client-go:v1.10.0
+          image: ethereum/client-go:stable
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -888,10 +837,6 @@ items:
             echo 123 > /etc/testnet/miner3/password.txt;
             mkdir -p /etc/geth/miner3;
             cp /etc/gethconfigmap/miner3/gethconfig.toml /etc/geth/miner3;
-            ENODE=$(cat /etc/testnet/bootnode/enode.address);
-            ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
-            sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner3/gethconfig.toml;
-            sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner3/gethconfig.toml;
             /usr/local/bin/geth --datadir /etc/testnet/miner3 \
             --mine \
             --verbosity 3  \
@@ -899,8 +844,8 @@ items:
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0x5708c9ed0dc25097f24903d27c13c9b4c18f3e54 --allow-insecure-unlock --password /etc/testnet/miner3/password.txt --miner.gasprice '0x0' --miner.gaslimit '357500000' --miner.gastarget '357500000' \
-            --config /etc/geth/miner3/gethconfig.toml;"
+            --unlock 0x5708c9ed0dc25097f24903d27c13c9b4c18f3e54 --allow-insecure-unlock --password /etc/testnet/miner3/password.txt --miner.gasprice '0x0' --miner.gaslimit '357500000' --miner.gastarget '357500000' --bootnodes 'enode://b35312c02f067d69549fb4c68d494af4ea2f758075ce925246ce62ce73ed2a5f25d5fc935bacab20d39bb734f78f1d131203b4f2ee6482de9367092271f21454@'$GETH_BOOTNODE_SVC_SERVICE_HOST':0?discport=30301' \
+            --config /etc/geth/miner3/gethconfig.toml --maxpendpeers 25 ;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -1115,7 +1060,7 @@ items:
       spec:
         containers:
         - name: miner4-container
-          image: ethereum/client-go:v1.10.0
+          image: ethereum/client-go:stable
           imagePullPolicy: Always
           command: [ "sh" ]
           args:
@@ -1125,10 +1070,6 @@ items:
             echo 123 > /etc/testnet/miner4/password.txt;
             mkdir -p /etc/geth/miner4;
             cp /etc/gethconfigmap/miner4/gethconfig.toml /etc/geth/miner4;
-            ENODE=$(cat /etc/testnet/bootnode/enode.address);
-            ENODE_ESC=$(echo $ENODE | sed 's@//@\\\\/\\\\/@g');
-            sed -i \"s/BootstrapNodes = \\[\\]/BootstrapNodes = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner4/gethconfig.toml;
-            sed -i \"s/BootstrapNodesV5 = \\[\\]/BootstrapNodesV5 = [\\\"$ENODE_ESC\\\"]/g\" /etc/geth/miner4/gethconfig.toml;
             /usr/local/bin/geth --datadir /etc/testnet/miner4 \
             --mine \
             --verbosity 3  \
@@ -1136,8 +1077,8 @@ items:
             --rpc \
             --ws \
             --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
-            --unlock 0x5e99b8f68e317e40f5b64fb427d6ddd86fb6d89b --allow-insecure-unlock --password /etc/testnet/miner4/password.txt --miner.gasprice '0x0' --miner.gaslimit '357500000' --miner.gastarget '357500000' \
-            --config /etc/geth/miner4/gethconfig.toml;"
+            --unlock 0x5e99b8f68e317e40f5b64fb427d6ddd86fb6d89b --allow-insecure-unlock --password /etc/testnet/miner4/password.txt --miner.gasprice '0x0' --miner.gaslimit '357500000' --miner.gastarget '357500000' --bootnodes 'enode://b35312c02f067d69549fb4c68d494af4ea2f758075ce925246ce62ce73ed2a5f25d5fc935bacab20d39bb734f78f1d131203b4f2ee6482de9367092271f21454@'$GETH_BOOTNODE_SVC_SERVICE_HOST':0?discport=30301' \
+            --config /etc/geth/miner4/gethconfig.toml --maxpendpeers 25 ;"
           ports:
             - containerPort: 8545
             - containerPort: 8546
@@ -1243,6 +1184,239 @@ items:
         storage: 20Gi
 
 
+# --------------------------=== POD DEPLOYMENT 5 ===--------------------------
+
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: keystore-config-miner5
+    namespace: ethereum-net
+    labels:
+      app: miner
+      name: keystore-config-miner5
+  data:
+    UTC--2021-07-19T13-43-20.173237944Z--c36194ca819c884d556eab67a0a3a1d760dcdff4: |-
+      {"address":"c36194ca819c884d556eab67a0a3a1d760dcdff4","crypto":{"cipher":"aes-128-ctr","ciphertext":"bdc7a07020b23c3401ffc95423a08c4f8fd15e2dd401691ba51d83d661828016","cipherparams":{"iv":"edb9823a2bd03d6d5f4678b728992f5b"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"25ff6dddda11ca5debc8a2051140eb380672af5f63b739feaa103e886fd242d5"},"mac":"778e1d1a1d1f4aafd39ac2c84b7172a587d563e81b1714ee23666f69a6568393"},"id":"fc45e16e-f1bf-40ef-9e51-2217d5e64088","version":3}
+
+#---------------------------------=CONFIG MAP NODE 5=---------------------------------------
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: gethconfig-miner5
+    namespace: ethereum-net
+    labels:
+      app: miner
+      name: gethconfig-miner5
+  data:
+    gethconfig: |-
+      [Eth]
+      NetworkId = 123456
+      SyncMode = "full"
+      LightPeers = 100
+      DatabaseCache = 1024
+      EnablePreimageRecording = false
+      
+      [Eth.Ethash]
+      CacheDir = "ethash"
+      CachesInMem = 2
+      CachesOnDisk = 3
+      DatasetDir = "/root/.ethash"
+      DatasetsInMem = 1
+      DatasetsOnDisk = 2
+      PowMode = 0
+      
+      [Eth.TxPool]
+      Locals = []
+      NoLocals = false
+      Journal = "transactions.rlp"
+      Rejournal = 3600000000000
+      PriceLimit = 0
+      PriceBump = 0
+      AccountSlots = 1000000
+      GlobalSlots = 1000000
+      AccountQueue = 100000
+      GlobalQueue = 100000
+      Lifetime = 10800000000000
+      
+      [Eth.GPO]
+      Blocks = 20
+      Percentile = 60
+      
+      [Node]
+      UserIdent = "miner5"
+      DataDir = "/etc/testnet/miner5"
+      IPCPath = "/etc/testnet/miner5/geth.ipc"
+      HTTPHost = "0.0.0.0"
+      HTTPPort = 8545
+      HTTPCors = ["*"]
+      HTTPVirtualHosts = ["*"]
+      HTTPModules = ["eth", "net", "web3", "personal", "miner", "admin", "clique", "personal", "txpool", "debug"]
+      WSHost = "0.0.0.0"
+      WSPort = 8546
+      WSOrigins = ["*"]
+      WSModules = ["net", "web3", "eth", "clique", "web3", "personal", "miner", "txpool" , "admin", "debug"]
+      
+      [Node.P2P]
+      MaxPeers = 25
+      NoDiscovery = false
+      BootstrapNodes = []
+      BootstrapNodesV5 = []
+      StaticNodes = []
+      TrustedNodes = []
+      ListenAddr = ":30303"
+      EnableMsgEvents = false
+      
+
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    namespace: ethereum-net
+    labels:
+      app: miner
+      tier: backend
+      name: geth-miner5
+      serviceSelector: ethereum-node
+    name: geth-miner5
+  spec:
+    selector:
+      matchLabels:
+        app: miner
+    replicas: 1
+    serviceName: geth-miner5
+    template:
+      metadata:
+        name: geth-miner5
+        labels:
+          app: miner
+          tier: backend
+          name: miner5
+      spec:
+        containers:
+        - name: miner5-container
+          image: ethereum/client-go:stable
+          imagePullPolicy: Always
+          command: [ "sh" ]
+          args:
+          - "-cx"
+          - "rm -rf /etc/testnet/miner5; /usr/local/bin/geth --datadir /etc/testnet/miner5 init /etc/geth/genesis/genesis-geth.json;
+            touch /etc/testnet/miner5/genesis_created;
+            echo 123 > /etc/testnet/miner5/password.txt;
+            mkdir -p /etc/geth/miner5;
+            cp /etc/gethconfigmap/miner5/gethconfig.toml /etc/geth/miner5;
+            /usr/local/bin/geth --datadir /etc/testnet/miner5 \
+            --mine \
+            --verbosity 3  \
+            --nousb \
+            --rpc \
+            --ws \
+            --metrics --metrics.influxdb --metrics.influxdb.endpoint 'http://influxdb.monitoring:8086' --metrics.influxdb.username 'admin' --metrics.influxdb.password 'admin' \
+            --unlock 0xc36194ca819c884d556eab67a0a3a1d760dcdff4 --allow-insecure-unlock --password /etc/testnet/miner5/password.txt --miner.gasprice '0x0' --miner.gaslimit '357500000' --miner.gastarget '357500000' --bootnodes 'enode://b35312c02f067d69549fb4c68d494af4ea2f758075ce925246ce62ce73ed2a5f25d5fc935bacab20d39bb734f78f1d131203b4f2ee6482de9367092271f21454@'$GETH_BOOTNODE_SVC_SERVICE_HOST':0?discport=30301' \
+            --config /etc/geth/miner5/gethconfig.toml --maxpendpeers 25 ;"
+          ports:
+            - containerPort: 8545
+            - containerPort: 8546
+              protocol: UDP
+            - containerPort: 30303
+          volumeMounts:
+          - name: miner5-persistent-storage
+            mountPath: /etc/testnet/miner5
+          - name: miner5-config-persistent-storage
+            mountPath: /etc/gethconfigmap/miner5
+          - name: keystore-config-persistent-storage
+            mountPath: /etc/testnet/miner5/keystore/UTC--2021-07-19T13-43-20.173237944Z--c36194ca819c884d556eab67a0a3a1d760dcdff4
+            subPath: UTC--2021-07-19T13-43-20.173237944Z--c36194ca819c884d556eab67a0a3a1d760dcdff4
+          - name: geth-boot-node-persistent-storage
+            mountPath: /etc/testnet/bootnode
+          - name: genesis-config-persistent-storage
+            mountPath: /etc/geth/genesis/genesis-geth.json
+            subPath: genesis-geth.json
+        volumes:
+        - name: keystore-config-persistent-storage
+          configMap:
+            name: keystore-config-miner5
+            items:
+            - key: UTC--2021-07-19T13-43-20.173237944Z--c36194ca819c884d556eab67a0a3a1d760dcdff4
+              path: UTC--2021-07-19T13-43-20.173237944Z--c36194ca819c884d556eab67a0a3a1d760dcdff4
+        - name: geth-boot-node-persistent-storage
+          hostPath:
+            path: /var/lib/docker/geth-storage/bootnode
+        - name: genesis-config-persistent-storage
+          configMap:
+            name: genesis-config
+            items:
+            - key: genesis-geth.json
+              path: genesis-geth.json
+        - name: miner5-persistent-storage
+          persistentVolumeClaim:
+          claimName: volume-miner5
+        - name: miner5-config-persistent-storage
+          configMap:
+            name: gethconfig-miner5
+            items:
+            - key: gethconfig
+              path: gethconfig.toml
+
+#---------------------------------=NODES SERVICES 5=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: miner5-svc
+    namespace: ethereum-net
+    labels:
+      app: miner
+      tier: backend
+      name: miner5-svc
+  spec:
+    selector:
+      app: miner
+      tier: backend
+      name: miner5
+    ports:
+      - name: miner5-jsonrpc
+        protocol: TCP
+        port: 8545
+        targetPort: 8545
+      - name: miner5-wsrpc
+        protocol: TCP
+        port: 8546
+        targetPort: 8546
+      - name: miner5-ipc-discovery
+        protocol: TCP
+        port: 30303
+        targetPort: 30303
+#---------------------------------=NODES PERSISTANT VOLUME 5=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: miner5
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 20Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Delete
+    hostPath:
+      #type: DirectoryOrCreate
+      path: "/datas/miner5"
+#--------------------------=PERSISTENT VOLUME CLAIM 5=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: volume-miner5
+    namespace: ethereum-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 20Gi
+
+
 #--------------------------=ONE SERVICE FOR ALL NODE (websocket)=--------------------------------
 
 - apiVersion: v1
@@ -1298,6 +1472,8 @@ items:
           "byzantiumBlock": 0,
           "constantinopleBlock": 0,
           "petersburgBlock": 0,
+          "istanbulBlock": 0,
+          "berlinBlock": 0,
           "clique": {
             "period": 2,
             "epoch": 30000
@@ -1309,17 +1485,17 @@ items:
         "difficulty" : "0x1",
         "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "coinbase": "0x0000000000000000000000000000000000000000",
-        "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000284971d0df1bf4a2e5b053261b8beffdc6ca8e0a6c72e4c3c645a5d84b44f6f143ce559c9e8d815377c1113fb3da88e6a0f6b8b1af7c5f15286f52535708c9ed0dc25097f24903d27c13c9b4c18f3e545e99b8f68e317e40f5b64fb427d6ddd86fb6d89b0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "extraData": "0x00000000000000000000000000000000000000000000000000000000000000006c72e4c3c645a5d84b44f6f143ce559c9e8d815377c1113fb3da88e6a0f6b8b1af7c5f15286f52535708c9ed0dc25097f24903d27c13c9b4c18f3e545e99b8f68e317e40f5b64fb427d6ddd86fb6d89bc36194ca819c884d556eab67a0a3a1d760dcdff40000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         "alloc": {
-                        "284971d0df1bf4a2e5b053261b8beffdc6ca8e0a": {
-              "balance": "0x200000000000000000000000000000000000000000000000000000000000000"
-            },            "6c72e4c3c645a5d84b44f6f143ce559c9e8d8153": {
+                        "6c72e4c3c645a5d84b44f6f143ce559c9e8d8153": {
               "balance": "0x200000000000000000000000000000000000000000000000000000000000000"
             },            "77c1113fb3da88e6a0f6b8b1af7c5f15286f5253": {
               "balance": "0x200000000000000000000000000000000000000000000000000000000000000"
             },            "5708c9ed0dc25097f24903d27c13c9b4c18f3e54": {
               "balance": "0x200000000000000000000000000000000000000000000000000000000000000"
             },            "5e99b8f68e317e40f5b64fb427d6ddd86fb6d89b": {
+              "balance": "0x200000000000000000000000000000000000000000000000000000000000000"
+            },            "c36194ca819c884d556eab67a0a3a1d760dcdff4": {
               "balance": "0x200000000000000000000000000000000000000000000000000000000000000"
             }
         },
@@ -1456,6 +1632,27 @@ items:
             "WS_SECRET"       : "123",
             "VERBOSITY"       : 3
           }
+        },        {
+          "name"              : "miner5",
+          "cwd"               : ".",
+          "script"            : "app.js",
+          "log_date_format"   : "YYYY-MM-DD HH:mm Z",
+          "merge_logs"        : false,
+          "watch"             : false,
+          "exec_interpreter"  : "node",
+          "exec_mode"         : "fork_mode",
+          "env":
+          {
+            "NODE_ENV"        : "production",
+            "RPC_HOST"        : "miner5-rpchost",
+            "RPC_PORT"        : "8545",
+            "LISTENING_PORT"  : "30303",
+            "INSTANCE_NAME"   : "miner5",
+            "CONTACT_DETAILS" : "",
+            "WS_SERVER"       : "localhost:3001",
+            "WS_SECRET"       : "123",
+            "VERBOSITY"       : 3
+          }
         }
       ]
 
@@ -1511,6 +1708,7 @@ items:
              sed -i \"s/miner2-rpchost/$MINER2_SVC_SERVICE_HOST/g\" /ethmonitor/app.json;
              sed -i \"s/miner3-rpchost/$MINER3_SVC_SERVICE_HOST/g\" /ethmonitor/app.json;
              sed -i \"s/miner4-rpchost/$MINER4_SVC_SERVICE_HOST/g\" /ethmonitor/app.json;
+             sed -i \"s/miner5-rpchost/$MINER5_SVC_SERVICE_HOST/g\" /ethmonitor/app.json;
  
             exit 0;"
           volumeMounts:
