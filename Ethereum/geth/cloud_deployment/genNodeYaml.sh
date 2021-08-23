@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NBNODES=5
+NBNODES=24
 #list of validators available
 # Boot Node Key generated
 bootnodekey="82a5635ba83da5d215c1588692fb0c7e9b244af0c265731dac69c39ad7dcf83f"
