@@ -35,4 +35,4 @@ plot "commit_rate_var_data.csv" using 1:2 with linespoints pt 2 pi 0 title "4 no
     "commit_rate_var_data.csv" using 1:3 with linespoints pt 4 pi 0 title "6 nodes", \
     "commit_rate_var_data.csv" using 1:4 with linespoints pt 6 pi 0 title "12 nodes", \
     "commit_rate_var_data.csv" using 1:5 with linespoints pt 10 pi 0 title "18 nodes", \
-    "commit_rate_var_data.csv" using 1:6 with linespoints pt 12 pi 0 title "24 nodes"
+    "commit_rate_var_data.csv" using 1:6 with linespoints pt 12 pi 0 lt rgb "#000000" title "24 nodes"

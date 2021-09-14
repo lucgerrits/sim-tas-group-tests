@@ -35,8 +35,8 @@ def butter_lowpass_filter(data, cutoff, fs, order=5):
 data_path = "./datas_csv/"
 conf_figsize=(20, 10)
 # conf_figsize=(6.4, 4.8)
-filter_out_all_with_elements= [] #["30tps|4_nodes", "30tps|6_nodes", "30tps|12_nodes", "30tps|18_nodes"] #["50tps|6_nodes", "40tps|6_nodes", "30tps|6_nodes", "50tps|12_nodes", "40tps|12_nodes", "30tps|12_nodes"] #"50tps", "40tps", "30tps"
-filter_out_reverse=False
+filter_out_all_with_elements= ["|8_nodes"] #["30tps|4_nodes", "30tps|6_nodes", "30tps|12_nodes", "30tps|18_nodes"] #["50tps|6_nodes", "40tps|6_nodes", "30tps|6_nodes", "50tps|12_nodes", "40tps|12_nodes", "30tps|12_nodes"] #"50tps", "40tps", "30tps"
+filter_out_reverse=True
 export_data_path = "./datas_csv_paper_ready/"
 
 if not os.path.exists(export_data_path):

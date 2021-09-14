@@ -21,159 +21,159 @@ do_test_init=True #1/0
 # config doc: https://sawtooth.hyperledger.org/docs/pbft/nightly/master/configuring-pbft.html
 test_profiles = [
     ############ 5tps
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "5",
-    #         "js_wait_time": "1"
-    #     }
-    # },
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "5",
-    #         "js_wait_time": "1"
-    #     }
-    # },
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "5",
-    #         "js_wait_time": "1"
-    #     }
-    # },
-    # ############### 10tps
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "5",
-    #         "js_wait_time": "0.5"
-    #     }
-    # },
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "5",
-    #         "js_wait_time": "0.5"
-    #     }
-    # },
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "5",
-    #         "js_wait_time": "0.5"
-    #     }
-    # },
-    # ############### 15tps
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "15",
-    #         "js_wait_time": "1"
-    #     }
-    # },
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "15",
-    #         "js_wait_time": "1"
-    #     }
-    # },
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "15",
-    #         "js_wait_time": "1"
-    #     }
-    # },
-    # ############### 20tps
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "10",
-    #         "js_wait_time": "0.5"
-    #     }
-    # },
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "10",
-    #         "js_wait_time": "0.5"
-    #     }
-    # },
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "10",
-    #         "js_wait_time": "0.5"
-    #     }
-    # },
-    # ############### 25tps
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "25",
-    #         "js_wait_time": "1"
-    #     }
-    # },
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "25",
-    #         "js_wait_time": "1"
-    #     }
-    # },
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "25",
-    #         "js_wait_time": "1"
-    #     }
-    # },
-    # ############### 30tps
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "10",
-    #         "js_wait_time": "0.333"
-    #     }
-    # },
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "10",
-    #         "js_wait_time": "0.333"
-    #     }
-    # },
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "10",
-    #         "js_wait_time": "0.333"
-    #     }
-    # },
-    # ############### 40tps
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "20",
-    #         "js_wait_time": "0.5"
-    #     }
-    # },
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "20",
-    #         "js_wait_time": "0.5"
-    #     }
-    # },
-    # {
-    #     "sender_parameters": {
-    #         "limit": "10000",
-    #         "js_nb_parallele": "20",
-    #         "js_wait_time": "0.5"
-    #     }
-    # },
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "5",
+            "js_wait_time": "1"
+        }
+    },
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "5",
+            "js_wait_time": "1"
+        }
+    },
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "5",
+            "js_wait_time": "1"
+        }
+    },
+    ############### 10tps
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "5",
+            "js_wait_time": "0.5"
+        }
+    },
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "5",
+            "js_wait_time": "0.5"
+        }
+    },
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "5",
+            "js_wait_time": "0.5"
+        }
+    },
+    ############### 15tps
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "15",
+            "js_wait_time": "1"
+        }
+    },
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "15",
+            "js_wait_time": "1"
+        }
+    },
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "15",
+            "js_wait_time": "1"
+        }
+    },
+    ############### 20tps
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "10",
+            "js_wait_time": "0.5"
+        }
+    },
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "10",
+            "js_wait_time": "0.5"
+        }
+    },
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "10",
+            "js_wait_time": "0.5"
+        }
+    },
+    ############### 25tps
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "25",
+            "js_wait_time": "1"
+        }
+    },
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "25",
+            "js_wait_time": "1"
+        }
+    },
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "25",
+            "js_wait_time": "1"
+        }
+    },
+    ############### 30tps
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "10",
+            "js_wait_time": "0.333"
+        }
+    },
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "10",
+            "js_wait_time": "0.333"
+        }
+    },
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "10",
+            "js_wait_time": "0.333"
+        }
+    },
+    ############### 40tps
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "20",
+            "js_wait_time": "0.5"
+        }
+    },
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "20",
+            "js_wait_time": "0.5"
+        }
+    },
+    {
+        "sender_parameters": {
+            "limit": "10000",
+            "js_nb_parallele": "20",
+            "js_wait_time": "0.5"
+        }
+    },
     ############### 50tps
     {
         "sender_parameters": {
