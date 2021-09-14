@@ -32,9 +32,9 @@ $data << EOD
 50, 25, 20, 16.9, 13, 13, 13
 EOD
 
-plot "$data" using 1:2 with linespoints title "5 nodes", \
-    "$data" using 1:3 with linespoints title "6 nodes", \
-    "$data" using 1:4 with linespoints title "8 nodes", \
-    "$data" using 1:5 with linespoints title "12 nodes", \
-    "$data" using 1:6 with linespoints title "18 nodes", \
-    "$data" using 1:7 with linespoints title "24 nodes"
+plot "$data" using 1:2 with linespoints lw 2 title "4 nodes", \
+    "$data" using 1:3 with linespoints lw 2 title "6 nodes", \
+    "$data" using 1:4 with linespoints lw 2 title "8 nodes", \
+    "$data" using 1:5 with linespoints lw 2 title "12 nodes", \
+    "$data" using 1:6 with linespoints lw 2 title "18 nodes", \
+    "$data" using 1:7 with linespoints lw 2 title "24 nodes"

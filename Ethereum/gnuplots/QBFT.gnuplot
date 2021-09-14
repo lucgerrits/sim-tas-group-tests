@@ -26,10 +26,10 @@ $data << EOD
 1500, 220, 215, 212, 211, 210, 210, 205
 EOD
 
-plot "$data" using 1:2 with linespoints title "5 nodes", \
-    "$data" using 1:3 with linespoints title "10 nodes", \
-    "$data" using 1:4 with linespoints title "15 nodes", \
-    "$data" using 1:5 with linespoints title "17 nodes", \
-    "$data" using 1:6 with linespoints title "19 nodes", \
-    "$data" using 1:7 with linespoints title "20 nodes", \
-    "$data" using 1:8 with linespoints title "25 nodes"
+plot "$data" using 1:2 with linespoints lw 2 title "5 nodes", \
+    "$data" using 1:3 with  linespoints lw 2 title "10 nodes", \
+    "$data" using 1:4 with  linespoints lw 2 title "15 nodes", \
+    "$data" using 1:5 with  linespoints lw 2 title "17 nodes", \
+    "$data" using 1:6 with  linespoints lw 2 title "19 nodes", \
+    "$data" using 1:7 with  linespoints lw 2 title "20 nodes", \
+    "$data" using 1:8 with  linespoints lw 2 title "25 nodes"

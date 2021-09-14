@@ -23,7 +23,7 @@ set key at graph 0.98, 0.3
 set datafile separator comma
 
 
-plot "conclusion.csv" using 1:2 with linespoints title "Clique (max=1500)", \
-    "conclusion.csv" using 1:3 with linespoints title "IBFT (max=450)", \
-    "conclusion.csv" using 1:4 with linespoints title "QBFT (max=465)", \
-    "conclusion.csv" using 1:5 with linespoints title "PBFT (max=25)"
+plot "conclusion.csv" using 1:2 with linespoints lw 2 title "Clique (max=1500)", \
+    "conclusion.csv" using 1:3 with  linespoints lw 2 title "IBFT (max=450)", \
+    "conclusion.csv" using 1:4 with  linespoints lw 2 title "QBFT (max=465)", \
+    "conclusion.csv" using 1:5 with  linespoints lw 2 title "PBFT (max=25)"
