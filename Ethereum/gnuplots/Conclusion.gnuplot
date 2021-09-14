@@ -16,14 +16,14 @@ set xtics (4,5,6,7,8,10,12,15,17,18,19,20,24,25)
 # set xrange [0 to 25]
 set yrange [0 to 1.1]
 
-set key at graph 0.85, 0.95
+set key at graph 0.98, 0.3
 
 #csv settings:
 # set key autotitle columnhead
 set datafile separator comma
 
 
-plot "conclusion.csv" using 1:2 with linespoints title "Clique", \
-    "conclusion.csv" using 1:3 with linespoints title "IBFT", \
-    "conclusion.csv" using 1:4 with linespoints title "QBFT", \
-    "conclusion.csv" using 1:5 with linespoints title "PBFT"
+plot "conclusion.csv" using 1:2 with linespoints title "Clique (max=1500)", \
+    "conclusion.csv" using 1:3 with linespoints title "IBFT (max=450)", \
+    "conclusion.csv" using 1:4 with linespoints title "QBFT (max=465)", \
+    "conclusion.csv" using 1:5 with linespoints title "PBFT (max=25)"

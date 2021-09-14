@@ -22,18 +22,19 @@ set datafile separator comma
 
 
 $data << EOD
-5,5,5,5,5,5
-10, 10, 10, 10, 10, 8
-15, 14, 14, 14, 13, 10
-20, 17, 17, 14, 10, 5
-25, 20, 19, 14, 9, 15
-30, 20, 19, 13, 9, 11
-40, 21, 21, 13, 14, 17
-50, 25, 20, 13, 13, 13
+5, 5, 5, 5, 5, 5, 5
+10, 10, 10, 9.3, 10, 10, 8
+15, 14, 14, 13.6, 14, 13, 10
+20, 17, 17, 16.1, 14, 10, 5
+25, 20, 19, 18.6, 14, 9, 15
+30, 20, 19, 17.2, 13, 9, 11
+40, 21, 21, 18.3, 13, 14, 17
+50, 25, 20, 16.9, 13, 13, 13
 EOD
 
 plot "$data" using 1:2 with linespoints title "5 nodes", \
     "$data" using 1:3 with linespoints title "6 nodes", \
-    "$data" using 1:4 with linespoints title "12 nodes", \
-    "$data" using 1:5 with linespoints title "18 nodes", \
-    "$data" using 1:6 with linespoints title "24 nodes"
+    "$data" using 1:4 with linespoints title "8 nodes", \
+    "$data" using 1:5 with linespoints title "12 nodes", \
+    "$data" using 1:6 with linespoints title "18 nodes", \
+    "$data" using 1:7 with linespoints title "24 nodes"
