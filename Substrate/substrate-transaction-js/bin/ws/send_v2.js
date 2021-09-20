@@ -116,7 +116,7 @@ function do_benchmark(callback) {
 
 
         //handle exit
-        processes_arr[i].on('exit', () => {
+        processes_arr[i].on('exit', async () => {
             //proccess exit
             processes_exited++;
             if (processes_exited == nb_processes) {
@@ -128,6 +128,7 @@ function do_benchmark(callback) {
                 console.log(`Total failed: ${tot_failed}`)
                 console.log(`Total finished: ${tot_finished}`)
 
+                await substrate_sim.sleep(10000); //wait a little
                 callback()
             }
         });
@@ -176,7 +177,7 @@ function do_stats(callback) {
 
 async.series([
     do_benchmark,
-    // do_stats
+    do_stats
 ], () => {
     console.log("End main program")
     process.exit(0);

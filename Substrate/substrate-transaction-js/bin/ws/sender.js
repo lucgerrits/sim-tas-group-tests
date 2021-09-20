@@ -70,7 +70,7 @@ async function prepare(limit) {
     for (let i = 0; i < limit; i++) {
         let car_index = i % car_array.length;
         transactions[i] = await substrate_sim.send.prepare_new_car_crash(api, car_array[car_index], car_array_nonces[car_index])
-        // car_array_nonces[car_index]++;
+        car_array_nonces[car_index]++;
         finished++;
     }
     process.send({ "cmd": "prepare_stats", "finished": finished });
@@ -82,9 +82,9 @@ async function send(wait_time) {
     var failed = 0;
     for (let i = 0; i < Object.keys(transactions).length; i++) {
         (async function (i) {
-            let car_index = i % car_array.length;
-            transactions[i] = await substrate_sim.send.prepare_new_car_crash(api, car_array[car_index], car_array_nonces[car_index])
-            car_array_nonces[car_index]++;
+            // let car_index = i % car_array.length;
+            // transactions[i] = await substrate_sim.send.prepare_new_car_crash(api, car_array[car_index], car_array_nonces[car_index])
+            // car_array_nonces[car_index]++;
             transactions[i].send()
                 .then((data) => {
                     // console.log(process_id_str, data)
