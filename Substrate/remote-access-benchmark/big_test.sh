@@ -2,20 +2,21 @@
 
 #RUN example:
 #
-#./big_test.sh <RANCHER TOKEN> > test-"`date +"%Y-%m-%d-%T"`".log
+#./big_test.sh <RANCHER TOKEN> > logs/test-"`date +"%Y-%m-%d-%T"`".log
 #
 
 GRAFANA_URL="http://grafana.unice.cust.tasfrance.com/api/annotations"
 GRAFANA_DASHBOARD_ID="3"
 
-JS_THREADS=20
+JS_THREADS=28
 
 #key=tps
 #we want an avg of 1 min test, ie 60 * tps
 # arr_tests=(100 500 800 1000 1100 1300 1500)
-arr_tests_nodes=(4 6 12 18 24)
+# arr_tests_nodes=(4 6 12 18 24) #use even to get odd (always odd+1 because of bootnode)
+arr_tests_nodes=(6) #use even to get odd (always odd+1 because of bootnode)
 # arr_tests_tps=(1000 1100 1200 1300 1400 1500 1600)
-arr_tests_tps=(500 800 1000 1200)
+arr_tests_tps=(200)
 tot_cars=10000
 tot_factories=10
 
@@ -32,7 +33,7 @@ for nb_nodes in "${arr_tests_nodes[@]}"; do
 
     for tps in "${arr_tests_tps[@]}"; do
         
-        total_tx=100000 #$(($tps * 60))
+        total_tx=30000 #100000 #$(($tps * 60))
 
         send_annotation "${tps}" "$total_tx" "${i}" "$(($nb_nodes -1))" "init_network"
 
@@ -47,7 +48,7 @@ for nb_nodes in "${arr_tests_nodes[@]}"; do
 
         cd ../remote-access-benchmark
 
-        for i in {1..10}; do #repeat 5 times the test
+        for i in {1..5}; do #repeat 5 times the test
 
             echo "################### TEST tps=$tps n°$i #######################";
 
@@ -68,9 +69,9 @@ for nb_nodes in "${arr_tests_nodes[@]}"; do
             echo "send tx"
             ./cmd_remote.sh "./bin/ws/send_v2.js $total_tx $tps $JS_THREADS" | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g"
 
-            send_annotation "${tps}" "$total_tx" "${i}" "$(($nb_nodes -1))" "end_send_tx"
-
             sleep 30
+
+            send_annotation "${tps}" "$total_tx" "${i}" "$(($nb_nodes -1))" "end_send_tx"
 
             echo "################### END TEST n°$i #######################"
 

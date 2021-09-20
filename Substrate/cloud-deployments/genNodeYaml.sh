@@ -68,11 +68,11 @@ cat << EOF
             resources:
               requests:
                 memory: "10Gi"
-                #cpu: "0.5"
+                cpu: "4"
                 ephemeral-storage: "1500Mi"
               limits:
                 memory: "11Gi"
-                #cpu: "1.1"
+                cpu: "4"
                 ephemeral-storage: "2Gi"
             ports:
               - name: p2p
@@ -120,7 +120,10 @@ cat << EOF
                         --wasm-execution Compiled \\
                         --ws-max-connections 1000 \\
                         --pool-limit 10000 \\
-                        --pool-kbytes 20480 \\
+                        --pool-kbytes 125000 \\
+                        --validator \\
+                        --no-grandpa \\
+                        --state-cache-size 2147483648 \\
                         --max-runtime-instances 100
                     
             volumeMounts:
@@ -169,11 +172,11 @@ cat << EOF
             resources:
               requests:
                 memory: "10Gi"
-                #cpu: "0.5"
+                cpu: "4"
                 ephemeral-storage: "1500Mi"
               limits:
                 memory: "11Gi"
-                #cpu: "1.1"
+                cpu: "4"
                 ephemeral-storage: "2Gi"
             ports:
               - name: p2p
@@ -221,9 +224,11 @@ cat << EOF
                         --wasm-execution Compiled \\
                         --ws-max-connections 1000 \\
                         --pool-limit 10000 \\
-                        --pool-kbytes 20480 \\
+                        --pool-kbytes 125000 \\
                         --max-runtime-instances 100 \\
+                        --state-cache-size 2147483648 \\
                         --validator \\
+                        --no-grandpa \\
                         --bootnodes /ip4/\$SUBSTRATE_0_SERVICE_HOST/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
                     
             volumeMounts:
@@ -387,8 +392,8 @@ palletGrandpa_authorities=$(echo "$palletGrandpa_authorities" | jq -c) #format j
 
 #edit json to replace the two arrays
 #jq
-chainSpec=$(echo $chainSpec | jq ".genesis.runtime.palletAura.authorities = ${palletAura_authorities}")
-chainSpec=$(echo $chainSpec | jq ".genesis.runtime.palletGrandpa.authorities = ${palletGrandpa_authorities}")
+chainSpec=$(echo $chainSpec | jq ".genesis.runtime.aura.authorities = ${palletAura_authorities}")
+chainSpec=$(echo $chainSpec | jq ".genesis.runtime.grandpa.authorities = ${palletGrandpa_authorities}")
 chainSpec=$(echo $chainSpec | jq '.name = "The Batman Chain"')
 chainSpec=$(echo $chainSpec | jq '.id = "TBC_testnet"')
 
@@ -429,17 +434,17 @@ cat << EOF
           - "substrate-ws.unice.cust.tasfrance.com"
         containers:
         - name: substrate-sim-transaction-js
-          image: projetsim/substrate-sim-transaction-js:v1.0
+          image: projetsim/substrate-sim-transaction-js:latest
           command:
             - "sleep"
             - "604800"
           resources:
             limits:
-              cpu: "20"
-              memory: "20Gi"
+              cpu: "30"
+              memory: "10Gi"
             requests:
-              cpu: "20"
-              memory: "20Gi"
+              cpu: "30"
+              memory: "10Gi"
           imagePullPolicy: Always
         restartPolicy: Always
 EOF

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 DATA_PATH=datas
+NB_MAX_TESTS_TO_DETECT=05 #use two digit format
 
 echo "Remove previous results"
 rm -rf ./datas_csv/*
@@ -46,11 +47,11 @@ for (( i=0; i<=$(($length - 1)); i++ )); do
     ./export_prometheus_data.sh ${start_time_list[i]} ${end_time_list[i]} $test
 
     #if 10 tests we can build final data
-    if [ "$test" == "10" ]; then
+    if [ "$test" == "$NB_MAX_TESTS_TO_DETECT" ]; then
         #we have a test end
         end=${end_time_list[i]}
         echo "##########################################################"
-        echo "We have 10 tests for the config: ${tps}tps|${nodes}_nodes"
+        echo "We have $NB_MAX_TESTS_TO_DETECT tests for the config: ${tps}tps|${nodes}_nodes"
         #We can now build data using .py script
         ./build_data.py "${tps}tps|${nodes}_nodes" #name the test
         ./build_data_merged.py "${nodes}_nodes"
