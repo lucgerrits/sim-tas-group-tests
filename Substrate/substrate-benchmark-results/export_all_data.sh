@@ -4,7 +4,7 @@ DATA_PATH=datas
 NB_MAX_TESTS_TO_DETECT=05 #use two digit format
 
 echo "Remove previous results"
-rm -rf ./datas_csv/*
+# rm -rf ./datas_csv/*
 rm -rf $DATA_PATH
 
 GRAFANA_URL="http://grafana.unice.cust.tasfrance.com/api/annotations"

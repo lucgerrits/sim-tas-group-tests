@@ -147,14 +147,14 @@ def filter_out_all_with(text):
 # Print stats used in gnuplots
 #
 
-print("tps\tnodes\tavg_finished_rate mean\tavg_finished_rate max\tavg_finished_rate var\tavg_invalid_rate mean\tavg_tot_finished max")
+print("tps,nodes,avg_finished_rate mean,avg_finished_rate max,avg_finished_rate var,avg_invalid_rate mean,avg_tot_finished max")
 show="avg_finished_rate"
 all_df_iter=iter(all_df)
 for field_name in all_df_iter:
     if filter_out_all_with(field_name):
-        print("{}\t{}\t{:.1f}\t{:.1f}\t{:.1f}\t{:.1f}\t{:.1f}".format(field_name.split('|')[0].replace("tps",""), field_name.split('|')[1].replace("_nodes",""), np.mean(all_df[field_name]["avg_finished_rate"].values), np.max(all_df[field_name]["avg_finished_rate"].values), np.var(all_df[field_name]["avg_finished_rate"].values), np.mean(all_df[field_name]["avg_invalid_rate"].values), np.max(all_df[field_name]["avg_tot_finished"].values)))
+        print("{},{},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f}".format(field_name.split('|')[0].replace("tps",""), field_name.split('|')[1].replace("_nodes",""), np.mean(all_df[field_name]["avg_finished_rate"].values), np.max(all_df[field_name]["avg_finished_rate"].values), np.var(all_df[field_name]["avg_finished_rate"].values), np.mean(all_df[field_name]["avg_invalid_rate"].values), np.max(all_df[field_name]["avg_tot_finished"].values)))
 
-# exit()
+exit()
 #%%
 
 fig, axs = pl.subplots(2,2,figsize=conf_figsize)
