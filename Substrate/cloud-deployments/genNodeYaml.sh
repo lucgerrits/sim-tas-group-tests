@@ -122,7 +122,6 @@ cat << EOF
                         --pool-limit 10000 \\
                         --pool-kbytes 125000 \\
                         --validator \\
-                        --no-grandpa \\
                         --state-cache-size 2147483648 \\
                         --max-runtime-instances 100
                     
@@ -228,7 +227,6 @@ cat << EOF
                         --max-runtime-instances 100 \\
                         --state-cache-size 2147483648 \\
                         --validator \\
-                        --no-grandpa \\
                         --bootnodes /ip4/\$SUBSTRATE_0_SERVICE_HOST/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
                     
             volumeMounts:

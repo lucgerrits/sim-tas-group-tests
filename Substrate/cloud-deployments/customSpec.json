@@ -22,7 +22,11 @@
           "5Dq9aFEp2NzamjsZnhMMQ8edZTzbFnrgEoVPGkGqV84QCDV9",
           "5CM4MKEfZqQQEHkAj5GHoNgBMD7NR3WNhEGJeWggrE9dHtzb",
           "5GgW3SLkGKN42do4L7qkncbRn5mu9zcVw2uK5fWdURq9itUD",
-          "5FYdv8Q8puGWURF7h1f5xEAitnNLSe8MnT5t7hTHj7CpGxjH"
+          "5FYdv8Q8puGWURF7h1f5xEAitnNLSe8MnT5t7hTHj7CpGxjH",
+          "5CFgKqkAQWiv2fkn4YFmMPX1SyveYA31c4MWtKyvDQoHcLD3",
+          "5HK5m1GHvfaUsA1LaEXCVzjLGybVzhgk9zZ1kTphTkfR3v6L",
+          "5HWf5uZxUSevJWfifuNLTH1RyRyFaAujSoEo3UAKApEq4LLY",
+          "5Dr1FNZFpCrHX9B5ZTZVjMmK18YW6drNjZphK4WifsATtBvS"
         ]
       },
       "grandpa": {
@@ -49,6 +53,22 @@
           ],
           [
             "5EprccYzvbdJieD6bhPKd9JFrYRxApxYTtibQMCNevHy2X7f",
+            1
+          ],
+          [
+            "5ErjTYuemomcLc6EgBo1WmB9RQQcE8y6bg7WtNGDdXkWcKb6",
+            1
+          ],
+          [
+            "5F8VwQPHatRbzcuEP9kqbwmFEE3fer19VJXoZeA6QCseAgcm",
+            1
+          ],
+          [
+            "5EEhoiJeGS2UPdsmcanTGetHKJY1Vn5jqfBHPYSDqe93VPUM",
+            1
+          ],
+          [
+            "5FLSaEJ8i9cr8LnY3FSBKrExbXtTD7B8g3g8eF6VAQ4ju2Dh",
             1
           ]
         ]
