@@ -3641,6 +3641,7 @@ dependencies = [
  "pallet-grandpa",
  "pallet-randomness-collective-flip",
  "pallet-sim-renault",
+ "pallet-sim-renault-accident",
  "pallet-sudo",
  "pallet-template",
  "pallet-timestamp",
@@ -3911,6 +3912,24 @@ dependencies = [
  "frame-system",
  "parity-scale-codec",
  "scale-info",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
+]
+
+[[package]]
+name = "pallet-sim-renault-accident"
+version = "4.0.0-dev"
+dependencies = [
+ "frame-benchmarking",
+ "frame-support",
+ "frame-system",
+ "log",
+ "pallet-sim-renault",
+ "parity-scale-codec",
+ "scale-info",
+ "sha2 0.10.6",
  "sp-core",
  "sp-io",
  "sp-runtime",

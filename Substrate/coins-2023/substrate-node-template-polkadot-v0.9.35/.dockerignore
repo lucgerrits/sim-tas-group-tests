@@ -3,3 +3,8 @@
 .vscode
 scripts
 target
+**/target
+target
+Dockerfile-installed-bionic
+.git
+.dockerignore
