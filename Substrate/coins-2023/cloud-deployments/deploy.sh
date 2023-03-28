@@ -16,3 +16,4 @@ cd rancher-v2.4.10/
 echo "Deploying IPFS"
 
 ./rancher kubectl -n $NAMESPACE apply -f ../ipfs.yaml
+./rancher kubectl -n $NAMESPACE apply -f ../substrate.yaml
