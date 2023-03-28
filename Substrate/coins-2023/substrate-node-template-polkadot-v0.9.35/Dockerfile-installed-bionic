@@ -32,18 +32,18 @@ RUN apt install -y protobuf-compiler
 
 RUN cargo build --release
 
-RUN cargo install cargo-deb
-RUN cargo deb -p node-template
+# RUN cargo install cargo-deb
+# RUN cargo deb -p node-template
 
-# -------------=== cartp rust docker build ===-------------
-FROM ubuntu:bionic
+# # -------------=== cartp rust docker build ===-------------
+# FROM ubuntu:bionic
 
-COPY --from=substrate-node-sim-builder /project/target/debian/node-template_*.deb /tmp
+# COPY --from=substrate-node-sim-builder /project/target/debian/node-template_*.deb /tmp
 
-RUN apt-get update \
- && dpkg -i /tmp/node-template_*.deb || true \
- && apt-get -f -y install
+# RUN apt-get update \
+#  && dpkg -i /tmp/node-template_*.deb || true \
+#  && apt-get -f -y install
 
-RUN node-template --help
+# RUN node-template --help
 
-RUN echo "Executable available using: node-template <OPTIONS>"
+# RUN echo "Executable available using: node-template <OPTIONS>"

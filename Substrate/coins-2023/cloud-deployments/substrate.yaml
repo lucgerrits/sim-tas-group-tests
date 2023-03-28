@@ -9,7 +9,7 @@ items:
   kind: Deployment
   metadata:
     name: node-0
-    namespace: substrate-net
+    namespace: multichain-net
   spec:
     replicas: 1
     selector:
@@ -19,13 +19,13 @@ items:
       metadata:
         labels:
           name: substrate-0
-          # serviceSelector: substrate-node
+          serviceSelector: substrate-node
       spec:
         securityContext:
           fsGroup: 101
         containers:
           - name: substrate-node
-            image: projetsim/substrate-sim:latest
+            image: projetsim/sim-node-coins-2023:latest
             resources:
               requests:
                 memory: "10Gi"
@@ -50,7 +50,7 @@ items:
               - -c
               - |
                     # Start Alice's node
-                    node-template \
+                    /node-template \
                         --base-path /datas/substrate-0 \
                         --name NodeAlice \
                         --chain local \
@@ -85,7 +85,7 @@ items:
   kind: Service
   metadata:
     name: substrate-0
-    namespace: substrate-net
+    namespace: multichain-net
   spec:
     type: ClusterIP
     selector:
@@ -131,7 +131,7 @@ items:
     labels:
       app: substrate-data
     name: substrate-data-0
-    namespace: substrate-net
+    namespace: multichain-net
   spec:
     storageClassName: manual
     accessModes:
@@ -145,7 +145,7 @@ items:
   kind: Deployment
   metadata:
     name: node-1
-    namespace: substrate-net
+    namespace: multichain-net
   spec:
     replicas: 1
     selector:
@@ -161,7 +161,7 @@ items:
           fsGroup: 101
         containers:
           - name: substrate-node
-            image: projetsim/substrate-sim:latest
+            image: projetsim/sim-node-coins-2023:latest
             resources:
               requests:
                 memory: "10Gi"
@@ -185,7 +185,7 @@ items:
             args:
               - -c
               - |
-                    node-template \
+                    /node-template \
                         --base-path /datas/substrate-1 \
                         --name NodeBob \
                         --chain local \
@@ -206,7 +206,7 @@ items:
                         --max-runtime-instances 100 \
                         --state-cache-size 2147483648 \
                         --validator \
-                        --bootnodes /ip4/$SUBSTRATE_0_SERVICE_HOST/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
+                        --bootnodes /ip4/$SUBSTRATE_0_SERVICE_HOST/tcp/30333/p2p/12D3KooWNnbuPTvagpCspJZg6BzhGP1YZNgznWEDfS3sSGjN39CB
                     
             volumeMounts:
               - name: substrate-data-1
@@ -222,7 +222,7 @@ items:
   kind: Service
   metadata:
     name: substrate-1
-    namespace: substrate-net
+    namespace: multichain-net
   spec:
     type: ClusterIP
     selector:
@@ -268,7 +268,7 @@ items:
     labels:
       app: substrate-data
     name: substrate-data-1
-    namespace: substrate-net
+    namespace: multichain-net
   spec:
     storageClassName: manual
     accessModes:
@@ -282,7 +282,7 @@ items:
   kind: Deployment
   metadata:
     name: node-2
-    namespace: substrate-net
+    namespace: multichain-net
   spec:
     replicas: 1
     selector:
@@ -298,7 +298,7 @@ items:
           fsGroup: 101
         containers:
           - name: substrate-node
-            image: projetsim/substrate-sim:latest
+            image: projetsim/sim-node-coins-2023:latest
             resources:
               requests:
                 memory: "10Gi"
@@ -322,7 +322,7 @@ items:
             args:
               - -c
               - |
-                    node-template \
+                    /node-template \
                         --base-path /datas/substrate-2 \
                         --name NodeCharlie \
                         --chain local \
@@ -343,7 +343,7 @@ items:
                         --max-runtime-instances 100 \
                         --state-cache-size 2147483648 \
                         --validator \
-                        --bootnodes /ip4/$SUBSTRATE_0_SERVICE_HOST/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
+                        --bootnodes /ip4/$SUBSTRATE_0_SERVICE_HOST/tcp/30333/p2p/12D3KooWNnbuPTvagpCspJZg6BzhGP1YZNgznWEDfS3sSGjN39CB
                     
             volumeMounts:
               - name: substrate-data-2
@@ -359,7 +359,7 @@ items:
   kind: Service
   metadata:
     name: substrate-2
-    namespace: substrate-net
+    namespace: multichain-net
   spec:
     type: ClusterIP
     selector:
@@ -405,7 +405,7 @@ items:
     labels:
       app: substrate-data
     name: substrate-data-2
-    namespace: substrate-net
+    namespace: multichain-net
   spec:
     storageClassName: manual
     accessModes:
@@ -421,7 +421,7 @@ items:
   kind: Service
   metadata:
     name: substrate-ws-service
-    namespace: substrate-net
+    namespace: multichain-net
   spec:
     type: ClusterIP
     selector:
@@ -437,7 +437,7 @@ items:
 #   kind: Deployment
 #   metadata:
 #     name: benchmark
-#     namespace: substrate-net
+#     namespace: multichain-net
 #   spec:
 #     replicas: 1
 #     selector:
