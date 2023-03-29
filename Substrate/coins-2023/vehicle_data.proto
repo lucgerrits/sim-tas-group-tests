@@ -6,9 +6,9 @@ message VehicleData {
         int32 ENGINE_RPM = 2;
         int32 FUEL_LEVEL = 3;
     }
-    message CategoryTwoFields {
-        int32 IGNITION_STATE = 1;
-        int32 HEADLIGHTS_STATE = 2;
+    message CategoryTwoField {
+        int64 timestamp = 1;
+        int32 value = 2;
     }
     message CategoryOne {
         // Category One fields
@@ -27,8 +27,8 @@ message VehicleData {
         // according to the occurrence of events (e.g. we send the last
         // 10 events of the engine state, associated with its timestamp).
         // All timestamps are standard UNIX 32-bit numbers.
-        repeated int64 timestamp = 1;
-        repeated CategoryTwoFields fields = 2;
+        repeated CategoryTwoField IGNITION_STATE = 1;
+        repeated CategoryTwoField HEADLIGHTS_STATE = 2;
     }
     // category_one should be a list of size 10
     repeated CategoryOne category_one = 1;
