@@ -50,6 +50,7 @@ items:
               - -c
               - |
                     # Start Alice's node
+                    rm -rf /datas/substrate-0; \\
                     /node-template \
                         --base-path /datas/substrate-0 \
                         --name NodeAlice \
@@ -185,11 +186,11 @@ items:
             args:
               - -c
               - |
+                    rm -rf /datas/substrate-1; \\
                     /node-template \
                         --base-path /datas/substrate-1 \
                         --name NodeBob \
                         --chain local \
-                        --keystore-path /datas/substrate-1/chains/local_testnet/keystore/ \
                         --bob \
                         --port 30333 \
                         --ws-port 9944 \
@@ -206,7 +207,7 @@ items:
                         --max-runtime-instances 100 \
                         --state-cache-size 2147483648 \
                         --validator \
-                        --bootnodes /ip4/$SUBSTRATE_0_SERVICE_HOST/tcp/30333/p2p/12D3KooWBsnLRbKi5nAGJ91391gbTjxgfLexAdsQe4CqeLRshscN
+                        --bootnodes /ip4/$SUBSTRATE_0_SERVICE_HOST/tcp/30333/p2p/12D3KooWJ6ge2GZMgz6H58KioiD1osJPGD1SYMXxfvbwaupjasCN
                     
             volumeMounts:
               - name: substrate-data-1
@@ -322,11 +323,11 @@ items:
             args:
               - -c
               - |
+                    rm -rf /datas/substrate-2; \\
                     /node-template \
                         --base-path /datas/substrate-2 \
                         --name NodeCharlie \
                         --chain local \
-                        --keystore-path /datas/substrate-2/chains/local_testnet/keystore/ \
                         --charlie \
                         --port 30333 \
                         --ws-port 9944 \
@@ -343,7 +344,7 @@ items:
                         --max-runtime-instances 100 \
                         --state-cache-size 2147483648 \
                         --validator \
-                        --bootnodes /ip4/$SUBSTRATE_0_SERVICE_HOST/tcp/30333/p2p/12D3KooWBsnLRbKi5nAGJ91391gbTjxgfLexAdsQe4CqeLRshscN
+                        --bootnodes /ip4/$SUBSTRATE_0_SERVICE_HOST/tcp/30333/p2p/12D3KooWJ6ge2GZMgz6H58KioiD1osJPGD1SYMXxfvbwaupjasCN
                     
             volumeMounts:
               - name: substrate-data-2

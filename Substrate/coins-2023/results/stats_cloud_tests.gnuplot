@@ -1,4 +1,4 @@
-choose_test_prefix = "test_1" 
+choose_test_prefix = "test_2" 
 collator_format_1 = "0collator" 
 
 ######################################## output tps ##################################################
