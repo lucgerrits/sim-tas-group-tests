@@ -1,11 +1,11 @@
 choose_test_prefix = "test_1" 
-collator_format_1 = "1collator" 
+collator_format_1 = "0collator" 
 
 ######################################## output tps ##################################################
 reset
 
 set terminal postscript eps enhanced color font 'Times-Roman,20' size 6,8
-set output "stats_cloud_output_tps.eps"
+set output 'stats_cloud_'.choose_test_prefix.'_'.collator_format_1.'_output_tps.eps'
 
 set multiplot layout 3,1 
 

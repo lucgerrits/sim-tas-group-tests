@@ -17,12 +17,12 @@ GRAFANA_DASHBOARD_ID="2"
 
 JS_THREADS=20
 # arr_tests_tps=(10 50 100 200 400 600 1000 1500 1800 2000)
-arr_tests_tps=(1800)
-arr_tests_collators=(-1)
+arr_tests_tps=(400 600 1000 1500 1800 2000)
+arr_tests_collators=(0)
 tot_cars=10000
 tot_factories=10
 total_accidents=10000
-TEST_LABEL_PREFIX="test_1" #prefix for the CSV files results (ex: test_1)
+TEST_LABEL_PREFIX="test_2" #prefix for the CSV files results (ex: test_1)
 # LABEL_NB_COLLATORS=3
 
 ENABLE_PERSONAL_NOTIFICATIONS=false #true or false

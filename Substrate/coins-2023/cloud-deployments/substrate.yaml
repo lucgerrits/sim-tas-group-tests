@@ -206,7 +206,7 @@ items:
                         --max-runtime-instances 100 \
                         --state-cache-size 2147483648 \
                         --validator \
-                        --bootnodes /ip4/$SUBSTRATE_0_SERVICE_HOST/tcp/30333/p2p/12D3KooWMH4fG3jAc7y4haDyGRA2BvX2L95XcygFaeYSGfnoUjb9
+                        --bootnodes /ip4/$SUBSTRATE_0_SERVICE_HOST/tcp/30333/p2p/12D3KooWBsnLRbKi5nAGJ91391gbTjxgfLexAdsQe4CqeLRshscN
                     
             volumeMounts:
               - name: substrate-data-1
@@ -343,7 +343,7 @@ items:
                         --max-runtime-instances 100 \
                         --state-cache-size 2147483648 \
                         --validator \
-                        --bootnodes /ip4/$SUBSTRATE_0_SERVICE_HOST/tcp/30333/p2p/12D3KooWMH4fG3jAc7y4haDyGRA2BvX2L95XcygFaeYSGfnoUjb9
+                        --bootnodes /ip4/$SUBSTRATE_0_SERVICE_HOST/tcp/30333/p2p/12D3KooWBsnLRbKi5nAGJ91391gbTjxgfLexAdsQe4CqeLRshscN
                     
             volumeMounts:
               - name: substrate-data-2
